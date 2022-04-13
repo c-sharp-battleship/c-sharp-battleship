@@ -1,31 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="AttackCoordinate.cs" company="Team">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Battleship
 {
-    class AttackCoordinate : Coordinate
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    /// <summary>
+    /// The class which is used to represent coordinates that are attacked.
+    /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
+    public class AttackCoordinate : Coordinate
     {
-        private AttackStatus CoordinateStatus;
+        /// <summary>
+        /// The status of coordinates that are attacked.
+        /// </summary>
+        private StatusCodes.AttackStatus coordinateStatus;
 
-        public AttackStatus GetAttackStatus()
-        {
-            return CoordinateStatus;
-        }
-
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="AttackCoordinate" /> class.
+        /// </summary>
         public AttackCoordinate() : base()
         {
-            CoordinateStatus = AttackStatus.NOT_ATTACKED;
+            this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
 
-        public AttackCoordinate(AttackStatus attackStatus) : base()
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="AttackCoordinate" /> class.
+        /// </summary>
+        /// <param name="attackStatus">The first name to join.</param>
+        public AttackCoordinate(StatusCodes.AttackStatus attackStatus) : base()
         {
-            CoordinateStatus = AttackStatus.NOT_ATTACKED;
+            this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
 
-        public AttackCoordinate(AttackStatus attackStatus, short xCoordinate, short yCoordinate) : base(xCoordinate, yCoordinate)
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="AttackCoordinate" /> class.
+        /// </summary>
+        /// <param name="attackStatus">The attack status.</param>
+        /// <param name="xCoordinate">The x coordinate.</param>
+        /// <param name="yCoordinate">The y coordinate.</param>
+        public AttackCoordinate(StatusCodes.AttackStatus attackStatus, short xCoordinate, short yCoordinate) : base(xCoordinate, yCoordinate)
         {
-            CoordinateStatus = AttackStatus.NOT_ATTACKED;
+            this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
+        }
+
+        /// <summary>
+        /// Returns the status of coordinates that are attacked
+        /// </summary>
+        /// <returns>The coordinate status.</returns>
+        public StatusCodes.AttackStatus GetAttackStatus()
+        {
+            return this.coordinateStatus;
         }
     }
 }

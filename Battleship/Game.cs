@@ -1,25 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Game.cs" company="Team">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Battleship
 {
-    class Game
-    {
-        private string ID;
-        private Player Player1;
-        private Player Player2;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
 
-        public string GetID()
+    /// <summary>
+    /// The class which is used to represent a game.
+    /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
+    public class Game
+    {
+        /// <summary>
+        /// The ID of the game.
+        /// </summary>
+        private string id;
+
+        /// <summary>
+        /// The player #1.
+        /// </summary>
+        private Player player1;
+
+        /// <summary>
+        /// The player #2.
+        /// </summary>
+        private Player player2;
+
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="Game" /> class.
+        /// </summary>
+        public Game()
         {
-            return ID;
+            this.id = 0.ToString();
+            this.player1 = new Player();
+            this.player2 = new Player();
         }
 
-        Game()
+        /// <summary>
+        ///  Returns the id of the game.
+        /// </summary>
+        /// <returns>The id of the game.</returns>
+        public string GetID()
         {
-            ID = 0.ToString();
-            Player1 = new Player();
-            Player2 = new Player();
+            return this.id;
         }
     }
 }

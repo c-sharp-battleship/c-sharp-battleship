@@ -1,20 +1,61 @@
-﻿/// <summary>
-/// Implementation of project-wide status codes.
-/// </summary>
+﻿//-----------------------------------------------------------------------
+// <copyright file="StatusCodes.cs" company="Team">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Battleship
 {
-    public enum AttackStatus
+    /// <summary>
+    /// Implementation of project-wide status codes.
+    /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
+    public class StatusCodes
     {
-        NOT_ATTACKED,
-        ATTACKED_NOT_HIT,
-        ATTACKED_HIT
-    }
+        /// <summary>
+        /// Types of attack statuses.
+        /// </summary>
+        public enum AttackStatus
+        {
+            /// <summary>
+            /// Represents a not attacked status.
+            /// </summary>
+            NOT_ATTACKED,
 
-    public enum ApplicationStatus
-    {
-        START_GAME,
-        PLAYER_1_TURN,
-        PLAYER_2_TURN,
-        END_GAME
+            /// <summary>
+            /// Represents an attacked but not hit status.
+            /// </summary>
+            ATTACKED_NOT_HIT,
+
+            /// <summary>
+            /// Represents an attacked and hit status.
+            /// </summary>
+            ATTACKED_HIT
+        }
+
+        /// <summary>
+        /// Types of applications statuses.
+        /// </summary>
+        public enum ApplicationStatus
+        {
+            /// <summary>
+            /// Represents a start of a game.
+            /// </summary>
+            START_GAME,
+
+            /// <summary>
+            /// Represents a player1.
+            /// </summary>
+            PLAYER_1_TURN,
+
+            /// <summary>
+            /// Represents a player2.
+            /// </summary>
+            PLAYER_2_TURN,
+
+            /// <summary>
+            /// Represents an end of the game.
+            /// </summary>
+            END_GAME
+        }
     }
 }
