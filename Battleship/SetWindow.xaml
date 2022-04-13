@@ -1,0 +1,27 @@
+﻿y
+    <Window x:Class="Battleship.SetWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Battleship"
+        mc:Ignorable="d"
+        Title="SetWindow" Height="450" Width="800">
+    <Grid Margin="0,0,0,-6">
+        <TextBox x:Name="MWtb_gridtablewidth" HorizontalAlignment="Left" Margin="203,55,0,0" Text="12" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" Height="26" MouseEnter="MWtb_gridtablewidth_MouseEnter"/>
+        <Label x:Name="MWl_gridsize" Content="Enter Game Window width" HorizontalAlignment="Left" Margin="44,55,0,0" VerticalAlignment="Top" Width="159"/>
+        <Button Content="Create grid window" HorizontalAlignment="Left" Margin="44,212,0,0" VerticalAlignment="Top" Click="Button_Click" Height="53" Width="228" Background="#FF55A874"/>
+        <Button Name="Exit_btn" Content="Exit" HorizontalAlignment="Left" Margin="458,317,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.75,0.745" Height="92" Width="282" Click="Exit_btn_Click" Background="#FFD79595"/>
+        <Label Content="Rows" HorizontalAlignment="Left" Margin="142,109,0,0" VerticalAlignment="Top" Height="25" Width="56" RenderTransformOrigin="0.479,0.858"/>
+        <TextBox Name="RowQtyInputTxtbox" HorizontalAlignment="Left" Margin="203,109,0,0" Text="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" Height="25"/>
+        <Label x:Name="BoardHeight" Content="Gamewindow Height" HorizontalAlignment="Left" Margin="44,81,0,0" VerticalAlignment="Top" Width="159" Height="28"/>
+        <TextBox Name="MWtxt_gridheight" HorizontalAlignment="Left" Margin="203,81,0,0" Text="6" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" Height="28"/>
+        <CheckBox Name="MainGridChckbox" Content="Colored Grid?" HorizontalAlignment="Left" Margin="160,139,0,0" VerticalAlignment="Top"/>
+        <RadioButton Name="Radioplayer1" Content="Player1" HorizontalAlignment="Left" Margin="187,172,0,0" VerticalAlignment="Top"/>
+        <RadioButton Name="Radioplayer2" Content="Player2" HorizontalAlignment="Left" Margin="187,192,0,0" VerticalAlignment="Top"/>
+        <Button Name="DoDrageventbtn" Content="Drag Drop Event,Not used" HorizontalAlignment="Left" Margin="504,37,0,0" VerticalAlignment="Top" Height="78" Width="218" Background="#FFE0E0DF" Click="DoDrageventbtn_Click"/>
+        <Button Name="CanvaCreate" Content="MakeCanvas" HorizontalAlignment="Left" Margin="504,125,0,0" VerticalAlignment="Top" Height="62" Width="198" Background="#FFE4E8E8" Click="CanvaCreate_Click"/>
+        <Button Name="MoveEvent" Content="MakeMoveEvent" HorizontalAlignment="Left" Margin="49,284,0,0" VerticalAlignment="Top" Height="61" Width="223" Background="#FF4FB129" Click="MoveEvent_Click"/>
+
+    </Grid>
+</Window>
