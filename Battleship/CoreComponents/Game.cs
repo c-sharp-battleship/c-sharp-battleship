@@ -3,7 +3,7 @@
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Battleship
+namespace Battleship.CoreComponents
 {
     using System;
     using System.Collections.Generic;
