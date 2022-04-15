@@ -13,7 +13,7 @@ namespace Battleship.CoreComponents
     /// The class which is used to represent coordinates that are attacked.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
-    public class AttackCoordinate : Coordinate
+    internal class AttackCoordinate : Coordinate
     {
         /// <summary>
         /// The status of coordinates that are attacked.

@@ -13,7 +13,7 @@ namespace Battleship.CoreComponents
     /// The class which is used to represent a player.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
-    public class Player
+    internal class Player
     {
         /// <summary>
         /// The ID of the player.

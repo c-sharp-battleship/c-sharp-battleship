@@ -13,7 +13,7 @@ namespace Battleship.CoreComponents
     /// The class which is used to represent a coordinate.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
-    public class Coordinate
+    internal class Coordinate
     {
         /// <summary>
         /// The y position of the coordinate.

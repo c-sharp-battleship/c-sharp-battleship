@@ -13,7 +13,7 @@ namespace Battleship.CoreComponents
     /// The class which is used to represent a ship.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
-    public class Ship
+    internal class Ship
     {
         /// <summary>
         /// The length of the ship.
