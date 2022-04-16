@@ -18,9 +18,6 @@
         <CheckBox Name="MainGridChckbox" Content="Colored Grid?" HorizontalAlignment="Left" Margin="160,139,0,0" VerticalAlignment="Top"/>
         <RadioButton Name="Radioplayer1" Content="Player1" HorizontalAlignment="Left" Margin="187,172,0,0" VerticalAlignment="Top"/>
         <RadioButton Name="Radioplayer2" Content="Player2" HorizontalAlignment="Left" Margin="187,192,0,0" VerticalAlignment="Top"/>
-        <Button Name="DoDrageventbtn" Content="Drag Drop Event,Not used" HorizontalAlignment="Left" Margin="504,37,0,0" VerticalAlignment="Top" Height="78" Width="218" Background="#FFE0E0DF" Click="DoDrageventbtn_Click"/>
-        <Button Name="CanvaCreate" Content="MakeCanvas" HorizontalAlignment="Left" Margin="504,125,0,0" VerticalAlignment="Top" Height="62" Width="198" Background="#FFE4E8E8" Click="CanvaCreate_Click"/>
-        <Button Name="MoveEvent" Content="MakeMoveEvent" HorizontalAlignment="Left" Margin="49,284,0,0" VerticalAlignment="Top" Height="61" Width="223" Background="#FF4FB129" Click="MoveEvent_Click"/>
 
     </Grid>
 </Window>
