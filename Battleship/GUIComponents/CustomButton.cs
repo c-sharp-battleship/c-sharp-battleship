@@ -61,6 +61,30 @@ namespace Battleship.GUIComponents
         /// </summary>
         private string name;
 
+
+        public int Stricked_ = 0;
+
+
+        public double Left_To_ParentLeft;
+
+
+        public double Top_To_ParentTop;
+
+        //Player Number property
+        public double Left_Comp_ParentLeft
+        {
+            get { return Left_To_ParentLeft; }
+            set { Left_To_ParentLeft = value; }
+        }
+
+        //Player Number property
+        public double Top_Comp_ParentTop
+        {
+            get { return Top_To_ParentTop; }
+            set { Top_To_ParentTop = value; }
+        }
+
+
         /// <summary>
         ///  Initializes a new instance of the <see cref="CustomButton" /> class.
         /// </summary>
@@ -74,20 +98,43 @@ namespace Battleship.GUIComponents
             this.name = myname;
 
             // Get the player number property from this class for color of button
-            if (this.PlayerNumber == 1)
+            switch (PlayerNumber)
             {
-                this.Background = Brushes.Black; // base
-            }
-            else
-            {
-                this.Background = Brushes.DarkCyan; // base   
+                case 1:
+                    Background = Brushes.Black;//base
+                    BorderBrush = Brushes.White;//base
+                    BorderThickness = new Thickness(0.5);//base
+                    break;
+                case 2:
+                    Background = Brushes.DarkCyan;//base
+                    BorderBrush = Brushes.Green;//base
+                    Foreground = Brushes.DarkCyan;//base
+                    BorderThickness = new Thickness(0.5);//base
+                    break;
+                default:
+                    Background = Brushes.Transparent;//base
+                    BorderBrush = Brushes.DarkGray;//base
+                    BorderThickness = new Thickness(0.1);//base
+                    Foreground = Brushes.Transparent;
+                    break;
             }
 
-            this.BorderBrush = Brushes.White;
-            this.BorderThickness = new Thickness(2); // base
-            this.Click += new RoutedEventHandler(this.Button_Click); // base
+            AllowDrop = true;//base
+            Click += new RoutedEventHandler(button_Click);//base
 
-            this.AllowDrop = true;
+            //Create a method when button is clicked 
+            void button_Click(object sender, System.EventArgs e)
+            {
+                Content = "X";
+                Stricked_ = 1;
+                Background = Brushes.Red;
+                MessageBox.Show("Id on this grid = " + this.ButtongridID.ToString() + "\n" +
+                                "Stricked Status = " + this.Stricked_.ToString() + "\n" +
+                                "Fire To Enemy = " + this.FireToEnemy.ToString() + "\n" +
+                                "LeftCompareTocanvas = " + this.Left_Comp_ParentLeft.ToString() + "\n" +
+                                "Top compared to parent Top = " + this.Top_Comp_ParentTop.ToString()
+                                                                                            , "Status Report", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            }
         }
 
         /// <summary>
@@ -142,23 +189,6 @@ namespace Battleship.GUIComponents
         {
             get { return this.name; }
             set { this.name = value; }
-        }
-
-        /// <summary>
-        /// Performs when button is clicked.
-        /// </summary>
-        /// <param name="sender">The object that initiated the event.</param>
-        /// <param name="e">The event arguments for the event.</param> 
-        public void Button_Click(object sender, System.EventArgs e)
-        {
-            this.Content = "X";
-            this.Striked = 1;
-            this.Background = Brushes.Red;
-            MessageBox.Show(
-                "Id on this grid = " + this.ButtongridID.ToString() + "\n" + "Stricked Status = " + this.Striked.ToString() + "\n" + "Fire To Enemy = " + this.FireToEnemy.ToString(), 
-                "Status Report", 
-                MessageBoxButton.OK, 
-                MessageBoxImage.Asterisk);
         }
     }
 }

@@ -18,6 +18,7 @@
         <CheckBox Name="MainGridChckbox" Content="Colored Grid?" HorizontalAlignment="Left" Margin="160,139,0,0" VerticalAlignment="Top"/>
         <RadioButton Name="Radioplayer1" Content="Player1" HorizontalAlignment="Left" Margin="187,172,0,0" VerticalAlignment="Top"/>
         <RadioButton Name="Radioplayer2" Content="Player2" HorizontalAlignment="Left" Margin="187,192,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="CanvaCreate" Content="MakeCanvas" HorizontalAlignment="Left" Margin="483,81,0,0" VerticalAlignment="Top" Height="73" Width="241"/>
 
     </Grid>
 </Window>
