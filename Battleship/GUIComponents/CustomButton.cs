@@ -1,103 +1,38 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="CustomButton.cs" company="Team">
-//     Company copyright tag.
-// </copyright>
-//-----------------------------------------------------------------------
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+
 namespace Battleship.GUIComponents
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Navigation;
-    using System.Windows.Shapes;
-
-    /// <summary>
-    /// The class which is used to represent a custom button.
-    /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
-    public class CustomButton : Button
+    class CustomButton : Button
     {
-        /// <summary>
-        /// Is button striked or not.
-        /// </summary>
-        public int Striked = 0;
-
-        /// <summary>
-        /// Does button belong to enemy or not.
-        /// </summary>
-        public int FireToEnemy = 0;
-
-        /// <summary>
-        /// The row of where the button is located.
-        /// </summary>
-        public int Row;
-
-        /// <summary>
-        /// The column of where the button is located.
-        /// </summary>
-        public int Column;
-
-        /// <summary>
-        /// The grid field.
-        /// </summary>
-        private int buttonGridID;
-
-        /// <summary>
-        /// The player number field.
-        /// </summary>
-        private int playerNumber;
-
-        /// <summary>
-        /// The name of the button.
-        /// </summary>
-        private string name;
-
-
+        private double ButtongridID_; // Grid field
+        private int PlayerNumber_;  // Player number field
+        private string Name_;
         public int Stricked_ = 0;
-
-
+        public int FireToEnemy = 0;
         public double Left_To_ParentLeft;
-
-
         public double Top_To_ParentTop;
 
-        //Player Number property
-        public double Left_Comp_ParentLeft
+
+        //constructor take both parameters for button ID and player number for color fill
+        public CustomButton(double PassID, int PassPlayerNumber, string myname) : base()
         {
-            get { return Left_To_ParentLeft; }
-            set { Left_To_ParentLeft = value; }
-        }
-
-        //Player Number property
-        public double Top_Comp_ParentTop
-        {
-            get { return Top_To_ParentTop; }
-            set { Top_To_ParentTop = value; }
-        }
-
-
-        /// <summary>
-        ///  Initializes a new instance of the <see cref="CustomButton" /> class.
-        /// </summary>
-        /// <param name="passID">The button ID.</param>
-        /// <param name="passPlayerNumber">The player number.</param>
-        /// <param name="myname">The name of the player.</param>
-        public CustomButton(int passID, int passPlayerNumber, string myname) : base()
-        {
-            this.buttonGridID = passID;
-            this.playerNumber = passPlayerNumber;
-            this.name = myname;
-
-            // Get the player number property from this class for color of button
+            ButtongridID_ = PassID;
+            PlayerNumber_ = PassPlayerNumber;
+            Name_ = myname;
             switch (PlayerNumber)
             {
                 case 1:
@@ -135,60 +70,48 @@ namespace Battleship.GUIComponents
                                 "Top compared to parent Top = " + this.Top_Comp_ParentTop.ToString()
                                                                                             , "Status Report", MessageBoxButton.OK, MessageBoxImage.Asterisk);
             }
+
+
         }
 
-        /// <summary>
-        ///  Initializes a new instance of the <see cref="CustomButton" /> class.
-        /// </summary>
-        /// <param name="anyButton">The object of the button.</param>
-        public CustomButton(object anyButton)
+
+        public CustomButton(object anybutton)
         {
-            this.name = anyButton.ToString();
+            Name_ = anybutton.ToString();
         }
 
-        /// <summary>
-        ///  Gets or sets the ID property.
-        /// </summary>
-        public int ButtongridID 
-        { 
-            get { return this.buttonGridID; } 
-            set { this.buttonGridID = value; } 
-        }
+        //ID Property
+        public double ButtongridID { get { return ButtongridID_; } set { ButtongridID_ = value; } }
 
-        /// <summary>
-        /// Gets or sets the player number property.
-        /// </summary>
+        //Player Number property
         public int PlayerNumber
         {
-            get { return this.playerNumber; }
-            set { this.playerNumber = value; }
+            get { return PlayerNumber_; }
+            set { PlayerNumber_ = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the row of where the button is located.
-        /// </summary>
-        public int ButtonRow
+        //Player Number property
+        public double Left_Comp_ParentLeft
         {
-            get { return this.Row; }
-            set { this.Row = value; }
+            get { return Left_To_ParentLeft; }
+            set { Left_To_ParentLeft = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the column of where the button is located.
-        /// </summary>
-        public int ButtonColumn
+        //Player Number property
+        public double Top_Comp_ParentTop
         {
-            get { return this.Column; }
-            set { this.Column = value; }
+            get { return Top_To_ParentTop; }
+            set { Top_To_ParentTop = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the button name property.
-        /// </summary>
-        public string ButtonName
+        //buttonname Property
+        public string buttonname
         {
-            get { return this.name; }
-            set { this.name = value; }
+            get { return Name_; }
+            set { Name_ = value; }
         }
+
+
+
     }
 }
