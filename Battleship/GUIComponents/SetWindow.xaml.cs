@@ -73,7 +73,7 @@ namespace Battleship.GUIComponents
             {
                 for (int row = 0; row < 30; row++) //Rows Button loader 
                 {
-                    CustomButton myButton = new CustomButton(Reverse + ((row + 1) * 0.001), 1, Reverse + ((row + 1) * 0.1).ToString());
+                    CustomButton myButton = new CustomButton((Reverse + ((row + 1) * 0.001), 1, Reverse + ((row + 1) * 0.1).ToString()));
                     myButton.Content = Reverse + ((row + 1) * 0.001).ToString();
                     myButton.Width = Gridsquareset;
                     Canvas.SetTop(myButton, row * Gridsquareset);
@@ -99,7 +99,7 @@ namespace Battleship.GUIComponents
             {
                 for (int row = 0; row < 30; row++) //Rows Button loader 
                 {
-                    CustomButton myButton = new CustomButton(col + 1 + ((row + 1) * 0.001), 2, Reverse + ((row + 1) * 0.1).ToString());
+                    CustomButton myButton = new CustomButton((col + 1 + ((row + 1) * 0.001), 2, Reverse + ((row + 1) * 0.1).ToString()));
                     myButton.Content = col + 1 + ((row + 1) * 0.001).ToString();
                     myButton.Width = Gridsquareset;
                     Canvas.SetTop(myButton, row * Gridsquareset);
