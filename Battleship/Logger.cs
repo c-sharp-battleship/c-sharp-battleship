@@ -10,6 +10,11 @@ namespace Battleship
         public static void Information(string message)
         {
             MessageBox.Show(message, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            Console.WriteLine(message);
+        }
+        public static void ConsoleInformation(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }

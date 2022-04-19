@@ -13,25 +13,25 @@ namespace Battleship.CoreComponents
     /// The class which is used to represent an attack board.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
-    internal class AttackBoard
+    public class AttackBoard
     {
         /// <summary>
         /// The list of attack coordinates that are hit.
         /// </summary>
-        private List<AttackCoordinate> hitCoords;
+        public List<AttackCoordinate> HitCoords;
 
         /// <summary>
         /// The list of attack coordinates that are missed.
         /// </summary>
-        private List<AttackCoordinate> missCoords;
+        public List<AttackCoordinate> MissCoords;
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="AttackBoard" /> class.
         /// </summary>
         public AttackBoard()
         {
-            this.hitCoords = new List<AttackCoordinate>();
-            this.missCoords = new List<AttackCoordinate>();
+            this.HitCoords = new List<AttackCoordinate>();
+            this.MissCoords = new List<AttackCoordinate>();
         }
     }
 }

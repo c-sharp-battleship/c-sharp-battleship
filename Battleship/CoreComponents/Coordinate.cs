@@ -13,25 +13,25 @@ namespace Battleship.CoreComponents
     /// The class which is used to represent a coordinate.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
-    internal class Coordinate
+    public class Coordinate
     {
         /// <summary>
         /// The y position of the coordinate.
         /// </summary>
-        protected short xCoordinate;
+        public short XCoordinate;
 
         /// <summary>
         /// The y position of the coordinate.
         /// </summary>
-        protected short yCoordinate;
+        public short YCoordinate;
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="Coordinate" /> class.
         /// </summary>
         public Coordinate()
         {
-            this.xCoordinate = 0;
-            this.yCoordinate = 0;
+            this.XCoordinate = 0;
+            this.YCoordinate = 0;
         }
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace Battleship.CoreComponents
         /// <param name="yCoordinate">The y coordinate.</param>
         public Coordinate(short xCoordinate, short yCoordinate)
         {
-            this.xCoordinate = xCoordinate;
-            this.yCoordinate = yCoordinate;
+            this.XCoordinate = xCoordinate;
+            this.YCoordinate = yCoordinate;
         }
     }
 }

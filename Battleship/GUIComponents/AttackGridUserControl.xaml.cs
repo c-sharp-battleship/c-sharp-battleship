@@ -30,7 +30,7 @@ namespace Battleship.GUIComponents
         private void GenericButtonClickEvent(object sender, RoutedEventArgs e, int tr, int td, Button clickedButton)
         {
             Logger.Information("Button Row " + tr.ToString() + " Entry " + td.ToString() + " was pressed!");
-            clickedButton.Content = "O";
+            clickedButton.IsEnabled = false;
         }
 
         private void ButtonTR1TD1_Click(object sender, RoutedEventArgs e)

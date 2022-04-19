@@ -13,43 +13,43 @@ namespace Battleship.CoreComponents
     /// The class which is used to represent a defense board.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
-    internal class DefenseBoard
+    public class DefenseBoard
     {
         /// <summary>
         /// The destroyer ship.
         /// </summary>
-        private Ship destroyerShip;
+        public Ship DestroyerShip;
 
         /// <summary>
         /// The submarine ship.
         /// </summary>
-        private Ship submarineShip;
+        public Ship SubmarineShip;
 
         /// <summary>
         /// The cruiser ship.
         /// </summary>
-        private Ship cruiserShip;
+        public Ship CruiserShip;
 
         /// <summary>
         /// The battleship.
         /// </summary>
-        private Ship battleshipShip;
+        public Ship BattleshipShip;
 
         /// <summary>
         /// The carrier ship.
         /// </summary>
-        private Ship carrierShip;
+        public Ship CarrierShip;
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="DefenseBoard" /> class.
         /// </summary>
         public DefenseBoard()
         {
-            this.destroyerShip = new Ship();
-            this.submarineShip = new Ship();
-            this.cruiserShip = new Ship();
-            this.battleshipShip = new Ship();
-            this.carrierShip = new Ship();
+            this.DestroyerShip = new Ship();
+            this.SubmarineShip = new Ship();
+            this.CruiserShip = new Ship();
+            this.BattleshipShip = new Ship();
+            this.CarrierShip = new Ship();
         }
     }
 }

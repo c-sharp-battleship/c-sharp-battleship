@@ -13,37 +13,37 @@ namespace Battleship.CoreComponents
     /// The class which is used to represent a player.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
-    internal class Player
+    public class Player
     {
         /// <summary>
         /// The ID of the player.
         /// </summary>
-        private string id;
+        public string ID;
 
         /// <summary>
         /// The Username of the player.
         /// </summary>
-        private string username;
+        public string Username;
 
         /// <summary>
         /// The attack board that the player attacks.
         /// </summary>
-        private AttackBoard playerAttackBoard;
+        public AttackBoard PlayerAttackBoard;
 
         /// <summary>
         /// The defense board that the player defenses.
         /// </summary>
-        private DefenseBoard playerDefenseBoard;
+        public DefenseBoard PlayerDefenseBoard;
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="Player" /> class.
         /// </summary>
         public Player()
         {
-            this.id = 0.ToString();
-            this.username = string.Empty;
-            this.playerAttackBoard = new AttackBoard();
-            this.playerDefenseBoard = new DefenseBoard();
+            this.ID = 0.ToString();
+            this.Username = string.Empty;
+            this.PlayerAttackBoard = new AttackBoard();
+            this.PlayerDefenseBoard = new DefenseBoard();
         }
     }
 }

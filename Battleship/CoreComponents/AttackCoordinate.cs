@@ -13,19 +13,19 @@ namespace Battleship.CoreComponents
     /// The class which is used to represent coordinates that are attacked.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
-    internal class AttackCoordinate : Coordinate
+    public class AttackCoordinate : Coordinate
     {
         /// <summary>
         /// The status of coordinates that are attacked.
         /// </summary>
-        private StatusCodes.AttackStatus coordinateStatus;
+        public StatusCodes.AttackStatus CoordinateStatus;
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="AttackCoordinate" /> class.
         /// </summary>
         public AttackCoordinate() : base()
         {
-            this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
+            this.CoordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Battleship.CoreComponents
         /// <param name="attackStatus">The first name to join.</param>
         public AttackCoordinate(StatusCodes.AttackStatus attackStatus) : base()
         {
-            this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
+            this.CoordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Battleship.CoreComponents
         /// <param name="yCoordinate">The y coordinate.</param>
         public AttackCoordinate(StatusCodes.AttackStatus attackStatus, short xCoordinate, short yCoordinate) : base(xCoordinate, yCoordinate)
         {
-            this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
+            this.CoordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Battleship.CoreComponents
         /// <returns>The coordinate status.</returns>
         public StatusCodes.AttackStatus GetAttackStatus()
         {
-            return this.coordinateStatus;
+            return this.CoordinateStatus;
         }
     }
 }

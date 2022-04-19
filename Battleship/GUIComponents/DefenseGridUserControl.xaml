@@ -5,10 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Battleship.GUIComponents"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="200" d:DesignWidth="200">
     <Grid>
-        <Canvas>
-            
+        <Canvas x:Name="CanvasMain" Height="200" Width="200"
+            PreviewMouseMove="CanvasMain_OnPreviewMouseMove"
+            PreviewMouseDown="CanvasMain_OnPreviewMouseDown"
+            PreviewMouseUp="CanvasMain_OnPreviewMouseUp" Margin="0,0,0,0">
+            <Canvas.Background>
+                <VisualBrush TileMode="Tile" Stretch="Uniform" Viewport="20,20,20,20" ViewportUnits="Absolute">
+                    <VisualBrush.Visual>
+                        <Rectangle Width="20" Height="20" Fill="White" Stroke="Black" StrokeThickness="0.1"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Canvas.Background>
         </Canvas>
     </Grid>
 </UserControl>

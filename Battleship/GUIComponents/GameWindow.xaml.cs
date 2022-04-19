@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using Battleship.CoreComponents;
+
 namespace Battleship.GUIComponents
 {
     /// <summary>
@@ -17,10 +19,13 @@ namespace Battleship.GUIComponents
     /// </summary>
     public partial class GameWindow : Window
     {
+        private Game currentGame;
 
         public GameWindow() : base()
         {
             this.InitializeComponent();
+
+            this.currentGame = new Game();
         }
 
         public GameWindow(string title) : base()
