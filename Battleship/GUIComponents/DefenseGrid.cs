@@ -24,42 +24,21 @@ namespace Battleship.GUIComponents
 
             this.Ships = new List<Rectangle>();
 
+            Rectangle tempRectangle;
             for (int i = 0; i < NUM_SHIPS; i++)
             {
                 // Code to place ships on the screen.
-                Rectangle myRectangle = new Rectangle();
-                myRectangle.Width = pixelgridsize;
-                myRectangle.Height = pixelgridsize * 5;
-                myRectangle.Fill = Brushes.Red;
-                myRectangle.Name = "Myrectangle"  +  i.ToString();
+                tempRectangle = new Rectangle();
+                tempRectangle.Width = pixelgridsize;
+                tempRectangle.Height = pixelgridsize * 5;
+                tempRectangle.Fill = Brushes.Red;
+                tempRectangle.Name = "TempRectangle"  +  i.ToString();
 
-                Canvas.SetTop(myRectangle, 0);
-                Canvas.SetLeft(myRectangle, 0);
+                Canvas.SetTop(tempRectangle, 1 * pixelgridsize);
+                Canvas.SetLeft(tempRectangle, (1 * pixelgridsize) + i);
 
-                myRectangle.MouseMove += new MouseEventHandler(myRectangle_Mousemove);
-
-                void myRectangle_Mousemove(object sender, MouseEventArgs e)
-                {
-                    if (e.LeftButton == MouseButtonState.Pressed)
-                    {
-                        Point GrabPos = e.GetPosition(this);
-                        Canvas.SetTop(myRectangle, GrabPos.Y);
-                        Canvas.SetLeft(myRectangle, GrabPos.X);
-                        DragDrop.DoDragDrop(myRectangle, new DataObject(myRectangle), DragDropEffects.Move);
-                    }
-                }
-
-                this.Ships.Add(myRectangle);
+                this.Ships.Add(tempRectangle);
             }
-
-            // Code to place ships on the screen.
-            Rectangle myRectangle = new Rectangle();
-            myRectangle.Width = pixelgridsize;
-            myRectangle.Height = pixelgridsize * 5;
-            myRectangle.Fill = Brushes.Red;
-
-            Canvas.SetTop(myRectangle, 0);
-            Canvas.SetLeft(myRectangle, 0);
 
             // Load the GridSquares and put them on the DefenseGrid.
             int Reverse = 30;
@@ -76,7 +55,7 @@ namespace Battleship.GUIComponents
                     myButton.Top_Comp_ParentTop = row * pixelgridsize;
                     this.Children.Add(myButton);//Add This button to my grid location
 
-                    /*
+                    // For each GridSqure, add a DragEventHandler to these buttons so that the ships can move over them.
                     foreach(Rectangle testRectangle in this.Ships)
                     {
                         testRectangle.DragOver += new DragEventHandler(Onbuttondragover);
@@ -88,13 +67,25 @@ namespace Battleship.GUIComponents
                             Canvas.SetLeft(testRectangle, myButton.Left_Comp_ParentLeft);
                         }
                     }
-                    */
                 }
                 Reverse--;
             }
 
             foreach (Rectangle testRectangle in this.Ships)
             {
+                testRectangle.MouseMove += new MouseEventHandler(Rectangle_Mousemove);
+
+                void Rectangle_Mousemove(object sender, MouseEventArgs e)
+                {
+                    if (e.LeftButton == MouseButtonState.Pressed)
+                    {
+                        Point GrabPos = e.GetPosition(this);
+                        Canvas.SetTop(testRectangle, GrabPos.Y);
+                        Canvas.SetLeft(testRectangle, GrabPos.X);
+                        DragDrop.DoDragDrop(testRectangle, new DataObject(testRectangle), DragDropEffects.Move);
+                    }
+                }
+
                 this.Children.Add(testRectangle);
             }
         }

@@ -14,18 +14,21 @@ namespace Battleship.GUIComponents
 {
     class MainCanvas : Canvas
     {
-        public MainCanvas() : base()
+        public MainCanvas(int width, int height) : base()
         {
+            this.Height = height;
+            this.Width = width;
+
             double gridSize = 19.2;
             int gridSquareCount = 10;
 
             double boardSize = gridSize * gridSquareCount;
 
-            DefenseGrid defenseGrid = new DefenseGrid(boardSize, boardSize, gridSize);
+            // NewDefenseGrid defenseGrid = new NewDefenseGrid(boardSize, boardSize, gridSize);
             AttackGrid attackGrid = new AttackGrid(boardSize, boardSize, gridSize);
-            Canvas.SetLeft(attackGrid, gridSize* gridSquareCount);
+            // Canvas.SetLeft(attackGrid, gridSize * gridSquareCount);
 
-            base.Children.Add(defenseGrid);
+            // base.Children.Add(defenseGrid);
             base.Children.Add(attackGrid);
         }
     }
