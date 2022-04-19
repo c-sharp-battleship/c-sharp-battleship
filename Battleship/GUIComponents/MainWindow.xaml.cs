@@ -26,7 +26,7 @@ namespace Battleship.GUIComponents
         }
         private void StartGameButton_Click(object sender, RoutedEventArgs e)
         {
-            GameWindow gameWindow = new GameWindow(400, 200, "Battleship: A Game of Adventure and Conquest");
+            GameWindow gameWindow = new GameWindow("Battleship: A Game of Adventure and Conquest");
             gameWindow.Show();
         }
 

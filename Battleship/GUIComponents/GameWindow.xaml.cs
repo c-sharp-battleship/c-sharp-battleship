@@ -17,36 +17,36 @@ namespace Battleship.GUIComponents
     /// </summary>
     public partial class GameWindow : Window
     {
-        DefenseGrid _DefenseGrid;
-        AttackGrid _AttackGrid;
 
-        public GameWindow()
+        public GameWindow() : base()
         {
             this.InitializeComponent();
-
-            // this._AttackGrid = new AttackGrid(800, 600, 19.2);
-            this._DefenseGrid = new DefenseGrid(this.Player1Board.Width / 2, this.Player1Board.Height, 19.2);
-
-            // this.Player1Board.Children.Add(this._AttackGrid);
-            this.Player1Board.Children.Add(this._DefenseGrid);
-
-            // MainCanvas mainCanvas = new MainCanvas(800, 600);
-            // this.Player1Board.Content = mainCanvas;
         }
 
-        public GameWindow(int width, int height, string title)
+        public GameWindow(string title) : base()
+        {
+            this.InitializeComponent();
+            this.Title = title;
+        }
+
+        public GameWindow(int width, int height, string title) : base()
         {
             this.InitializeComponent();
             this.Title = title;
 
-            this._AttackGrid = new AttackGrid(this.Player1Board.Width / 2, this.Player1Board.Height, 19.2);
-            // this._DefenseGrid = new DefenseGrid(this.Player1Board.Width / 2, this.Player1Board.Height, 19.2);
+            this.Player1Board.Width = width;
+            this.Player1Board.Height = height;
+        }
 
-            this.Player1Board.Children.Add(this._AttackGrid);
-            // this.Player1Board.Children.Add(this._DefenseGrid);
-            
-            // MainCanvas mainCanvas = new MainCanvas(width, height);
-            // this.Content = mainCanvas;
+        // Game Control Click Events
+        private void NextPlayerTurnButton_Click(object sender, RoutedEventArgs e)
+        {
+            Logger.Information("It's the next player's turn!");
+        }
+
+        private void RestGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            Logger.Information("The Game Has Been Reset");
         }
 
         private void EndGameButton_Click(object sender, RoutedEventArgs e)
@@ -55,11 +55,7 @@ namespace Battleship.GUIComponents
             System.Environment.Exit(0);
         }
 
-        private void RestGameButton_Click(object sender, RoutedEventArgs e)
-        {
-            Logger.Information("The Game Has Been Reset");
-        }
-
+        // Ship Placement Button Click Events
         private void DestroyerDeploymentButton_Click(object sender, RoutedEventArgs e)
         {
             Logger.Information("The Destroyer Has Been Deployed");

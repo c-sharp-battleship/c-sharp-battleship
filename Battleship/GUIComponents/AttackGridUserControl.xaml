@@ -4,117 +4,117 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Battleship.GUIComponents"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="220" d:DesignWidth="220">
     <Grid>
-        <Button x:Name="ButtonTR1TD1" Content="X" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR1TD2" Content="X" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR1TD3" Content="X" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR1TD4" Content="X" HorizontalAlignment="Left" Margin="70,10,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR1TD5" Content="X" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR1TD6" Content="X" HorizontalAlignment="Left" Margin="110,10,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR1TD7" Content="X" HorizontalAlignment="Left" Margin="130,10,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR1TD8" Content="X" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR1TD9" Content="X" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR1TD10" Content="X" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" Height="20" Width="20" />
+        <Button x:Name="ButtonTR1TD1" Content="X" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR1TD1_Click" />
+        <Button x:Name="ButtonTR1TD2" Content="X" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR1TD2_Click" />
+        <Button x:Name="ButtonTR1TD3" Content="X" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR1TD3_Click" />
+        <Button x:Name="ButtonTR1TD4" Content="X" HorizontalAlignment="Left" Margin="70,10,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR1TD4_Click" />
+        <Button x:Name="ButtonTR1TD5" Content="X" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR1TD5_Click" />
+        <Button x:Name="ButtonTR1TD6" Content="X" HorizontalAlignment="Left" Margin="110,10,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR1TD6_Click" />
+        <Button x:Name="ButtonTR1TD7" Content="X" HorizontalAlignment="Left" Margin="130,10,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR1TD7_Click" />
+        <Button x:Name="ButtonTR1TD8" Content="X" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR1TD8_Click" />
+        <Button x:Name="ButtonTR1TD9" Content="X" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR1TD9_Click" />
+        <Button x:Name="ButtonTR1TD10" Content="X" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR1TD10_Click" />
 
-        <Button x:Name="ButtonTR2TD1" Content="X" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR2TD2" Content="X" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR2TD3" Content="X" HorizontalAlignment="Left" Margin="50,30,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR2TD4" Content="X" HorizontalAlignment="Left" Margin="70,30,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR2TD5" Content="X" HorizontalAlignment="Left" Margin="90,30,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR2TD6" Content="X" HorizontalAlignment="Left" Margin="110,30,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR2TD7" Content="X" HorizontalAlignment="Left" Margin="130,30,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR2TD8" Content="X" HorizontalAlignment="Left" Margin="150,30,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR2TD9" Content="X" HorizontalAlignment="Left" Margin="170,30,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR2TD10" Content="X" HorizontalAlignment="Left" Margin="190,30,0,0" VerticalAlignment="Top" Height="20" Width="20" />
+        <Button x:Name="ButtonTR2TD1" Content="X" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR2TD1_Click" />
+        <Button x:Name="ButtonTR2TD2" Content="X" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR2TD2_Click" />
+        <Button x:Name="ButtonTR2TD3" Content="X" HorizontalAlignment="Left" Margin="50,30,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR2TD3_Click" />
+        <Button x:Name="ButtonTR2TD4" Content="X" HorizontalAlignment="Left" Margin="70,30,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR2TD4_Click" />
+        <Button x:Name="ButtonTR2TD5" Content="X" HorizontalAlignment="Left" Margin="90,30,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR2TD5_Click" />
+        <Button x:Name="ButtonTR2TD6" Content="X" HorizontalAlignment="Left" Margin="110,30,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR2TD6_Click" />
+        <Button x:Name="ButtonTR2TD7" Content="X" HorizontalAlignment="Left" Margin="130,30,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR2TD7_Click" />
+        <Button x:Name="ButtonTR2TD8" Content="X" HorizontalAlignment="Left" Margin="150,30,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR2TD8_Click" />
+        <Button x:Name="ButtonTR2TD9" Content="X" HorizontalAlignment="Left" Margin="170,30,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR2TD9_Click" />
+        <Button x:Name="ButtonTR2TD10" Content="X" HorizontalAlignment="Left" Margin="190,30,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR2TD10_Click" />
 
-        <Button x:Name="ButtonTR3TD1" Content="X" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR3TD2" Content="X" HorizontalAlignment="Left" Margin="30,50,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR3TD3" Content="X" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR3TD4" Content="X" HorizontalAlignment="Left" Margin="70,50,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR3TD5" Content="X" HorizontalAlignment="Left" Margin="90,50,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR3TD6" Content="X" HorizontalAlignment="Left" Margin="110,50,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR3TD7" Content="X" HorizontalAlignment="Left" Margin="130,50,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR3TD8" Content="X" HorizontalAlignment="Left" Margin="150,50,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR3TD9" Content="X" HorizontalAlignment="Left" Margin="170,50,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR3TD10" Content="X" HorizontalAlignment="Left" Margin="190,50,0,0" VerticalAlignment="Top" Height="20" Width="20" />
+        <Button x:Name="ButtonTR3TD1" Content="X" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR3TD1_Click" />
+        <Button x:Name="ButtonTR3TD2" Content="X" HorizontalAlignment="Left" Margin="30,50,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR3TD2_Click" />
+        <Button x:Name="ButtonTR3TD3" Content="X" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR3TD3_Click" />
+        <Button x:Name="ButtonTR3TD4" Content="X" HorizontalAlignment="Left" Margin="70,50,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR3TD4_Click" />
+        <Button x:Name="ButtonTR3TD5" Content="X" HorizontalAlignment="Left" Margin="90,50,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR3TD5_Click" />
+        <Button x:Name="ButtonTR3TD6" Content="X" HorizontalAlignment="Left" Margin="110,50,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR3TD6_Click" />
+        <Button x:Name="ButtonTR3TD7" Content="X" HorizontalAlignment="Left" Margin="130,50,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR3TD7_Click" />
+        <Button x:Name="ButtonTR3TD8" Content="X" HorizontalAlignment="Left" Margin="150,50,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR3TD8_Click" />
+        <Button x:Name="ButtonTR3TD9" Content="X" HorizontalAlignment="Left" Margin="170,50,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR3TD9_Click" />
+        <Button x:Name="ButtonTR3TD10" Content="X" HorizontalAlignment="Left" Margin="190,50,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR3TD10_Click" />
 
-        <Button x:Name="ButtonTR4TD1" Content="X" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR4TD2" Content="X" HorizontalAlignment="Left" Margin="30,70,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR4TD3" Content="X" HorizontalAlignment="Left" Margin="50,70,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR4TD4" Content="X" HorizontalAlignment="Left" Margin="70,70,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR4TD5" Content="X" HorizontalAlignment="Left" Margin="90,70,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR4TD6" Content="X" HorizontalAlignment="Left" Margin="110,70,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR4TD7" Content="X" HorizontalAlignment="Left" Margin="130,70,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR4TD8" Content="X" HorizontalAlignment="Left" Margin="150,70,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR4TD9" Content="X" HorizontalAlignment="Left" Margin="170,70,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR4TD10" Content="X" HorizontalAlignment="Left" Margin="190,70,0,0" VerticalAlignment="Top" Height="20" Width="20" />
+        <Button x:Name="ButtonTR4TD1" Content="X" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR4TD1_Click" />
+        <Button x:Name="ButtonTR4TD2" Content="X" HorizontalAlignment="Left" Margin="30,70,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR4TD2_Click" />
+        <Button x:Name="ButtonTR4TD3" Content="X" HorizontalAlignment="Left" Margin="50,70,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR4TD3_Click" />
+        <Button x:Name="ButtonTR4TD4" Content="X" HorizontalAlignment="Left" Margin="70,70,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR4TD4_Click" />
+        <Button x:Name="ButtonTR4TD5" Content="X" HorizontalAlignment="Left" Margin="90,70,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR4TD5_Click" />
+        <Button x:Name="ButtonTR4TD6" Content="X" HorizontalAlignment="Left" Margin="110,70,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR4TD6_Click" />
+        <Button x:Name="ButtonTR4TD7" Content="X" HorizontalAlignment="Left" Margin="130,70,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR4TD7_Click" />
+        <Button x:Name="ButtonTR4TD8" Content="X" HorizontalAlignment="Left" Margin="150,70,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR4TD8_Click" />
+        <Button x:Name="ButtonTR4TD9" Content="X" HorizontalAlignment="Left" Margin="170,70,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR4TD9_Click" />
+        <Button x:Name="ButtonTR4TD10" Content="X" HorizontalAlignment="Left" Margin="190,70,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR4TD10_Click" />
 
-        <Button x:Name="ButtonTR5TD1" Content="X" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR5TD2" Content="X" HorizontalAlignment="Left" Margin="30,90,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR5TD3" Content="X" HorizontalAlignment="Left" Margin="50,90,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR5TD4" Content="X" HorizontalAlignment="Left" Margin="70,90,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR5TD5" Content="X" HorizontalAlignment="Left" Margin="90,90,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR5TD6" Content="X" HorizontalAlignment="Left" Margin="110,90,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR5TD7" Content="X" HorizontalAlignment="Left" Margin="130,90,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR5TD8" Content="X" HorizontalAlignment="Left" Margin="150,90,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR5TD9" Content="X" HorizontalAlignment="Left" Margin="170,90,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR5TD10" Content="X" HorizontalAlignment="Left" Margin="190,90,0,0" VerticalAlignment="Top" Height="20" Width="20" />
+        <Button x:Name="ButtonTR5TD1" Content="X" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR5TD1_Click" />
+        <Button x:Name="ButtonTR5TD2" Content="X" HorizontalAlignment="Left" Margin="30,90,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR5TD2_Click" />
+        <Button x:Name="ButtonTR5TD3" Content="X" HorizontalAlignment="Left" Margin="50,90,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR5TD3_Click" />
+        <Button x:Name="ButtonTR5TD4" Content="X" HorizontalAlignment="Left" Margin="70,90,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR5TD4_Click" />
+        <Button x:Name="ButtonTR5TD5" Content="X" HorizontalAlignment="Left" Margin="90,90,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR5TD5_Click" />
+        <Button x:Name="ButtonTR5TD6" Content="X" HorizontalAlignment="Left" Margin="110,90,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR5TD6_Click" />
+        <Button x:Name="ButtonTR5TD7" Content="X" HorizontalAlignment="Left" Margin="130,90,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR5TD7_Click" />
+        <Button x:Name="ButtonTR5TD8" Content="X" HorizontalAlignment="Left" Margin="150,90,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR5TD8_Click" />
+        <Button x:Name="ButtonTR5TD9" Content="X" HorizontalAlignment="Left" Margin="170,90,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR5TD9_Click" />
+        <Button x:Name="ButtonTR5TD10" Content="X" HorizontalAlignment="Left" Margin="190,90,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR5TD10_Click" />
 
-        <Button x:Name="ButtonTR6TD1" Content="X" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR6TD2" Content="X" HorizontalAlignment="Left" Margin="30,110,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR6TD3" Content="X" HorizontalAlignment="Left" Margin="50,110,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR6TD4" Content="X" HorizontalAlignment="Left" Margin="70,110,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR6TD5" Content="X" HorizontalAlignment="Left" Margin="90,110,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR6TD6" Content="X" HorizontalAlignment="Left" Margin="110,110,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR6TD7" Content="X" HorizontalAlignment="Left" Margin="130,110,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR6TD8" Content="X" HorizontalAlignment="Left" Margin="150,110,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR6TD9" Content="X" HorizontalAlignment="Left" Margin="170,110,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR6TD10" Content="X" HorizontalAlignment="Left" Margin="190,110,0,0" VerticalAlignment="Top" Height="20" Width="20" />
+        <Button x:Name="ButtonTR6TD1" Content="X" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR6TD1_Click" />
+        <Button x:Name="ButtonTR6TD2" Content="X" HorizontalAlignment="Left" Margin="30,110,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR6TD2_Click" />
+        <Button x:Name="ButtonTR6TD3" Content="X" HorizontalAlignment="Left" Margin="50,110,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR6TD3_Click" />
+        <Button x:Name="ButtonTR6TD4" Content="X" HorizontalAlignment="Left" Margin="70,110,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR6TD4_Click" />
+        <Button x:Name="ButtonTR6TD5" Content="X" HorizontalAlignment="Left" Margin="90,110,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR6TD5_Click" />
+        <Button x:Name="ButtonTR6TD6" Content="X" HorizontalAlignment="Left" Margin="110,110,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR6TD6_Click" />
+        <Button x:Name="ButtonTR6TD7" Content="X" HorizontalAlignment="Left" Margin="130,110,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR6TD7_Click" />
+        <Button x:Name="ButtonTR6TD8" Content="X" HorizontalAlignment="Left" Margin="150,110,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR6TD8_Click" />
+        <Button x:Name="ButtonTR6TD9" Content="X" HorizontalAlignment="Left" Margin="170,110,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR6TD9_Click" />
+        <Button x:Name="ButtonTR6TD10" Content="X" HorizontalAlignment="Left" Margin="190,110,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR6TD10_Click" />
 
-        <Button x:Name="ButtonTR7TD1" Content="X" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR7TD2" Content="X" HorizontalAlignment="Left" Margin="30,130,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR7TD3" Content="X" HorizontalAlignment="Left" Margin="50,130,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR7TD4" Content="X" HorizontalAlignment="Left" Margin="70,130,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR7TD5" Content="X" HorizontalAlignment="Left" Margin="90,130,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR7TD6" Content="X" HorizontalAlignment="Left" Margin="110,130,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR7TD7" Content="X" HorizontalAlignment="Left" Margin="130,130,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR7TD8" Content="X" HorizontalAlignment="Left" Margin="150,130,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR7TD9" Content="X" HorizontalAlignment="Left" Margin="170,130,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR7TD10" Content="X" HorizontalAlignment="Left" Margin="190,130,0,0" VerticalAlignment="Top" Height="20" Width="20" />
+        <Button x:Name="ButtonTR7TD1" Content="X" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR7TD1_Click" />
+        <Button x:Name="ButtonTR7TD2" Content="X" HorizontalAlignment="Left" Margin="30,130,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR7TD2_Click" />
+        <Button x:Name="ButtonTR7TD3" Content="X" HorizontalAlignment="Left" Margin="50,130,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR7TD3_Click" />
+        <Button x:Name="ButtonTR7TD4" Content="X" HorizontalAlignment="Left" Margin="70,130,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR7TD4_Click" />
+        <Button x:Name="ButtonTR7TD5" Content="X" HorizontalAlignment="Left" Margin="90,130,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR7TD5_Click" />
+        <Button x:Name="ButtonTR7TD6" Content="X" HorizontalAlignment="Left" Margin="110,130,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR7TD6_Click" />
+        <Button x:Name="ButtonTR7TD7" Content="X" HorizontalAlignment="Left" Margin="130,130,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR7TD7_Click" />
+        <Button x:Name="ButtonTR7TD8" Content="X" HorizontalAlignment="Left" Margin="150,130,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR7TD8_Click" />
+        <Button x:Name="ButtonTR7TD9" Content="X" HorizontalAlignment="Left" Margin="170,130,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR7TD9_Click" />
+        <Button x:Name="ButtonTR7TD10" Content="X" HorizontalAlignment="Left" Margin="190,130,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR7TD10_Click" />
 
-        <Button x:Name="ButtonTR8TD1" Content="X" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR8TD2" Content="X" HorizontalAlignment="Left" Margin="30,150,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR8TD3" Content="X" HorizontalAlignment="Left" Margin="50,150,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR8TD4" Content="X" HorizontalAlignment="Left" Margin="70,150,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR8TD5" Content="X" HorizontalAlignment="Left" Margin="90,150,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR8TD6" Content="X" HorizontalAlignment="Left" Margin="110,150,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR8TD7" Content="X" HorizontalAlignment="Left" Margin="130,150,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR8TD8" Content="X" HorizontalAlignment="Left" Margin="150,150,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR8TD9" Content="X" HorizontalAlignment="Left" Margin="170,150,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR8TD10" Content="X" HorizontalAlignment="Left" Margin="190,150,0,0" VerticalAlignment="Top" Height="20" Width="20" />
+        <Button x:Name="ButtonTR8TD1" Content="X" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR8TD1_Click" />
+        <Button x:Name="ButtonTR8TD2" Content="X" HorizontalAlignment="Left" Margin="30,150,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR8TD2_Click" />
+        <Button x:Name="ButtonTR8TD3" Content="X" HorizontalAlignment="Left" Margin="50,150,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR8TD3_Click" />
+        <Button x:Name="ButtonTR8TD4" Content="X" HorizontalAlignment="Left" Margin="70,150,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR8TD4_Click" />
+        <Button x:Name="ButtonTR8TD5" Content="X" HorizontalAlignment="Left" Margin="90,150,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR8TD5_Click" />
+        <Button x:Name="ButtonTR8TD6" Content="X" HorizontalAlignment="Left" Margin="110,150,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR8TD6_Click" />
+        <Button x:Name="ButtonTR8TD7" Content="X" HorizontalAlignment="Left" Margin="130,150,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR8TD7_Click" />
+        <Button x:Name="ButtonTR8TD8" Content="X" HorizontalAlignment="Left" Margin="150,150,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR8TD8_Click" />
+        <Button x:Name="ButtonTR8TD9" Content="X" HorizontalAlignment="Left" Margin="170,150,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR8TD9_Click" />
+        <Button x:Name="ButtonTR8TD10" Content="X" HorizontalAlignment="Left" Margin="190,150,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR8TD10_Click" />
 
-        <Button x:Name="ButtonTR9TD1" Content="X" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR9TD2" Content="X" HorizontalAlignment="Left" Margin="30,170,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR9TD3" Content="X" HorizontalAlignment="Left" Margin="50,170,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR9TD4" Content="X" HorizontalAlignment="Left" Margin="70,170,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR9TD5" Content="X" HorizontalAlignment="Left" Margin="90,170,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR9TD6" Content="X" HorizontalAlignment="Left" Margin="110,170,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR9TD7" Content="X" HorizontalAlignment="Left" Margin="130,170,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR9TD8" Content="X" HorizontalAlignment="Left" Margin="150,170,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR9TD9" Content="X" HorizontalAlignment="Left" Margin="170,170,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR9TD10" Content="X" HorizontalAlignment="Left" Margin="190,170,0,0" VerticalAlignment="Top" Height="20" Width="20" />
+        <Button x:Name="ButtonTR9TD1" Content="X" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR9TD1_Click" />
+        <Button x:Name="ButtonTR9TD2" Content="X" HorizontalAlignment="Left" Margin="30,170,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR9TD2_Click" />
+        <Button x:Name="ButtonTR9TD3" Content="X" HorizontalAlignment="Left" Margin="50,170,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR9TD3_Click" />
+        <Button x:Name="ButtonTR9TD4" Content="X" HorizontalAlignment="Left" Margin="70,170,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR9TD4_Click" />
+        <Button x:Name="ButtonTR9TD5" Content="X" HorizontalAlignment="Left" Margin="90,170,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR9TD5_Click" />
+        <Button x:Name="ButtonTR9TD6" Content="X" HorizontalAlignment="Left" Margin="110,170,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR9TD6_Click" />
+        <Button x:Name="ButtonTR9TD7" Content="X" HorizontalAlignment="Left" Margin="130,170,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR9TD7_Click" />
+        <Button x:Name="ButtonTR9TD8" Content="X" HorizontalAlignment="Left" Margin="150,170,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR9TD8_Click" />
+        <Button x:Name="ButtonTR9TD9" Content="X" HorizontalAlignment="Left" Margin="170,170,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR9TD9_Click" />
+        <Button x:Name="ButtonTR9TD10" Content="X" HorizontalAlignment="Left" Margin="190,170,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR9TD10_Click" />
 
-        <Button x:Name="ButtonTR10TD1" Content="X" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR10TD2" Content="X" HorizontalAlignment="Left" Margin="30,190,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR10TD3" Content="X" HorizontalAlignment="Left" Margin="50,190,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR10TD4" Content="X" HorizontalAlignment="Left" Margin="70,190,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR10TD5" Content="X" HorizontalAlignment="Left" Margin="90,190,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR10TD6" Content="X" HorizontalAlignment="Left" Margin="110,190,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR10TD7" Content="X" HorizontalAlignment="Left" Margin="130,190,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR10TD8" Content="X" HorizontalAlignment="Left" Margin="150,190,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR10TD9" Content="X" HorizontalAlignment="Left" Margin="170,190,0,0" VerticalAlignment="Top" Height="20" Width="20" />
-        <Button x:Name="ButtonTR10TD10" Content="X" HorizontalAlignment="Left" Margin="190,190,0,0" VerticalAlignment="Top" Height="20" Width="20" />
+        <Button x:Name="ButtonTR10TD1" Content="X" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR10TD1_Click" />
+        <Button x:Name="ButtonTR10TD2" Content="X" HorizontalAlignment="Left" Margin="30,190,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR10TD2_Click" />
+        <Button x:Name="ButtonTR10TD3" Content="X" HorizontalAlignment="Left" Margin="50,190,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR10TD3_Click" />
+        <Button x:Name="ButtonTR10TD4" Content="X" HorizontalAlignment="Left" Margin="70,190,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR10TD4_Click" />
+        <Button x:Name="ButtonTR10TD5" Content="X" HorizontalAlignment="Left" Margin="90,190,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR10TD5_Click" />
+        <Button x:Name="ButtonTR10TD6" Content="X" HorizontalAlignment="Left" Margin="110,190,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR10TD6_Click" />
+        <Button x:Name="ButtonTR10TD7" Content="X" HorizontalAlignment="Left" Margin="130,190,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR10TD7_Click" />
+        <Button x:Name="ButtonTR10TD8" Content="X" HorizontalAlignment="Left" Margin="150,190,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR10TD8_Click" />
+        <Button x:Name="ButtonTR10TD9" Content="X" HorizontalAlignment="Left" Margin="170,190,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR10TD9_Click" />
+        <Button x:Name="ButtonTR10TD10" Content="X" HorizontalAlignment="Left" Margin="190,190,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="ButtonTR10TD10_Click" />
     </Grid>
 </UserControl>
