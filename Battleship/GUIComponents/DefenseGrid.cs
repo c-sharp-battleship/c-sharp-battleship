@@ -46,9 +46,9 @@ namespace Battleship.GUIComponents
 
             // Load the GridSquares and put them on the DefenseGrid.
             int Reverse = 30;
-            for (int col = 0; col < 30; col++)
+            for (int col = 0; col < width / pixelgridsize; col++)
             {
-                for (int row = 0; row < 30; row++) //Rows Button loader 
+                for (int row = 0; row < width / pixelgridsize; row++) //Rows Button loader 
                 {
                     GridSquare myButton = new GridSquare(Reverse + ((row + 1) * 0.001), 1, Reverse + ((row + 1) * 0.1).ToString());
                     myButton.Content = Reverse + ((row + 1) * 0.001).ToString();

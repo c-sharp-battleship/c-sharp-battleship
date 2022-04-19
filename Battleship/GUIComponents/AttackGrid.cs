@@ -17,24 +17,23 @@ namespace Battleship.GUIComponents
         public AttackGrid(double width, double height, double pixelgridsize) : base()
         {
             // Load the GridSquares and put them on the DefenseGrid.
-            int Reverse = 0;
-            double Leftoffset = pixelgridsize * 30;
-            for (int col = 0; col < 30; col++)
+            int Reverse = 30;
+            for (int col = 0; col < width / pixelgridsize; col++)
             {
-                for (int row = 0; row < 30; row++) //Rows Button loader 
+                for (int row = 0; row < width / pixelgridsize; row++)
                 {
-                    // Create a new GridSquare, passing in the 
-                    GridSquare myButton = new GridSquare(col + 1 + ((row + 1) * 0.001), 2, Reverse + ((row + 1) * 0.1).ToString());
-                    myButton.Content = col + 1 + ((row + 1) * 0.001).ToString();
+                    GridSquare myButton = new GridSquare(Reverse + ((row + 1) * 0.001), 2, Reverse + ((row + 1) * 0.1).ToString());
+                    myButton.Content = Reverse + ((row + 1) * 0.001).ToString();
                     myButton.Width = pixelgridsize;
                     Canvas.SetTop(myButton, row * pixelgridsize);
-                    Canvas.SetLeft(myButton, col * pixelgridsize + Leftoffset);
-                    myButton.Left_Comp_ParentLeft = col * pixelgridsize + Leftoffset;
+                    Canvas.SetLeft(myButton, col * pixelgridsize);
+                    myButton.Left_Comp_ParentLeft = col * pixelgridsize;
                     myButton.Top_Comp_ParentTop = row * pixelgridsize;
 
-                    // Add the current button to the AttackGrid
+                    // Add This button to my grid location
                     this.Children.Add(myButton);
                 }
+                Reverse--;
             }
         }
     }

@@ -21,20 +21,8 @@ namespace Battleship.GUIComponents
         {
             this.InitializeComponent();
 
-            double gridSize = 19.2;
-            int gridSquareCount = 10;
-
-            double boardSize = gridSize * gridSquareCount;
-
-            DefenseGrid defenseGrid = new DefenseGrid(boardSize, boardSize, gridSize);
-            this.Content = defenseGrid;
-
-            /*
-            AttackGrid attackGrid = new AttackGrid(boardSize, boardSize, gridSize);
-
-            myParentCanvas.Children.Add(myRectangle);
-            this.Content = myParentCanvas;
-            */
+            MainCanvas mainCanvas = new MainCanvas();
+            this.Content = mainCanvas;
         }
     }
 }
