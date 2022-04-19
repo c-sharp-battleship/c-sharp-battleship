@@ -24,10 +24,10 @@ namespace Battleship.GUIComponents
         {
             this.InitializeComponent();
 
-            this._AttackGrid = new AttackGrid(this.Player1Board.Width / 2, this.Player1Board.Height, 19.2);
+            // this._AttackGrid = new AttackGrid(800, 600, 19.2);
             this._DefenseGrid = new DefenseGrid(this.Player1Board.Width / 2, this.Player1Board.Height, 19.2);
 
-            this.Player1Board.Children.Add(this._AttackGrid);
+            // this.Player1Board.Children.Add(this._AttackGrid);
             this.Player1Board.Children.Add(this._DefenseGrid);
 
             // MainCanvas mainCanvas = new MainCanvas(800, 600);
@@ -45,7 +45,6 @@ namespace Battleship.GUIComponents
             this.Player1Board.Children.Add(this._AttackGrid);
             // this.Player1Board.Children.Add(this._DefenseGrid);
             
-
             // MainCanvas mainCanvas = new MainCanvas(width, height);
             // this.Content = mainCanvas;
         }
