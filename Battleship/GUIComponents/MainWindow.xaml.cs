@@ -26,8 +26,8 @@ namespace Battleship.GUIComponents
         }
         private void StartGameButton_Click(object sender, RoutedEventArgs e)
         {
-            SetWindow setWindow = new SetWindow();
-            setWindow.Show();
+            GameWindow gameWindow = new GameWindow();
+            gameWindow.Show();
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
@@ -39,6 +39,7 @@ namespace Battleship.GUIComponents
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            Environment.Exit(0);
         }
     }
 }

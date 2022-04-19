@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 
 namespace Battleship.GUIComponents
 {
-    class CustomButton : Button
+    class GridSquare : Button
     {
         private double ButtongridID_; // Grid field
         private int PlayerNumber_;  // Player number field
@@ -28,7 +28,7 @@ namespace Battleship.GUIComponents
 
 
         //constructor take both parameters for button ID and player number for color fill
-        public CustomButton(double PassID, int PassPlayerNumber, string myname) : base()
+        public GridSquare(double PassID, int PassPlayerNumber, string myname) : base()
         {
             ButtongridID_ = PassID;
             PlayerNumber_ = PassPlayerNumber;
@@ -75,7 +75,7 @@ namespace Battleship.GUIComponents
         }
 
 
-        public CustomButton(object anybutton)
+        public GridSquare(object anybutton)
         {
             Name_ = anybutton.ToString();
         }
