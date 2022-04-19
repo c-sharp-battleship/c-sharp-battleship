@@ -14,35 +14,52 @@ namespace Battleship.GUIComponents
 {
     class DefenseGrid : Canvas
     {
+        private const ushort NUM_SHIPS = 5;
+        private List<Rectangle> Ships;
 
         public DefenseGrid(double width, double height, double pixelgridsize) : base()
         {
             base.Width = width;
             base.Height = height;
 
-            /*
+            this.Ships = new List<Rectangle>();
+
+            for (int i = 0; i < NUM_SHIPS; i++)
+            {
+                // Code to place ships on the screen.
+                Rectangle myRectangle = new Rectangle();
+                myRectangle.Width = pixelgridsize;
+                myRectangle.Height = pixelgridsize * 5;
+                myRectangle.Fill = Brushes.Red;
+                myRectangle.Name = "Myrectangle"  +  i.ToString();
+
+                Canvas.SetTop(myRectangle, 0);
+                Canvas.SetLeft(myRectangle, 0);
+
+                myRectangle.MouseMove += new MouseEventHandler(myRectangle_Mousemove);
+
+                void myRectangle_Mousemove(object sender, MouseEventArgs e)
+                {
+                    if (e.LeftButton == MouseButtonState.Pressed)
+                    {
+                        Point GrabPos = e.GetPosition(this);
+                        Canvas.SetTop(myRectangle, GrabPos.Y);
+                        Canvas.SetLeft(myRectangle, GrabPos.X);
+                        DragDrop.DoDragDrop(myRectangle, new DataObject(myRectangle), DragDropEffects.Move);
+                    }
+                }
+
+                this.Ships.Add(myRectangle);
+            }
+
             // Code to place ships on the screen.
             Rectangle myRectangle = new Rectangle();
-            myRectangle.Width = pixelgridsize * 8;
-            myRectangle.Height = pixelgridsize * 4;
+            myRectangle.Width = pixelgridsize;
+            myRectangle.Height = pixelgridsize * 5;
             myRectangle.Fill = Brushes.Red;
 
-            Canvas.SetTop(myRectangle, 200);
-            Canvas.SetLeft(myRectangle, 200);
-
-            myRectangle.MouseMove += new MouseEventHandler(myRectangle_Mousemove);
-
-            void myRectangle_Mousemove(object sender, MouseEventArgs e)
-            {
-                if (e.LeftButton == MouseButtonState.Pressed)
-                {
-                    Point GrabPos = e.GetPosition(this);
-                    Canvas.SetTop(myRectangle, GrabPos.Y);
-                    Canvas.SetLeft(myRectangle, GrabPos.X);
-                    DragDrop.DoDragDrop(myRectangle, new DataObject(myRectangle), DragDropEffects.Move);
-                }
-            }
-            */
+            Canvas.SetTop(myRectangle, 0);
+            Canvas.SetLeft(myRectangle, 0);
 
             // Load the GridSquares and put them on the DefenseGrid.
             int Reverse = 30;
@@ -60,17 +77,25 @@ namespace Battleship.GUIComponents
                     this.Children.Add(myButton);//Add This button to my grid location
 
                     /*
-                    myButton.DragOver += new DragEventHandler(Onbuttondragover);
-
-                    void Onbuttondragover(object sender, DragEventArgs e)
+                    foreach(Rectangle testRectangle in this.Ships)
                     {
-                        Point GrabPos = e.GetPosition(this);
-                        Canvas.SetTop(myRectangle, myButton.Top_To_ParentTop);
-                        Canvas.SetLeft(myRectangle, myButton.Left_Comp_ParentLeft);
+                        testRectangle.DragOver += new DragEventHandler(Onbuttondragover);
+
+                        void Onbuttondragover(object sender, DragEventArgs e)
+                        {
+                            Point GrabPos = e.GetPosition(this);
+                            Canvas.SetTop(testRectangle, myButton.Top_To_ParentTop);
+                            Canvas.SetLeft(testRectangle, myButton.Left_Comp_ParentLeft);
+                        }
                     }
                     */
                 }
                 Reverse--;
+            }
+
+            foreach (Rectangle testRectangle in this.Ships)
+            {
+                this.Children.Add(testRectangle);
             }
         }
    }
