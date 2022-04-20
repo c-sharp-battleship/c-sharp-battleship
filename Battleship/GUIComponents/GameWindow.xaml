@@ -8,23 +8,31 @@
         Width="1000" Height="600">
     <Grid>
         <Grid x:Name="Player1Board" Visibility="Visible">
-            <local:AttackGrid Margin="600,0,180,0" Height="220" Width="220"></local:AttackGrid>
+            <Grid x:Name="Player1ShipDeploymentButtons" Margin="255,182,625,191">
+                <Button x:Name="Player1DestroyerDeploymentButton" Content="Deploy Destroyer" Click="Player1DestroyerDeploymentButton_Click" Margin="0,10,0,176" />
+                <Button x:Name="Player1SubmarineDeploymentButton" Content="Deploy Submarine" Click="Player1SubmarineDeploymentButton_Click" Margin="0,53,0,133" />
+                <Button x:Name="Player1CruiserDeploymentButton" Content="Deploy Cruiser" Click="Player1CruiserDeploymentButton_Click" Margin="0,93,0,93" />
+                <Button x:Name="Player1BattleshipDeploymentButton" Content="Deploy Battleship" Click="Player1BattleshipDeploymentButton_Click" Margin="0,136,0,50" />
+                <Button x:Name="Player1CarrierDeploymentButton" Content="Deploy Carrier" Click="Player1CarrierDeploymentButton_Click" Margin="0,176,0,10" />
+            </Grid>
+            <local:AttackGrid x:Name="Player1AttackGrid" Margin="600,0,180,0" Height="220" Width="220"></local:AttackGrid>
             <local:DefenseGrid x:Name="Player1DefenseGrid" Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGrid>
         </Grid>
         <Grid x:Name="Player2Board" Visibility="Hidden">
-            <local:AttackGrid Margin="600,0,180,0" Height="220" Width="220"></local:AttackGrid>
-            <local:DefenseGrid Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGrid>
+            <Grid x:Name="Player2ShipDeploymentButtons" Margin="255,182,625,191">
+                <Button x:Name="Player2DestroyerDeploymentButton" Content="Deploy Destroyer" Click="Player2DestroyerDeploymentButton_Click" Margin="0,10,0,176" />
+                <Button x:Name="Player2SubmarineDeploymentButton" Content="Deploy Submarine" Click="Player2SubmarineDeploymentButton_Click" Margin="0,53,0,133" />
+                <Button x:Name="Player2CruiserDeploymentButton" Content="Deploy Cruiser" Click="Player2CruiserDeploymentButton_Click" Margin="0,93,0,93" />
+                <Button x:Name="Player2BattleshipDeploymentButton" Content="Deploy Battleship" Click="Player2BattleshipDeploymentButton_Click" Margin="0,136,0,50" />
+                <Button x:Name="Player2CarrierDeploymentButton" Content="Deploy Carrier" Click="Player2CarrierDeploymentButton_Click" Margin="0,176,0,10" />
+            </Grid>
+            <local:AttackGrid x:Name="Player2AttackGrid" Margin="600,0,180,0" Height="220" Width="220"></local:AttackGrid>
+            <local:DefenseGrid x:Name="Player2DefenseGrid" Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGrid>
         </Grid>
-        <Grid x:Name="ShipDeploymentGrid" Margin="0,0,800,0">
-            <Button x:Name="DestroyerDeploymentButton" Content="Deploy Destroyer" Margin="10,10,10,524" Click="DestroyerDeploymentButton_Click"></Button>
-            <Button x:Name="SubmarineDeploymentButton" Content="Deploy Submarine" Margin="10,65,10,469" Click="SubmarineDeploymentButton_Click"></Button>
-            <Button x:Name="CruiserDeploymentButton" Content="Deploy Cruiser" Margin="10,120,10,414" Click="CruiserDeploymentButton_Click"></Button>
-            <Button x:Name="BattleshipDeploymentButton" Content="Deploy Battleship" Margin="10,175,10,359" Click="BattleshipDeploymentButton_Click"></Button>
-            <Button x:Name="CarrierDeploymentButton" Content="Deploy Carrier" Margin="10,230,10,304" Click="CarrierDeploymentButton_Click"></Button>
-
-            <Button x:Name="NextPlayerTurnButton" Margin="10,414,10,120" Click="NextPlayerTurnButton_Click">Next Player Turn</Button>
-            <Button x:Name="RestGameButton" Margin="10,469,10,65" Click="RestGameButton_Click">Reset Game</Button>
-            <Button x:Name="EndGameButton" Margin="10,524,10,10" Click="EndGameButton_Click">End Game</Button>
+        <Grid x:Name="GameControlsGrid" Margin="10,533,10,10">
+            <Button x:Name="NextPlayerTurnButton" Click="NextPlayerTurnButton_Click" Margin="0,0,495,0">Next Player Turn</Button>
+            <Button x:Name="RestGameButton" Click="RestGameButton_Click" Margin="490,0,245,0">Reset Game</Button>
+            <Button x:Name="EndGameButton" Click="EndGameButton_Click" Margin="740,0,0,0">End Game</Button>
         </Grid>
     </Grid>
 </Window>
