@@ -28,21 +28,58 @@ namespace Battleship.GUIComponents
         /// </summary>
         private Point offset;
 
+        private const int PIXEL_GRID_SIZE = 20;
+
+        private Ellipse carrierShip;
+        private Ellipse battleshipShip;
+        private Ellipse cruiserShip;
+        private Ellipse submarineShip;
+        private Ellipse destroyerShip;
+
         public DefenseGridUserControl()
         {
             InitializeComponent();
 
-            Rectangle gameboard = new Rectangle();
-            //// gameboard.Fill = Brushes.White;
-            Ellipse thing = new Ellipse();
-            thing.Fill = Brushes.Blue;
-            thing.Width = 100;
-            thing.Height = 100;
-            Canvas.SetTop(thing, 20);
-            Canvas.SetLeft(thing, 20);
-            thing.PreviewMouseDown += this.CanvasMain_OnPreviewMouseDown;
-            this.CanvasMain.Children.Add(thing);
+            carrierShip = new Ellipse();
+            battleshipShip = new Ellipse();
+            cruiserShip = new Ellipse();
+            submarineShip = new Ellipse();
+            destroyerShip = new Ellipse();
         }
+
+        public void deployShip(Ellipse templeEllipse, int height)
+        {
+            templeEllipse.Fill = Brushes.Blue;
+            templeEllipse.Width = PIXEL_GRID_SIZE;
+            templeEllipse.Height = height * PIXEL_GRID_SIZE;
+            Canvas.SetTop(templeEllipse, 20);
+            Canvas.SetLeft(templeEllipse, 20);
+            templeEllipse.PreviewMouseDown += this.CanvasMain_OnPreviewMouseDown;
+            this.CanvasMain.Children.Add(templeEllipse);
+        }
+
+        public void deployCarrierShip()
+        {
+            deployShip(carrierShip, 5);
+        }
+
+        public void deployBattleshipShip()
+        {
+            deployShip(battleshipShip, 4);
+        }
+        public void deployCruiserShip()
+        {
+            deployShip(cruiserShip, 3);
+        }
+        public void deploySubmarineShip()
+        {
+            deployShip(submarineShip, 3);
+        }
+        public void deployDestroyerShip()
+        {
+            deployShip(destroyerShip, 2);
+        }
+
         /// <summary>
         /// Performs when mouse button is pressed.
         /// </summary>

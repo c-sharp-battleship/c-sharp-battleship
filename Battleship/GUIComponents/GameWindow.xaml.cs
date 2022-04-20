@@ -63,27 +63,37 @@ namespace Battleship.GUIComponents
         // Ship Placement Button Click Events
         private void DestroyerDeploymentButton_Click(object sender, RoutedEventArgs e)
         {
-            Logger.Information("The Destroyer Has Been Deployed");
+            Logger.ConsoleInformation("The Destroyer Has Been Deployed");
+            this.Player1DefenseGrid.deployDestroyerShip();
+            this.DestroyerDeploymentButton.IsEnabled = false;
         }
 
         private void SubmarineDeploymentButton_Click(object sender, RoutedEventArgs e)
         {
-            Logger.Information("The Submarine Has Been Deployed");
+            Logger.ConsoleInformation("The Submarine Has Been Deployed");
+            this.Player1DefenseGrid.deploySubmarineShip();
+            this.SubmarineDeploymentButton.IsEnabled = false;
         }
 
         private void CruiserDeploymentButton_Click(object sender, RoutedEventArgs e)
         {
-            Logger.Information("The Cruiser Has Been Deployed");
+            Logger.ConsoleInformation("The Cruiser Has Been Deployed");
+            this.Player1DefenseGrid.deployCruiserShip();
+            this.CruiserDeploymentButton.IsEnabled = false;
         }
 
         private void BattleshipDeploymentButton_Click(object sender, RoutedEventArgs e)
         {
-            Logger.Information("The Battleship Has Been Deployed");
+            Logger.ConsoleInformation("The Battleship Has Been Deployed");
+            this.Player1DefenseGrid.deployBattleshipShip();
+            this.BattleshipDeploymentButton.IsEnabled = false;
         }
 
         private void CarrierDeploymentButton_Click(object sender, RoutedEventArgs e)
         {
-            Logger.Information("The Carrier Has Been Deployed");
+            Logger.ConsoleInformation("The Carrier Has Been Deployed");
+            this.Player1DefenseGrid.deployCarrierShip();
+            this.CarrierDeploymentButton.IsEnabled = false;
         }
     }
 }

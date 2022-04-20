@@ -9,7 +9,7 @@
     <Grid>
         <Grid x:Name="Player1Board" Visibility="Visible">
             <local:AttackGridUserControl Margin="600,0,180,0" Height="220" Width="220"></local:AttackGridUserControl>
-            <local:DefenseGridUserControl Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGridUserControl>
+            <local:DefenseGridUserControl x:Name="Player1DefenseGrid" Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGridUserControl>
         </Grid>
         <Grid x:Name="Player2Board" Visibility="Hidden">
             <local:AttackGridUserControl Margin="600,0,180,0" Height="220" Width="220"></local:AttackGridUserControl>
