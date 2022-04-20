@@ -15,22 +15,25 @@ namespace Battleship.CoreComponents
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not yet taught.")]
     public class Game
     {
+        /// <summary>
+        /// The status of the <see cref="Game" /> object.
+        /// </summary>
         public StatusCodes.ApplicationStatus GameStatus;
 
         /// <summary>
-        /// The ID of the game.
+        /// The ID of the <see cref="Game" /> object.
         /// </summary>
-        private string ID;
+        public string ID;
 
         /// <summary>
-        /// The player #1.
+        /// The player #1 of the <see cref="Game" /> object.
         /// </summary>
-        private Player Player1;
+        public Player Player1;
 
         /// <summary>
-        /// The player #2.
+        /// The player #2 of the <see cref="Game" /> object.
         /// </summary>
-        private Player Player2;
+        public Player Player2;
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="Game" /> class.
@@ -45,6 +48,11 @@ namespace Battleship.CoreComponents
             Logger.ConsoleInformation("Game Initialized");
         }
 
+        /// <summary>
+        ///  Method that begins the new game.
+        /// </summary>
+        /// <param name="player1Name">The first player's username.</param>
+        /// <param name="player2Name">The second player's username.</param>
         public void StartGame(string player1Name, string player2Name)
         {
             this.GameStatus = StatusCodes.ApplicationStatus.GAME_STARTED;

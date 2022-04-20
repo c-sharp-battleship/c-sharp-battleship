@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="App.xaml.cs" company="Team">
-//     Company copyright tag.
+// <copyright file="App.xaml.cs" company="Battleship Coding Group">
+//     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Battleship
@@ -20,9 +20,11 @@ namespace Battleship
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="App" /> class.
+        /// </summary>
         public App() : base()
         {
-
         }
     }
 }

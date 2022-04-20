@@ -37,7 +37,11 @@ namespace Battleship
         /// </summary>
         public enum ApplicationStatus
         {
+            /// <summary>
+            /// Represents a game not yet started.
+            /// </summary>
             GAME_NOT_STARTED,
+
             /// <summary>
             /// Represents a start of a game.
             /// </summary>

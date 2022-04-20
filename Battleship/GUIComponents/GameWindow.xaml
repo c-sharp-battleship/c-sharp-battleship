@@ -8,12 +8,12 @@
         Width="1000" Height="600">
     <Grid>
         <Grid x:Name="Player1Board" Visibility="Visible">
-            <local:AttackGridUserControl Margin="600,0,180,0" Height="220" Width="220"></local:AttackGridUserControl>
-            <local:DefenseGridUserControl x:Name="Player1DefenseGrid" Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGridUserControl>
+            <local:AttackGrid Margin="600,0,180,0" Height="220" Width="220"></local:AttackGrid>
+            <local:DefenseGrid x:Name="Player1DefenseGrid" Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGrid>
         </Grid>
         <Grid x:Name="Player2Board" Visibility="Hidden">
-            <local:AttackGridUserControl Margin="600,0,180,0" Height="220" Width="220"></local:AttackGridUserControl>
-            <local:DefenseGridUserControl Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGridUserControl>
+            <local:AttackGrid Margin="600,0,180,0" Height="220" Width="220"></local:AttackGrid>
+            <local:DefenseGrid Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGrid>
         </Grid>
         <Grid x:Name="ShipDeploymentGrid" Margin="0,0,800,0">
             <Button x:Name="DestroyerDeploymentButton" Content="Deploy Destroyer" Margin="10,10,10,524" Click="DestroyerDeploymentButton_Click"></Button>
