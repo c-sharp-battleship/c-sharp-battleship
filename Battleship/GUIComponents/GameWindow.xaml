@@ -8,23 +8,23 @@
         Width="1000" Height="600">
     <Grid>
         <Grid x:Name="Player1Board" Visibility="Visible">
-            <Grid x:Name="Player1ShipDeploymentButtons" Margin="255,182,625,191">
-                <Button x:Name="Player1DestroyerDeploymentButton" Content="Deploy Destroyer" Click="Player1DestroyerDeploymentButton_Click" Margin="0,10,0,176" />
-                <Button x:Name="Player1SubmarineDeploymentButton" Content="Deploy Submarine" Click="Player1SubmarineDeploymentButton_Click" Margin="0,53,0,133" />
-                <Button x:Name="Player1CruiserDeploymentButton" Content="Deploy Cruiser" Click="Player1CruiserDeploymentButton_Click" Margin="0,93,0,93" />
-                <Button x:Name="Player1BattleshipDeploymentButton" Content="Deploy Battleship" Click="Player1BattleshipDeploymentButton_Click" Margin="0,136,0,50" />
-                <Button x:Name="Player1CarrierDeploymentButton" Content="Deploy Carrier" Click="Player1CarrierDeploymentButton_Click" Margin="0,176,0,10" />
+            <Grid x:Name="Player1ShipDeploymentButtons" Margin="255,182,625,182">
+                <Button x:Name="Player1DestroyerDeploymentButton" Content="Deploy Destroyer" Click="Player1DestroyerDeploymentButton_Click" Margin="0,0,0,176" />
+                <Button x:Name="Player1SubmarineDeploymentButton" Content="Deploy Submarine" Click="Player1SubmarineDeploymentButton_Click" Margin="0,44,0,133" />
+                <Button x:Name="Player1CruiserDeploymentButton" Content="Deploy Cruiser" Click="Player1CruiserDeploymentButton_Click" Margin="0,87,0,93" />
+                <Button x:Name="Player1BattleshipDeploymentButton" Content="Deploy Battleship" Click="Player1BattleshipDeploymentButton_Click" Margin="0,127,0,50" />
+                <Button x:Name="Player1CarrierDeploymentButton" Content="Deploy Carrier" Click="Player1CarrierDeploymentButton_Click" Margin="0,170,0,10" />
             </Grid>
             <local:AttackGrid x:Name="Player1AttackGrid" Margin="600,0,180,0" Height="220" Width="220"></local:AttackGrid>
             <local:DefenseGrid x:Name="Player1DefenseGrid" Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGrid>
         </Grid>
-        <Grid x:Name="Player2Board" Visibility="Hidden">
-            <Grid x:Name="Player2ShipDeploymentButtons" Margin="255,182,625,191">
-                <Button x:Name="Player2DestroyerDeploymentButton" Content="Deploy Destroyer" Click="Player2DestroyerDeploymentButton_Click" Margin="0,10,0,176" />
-                <Button x:Name="Player2SubmarineDeploymentButton" Content="Deploy Submarine" Click="Player2SubmarineDeploymentButton_Click" Margin="0,53,0,133" />
-                <Button x:Name="Player2CruiserDeploymentButton" Content="Deploy Cruiser" Click="Player2CruiserDeploymentButton_Click" Margin="0,93,0,93" />
-                <Button x:Name="Player2BattleshipDeploymentButton" Content="Deploy Battleship" Click="Player2BattleshipDeploymentButton_Click" Margin="0,136,0,50" />
-                <Button x:Name="Player2CarrierDeploymentButton" Content="Deploy Carrier" Click="Player2CarrierDeploymentButton_Click" Margin="0,176,0,10" />
+        <Grid x:Name="Player2Board" Visibility="Visible">
+            <Grid x:Name="Player2ShipDeploymentButtons" Margin="255,182,625,182">
+                <Button x:Name="Player2DestroyerDeploymentButton" Content="Deploy Destroyer" Click="Player2DestroyerDeploymentButton_Click" Margin="0,0,0,176" />
+                <Button x:Name="Player2SubmarineDeploymentButton" Content="Deploy Submarine" Click="Player2SubmarineDeploymentButton_Click" Margin="0,44,0,133" />
+                <Button x:Name="Player2CruiserDeploymentButton" Content="Deploy Cruiser" Click="Player2CruiserDeploymentButton_Click" Margin="0,87,0,93" />
+                <Button x:Name="Player2BattleshipDeploymentButton" Content="Deploy Battleship" Click="Player2BattleshipDeploymentButton_Click" Margin="0,127,0,50" />
+                <Button x:Name="Player2CarrierDeploymentButton" Content="Deploy Carrier" Click="Player2CarrierDeploymentButton_Click" Margin="0,170,0,10" />
             </Grid>
             <local:AttackGrid x:Name="Player2AttackGrid" Margin="600,0,180,0" Height="220" Width="220"></local:AttackGrid>
             <local:DefenseGrid x:Name="Player2DefenseGrid" Margin="380,0,400,0" Height="220" Width="220"></local:DefenseGrid>
