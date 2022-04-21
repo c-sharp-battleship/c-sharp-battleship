@@ -9,6 +9,8 @@ namespace Battleship
     using System.Collections.Generic;
     using System.Text;
     using System.Windows;
+    using System.Diagnostics;
+
 
     /// <summary>
     /// Class that outputs information (GUI and console).
@@ -31,7 +33,7 @@ namespace Battleship
         /// <param name="message">The message to be displayed to the console.</param>
         public static void ConsoleInformation(string message)
         {
-            Console.WriteLine(message);
+            Trace.WriteLine(message);
         }
     }
 }
