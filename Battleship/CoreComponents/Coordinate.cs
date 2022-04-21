@@ -18,12 +18,12 @@ namespace Battleship.CoreComponents
         /// <summary>
         /// The y position of the coordinate.
         /// </summary>
-        public short XCoordinate;
+        public ushort XCoordinate;
 
         /// <summary>
         /// The y position of the coordinate.
         /// </summary>
-        public short YCoordinate;
+        public ushort YCoordinate;
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="Coordinate" /> class.
@@ -41,8 +41,7 @@ namespace Battleship.CoreComponents
         /// <param name="yCoordinate">The y coordinate.</param>
         public Coordinate(short xCoordinate, short yCoordinate)
         {
-            this.XCoordinate = xCoordinate;
-            this.YCoordinate = yCoordinate;
+
         }
     }
 }
