@@ -36,6 +36,11 @@ namespace Battleship.GUIComponents
         private UIElement dragObject = null;
 
         /// <summary>
+        /// The object that the user drags.
+        /// </summary>
+        private Ellipse rotateObject = null;
+
+        /// <summary>
         /// The point of the object.
         /// </summary>
         private Point offset;
@@ -89,9 +94,13 @@ namespace Battleship.GUIComponents
             templeEllipse.Fill = Brushes.Blue;
             templeEllipse.Width = pixelGridSize;
             templeEllipse.Height = height * pixelGridSize;
+            
             Canvas.SetTop(templeEllipse, pixelGridSize);
             Canvas.SetLeft(templeEllipse, pixelGridSize);
+
             templeEllipse.PreviewMouseDown += this.CanvasMain_OnPreviewMouseDown;
+            templeEllipse.PreviewMouseRightButtonDown += this.CanvasMain_OnPreviewMouseRightButtonDown;
+
             this.CanvasMain.Children.Add(templeEllipse);
         }
 
@@ -136,6 +145,22 @@ namespace Battleship.GUIComponents
         }
 
         /// <summary>
+        /// Rotates the ship when the user double-clicks the <see cref="Ellipse"/> object.
+        /// </summary>
+        /// <param name="sender">The object that initiated the event.</param>
+        /// <param name="e">The event arguments for the event.</param>
+        private void CanvasMain_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.rotateObject = sender as Ellipse;
+
+            double previousWidth = this.rotateObject.Width;
+            double previousHeight = this.rotateObject.Height;
+
+            this.rotateObject.Width = previousHeight;
+            this.rotateObject.Height = previousWidth;
+        }
+
+        /// <summary>
         /// Performs when mouse button is pressed.
         /// </summary>
         /// <param name="sender">The object that initiated the event.</param>
@@ -173,8 +198,7 @@ namespace Battleship.GUIComponents
             // Step 4: Convert grid coordinates back into canvas coordinates (by multiplying by 20).
             double[] step4Coords = ConvertGridCoordinatesToCanvasCoordinates(step3Coords);
 
-            Logger.ConsoleInformation("Absolute Coordinates: " + step1Coords.X + ", " + step1Coords.Y);
-            Logger.ConsoleInformation("Rounded Coordinates: " + step4Coords[0] + ", " + step4Coords[1]);
+            Logger.ConsoleInformation("Ship Movement Coordinates: " + step4Coords[0] + ", " + step4Coords[1]);
 
             Canvas.SetTop(this.dragObject, step4Coords[1]);
             Canvas.SetLeft(this.dragObject, step4Coords[0]);
