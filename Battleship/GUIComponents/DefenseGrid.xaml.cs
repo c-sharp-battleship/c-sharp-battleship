@@ -18,6 +18,8 @@ namespace Battleship.GUIComponents
     using System.Windows.Navigation;
     using System.Windows.Shapes;
 
+    using Battleship.CoreComponents;
+
     /// <summary>
     /// Interaction logic for DefenseGrid.xaml
     /// </summary>
@@ -159,9 +161,23 @@ namespace Battleship.GUIComponents
                 return;
             }
 
-            var position = e.GetPosition(sender as IInputElement);
-            Canvas.SetTop(this.dragObject, position.Y - this.offset.Y);
-            Canvas.SetLeft(this.dragObject, position.X - this.offset.X);
+            // Set 1: Retrieve the current object coordinates.
+            var step1Coords = e.GetPosition(sender as IInputElement);
+
+            // Step 2: Round the current canvas coordinates to the nearest ingegral value.
+            double[] step2Coords = new double[2] { step1Coords.X, step1Coords.Y };
+            
+            // Step 3: Convert rounded canvas coordinates to grid coordinates.
+            Coordinate step3Coords = ConvertCanvasCoordinatesToGridCoordinates(step2Coords);
+
+            // Step 4: Convert grid coordinates back into canvas coordinates (by multiplying by 20).
+            double[] step4Coords = ConvertGridCoordinatesToCanvasCoordinates(step3Coords);
+
+            Logger.ConsoleInformation("Absolute Coordinates: " + step1Coords.X + ", " + step1Coords.Y);
+            Logger.ConsoleInformation("Rounded Coordinates: " + step4Coords[0] + ", " + step4Coords[1]);
+
+            Canvas.SetTop(this.dragObject, step4Coords[1] - this.offset.Y);
+            Canvas.SetLeft(this.dragObject, step4Coords[0] - this.offset.X);
         }
 
         /// <summary>
@@ -173,6 +189,53 @@ namespace Battleship.GUIComponents
         {
             this.dragObject = null;
             this.CanvasMain.ReleaseMouseCapture();
+        }
+
+        /// <summary>
+        /// Rounds the specified <paramref name="canvasCoords"/> to the nearest integral value.
+        /// </summary>
+        /// <param name="canvasCoords">The coordinates to be rounded.</param>
+        /// <returns>The rounded coordinates.</returns>
+        private double[] RoundCanvasCoords(double[] canvasCoords)
+        {
+            double[] roundedCanvasCoords = new double[2] { 0, 0 };
+
+            roundedCanvasCoords[0] = Math.Round(canvasCoords[0]);
+            roundedCanvasCoords[1] = Math.Round(canvasCoords[1]);
+
+            return roundedCanvasCoords;
+        }
+
+        // The following methods explicitly reduce percision to the nearest pixelgridsize.
+
+        /// <summary>
+        /// Converts the specified <paramref name="roundedCanvasCoords"/> into a <see cref="Coordinate"/> object.
+        /// </summary>
+        /// <param name="roundedCanvasCoords">The coordinates to be converted.</param>
+        /// <returns>The converted coordinates.</returns>
+        private Coordinate ConvertCanvasCoordinatesToGridCoordinates(double[] roundedCanvasCoords)
+        {
+            Coordinate gridCoordinate = new Coordinate();
+
+            gridCoordinate.XCoordinate = (ushort)(roundedCanvasCoords[0] / 20);
+            gridCoordinate.YCoordinate = (ushort)(roundedCanvasCoords[1] / 20);
+
+            return gridCoordinate;
+        }
+
+        /// <summary>
+        /// Converts the specified <paramref name="testCoordinate"/> into a double array.
+        /// </summary>
+        /// <param name="testCoordinate">The coordinates to be converted.</param>
+        /// <returns>The converted coordinates.</returns>
+        private double[] ConvertGridCoordinatesToCanvasCoordinates(Coordinate testCoordinate)
+        {
+            double[] newCoordinate = new double[2] { 0, 0 };
+
+            newCoordinate[0] = testCoordinate.XCoordinate * 20;
+            newCoordinate[1] = testCoordinate.YCoordinate * 20;
+
+            return newCoordinate;
         }
     }
 }
