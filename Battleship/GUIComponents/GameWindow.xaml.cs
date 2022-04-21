@@ -93,6 +93,29 @@ namespace Battleship.GUIComponents
         private void RestGameButton_Click(object sender, RoutedEventArgs e)
         {
             Logger.ConsoleInformation("The Game Has Been Reset");
+
+            this.currentGame = new Game();
+
+            this.Player1DefenseGrid = new DefenseGrid();
+            this.Player1AttackGrid = new AttackGrid();
+
+            this.Player2DefenseGrid = new DefenseGrid();
+            this.Player2AttackGrid = new AttackGrid();
+
+            this.Player1DestroyerDeploymentButton.IsEnabled = true;
+            this.Player1SubmarineDeploymentButton.IsEnabled = true;
+            this.Player1CruiserDeploymentButton.IsEnabled = true;
+            this.Player1BattleshipDeploymentButton.IsEnabled = true;
+            this.Player1CarrierDeploymentButton.IsEnabled = true;
+
+            this.Player2DestroyerDeploymentButton.IsEnabled = true;
+            this.Player2SubmarineDeploymentButton.IsEnabled = true;
+            this.Player2CruiserDeploymentButton.IsEnabled = true;
+            this.Player2BattleshipDeploymentButton.IsEnabled = true;
+            this.Player2CarrierDeploymentButton.IsEnabled = true;
+
+            this.Player2Board.Visibility = Visibility.Hidden;
+            this.Player1Board.Visibility = Visibility.Visible;
         }
 
         /// <summary>
