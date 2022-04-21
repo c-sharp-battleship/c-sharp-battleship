@@ -28,7 +28,7 @@ namespace Battleship.GUIComponents
         /// <summary>
         /// The size (in pixels) of each grid space.
         /// </summary>
-        private const int PIXELGRIDSIZE = 20;
+        private const int pixelGridSize = 20;
 
         /// <summary>
         /// The object that the user drags.
@@ -87,10 +87,10 @@ namespace Battleship.GUIComponents
         public void DeployShip(Ellipse templeEllipse, int height)
         {
             templeEllipse.Fill = Brushes.Blue;
-            templeEllipse.Width = PIXELGRIDSIZE;
-            templeEllipse.Height = height * PIXELGRIDSIZE;
-            Canvas.SetTop(templeEllipse, 20);
-            Canvas.SetLeft(templeEllipse, 20);
+            templeEllipse.Width = pixelGridSize;
+            templeEllipse.Height = height * pixelGridSize;
+            Canvas.SetTop(templeEllipse, pixelGridSize);
+            Canvas.SetLeft(templeEllipse, pixelGridSize);
             templeEllipse.PreviewMouseDown += this.CanvasMain_OnPreviewMouseDown;
             this.CanvasMain.Children.Add(templeEllipse);
         }
@@ -176,8 +176,8 @@ namespace Battleship.GUIComponents
             Logger.ConsoleInformation("Absolute Coordinates: " + step1Coords.X + ", " + step1Coords.Y);
             Logger.ConsoleInformation("Rounded Coordinates: " + step4Coords[0] + ", " + step4Coords[1]);
 
-            Canvas.SetTop(this.dragObject, step4Coords[1] - this.offset.Y);
-            Canvas.SetLeft(this.dragObject, step4Coords[0] - this.offset.X);
+            Canvas.SetTop(this.dragObject, step4Coords[1]);
+            Canvas.SetLeft(this.dragObject, step4Coords[0]);
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Battleship.GUIComponents
         {
             Coordinate gridCoordinate = new Coordinate();
 
-            gridCoordinate.XCoordinate = (ushort)(roundedCanvasCoords[0] / 20);
-            gridCoordinate.YCoordinate = (ushort)(roundedCanvasCoords[1] / 20);
+            gridCoordinate.XCoordinate = (ushort)(roundedCanvasCoords[0] / pixelGridSize);
+            gridCoordinate.YCoordinate = (ushort)(roundedCanvasCoords[1] / pixelGridSize);
 
             return gridCoordinate;
         }
@@ -232,8 +232,8 @@ namespace Battleship.GUIComponents
         {
             double[] newCoordinate = new double[2] { 0, 0 };
 
-            newCoordinate[0] = testCoordinate.XCoordinate * 20;
-            newCoordinate[1] = testCoordinate.YCoordinate * 20;
+            newCoordinate[0] = testCoordinate.XCoordinate * pixelGridSize;
+            newCoordinate[1] = testCoordinate.YCoordinate * pixelGridSize;
 
             return newCoordinate;
         }
