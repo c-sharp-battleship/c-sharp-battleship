@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Battleship.GUIComponents"
         mc:Ignorable="d"
-        Width="1000" Height="600">
+        Width="1000" Height="600" ResizeMode="NoResize">
     <Grid>
         <Grid x:Name="Player1Board" Visibility="Visible">
             <Grid x:Name="Player1ShipDeploymentButtons" Margin="255,182,625,182">
