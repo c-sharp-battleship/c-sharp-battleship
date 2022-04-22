@@ -186,22 +186,41 @@ namespace Battleship.GUIComponents
                 return;
             }
 
-            // Set 1: Retrieve the current object coordinates.
-            var step1Coords = e.GetPosition(sender as IInputElement);
+            if (this.dragObject.GetType() == typeof(System.Windows.Shapes.Ellipse))
+            {
+                Ellipse testEllipse = (Ellipse)this.dragObject;
 
-            // Step 2: Round the current canvas coordinates to the nearest ingegral value.
-            double[] step2Coords = new double[2] { step1Coords.X, step1Coords.Y };
-            
-            // Step 3: Convert rounded canvas coordinates to grid coordinates.
-            Coordinate step3Coords = ConvertCanvasCoordinatesToGridCoordinates(step2Coords);
+                Logger.ConsoleInformation("Ellipse Width: " + testEllipse.ActualWidth.ToString());
+                Logger.ConsoleInformation("Ellipse Height: " + testEllipse.ActualHeight.ToString());
 
-            // Step 4: Convert grid coordinates back into canvas coordinates (by multiplying by 20).
-            double[] step4Coords = ConvertGridCoordinatesToCanvasCoordinates(step3Coords);
+                // Set 1: Retrieve the current object coordinates.
+                var step1Coords = e.GetPosition(sender as IInputElement);
 
-            Logger.ConsoleInformation("Ship Movement Coordinates: " + step4Coords[0] + ", " + step4Coords[1]);
+                // Step 2: Round the current canvas coordinates to the nearest ingegral value.
+                double[] step2Coords = new double[2] { step1Coords.X, step1Coords.Y };
 
-            Canvas.SetTop(this.dragObject, step4Coords[1]);
-            Canvas.SetLeft(this.dragObject, step4Coords[0]);
+                // Step 3: Convert rounded canvas coordinates to grid coordinates.
+                Coordinate step3Coords = ConvertCanvasCoordinatesToGridCoordinates(step2Coords);
+
+                // Step 4: Convert grid coordinates back into canvas coordinates (by multiplying by 20).
+                double[] step4Coords = ConvertGridCoordinatesToCanvasCoordinates(step3Coords);
+
+                Logger.ConsoleInformation("Ship Movement Coordinates: " + step4Coords[0] + ", " + step4Coords[1]);
+
+                double shipHeight = testEllipse.ActualHeight;
+                double shipWidth = testEllipse.ActualWidth;
+
+                // Use this information to ensure that the ship is not going out of bounds.
+                if (step4Coords[0] >= 0 && step4Coords[1] >= 0 && step4Coords[0] <= ((10 * pixelGridSize) - shipWidth) && step4Coords[1] <= ((10 * pixelGridSize) - shipHeight))
+                {
+                    Canvas.SetTop(this.dragObject, step4Coords[1]);
+                    Canvas.SetLeft(this.dragObject, step4Coords[0]);
+                }
+                else
+                {
+                    Logger.ConsoleInformation("Error: Object Movement Exceeds Board Bounds!");
+                }
+            }
         }
 
         /// <summary>
@@ -241,8 +260,8 @@ namespace Battleship.GUIComponents
         {
             Coordinate gridCoordinate = new Coordinate();
 
-            gridCoordinate.XCoordinate = (ushort)(roundedCanvasCoords[0] / pixelGridSize);
-            gridCoordinate.YCoordinate = (ushort)(roundedCanvasCoords[1] / pixelGridSize);
+            gridCoordinate.XCoordinate = (short)(roundedCanvasCoords[0] / pixelGridSize);
+            gridCoordinate.YCoordinate = (short)(roundedCanvasCoords[1] / pixelGridSize);
 
             return gridCoordinate;
         }
