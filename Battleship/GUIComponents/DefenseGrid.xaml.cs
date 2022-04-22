@@ -156,8 +156,26 @@ namespace Battleship.GUIComponents
             double previousWidth = this.rotateObject.Width;
             double previousHeight = this.rotateObject.Height;
 
-            this.rotateObject.Width = previousHeight;
-            this.rotateObject.Height = previousWidth;
+            double distanceFromLeft = Canvas.GetLeft(this.rotateObject);
+            double distanceFromTop = Canvas.GetTop(this.rotateObject);
+
+            double potentialDistanceFromLeftToRight = distanceFromLeft + previousHeight;
+            double potentialDistanceFromTopToBottom = distanceFromTop + previousWidth;
+
+            Logger.ConsoleInformation(distanceFromLeft + ", " + distanceFromTop);
+            Logger.ConsoleInformation(potentialDistanceFromLeftToRight.ToString());
+
+
+            // Use this information to ensure that the ship is not going out of bounds.
+            if (potentialDistanceFromLeftToRight <= (10 * pixelGridSize) && potentialDistanceFromTopToBottom <= (10 * pixelGridSize))
+            {
+                this.rotateObject.Width = previousHeight;
+                this.rotateObject.Height = previousWidth;
+            }
+            else
+            {
+                Logger.ConsoleInformation("Error: Object Rotation Exceeds Board Bounds!");
+            }
         }
 
         /// <summary>
