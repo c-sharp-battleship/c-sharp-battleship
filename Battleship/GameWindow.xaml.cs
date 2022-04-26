@@ -326,7 +326,7 @@ namespace Battleship
                 //Rotate ships for player two with rigth click(refer to ship class constructor)
                 void Warship_MouseRightButtonDown(object sender, System.EventArgs e)
                 {
-                    if (isLocked == false)
+                    if (isLocked2 == false)
                     {
                         if (ship_2.h_direction == true)
                         {
