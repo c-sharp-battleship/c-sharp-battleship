@@ -33,6 +33,8 @@ namespace Battleship
         private Coordinate shipEndCoords;
         public Coordinate ShipEndCoords { get { return shipEndCoords; } }
 
+        public event EventHandler ShipIsSunk;
+
         /// <summary>
         /// This is the Ship constructor
         /// </summary>
@@ -99,6 +101,11 @@ namespace Battleship
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
                     Logger.ConsoleInformation("You've hit gold!");
+                    
+                    this.Resistance_--;
+
+                    if (this.Resistance_ <= 0)
+                        ShipIsSunk?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
@@ -112,6 +119,11 @@ namespace Battleship
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
                     Logger.ConsoleInformation("You've hit gold!");
+
+                    this.Resistance_--;
+
+                    if (this.Resistance_ <= 0)
+                        ShipIsSunk?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {

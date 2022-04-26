@@ -133,11 +133,15 @@ namespace Battleship
                 Canvas.SetTop(Warship, i * gridcellSize);
                 Canvas.SetLeft(Warship,0);
 
+                Warship.ShipIsSunk += this.PlayerShipSunk;
+
                 // load the ship to the list of ships
                 shiploader.Add(Warship);
             }
             //Load the ships to the list passed down the line with the field
             Playerships_ = shiploader;
+
+
         }
 
         /// <summary>
@@ -172,6 +176,11 @@ namespace Battleship
             get { return PlayerGridCells; }
         }
 
+        private void PlayerShipSunk(object sender, EventArgs e)
+        {
+            Ship ship = sender as Ship;
+            Logger.ConsoleInformation("Ship " + ship.Uid + " has been sunk!");
+        }
     }
 
 }
