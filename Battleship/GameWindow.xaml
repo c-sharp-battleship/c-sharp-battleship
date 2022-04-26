@@ -25,6 +25,7 @@
         <Image x:Name="PlayerTwolabel" HorizontalAlignment="Left" Height="66" Margin="112,26,0,0" VerticalAlignment="Top" Width="125" Source="/Playertwoturn.jpg" Stretch="Fill" RenderTransformOrigin="1.802,0.385"/>
         <ListBox x:Name="listbtn" Margin="553,168,10,81"/>
         <Button x:Name="reportbtn" Content="Report" HorizontalAlignment="Left" Margin="640,125,0,0" VerticalAlignment="Top" Height="25" Width="125" Click="reportbtn_Click"/>
+        <Button x:Name="Confirm_Button" Content="Confirm" HorizontalAlignment="Left" Margin="93,191,0,0" VerticalAlignment="Top" Height="60" Width="144" Click="Confirm_Button_Click"/>
 
     </Grid>
 </Window>

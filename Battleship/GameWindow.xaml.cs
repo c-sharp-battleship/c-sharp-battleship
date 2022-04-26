@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,7 +23,8 @@ namespace Battleship
         public double Cellsize = 25;
         public int RowRep = 10;
         public List<GridCell> PlayersCellRecords;
-
+        private bool isLocked = false;
+        private bool isLocked2 = false;
 
         /// <summary>
         /// initiallize the game
@@ -67,6 +69,7 @@ namespace Battleship
                 if (Player_1_Offense_button.OffenseButton == true)
                 {
                     //add click event
+                    
                     Player_1_Offense_button.Click += new RoutedEventHandler(button_Click);//base
                     void button_Click(object sender, System.EventArgs e)
                     {
@@ -119,33 +122,41 @@ namespace Battleship
             ///Ships for player one actions
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Load all ships from player one to the player one canvas
-            foreach (Ship ship_1 in Player_1.Playershipcollection)
-            {
-                //create a move move event for player 1 ships to attacch the rectangle to the mouse
-                ship_1.MouseMove += new MouseEventHandler(Warship_MouseMove);
-                ship_1.MouseRightButtonDown += new MouseButtonEventHandler(Warship_MouseRightButtonDown);
-
-                void Warship_MouseMove(object sender, MouseEventArgs e)
+            
+                foreach (Ship ship_1 in Player_1.Playershipcollection)
                 {
-                    if (e.LeftButton == MouseButtonState.Pressed)
+                    //create a move move event for player 1 ships to attacch the rectangle to the mouse
+                    ship_1.MouseMove += new MouseEventHandler(Warship_MouseMove);
+                    ship_1.MouseRightButtonDown += new MouseButtonEventHandler(Warship_MouseRightButtonDown);
+
+                    void Warship_MouseMove(object sender, MouseEventArgs e)
                     {
-                        string ObjectUniqueID = ship_1.Uid;
-                        Point GrabPos = e.GetPosition(ship_1);
-                        Canvas.SetTop(ship_1, GrabPos.Y);
-                        Canvas.SetLeft(ship_1, GrabPos.X);
-                        DragDrop.DoDragDrop(ship_1, ObjectUniqueID, DragDropEffects.Move);
+                        if (isLocked == false)
+                        {
+                            if (e.LeftButton == MouseButtonState.Pressed)
+                        {
+                            string ObjectUniqueID = ship_1.Uid;
+                            Point GrabPos = e.GetPosition(ship_1);
+                            Canvas.SetTop(ship_1, GrabPos.Y);
+                            Canvas.SetLeft(ship_1, GrabPos.X);
+                            DragDrop.DoDragDrop(ship_1, ObjectUniqueID, DragDropEffects.Move);
+                        }
+                            }
                     }
-                }
 
-                //Rotate ships for player one with rigth click(refer to ship class constructor)
-                void Warship_MouseRightButtonDown(object sender, System.EventArgs e)
-                {
-                    ship_1.Rotateship(true);
-                }
+                    //Rotate ships for player one with rigth click(refer to ship class constructor)
+                    void Warship_MouseRightButtonDown(object sender, System.EventArgs e)
+                    {
+                        if (isLocked == false)
+                        {
+                            ship_1.Rotateship(true);
+                        }
+                    }
 
-                //Add player 1 Ships to the window grid
-                PlayerWindow_1.Children.Add(ship_1);
-            }
+                    //Add player 1 Ships to the window grid
+                    PlayerWindow_1.Children.Add(ship_1);
+                }
+            
 
             ///offense buttons for player two actions 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,23 +197,29 @@ namespace Battleship
                 {
                     //Create a method when an object is drag over this left button
                     Player_2_Offense_button.DragOver += new DragEventHandler(Onbuttondragover);
-                    void Onbuttondragover(object sender, DragEventArgs e)
-                    {
-                        // find the sender uid extracting the date of the event
-                        string MyWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
 
-                        //iterate thru the collection of ships to find the sender element with matching uid
-                        foreach (Ship ship in Player_2.Playershipcollection)
+                        void Onbuttondragover(object sender, DragEventArgs e)
                         {
-                            //if the sender element uid matches then this is my element, then move it with the mouse
-                            if (MyWarshipUid == ship.Uid)
+                            // find the sender uid extracting the date of the event
+                            string MyWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
+
+                            //iterate thru the collection of ships to find the sender element with matching uid
+                            foreach (Ship ship in Player_2.Playershipcollection)
                             {
-                                Point GrabPos = e.GetPosition(PlayerWindow_2);//find the position of the mouse compared to the canvas for player one
-                                Canvas.SetTop(ship, Player_2_Offense_button.Top_Comp_ParentTop);
-                                Canvas.SetLeft(ship, Player_2_Offense_button.Left_Comp_ParentLeft);
+                                if (isLocked == false)
+                                {
+                                    //if the sender element uid matches then this is my element, then move it with the mouse
+                                    if (MyWarshipUid == ship.Uid)
+                                    {
+                                        Point GrabPos =
+                                            e.GetPosition(
+                                                PlayerWindow_2); //find the position of the mouse compared to the canvas for player one
+                                        Canvas.SetTop(ship, Player_2_Offense_button.Top_Comp_ParentTop);
+                                        Canvas.SetLeft(ship, Player_2_Offense_button.Left_Comp_ParentLeft);
+                                    }
+                                }
                             }
                         }
-                    }
                 }
                 //Add player 2 cells to the window grid
                 PlayerWindow_2.Children.Add(Player_2_Offense_button);
@@ -219,20 +236,26 @@ namespace Battleship
 
                 void Warship_MouseMove(object sender, MouseEventArgs e)
                 {
-                    if (e.LeftButton == MouseButtonState.Pressed)
+                    if (isLocked == false)
                     {
-                        string ObjectUniqueID = ship_2.Uid;
-                        Point GrabPos = e.GetPosition(ship_2);
-                        Canvas.SetTop(ship_2, GrabPos.Y);
-                        Canvas.SetLeft(ship_2, GrabPos.X);
-                        DragDrop.DoDragDrop(ship_2, ObjectUniqueID, DragDropEffects.Move);
+                        if (e.LeftButton == MouseButtonState.Pressed)
+                        {
+                            string ObjectUniqueID = ship_2.Uid;
+                            Point GrabPos = e.GetPosition(ship_2);
+                            Canvas.SetTop(ship_2, GrabPos.Y);
+                            Canvas.SetLeft(ship_2, GrabPos.X);
+                            DragDrop.DoDragDrop(ship_2, ObjectUniqueID, DragDropEffects.Move);
+                        }
                     }
                 }
 
                 //Rotate ships for player two with rigth click(refer to ship class constructor)
                 void Warship_MouseRightButtonDown(object sender, System.EventArgs e)
                 {
-                    ship_2.Rotateship(true);
+                    if (isLocked == false)
+                    {
+                        ship_2.Rotateship(true);
+                    }
                 }
 
                 //Add player 2 Ships to the window grid
@@ -267,6 +290,11 @@ namespace Battleship
         /// </summary>
         public void SwitchPlayerWindows()
         {
+            if (isLocked2 == false && isLocked == true)
+            {
+                isLocked = false;
+                isLocked2 = true;
+            }
             if (ScreenPlayerOne_ == true)
             {
                 //change the visual to off for player 1 and turn on the vissible to player two canvas
@@ -285,10 +313,12 @@ namespace Battleship
                         Canvas.Visibility = Visibility.Visible;
                     }
                 }
+                // if the switch button has been clicked for the first time then allow player2 to move their ships
             }
             else// if the screen player one entert the method in false condition
             {
                 //change the visual to on for player 1 and turn off the vissible to player two canvas
+
                 ScreenPlayerOne_ = true;
                 PlayerOnelabel.Visibility = Visibility.Visible;
                 PlayerTwolabel.Visibility = Visibility.Hidden;
@@ -304,7 +334,7 @@ namespace Battleship
                         Canvas.Visibility = Visibility.Hidden;
                     }
                 }
-
+                
             }
         }
 
@@ -322,6 +352,11 @@ namespace Battleship
         private void reportbtn_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Confirm_Button_Click(object sender, RoutedEventArgs e)
+        {
+            isLocked = true;
         }
     }
 }
