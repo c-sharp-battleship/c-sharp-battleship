@@ -141,14 +141,14 @@ namespace Battleship
                         if (isLocked == false)
                         {
                             if (e.LeftButton == MouseButtonState.Pressed)
-                        {
+                            {
                             string ObjectUniqueID = ship_1.Uid;
                             Point GrabPos = e.GetPosition(ship_1);
                             Canvas.SetTop(ship_1, GrabPos.Y);
                             Canvas.SetLeft(ship_1, GrabPos.X);
                             DragDrop.DoDragDrop(ship_1, ObjectUniqueID, DragDropEffects.Move);
-                        }
                             }
+                        }
                     }
 
                     //Rotate ships for player one with rigth click(refer to ship class constructor)
@@ -218,11 +218,14 @@ namespace Battleship
                                     //if the sender element uid matches then this is my element, then move it with the mouse
                                     if (MyWarshipUid == ship.Uid)
                                     {
-                                        Point GrabPos =
-                                            e.GetPosition(
-                                                PlayerWindow_2); //find the position of the mouse compared to the canvas for player one
+                                        Point GrabPos = e.GetPosition(PlayerWindow_2); //find the position of the mouse compared to the canvas for player two
+                                        double ShipmaxX = (PlayerWindow_2.Width / 2) - ship.Width + Cellsize;
+                                        double ShipmaxY = (PlayerWindow_2.Width) / 2 - ship.Height + Cellsize;
+                                       if (GrabPos.X < ShipmaxX && GrabPos.Y < ShipmaxY)
+                                       {
                                         Canvas.SetTop(ship, Player_2_Offense_button.Top_Comp_ParentTop);
                                         Canvas.SetLeft(ship, Player_2_Offense_button.Left_Comp_ParentLeft);
+                                       }
                                     }
                                 }
                             }
