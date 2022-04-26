@@ -401,8 +401,35 @@ namespace Battleship
                     {
                         Canvas.Visibility = Visibility.Hidden;
                     }
+                    SetConfirmButtonVisibility(Canvas.Uid);
                 }
                 
+            }
+        }
+
+        private void SetConfirmButtonVisibility(string canvasUid)
+        {
+            if (canvasUid == "Player1Canvas")
+            {
+                if(this.isLocked == true)
+                {
+                    this.Confirm_Button.IsEnabled = false;
+                }
+                else
+                {
+                    this.Confirm_Button.IsEnabled = true;
+                }
+            }
+            if (canvasUid == "Player2Canvas")
+            {
+                if (this.isLocked2 == true)
+                {
+                    this.Confirm_Button.IsEnabled = false;
+                }
+                else
+                {
+                    this.Confirm_Button.IsEnabled = true;
+                }
             }
         }
 
