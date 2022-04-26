@@ -68,6 +68,8 @@ namespace Battleship
                             myButton.Content = CAPITAL_LETTERS[col] + (row + 1);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
+                            myButton.RowNum = row + 1;
+                            myButton.ColNum = col + 1;
                             myButton.OffenseButton = false;
                             myButton.AllowDrop = true;
                             myButton.Uid = CAPITAL_LETTERS[col] + (row + 1);//will result in an id(A1) string
@@ -95,6 +97,8 @@ namespace Battleship
                             myButton.Content = CAPITAL_LETTERS[col] + (row + 1);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
+                            myButton.RowNum = row + 1;
+                            myButton.ColNum = col + 1;
                             myButton.OffenseButton = true;
                             myButton.AllowDrop = false;
                             myButton.Uid = CAPITAL_LETTERS[col] + (row + 1);//will result in an id(A1) string
