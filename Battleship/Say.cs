@@ -14,7 +14,7 @@ namespace Battleship
 {
     class Say
     {
-        public void show(string Say)
+        public static void show(string Say)
         {
             MessageBox.Show(Say, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
