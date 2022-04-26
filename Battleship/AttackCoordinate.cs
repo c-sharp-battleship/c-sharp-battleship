@@ -19,6 +19,11 @@ namespace Battleship
             this.CoordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
 
+        public AttackCoordinate(short xCoordinate, short yCoordinate) : base(xCoordinate, yCoordinate)
+        {
+            this.CoordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
+        }
+
         /// <summary>
         ///  Initializes a new instance of the <see cref="AttackCoordinate" /> class.
         /// </summary>

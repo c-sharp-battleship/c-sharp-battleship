@@ -88,6 +88,41 @@ namespace Battleship
             }
         }
 
+        public AttackCoordinate AttackGridSpace(Coordinate testCoordinate)
+        {
+            AttackCoordinate attackCoordinate = new AttackCoordinate(testCoordinate.XCoordinate, testCoordinate.YCoordinate);
+
+            // If the ship is horizontal, we only have to compare the X-Coordinate of the attacked grid space with the ship's grid spaces.
+            if(this.h_direction == true)
+            {
+                if((testCoordinate.YCoordinate == this.shipEndCoords.YCoordinate) && (testCoordinate.XCoordinate >= this.shipStartCoords.XCoordinate) && (testCoordinate.XCoordinate <= this.shipEndCoords.XCoordinate))
+                {
+                    attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
+                    Logger.ConsoleInformation("You've hit gold!");
+                }
+                else
+                {
+                    attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
+                    Logger.ConsoleInformation("Sorry, but you'll never succeed!");
+                }
+            }
+            else
+            {
+                if ((testCoordinate.XCoordinate == this.shipEndCoords.XCoordinate) && (testCoordinate.YCoordinate >= this.shipStartCoords.YCoordinate) && (testCoordinate.YCoordinate <= this.shipEndCoords.YCoordinate))
+                {
+                    attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
+                    Logger.ConsoleInformation("You've hit gold!");
+                }
+                else
+                {
+                    attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
+                    Logger.ConsoleInformation("Sorry, but you'll never succeed!");
+                }
+            }
+
+            return attackCoordinate;
+        }
+
         /// <summary>
         /// Horizontal loading for the ship set true at loading
         /// </summary>
