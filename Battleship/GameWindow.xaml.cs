@@ -355,6 +355,11 @@ namespace Battleship
             }
             if (ScreenPlayerOne_ == true)
             {
+                if (this.isLocked == true)
+                    this.Confirm_Button.IsEnabled = false;
+                else
+                    this.Confirm_Button.IsEnabled = true;
+
                 //change the visual to off for player 1 and turn on the vissible to player two canvas
                 ScreenPlayerOne_ = false;
                 PlayerOnelabel.Visibility = Visibility.Hidden;
@@ -375,6 +380,11 @@ namespace Battleship
             }
             else// if the screen player one entert the method in false condition
             {
+                if (this.isLocked2 == true)
+                    this.Confirm_Button.IsEnabled = false;
+                else
+                    this.Confirm_Button.IsEnabled = true;
+
                 //change the visual to on for player 1 and turn off the vissible to player two canvas
 
                 ScreenPlayerOne_ = true;
@@ -442,6 +452,7 @@ namespace Battleship
 
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
         {
+            this.Confirm_Button.IsEnabled = false;
             isLocked = true;
         }
     }
