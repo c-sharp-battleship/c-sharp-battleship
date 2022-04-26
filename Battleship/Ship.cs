@@ -23,6 +23,8 @@ namespace Battleship
         private int Resistance_;
         private int Grids_;
         private int PlayerID_;
+        private bool H_direction = true;
+        private double S_length_;
 
         /// <summary>
         /// This is the Ship constructor
@@ -59,6 +61,15 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Horizontal loading for the ship set true at loading
+        /// </summary>
+        public bool h_direction
+        {
+            get { return H_direction; }
+            set { H_direction = value; }
+        }
+
+        /// <summary>
         /// this is the type of ship, Submarine,warship...
         /// </summary>
         public int shiptype
@@ -85,13 +96,22 @@ namespace Battleship
             set { Name_ = value; }
         }
 
-        /// <summary>
-        /// This is the number of gridsquares the ship will cover on the player class(canvas)
-        /// </summary>
+         /// <summary>
+         ///Ship length 
+         /// </summary>
         public int gridspaces
         {
             get { return Grids_; }
             set { Grids_ = value; }
+        }
+
+        /// <summary>
+        /// This is the number of gridsquares the ship will cover on the player class(canvas)
+        /// </summary>
+        public double shiplength
+        {
+            get { return S_length_; }
+            set { S_length_ = value; }
         }
 
         /// <summary>
