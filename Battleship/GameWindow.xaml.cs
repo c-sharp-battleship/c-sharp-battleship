@@ -86,7 +86,7 @@ namespace Battleship
                     void button_Click(object sender, System.EventArgs e)
                     {
                         //go check the list of buttons for player two and change the status for them
-                        foreach (GridCell Player_2_deffense_button in Player_2.Playergridsquarecollection)
+                        foreach (GridCell Player_2_deffense_button in this.Player_2.Playergridsquarecollection)
                         {
                             // turn off buttons on the enemy grid(player two left side)only if it is a defense button
                             if (Player_1_Offense_button.Uid == Player_2_deffense_button.Uid && Player_2_deffense_button.OffenseButton == false)
@@ -115,7 +115,7 @@ namespace Battleship
                         string MyWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
 
                         //iterate thru the collection of ships to find the sender element with matching uid
-                        foreach (Ship ship in Player_1.Playershipcollection)
+                        foreach (Ship ship in this.Player_1.Playershipcollection)
                         {
                             //if the sender element uid matches then this is my element, then move it with the mouse
                             if (MyWarshipUid == ship.Uid)
@@ -142,7 +142,7 @@ namespace Battleship
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Load all ships from player one to the player one canvas
             
-                foreach (Ship ship_1 in Player_1.Playershipcollection)
+                foreach (Ship ship_1 in this.Player_1.Playershipcollection)
                 {
                     //create a move move event for player 1 ships to attacch the rectangle to the mouse
                     ship_1.MouseMove += new MouseEventHandler(Warship_MouseMove);
@@ -197,7 +197,7 @@ namespace Battleship
             ///offense buttons for player two actions 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Load all cells from player two to the player two canvas
-            foreach (GridCell Player_2_Offense_button in Player_2.Playergridsquarecollection)
+            foreach (GridCell Player_2_Offense_button in this.Player_2.Playergridsquarecollection)
             {
                 PlayersCellRecords.Add(Player_2_Offense_button);
 
@@ -209,7 +209,7 @@ namespace Battleship
                     void button_Click(object sender, System.EventArgs e)
                     {
                         //go check the list of buttons for player one and change the status for them
-                        foreach (GridCell Player_1_deffense_button in Player_1.Playergridsquarecollection)
+                        foreach (GridCell Player_1_deffense_button in this.Player_1.Playergridsquarecollection)
                         {
                             // turn off buttons on the enemy grid(player two left side)only if it is a defense button
                             if (Player_2_Offense_button.Uid == Player_1_deffense_button.Uid && Player_1_deffense_button.OffenseButton == false)
@@ -240,7 +240,7 @@ namespace Battleship
                             string MyWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
 
                             //iterate thru the collection of ships to find the sender element with matching uid
-                            foreach (Ship ship in Player_2.Playershipcollection)
+                            foreach (Ship ship in this.Player_2.Playershipcollection)
                             {
                                 if (isLocked == false)
                                 {
@@ -269,7 +269,7 @@ namespace Battleship
             ///player two ships actions
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Load all ships from player two to the player two canvas
-            foreach (Ship ship_2 in Player_2.Playershipcollection)
+            foreach (Ship ship_2 in this.Player_2.Playershipcollection)
             {
                 //create a move move event for player 2 ships to attacch the rectangle to the mouse
                 ship_2.MouseMove += new MouseEventHandler(Warship_MouseMove);
