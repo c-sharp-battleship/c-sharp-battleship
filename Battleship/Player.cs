@@ -123,8 +123,11 @@ namespace Battleship
                 ShipPic.UriSource = new Uri(@"./Warship.jpg", UriKind.Relative);
                 ShipPic.EndInit();
 
+                Coordinate startCoords = new Coordinate(1, (short)(i + 1));
+                Coordinate endCoords = new Coordinate((short)3, (short)i);
+
                 //Construct the ships with the image above
-                Ship Warship = new Ship(Player_ID,"Ship"+i.ToString(), 3, 0,3, gridcellSize);
+                Ship Warship = new Ship(Player_ID,"Ship"+i.ToString(), 3, 0,3, gridcellSize, startCoords, endCoords);
                 Warship.Background = new ImageBrush(ShipPic);
                 Warship.Uid = i.ToString();
                 Canvas.SetTop(Warship, i * gridcellSize);

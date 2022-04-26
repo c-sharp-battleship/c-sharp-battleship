@@ -42,7 +42,7 @@ namespace Battleship
         /// <param name="ShipType"> this is the type of ship, Submarine,warship...</param>
         /// <param name="Grids"> This is the number of gridsquares the ship will cover on the player class(canvas)</param>
         /// <param name="gridcellSize"> This is the size of the grid square passed from player class, determined in pixels</param>
-        public Ship(int PlayerID, string ShipName, int Resistance, int ShipType, int Grids,double gridcellSize) : base()
+        public Ship(int PlayerID, string ShipName, int Resistance, int ShipType, int Grids,double gridcellSize, Coordinate startCoords, Coordinate endCoords) : base()
         {
             PlayerID_ = PlayerID;
             Name_ = ShipName;
@@ -52,8 +52,8 @@ namespace Battleship
             Width = Grids * gridcellSize;
             Height = gridcellSize;
 
-            this.shipStartCoords = new Coordinate();
-            this.shipEndCoords = new Coordinate();
+            this.shipStartCoords = startCoords;
+            this.shipEndCoords = endCoords;
         }
         /// <summary>
         /// This method will change the width fr the Height of this ship and viceversa
@@ -95,7 +95,7 @@ namespace Battleship
             // If the ship is horizontal, we only have to compare the X-Coordinate of the attacked grid space with the ship's grid spaces.
             if(this.h_direction == true)
             {
-                if((testCoordinate.YCoordinate == this.shipEndCoords.YCoordinate) && (testCoordinate.XCoordinate >= this.shipStartCoords.XCoordinate) && (testCoordinate.XCoordinate <= this.shipEndCoords.XCoordinate))
+                if((testCoordinate.YCoordinate == this.shipStartCoords.YCoordinate) && (testCoordinate.XCoordinate >= this.shipStartCoords.XCoordinate) && (testCoordinate.XCoordinate <= this.shipEndCoords.XCoordinate))
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
                     Logger.ConsoleInformation("You've hit gold!");
@@ -108,7 +108,7 @@ namespace Battleship
             }
             else
             {
-                if ((testCoordinate.XCoordinate == this.shipEndCoords.XCoordinate) && (testCoordinate.YCoordinate >= this.shipStartCoords.YCoordinate) && (testCoordinate.YCoordinate <= this.shipEndCoords.YCoordinate))
+                if ((testCoordinate.XCoordinate == this.shipStartCoords.XCoordinate) && (testCoordinate.YCoordinate >= this.shipStartCoords.YCoordinate) && (testCoordinate.YCoordinate <= this.shipEndCoords.YCoordinate))
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
                     Logger.ConsoleInformation("You've hit gold!");
@@ -119,6 +119,10 @@ namespace Battleship
                     Logger.ConsoleInformation("Sorry, but you'll never succeed!");
                 }
             }
+
+            Logger.ConsoleInformation("Ship Uid: " + this.Uid);
+            Logger.ConsoleInformation("Ship Start Coordinates: " + this.shipStartCoords.XCoordinate + ", " + this.shipStartCoords.YCoordinate);
+            Logger.ConsoleInformation("Ship End Coordinates: " + this.shipEndCoords.XCoordinate + ", " + this.shipEndCoords.YCoordinate);
 
             return attackCoordinate;
         }

@@ -243,6 +243,16 @@ namespace Battleship
                             }
                         }
 
+                        Coordinate attackedGridSpace = new Coordinate((short)Player_2_Offense_button.ColNum, (short)Player_2_Offense_button.RowNum);
+
+                        Logger.ConsoleInformation("Row Number: " + Player_2_Offense_button.RowNum);
+                        Logger.ConsoleInformation("Column Number: " + Player_2_Offense_button.ColNum);
+
+                        foreach (Ship testShip in this.Player_1.Playershipcollection)
+                        {
+                            AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                        }
+
                         //Swicth windows between players
                         SwitchPlayerWindows();
                     }
