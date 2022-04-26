@@ -52,10 +52,12 @@ namespace Battleship
             PlayerWindow_1.HorizontalAlignment = HorizontalAlignment.Left;
             PlayerWindow_1.VerticalAlignment = VerticalAlignment.Center;
             PlayerWindow_1.Uid = "Player1Canvas";
+            PlayerWindow_1.Width = (Cellsize * RowRep)*2;
             Canvas PlayerWindow_2 = new Canvas();
             PlayerWindow_2.HorizontalAlignment = HorizontalAlignment.Left;
             PlayerWindow_2.VerticalAlignment = VerticalAlignment.Center;
             PlayerWindow_2.Uid = "Player2Canvas";
+            PlayerWindow_2.Width = (Cellsize * RowRep) * 2;
             PlayerWindow_2.Visibility = Visibility.Hidden;// load this canvas hidden for player 2
 
             //////Offense buttons for player one actions
@@ -109,8 +111,13 @@ namespace Battleship
                             if (MyWarshipUid == ship.Uid)
                             {
                                 Point GrabPos = e.GetPosition(PlayerWindow_1);//find the position of the mouse compared to the canvas for player one
-                                Canvas.SetTop(ship, Player_1_Offense_button.Top_Comp_ParentTop);
-                                Canvas.SetLeft(ship, Player_1_Offense_button.Left_Comp_ParentLeft);
+                                double ShipmaxX = (PlayerWindow_1.Width/2)-ship.Width+ Cellsize;
+                                double ShipmaxY = (PlayerWindow_1.Width)/2-ship.Height+ Cellsize;
+                                 if(GrabPos.X < ShipmaxX && GrabPos.Y < ShipmaxY)
+                                 {
+                                   Canvas.SetTop(ship, Player_1_Offense_button.Top_Comp_ParentTop);
+                                   Canvas.SetLeft(ship, Player_1_Offense_button.Left_Comp_ParentLeft);
+                                 }
                             }
                         }
                     }

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace Battleship
 {
@@ -17,6 +18,11 @@ namespace Battleship
         public static void show(string Say)
         {
             MessageBox.Show(Say, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        public static void consoleShow(string say)
+        {
+            Trace.WriteLine(say);
         }
     }
 }
