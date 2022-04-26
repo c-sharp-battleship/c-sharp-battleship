@@ -25,4 +25,10 @@
     <Resource Include="Z5WCC7LWJVBS3ODXWV6FYI6KXA.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Warship.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

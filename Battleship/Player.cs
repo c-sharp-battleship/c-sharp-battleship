@@ -114,17 +114,14 @@ namespace Battleship
             for (int i = 1; i <= 5; i++)
             {
                 //get an iamge retainer for the iteration
-                /*
                 BitmapImage ShipPic = new BitmapImage();
                 ShipPic.BeginInit();
-                ShipPic.UriSource = new Uri(@"DinamicImages/Warship.jpg", UriKind.RelativeOrAbsolute);//Load dinamic image
+                ShipPic.UriSource = new Uri(@"./Warship.jpg", UriKind.Relative);
                 ShipPic.EndInit();
-                */
 
                 //Construct the ships with the image above
                 Ship Warship = new Ship(Player_ID,"Ship"+i.ToString(), 3, 0,3, gridcellSize);
-                //Warship.Background = new ImageBrush(ShipPic);
-                Warship.Background = Brushes.Yellow;
+                Warship.Background = new ImageBrush(ShipPic);
                 Warship.Uid = i.ToString();
                 Canvas.SetTop(Warship, i * gridcellSize);
                 Canvas.SetLeft(Warship,0);
