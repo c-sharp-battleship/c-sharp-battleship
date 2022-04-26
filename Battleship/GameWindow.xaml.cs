@@ -397,6 +397,19 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Method to update the logical coordinates of the passed in <paramref name="shipToUpdate"/> object.
+        /// </summary>
+        /// <param name="shipToUpdate">The ship whose coordinates are to be updated.</param>
+        /// <param name="shipStartCoords">The starting (top-left) coordinates of the ship.</param>
+        /// <param name="shipEndCoords">The ending (bottom-right) coordinates of the ship.</param>
+        private void UpdateShipCoords(Ship shipToUpdate, Coordinate shipStartCoords, Coordinate shipEndCoords)
+        {
+            Logger.ConsoleInformation("New Ship Start Coords: " + shipStartCoords.XCoordinate.ToString() + ", " + shipStartCoords.YCoordinate.ToString());
+            Logger.ConsoleInformation("New Ship End Coords: " + shipEndCoords.XCoordinate.ToString() + ", " + shipEndCoords.YCoordinate.ToString());
+            shipToUpdate.UpdateShipCoords(shipStartCoords, shipEndCoords);
+        }
+
+        /// <summary>
         /// Fire missiles
         /// </summary>
         /// <param name="sender"></param>
