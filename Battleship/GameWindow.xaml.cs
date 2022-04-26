@@ -20,11 +20,20 @@ namespace Battleship
     public partial class GameWindow : Window
     {
         private bool ScreenPlayerOne_ = true;
+        
         public double Cellsize = 25;
         public int RowRep = 10;
+        
         public List<GridCell> PlayersCellRecords;
+
         private bool isLocked = false;
         private bool isLocked2 = false;
+
+        private Player Player_1;
+        private Player Player_2;
+
+        private Canvas PlayerWindow_1;
+        private Canvas PlayerWindow_2;
 
         /// <summary>
         /// initiallize the game
@@ -44,16 +53,17 @@ namespace Battleship
 
             //Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
-            Player Player_1 = new Player(1, "PlayerOne", Cellsize, RowRep, 1, 3);
-            Player Player_2 = new Player(2, "PlayerOne", Cellsize, RowRep, 3, 6);
+            this.Player_1 = new Player(1, "PlayerOne", Cellsize, RowRep, 1, 3);
+            this.Player_2 = new Player(2, "PlayerOne", Cellsize, RowRep, 3, 6);
 
             //Create two Canvas to place the player elements on them 
-            Canvas PlayerWindow_1 = new Canvas();
+            this.PlayerWindow_1 = new Canvas();
             PlayerWindow_1.HorizontalAlignment = HorizontalAlignment.Left;
             PlayerWindow_1.VerticalAlignment = VerticalAlignment.Center;
             PlayerWindow_1.Uid = "Player1Canvas";
             PlayerWindow_1.Width = (Cellsize * RowRep)*2;
-            Canvas PlayerWindow_2 = new Canvas();
+
+            this.PlayerWindow_2 = new Canvas();
             PlayerWindow_2.HorizontalAlignment = HorizontalAlignment.Left;
             PlayerWindow_2.VerticalAlignment = VerticalAlignment.Center;
             PlayerWindow_2.Uid = "Player2Canvas";
@@ -63,7 +73,7 @@ namespace Battleship
             //////Offense buttons for player one actions
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Load all cells from player one to the player one canvas
-            foreach (GridCell Player_1_Offense_button in Player_1.Playergridsquarecollection)
+            foreach (GridCell Player_1_Offense_button in this.Player_1.Playergridsquarecollection)
             {
                PlayersCellRecords.Add(Player_1_Offense_button);
 
