@@ -397,6 +397,21 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Converts the specified <paramref name="roundedCanvasCoords"/> into a <see cref="Coordinate"/> object.
+        /// </summary>
+        /// <param name="roundedCanvasCoords">The coordinates to be converted.</param>
+        /// <returns>The converted coordinates.</returns>
+        private Coordinate ConvertCanvasCoordinatesToGridCoordinates(double[] roundedCanvasCoords)
+        {
+            Coordinate gridCoordinate = new Coordinate();
+
+            gridCoordinate.XCoordinate = (short)(roundedCanvasCoords[0] / Cellsize);
+            gridCoordinate.YCoordinate = (short)(roundedCanvasCoords[1] / Cellsize);
+
+            return gridCoordinate;
+        }
+
+        /// <summary>
         /// Method to update the logical coordinates of the passed in <paramref name="shipToUpdate"/> object.
         /// </summary>
         /// <param name="shipToUpdate">The ship whose coordinates are to be updated.</param>
