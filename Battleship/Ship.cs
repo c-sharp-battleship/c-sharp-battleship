@@ -152,6 +152,15 @@ namespace Battleship
         {
             this.shipStartCoords = _shipStartCoords;
             this.shipEndCoords = _shipEndCoords;
+
+            if(_shipStartCoords.YCoordinate == _shipEndCoords.YCoordinate)
+            {
+                this.h_direction = true;
+            }
+            else
+            {
+                this.h_direction = false;
+            }
         }
     }
 }
