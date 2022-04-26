@@ -43,6 +43,9 @@ namespace Battleship
             this.PlayersCellRecords = new List<GridCell>();
 
             InitializeComponent();
+
+            this.isLocked = false;
+            this.isLocked2 = false;
         }
 
         public void StartGame()
@@ -242,7 +245,7 @@ namespace Battleship
                             //iterate thru the collection of ships to find the sender element with matching uid
                             foreach (Ship ship in this.Player_2.Playershipcollection)
                             {
-                                if (isLocked == false)
+                                if (isLocked2 == false)
                                 {
                                     //if the sender element uid matches then this is my element, then move it with the mouse
                                     if (MyWarshipUid == ship.Uid)
@@ -277,7 +280,7 @@ namespace Battleship
 
                 void Warship_MouseMove(object sender, MouseEventArgs e)
                 {
-                    if (isLocked == false)
+                    if (isLocked2 == false)
                     {
                         if (e.LeftButton == MouseButtonState.Pressed)
                         {
@@ -348,18 +351,8 @@ namespace Battleship
         /// </summary>
         public void SwitchPlayerWindows()
         {
-            if (isLocked2 == false && isLocked == true)
-            {
-                isLocked = false;
-                isLocked2 = true;
-            }
             if (ScreenPlayerOne_ == true)
             {
-                if (this.isLocked == true)
-                    this.Confirm_Button.IsEnabled = false;
-                else
-                    this.Confirm_Button.IsEnabled = true;
-
                 //change the visual to off for player 1 and turn on the vissible to player two canvas
                 ScreenPlayerOne_ = false;
                 PlayerOnelabel.Visibility = Visibility.Hidden;
@@ -377,14 +370,11 @@ namespace Battleship
                     }
                 }
                 // if the switch button has been clicked for the first time then allow player2 to move their ships
+
+                SetConfirmButtonVisibility("Player2Canvas");
             }
             else// if the screen player one entert the method in false condition
             {
-                if (this.isLocked2 == true)
-                    this.Confirm_Button.IsEnabled = false;
-                else
-                    this.Confirm_Button.IsEnabled = true;
-
                 //change the visual to on for player 1 and turn off the vissible to player two canvas
 
                 ScreenPlayerOne_ = true;
@@ -401,36 +391,30 @@ namespace Battleship
                     {
                         Canvas.Visibility = Visibility.Hidden;
                     }
-                    SetConfirmButtonVisibility(Canvas.Uid);
                 }
-                
+
+                SetConfirmButtonVisibility("Player1Canvas");
             }
         }
 
         private void SetConfirmButtonVisibility(string canvasUid)
         {
+            if ((canvasUid == "Player1Canvas" && this.isLocked == true) || (canvasUid == "Player2Canvas" && this.isLocked2 == true))
+                this.Confirm_Button.IsEnabled = false;
+
+            else if ((canvasUid == "Player1Canvas" && this.isLocked) == false || (canvasUid == "Player2Canvas" && this.isLocked2 == false))
+                this.Confirm_Button.IsEnabled = true;
+        }
+
+        private void ConfirmShipPlacement(string canvasUid)
+        {
             if (canvasUid == "Player1Canvas")
-            {
-                if(this.isLocked == true)
-                {
-                    this.Confirm_Button.IsEnabled = false;
-                }
-                else
-                {
-                    this.Confirm_Button.IsEnabled = true;
-                }
-            }
-            if (canvasUid == "Player2Canvas")
-            {
-                if (this.isLocked2 == true)
-                {
-                    this.Confirm_Button.IsEnabled = false;
-                }
-                else
-                {
-                    this.Confirm_Button.IsEnabled = true;
-                }
-            }
+                this.isLocked = true;
+
+            else if (canvasUid == "Player2Canvas")
+                this.isLocked2 = true;
+
+            SetConfirmButtonVisibility(canvasUid);
         }
 
         /// <summary>
@@ -479,8 +463,10 @@ namespace Battleship
 
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Confirm_Button.IsEnabled = false;
-            isLocked = true;
+            if (this.PlayerWindow_1.Visibility == Visibility.Visible)
+                ConfirmShipPlacement("Player1Canvas");
+            else if (this.PlayerWindow_2.Visibility == Visibility.Visible)
+                ConfirmShipPlacement("Player2Canvas");
         }
     }
 }
