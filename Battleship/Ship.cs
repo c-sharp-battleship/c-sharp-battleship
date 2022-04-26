@@ -63,8 +63,16 @@ namespace Battleship
         {
             if (trigger == true)
             {
-               if(h_direction == true)
-               {
+                // Instantiate new coordinate objects to store the ship's previous coordinates.
+                Coordinate previousShipStartCoords = new Coordinate(this.shipStartCoords.XCoordinate, this.shipStartCoords.YCoordinate);
+                Coordinate previousShipEndCoords = new Coordinate(this.shipStartCoords.XCoordinate, this.shipStartCoords.YCoordinate);
+
+                // Update the coordinate properties of the current ship.
+                this.shipStartCoords = previousShipEndCoords;
+                this.shipEndCoords = previousShipStartCoords;
+
+                if (h_direction == true)
+                {
                     h_direction = false;
                     double switcher = Width;//base
                     Width = Height;
@@ -78,7 +86,6 @@ namespace Battleship
                     Height = switcher;
                 }
             }
-
         }
 
         /// <summary>
