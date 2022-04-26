@@ -132,7 +132,22 @@ namespace Battleship
                                     ship.Top_Comp_ParentTop = Player_1_Offense_button.Top_Comp_ParentTop;
                                    Canvas.SetLeft(ship, Player_1_Offense_button.Left_Comp_ParentLeft);
                                     ship.Left_Comp_ParentLeft = Player_1_Offense_button.Left_Comp_ParentLeft;
-                                 }
+
+                                    Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(GrabPos.X, GrabPos.Y);
+                                    Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(GrabPos.X, GrabPos.Y);
+
+
+                                    if (ship.h_direction == true)
+                                    {
+                                        shipEndCoords.XCoordinate += (short)((ship.Width / Cellsize) - 1);
+                                    }
+                                    else if (ship.h_direction == false)
+                                    {
+                                        shipEndCoords.YCoordinate += (short)((ship.Height / Cellsize) - 1);
+                                    }
+
+                                    UpdateShipCoords(ship, shipStartCoords, shipEndCoords);
+                                }
                             }
                         }
                     }
@@ -259,7 +274,22 @@ namespace Battleship
                                         ship.Top_Comp_ParentTop = Player_2_Offense_button.Top_Comp_ParentTop;
                                         Canvas.SetLeft(ship, Player_2_Offense_button.Left_Comp_ParentLeft);
                                         ship.Left_Comp_ParentLeft = Player_2_Offense_button.Left_Comp_ParentLeft;
-                                       }
+
+                                        Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(GrabPos.X, GrabPos.Y);
+                                        Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(GrabPos.X, GrabPos.Y);
+
+
+                                        if (ship.h_direction == true)
+                                        {
+                                            shipEndCoords.XCoordinate += (short)((ship.Width / Cellsize) - 1);
+                                        }
+                                        else if (ship.h_direction == false)
+                                        {
+                                            shipEndCoords.YCoordinate += (short)((ship.Height / Cellsize) - 1);
+                                        }
+
+                                        UpdateShipCoords(ship, shipStartCoords, shipEndCoords);
+                                    }
                                     }
                                 }
                             }
@@ -422,12 +452,12 @@ namespace Battleship
         /// </summary>
         /// <param name="roundedCanvasCoords">The coordinates to be converted.</param>
         /// <returns>The converted coordinates.</returns>
-        private Coordinate ConvertCanvasCoordinatesToGridCoordinates(double[] roundedCanvasCoords)
+        private Coordinate ConvertCanvasCoordinatesToGridCoordinates(double canvasX, double canvasY)
         {
             Coordinate gridCoordinate = new Coordinate();
 
-            gridCoordinate.XCoordinate = (short)(roundedCanvasCoords[0] / Cellsize);
-            gridCoordinate.YCoordinate = (short)(roundedCanvasCoords[1] / Cellsize);
+            gridCoordinate.XCoordinate = (short)((canvasX / Cellsize) + 1);
+            gridCoordinate.YCoordinate = (short)((canvasY / Cellsize) + 1);
 
             return gridCoordinate;
         }
