@@ -27,6 +27,12 @@ namespace Battleship
         public double Left_To_ParentLeft;
         public double Top_To_ParentTop;
 
+        private Coordinate shipStartCoords;
+        public Coordinate ShipStartCoords { get { return shipStartCoords; } }
+
+        private Coordinate shipEndCoords;
+        public Coordinate ShipEndCoords { get { return shipEndCoords; } }
+
         /// <summary>
         /// This is the Ship constructor
         /// </summary>
@@ -46,6 +52,8 @@ namespace Battleship
             Width = Grids * gridcellSize;
             Height = gridcellSize;
 
+            this.shipStartCoords = new Coordinate();
+            this.shipEndCoords = new Coordinate();
         }
         /// <summary>
         /// This method will change the width fr the Height of this ship and viceversa
@@ -140,5 +148,10 @@ namespace Battleship
             set { Top_To_ParentTop = value; }
         }
 
+        public void UpdateShipCoords(Coordinate _shipStartCoords, Coordinate _shipEndCoords)
+        {
+            this.shipStartCoords = _shipStartCoords;
+            this.shipEndCoords = _shipEndCoords;
+        }
     }
 }
