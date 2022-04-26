@@ -116,7 +116,9 @@ namespace Battleship
                                  if(GrabPos.X < ShipmaxX && GrabPos.Y < ShipmaxY)
                                  {
                                    Canvas.SetTop(ship, Player_1_Offense_button.Top_Comp_ParentTop);
+                                    ship.Top_Comp_ParentTop = Player_1_Offense_button.Top_Comp_ParentTop;
                                    Canvas.SetLeft(ship, Player_1_Offense_button.Left_Comp_ParentLeft);
+                                    ship.Left_Comp_ParentLeft = Player_1_Offense_button.Left_Comp_ParentLeft;
                                  }
                             }
                         }
@@ -156,7 +158,24 @@ namespace Battleship
                     {
                         if (isLocked == false)
                         {
-                            ship_1.Rotateship(true);
+                           if (ship_1.h_direction == true)
+                           {
+                              double ShipmaxY = (PlayerWindow_1.Width) / 2 - (Cellsize*2);
+                              double ShipmaxX = (PlayerWindow_1.Width / 2);
+                              if (ship_1.Top_Comp_ParentTop < ShipmaxY && ship_1.Left_Comp_ParentLeft < ShipmaxX)
+                              {
+                                ship_1.Rotateship(true);
+                              }
+                           }
+                           else 
+                           {
+                              double ShipmaxY = (PlayerWindow_1.Width) / 2;
+                              double ShipmaxX = (PlayerWindow_1.Width / 2) - (Cellsize * 2);
+                              if (ship_1.Top_Comp_ParentTop < ShipmaxY && ship_1.Left_Comp_ParentLeft < ShipmaxX)
+                              {
+                                ship_1.Rotateship(true);
+                              }
+                           }
                         }
                     }
 
@@ -224,7 +243,9 @@ namespace Battleship
                                        if (GrabPos.X < ShipmaxX && GrabPos.Y < ShipmaxY)
                                        {
                                         Canvas.SetTop(ship, Player_2_Offense_button.Top_Comp_ParentTop);
+                                        ship.Top_Comp_ParentTop = Player_2_Offense_button.Top_Comp_ParentTop;
                                         Canvas.SetLeft(ship, Player_2_Offense_button.Left_Comp_ParentLeft);
+                                        ship.Left_Comp_ParentLeft = Player_2_Offense_button.Left_Comp_ParentLeft;
                                        }
                                     }
                                 }
@@ -264,7 +285,24 @@ namespace Battleship
                 {
                     if (isLocked == false)
                     {
-                        ship_2.Rotateship(true);
+                        if (ship_2.h_direction == true)
+                        {
+                            double ShipmaxY = (PlayerWindow_2.Width) / 2 - (Cellsize * 2);
+                            double ShipmaxX = (PlayerWindow_2.Width / 2);
+                            if (ship_2.Top_Comp_ParentTop < ShipmaxY && ship_2.Left_Comp_ParentLeft < ShipmaxX)
+                            {
+                                ship_2.Rotateship(true);
+                            }
+                        }
+                        else
+                        {
+                            double ShipmaxY = (PlayerWindow_2.Width) / 2;
+                            double ShipmaxX = (PlayerWindow_2.Width / 2) - (Cellsize * 2);
+                            if (ship_2.Top_Comp_ParentTop < ShipmaxY && ship_2.Left_Comp_ParentLeft < ShipmaxX)
+                            {
+                                ship_2.Rotateship(true);
+                            }
+                        }
                     }
                 }
 

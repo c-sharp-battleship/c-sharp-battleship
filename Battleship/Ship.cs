@@ -24,7 +24,8 @@ namespace Battleship
         private int Grids_;
         private int PlayerID_;
         private bool H_direction = true;
-        private double S_length_;
+        public double Left_To_ParentLeft;
+        public double Top_To_ParentTop;
 
         /// <summary>
         /// This is the Ship constructor
@@ -44,6 +45,7 @@ namespace Battleship
             Grids_ = Grids;
             Width = Grids * gridcellSize;
             Height = gridcellSize;
+
         }
         /// <summary>
         /// This method will change the width fr the Height of this ship and viceversa
@@ -53,9 +55,20 @@ namespace Battleship
         {
             if (trigger == true)
             {
-                double switcher = Width;//base
-                Width = Height;
-                Height = switcher;
+               if(h_direction == true)
+               {
+                    h_direction = false;
+                    double switcher = Width;//base
+                    Width = Height;
+                    Height = switcher;
+                }
+                else 
+                {
+                    h_direction = true;
+                    double switcher = Width;//base
+                    Width = Height;
+                    Height = switcher;
+                }
             }
 
         }
@@ -106,20 +119,25 @@ namespace Battleship
         }
 
         /// <summary>
-        /// This is the number of gridsquares the ship will cover on the player class(canvas)
-        /// </summary>
-        public double shiplength
-        {
-            get { return S_length_; }
-            set { S_length_ = value; }
-        }
-
-        /// <summary>
         /// This is the player ID passed from player class
         /// </summary>
         public int playerid
         {
             get { return PlayerID_; }
+        }
+
+        //Player Number property
+        public double Left_Comp_ParentLeft
+        {
+            get { return Left_To_ParentLeft; }
+            set { Left_To_ParentLeft = value; }
+        }
+
+        //Player ID property
+        public double Top_Comp_ParentTop
+        {
+            get { return Top_To_ParentTop; }
+            set { Top_To_ParentTop = value; }
         }
 
     }
