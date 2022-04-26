@@ -58,17 +58,17 @@ namespace Battleship
 
             //Create two Canvas to place the player elements on them 
             this.PlayerWindow_1 = new Canvas();
-            PlayerWindow_1.HorizontalAlignment = HorizontalAlignment.Left;
-            PlayerWindow_1.VerticalAlignment = VerticalAlignment.Center;
-            PlayerWindow_1.Uid = "Player1Canvas";
-            PlayerWindow_1.Width = (Cellsize * RowRep)*2;
+            this.PlayerWindow_1.HorizontalAlignment = HorizontalAlignment.Left;
+            this.PlayerWindow_1.VerticalAlignment = VerticalAlignment.Center;
+            this.PlayerWindow_1.Uid = "Player1Canvas";
+            this.PlayerWindow_1.Width = (Cellsize * RowRep)*2;
 
             this.PlayerWindow_2 = new Canvas();
-            PlayerWindow_2.HorizontalAlignment = HorizontalAlignment.Left;
-            PlayerWindow_2.VerticalAlignment = VerticalAlignment.Center;
-            PlayerWindow_2.Uid = "Player2Canvas";
-            PlayerWindow_2.Width = (Cellsize * RowRep) * 2;
-            PlayerWindow_2.Visibility = Visibility.Hidden;// load this canvas hidden for player 2
+            this.PlayerWindow_2.HorizontalAlignment = HorizontalAlignment.Left;
+            this.PlayerWindow_2.VerticalAlignment = VerticalAlignment.Center;
+            this.PlayerWindow_2.Uid = "Player2Canvas";
+            this.PlayerWindow_2.Width = (Cellsize * RowRep) * 2;
+            this.PlayerWindow_2.Visibility = Visibility.Hidden;// load this canvas hidden for player 2
 
             //////Offense buttons for player one actions
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,9 +120,9 @@ namespace Battleship
                             //if the sender element uid matches then this is my element, then move it with the mouse
                             if (MyWarshipUid == ship.Uid)
                             {
-                                Point GrabPos = e.GetPosition(PlayerWindow_1);//find the position of the mouse compared to the canvas for player one
-                                double ShipmaxX = (PlayerWindow_1.Width/2)-ship.Width+ Cellsize;
-                                double ShipmaxY = (PlayerWindow_1.Width)/2-ship.Height+ Cellsize;
+                                Point GrabPos = e.GetPosition(this.PlayerWindow_1);//find the position of the mouse compared to the canvas for player one
+                                double ShipmaxX = (this.PlayerWindow_1.Width/2)-ship.Width+ Cellsize;
+                                double ShipmaxY = (this.PlayerWindow_1.Width)/2-ship.Height+ Cellsize;
                                  if(GrabPos.X < ShipmaxX && GrabPos.Y < ShipmaxY)
                                  {
                                    Canvas.SetTop(ship, Player_1_Offense_button.Top_Comp_ParentTop);
@@ -135,7 +135,7 @@ namespace Battleship
                     }
                 }
                 //Add player 1 cells to the window grid
-                PlayerWindow_1.Children.Add(Player_1_Offense_button);
+                this.PlayerWindow_1.Children.Add(Player_1_Offense_button);
             }
 
             ///Ships for player one actions
@@ -170,8 +170,8 @@ namespace Battleship
                         {
                            if (ship_1.h_direction == true)
                            {
-                              double ShipmaxY = (PlayerWindow_1.Width) / 2 - (Cellsize*2);
-                              double ShipmaxX = (PlayerWindow_1.Width / 2);
+                              double ShipmaxY = (this.PlayerWindow_1.Width) / 2 - (Cellsize*2);
+                              double ShipmaxX = (this.PlayerWindow_1.Width / 2);
                               if (ship_1.Top_Comp_ParentTop < ShipmaxY && ship_1.Left_Comp_ParentLeft < ShipmaxX)
                               {
                                 ship_1.Rotateship(true);
@@ -179,8 +179,8 @@ namespace Battleship
                            }
                            else 
                            {
-                              double ShipmaxY = (PlayerWindow_1.Width) / 2;
-                              double ShipmaxX = (PlayerWindow_1.Width / 2) - (Cellsize * 2);
+                              double ShipmaxY = (this.PlayerWindow_1.Width) / 2;
+                              double ShipmaxX = (this.PlayerWindow_1.Width / 2) - (Cellsize * 2);
                               if (ship_1.Top_Comp_ParentTop < ShipmaxY && ship_1.Left_Comp_ParentLeft < ShipmaxX)
                               {
                                 ship_1.Rotateship(true);
@@ -190,7 +190,7 @@ namespace Battleship
                     }
 
                     //Add player 1 Ships to the window grid
-                    PlayerWindow_1.Children.Add(ship_1);
+                    this.PlayerWindow_1.Children.Add(ship_1);
                 }
             
 
@@ -247,9 +247,9 @@ namespace Battleship
                                     //if the sender element uid matches then this is my element, then move it with the mouse
                                     if (MyWarshipUid == ship.Uid)
                                     {
-                                        Point GrabPos = e.GetPosition(PlayerWindow_2); //find the position of the mouse compared to the canvas for player two
-                                        double ShipmaxX = (PlayerWindow_2.Width / 2) - ship.Width + Cellsize;
-                                        double ShipmaxY = (PlayerWindow_2.Width) / 2 - ship.Height + Cellsize;
+                                        Point GrabPos = e.GetPosition(this.PlayerWindow_2); //find the position of the mouse compared to the canvas for player two
+                                        double ShipmaxX = (this.PlayerWindow_2.Width / 2) - ship.Width + Cellsize;
+                                        double ShipmaxY = (this.PlayerWindow_2.Width) / 2 - ship.Height + Cellsize;
                                        if (GrabPos.X < ShipmaxX && GrabPos.Y < ShipmaxY)
                                        {
                                         Canvas.SetTop(ship, Player_2_Offense_button.Top_Comp_ParentTop);
@@ -263,7 +263,7 @@ namespace Battleship
                         }
                 }
                 //Add player 2 cells to the window grid
-                PlayerWindow_2.Children.Add(Player_2_Offense_button);
+                this.PlayerWindow_2.Children.Add(Player_2_Offense_button);
             }
 
             ///player two ships actions
@@ -297,8 +297,8 @@ namespace Battleship
                     {
                         if (ship_2.h_direction == true)
                         {
-                            double ShipmaxY = (PlayerWindow_2.Width) / 2 - (Cellsize * 2);
-                            double ShipmaxX = (PlayerWindow_2.Width / 2);
+                            double ShipmaxY = (this.PlayerWindow_2.Width) / 2 - (Cellsize * 2);
+                            double ShipmaxX = (this.PlayerWindow_2.Width / 2);
                             if (ship_2.Top_Comp_ParentTop < ShipmaxY && ship_2.Left_Comp_ParentLeft < ShipmaxX)
                             {
                                 ship_2.Rotateship(true);
@@ -306,8 +306,8 @@ namespace Battleship
                         }
                         else
                         {
-                            double ShipmaxY = (PlayerWindow_2.Width) / 2;
-                            double ShipmaxX = (PlayerWindow_2.Width / 2) - (Cellsize * 2);
+                            double ShipmaxY = (this.PlayerWindow_2.Width) / 2;
+                            double ShipmaxX = (this.PlayerWindow_2.Width / 2) - (Cellsize * 2);
                             if (ship_2.Top_Comp_ParentTop < ShipmaxY && ship_2.Left_Comp_ParentLeft < ShipmaxX)
                             {
                                 ship_2.Rotateship(true);
@@ -317,12 +317,12 @@ namespace Battleship
                 }
 
                 //Add player 2 Ships to the window grid
-                PlayerWindow_2.Children.Add(ship_2);
+                this.PlayerWindow_2.Children.Add(ship_2);
             }
 
             //load both canvas to this window grid
-            this.Maingrid.Children.Add(PlayerWindow_1);
-            this.Maingrid.Children.Add(PlayerWindow_2);
+            this.Maingrid.Children.Add(this.PlayerWindow_1);
+            this.Maingrid.Children.Add(this.PlayerWindow_2);
 
 
             foreach (GridCell cell in PlayersCellRecords)
