@@ -7,10 +7,9 @@ namespace Battleship
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Text;
     using System.Windows;
-    using System.Diagnostics;
-
 
     /// <summary>
     /// Class that outputs information (GUI and console).
