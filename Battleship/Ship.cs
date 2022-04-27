@@ -26,6 +26,7 @@ namespace Battleship
         private bool H_direction = true;
         public double Left_To_ParentLeft;
         public double Top_To_ParentTop;
+        public bool ShipIsSunk;
 
         private Coordinate shipStartCoords;
         public Coordinate ShipStartCoords { get { return shipStartCoords; } }
@@ -33,7 +34,7 @@ namespace Battleship
         private Coordinate shipEndCoords;
         public Coordinate ShipEndCoords { get { return shipEndCoords; } }
 
-        public event EventHandler ShipIsSunk;
+        public event EventHandler OnShipIsSunk;
 
         /// <summary>
         /// This is the Ship constructor
@@ -53,6 +54,8 @@ namespace Battleship
             Grids_ = Grids;
             Width = Grids * gridcellSize;
             Height = gridcellSize;
+
+            this.ShipIsSunk = false;
 
             this.shipStartCoords = startCoords;
             this.shipEndCoords = endCoords;
@@ -105,7 +108,7 @@ namespace Battleship
                     this.Resistance_--;
 
                     if (this.Resistance_ <= 0)
-                        ShipIsSunk?.Invoke(this, EventArgs.Empty);
+                        OnShipIsSunk?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
@@ -123,7 +126,7 @@ namespace Battleship
                     this.Resistance_--;
 
                     if (this.Resistance_ <= 0)
-                        ShipIsSunk?.Invoke(this, EventArgs.Empty);
+                        OnShipIsSunk?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {

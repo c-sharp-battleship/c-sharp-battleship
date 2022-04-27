@@ -188,7 +188,7 @@ namespace Battleship
                         {
                            if (ship_1.h_direction == true)
                            {
-                              double ShipmaxY = (this.PlayerWindow_1.Width) / 2 - (Cellsize*2);
+                              double ShipmaxY = (this.PlayerWindow_1.Width) / 2 - (Cellsize * 2);
                               double ShipmaxX = (this.PlayerWindow_1.Width / 2);
                               if (ship_1.Top_Comp_ParentTop < ShipmaxY && ship_1.Left_Comp_ParentLeft < ShipmaxX)
                               {

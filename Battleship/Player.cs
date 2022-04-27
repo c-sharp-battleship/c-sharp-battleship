@@ -133,7 +133,7 @@ namespace Battleship
                 Canvas.SetTop(Warship, i * gridcellSize);
                 Canvas.SetLeft(Warship,0);
 
-                Warship.ShipIsSunk += this.PlayerShipSunk;
+                Warship.OnShipIsSunk += this.PlayerShipSunk;
 
                 // load the ship to the list of ships
                 shiploader.Add(Warship);
@@ -179,7 +179,26 @@ namespace Battleship
         private void PlayerShipSunk(object sender, EventArgs e)
         {
             Ship ship = sender as Ship;
+            ship.ShipIsSunk = true;
             Logger.ConsoleInformation("Ship " + ship.Uid + " has been sunk!");
+
+            CheckIfPlayerHasWon();
+        }
+
+        private void CheckIfPlayerHasWon()
+        {
+            int numberOfShipsThatHaveBeenSunk = 0;
+            foreach(Ship ship in this.Playershipcollection)
+            {
+                if(ship.ShipIsSunk == true)
+                {
+                    numberOfShipsThatHaveBeenSunk++;
+                }
+            }
+            if(numberOfShipsThatHaveBeenSunk == this.Playershipcollection.Count)
+            {
+                Logger.Information("You Have Won!");
+            }
         }
     }
 
