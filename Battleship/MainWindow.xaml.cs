@@ -26,7 +26,7 @@ namespace Battleship
 
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void StartGameButton_Click(object sender, RoutedEventArgs e)
