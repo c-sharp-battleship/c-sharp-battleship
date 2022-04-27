@@ -103,7 +103,6 @@ namespace Battleship
                 if((testCoordinate.YCoordinate == this.shipStartCoords.YCoordinate) && (testCoordinate.XCoordinate >= this.shipStartCoords.XCoordinate) && (testCoordinate.XCoordinate <= this.shipEndCoords.XCoordinate))
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
-                    Logger.ConsoleInformation("You've hit gold!");
                     
                     this.Resistance_--;
 
@@ -113,7 +112,6 @@ namespace Battleship
                 else
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
-                    Logger.ConsoleInformation("Sorry, but you'll never succeed!");
                 }
             }
             else
@@ -121,7 +119,6 @@ namespace Battleship
                 if ((testCoordinate.XCoordinate == this.shipStartCoords.XCoordinate) && (testCoordinate.YCoordinate >= this.shipStartCoords.YCoordinate) && (testCoordinate.YCoordinate <= this.shipEndCoords.YCoordinate))
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
-                    Logger.ConsoleInformation("You've hit gold!");
 
                     this.Resistance_--;
 
@@ -131,13 +128,8 @@ namespace Battleship
                 else
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
-                    Logger.ConsoleInformation("Sorry, but you'll never succeed!");
                 }
             }
-
-            Logger.ConsoleInformation("Ship Uid: " + this.Uid);
-            Logger.ConsoleInformation("Ship Start Coordinates: " + this.shipStartCoords.XCoordinate + ", " + this.shipStartCoords.YCoordinate);
-            Logger.ConsoleInformation("Ship End Coordinates: " + this.shipEndCoords.XCoordinate + ", " + this.shipEndCoords.YCoordinate);
 
             return attackCoordinate;
         }
