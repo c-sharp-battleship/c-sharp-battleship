@@ -1,27 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="AttackCoordinate.cs" company="Team">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Battleship
 {
-    class AttackCoordinate : Coordinate
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    /// <summary>
+    /// Interaction logic for AttackCoordinate
+    /// </summary>
+    public class AttackCoordinate : Coordinate
     {
         /// <summary>
         /// The status of coordinates that are attacked.
         /// </summary>
-        public StatusCodes.AttackStatus CoordinateStatus;
+        private StatusCodes.AttackStatus coordinateStatus;
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="AttackCoordinate" /> class.
         /// </summary>
         public AttackCoordinate() : base()
         {
-            this.CoordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
+            this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
 
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="AttackCoordinate" /> class.
+        /// </summary>
+        /// <param name="xCoordinate">The x coordinate.</param>
+        /// <param name="yCoordinate">The y coordinate.</param>
         public AttackCoordinate(short xCoordinate, short yCoordinate) : base(xCoordinate, yCoordinate)
         {
-            this.CoordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
+            this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
 
         /// <summary>
@@ -30,7 +43,7 @@ namespace Battleship
         /// <param name="attackStatus">The first name to join.</param>
         public AttackCoordinate(StatusCodes.AttackStatus attackStatus) : base()
         {
-            this.CoordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
+            this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
 
         /// <summary>
@@ -45,12 +58,22 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Returns the status of coordinates that are attacked
+        /// Gets or sets the status of coordinates that are attacked.
+        /// </summary>
+        /// <returns>The coordinate status.</returns>
+        public StatusCodes.AttackStatus CoordinateStatus
+        {
+            get { return this.coordinateStatus; }
+            set { this.coordinateStatus = value; }
+        }
+
+        /// <summary>
+        /// Returns the status of coordinates that are attacked.
         /// </summary>
         /// <returns>The coordinate status.</returns>
         public StatusCodes.AttackStatus GetAttackStatus()
         {
-            return this.CoordinateStatus;
+            return this.coordinateStatus;
         }
     }
 }

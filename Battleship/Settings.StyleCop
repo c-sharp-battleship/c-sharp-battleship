@@ -1,6 +1,7 @@
 <StyleCopSettings Version="105">
   <GlobalSettings>
     <CollectionProperty Name="RecognizedWords">
+      <Value>Stricked</Value>
       <Value>Striked</Value>
       <Value>xaml</Value>
     </CollectionProperty>

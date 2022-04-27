@@ -6,6 +6,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;0162;0169</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="8fbed52d9783b09666c5212ef2a30047.jpg" />
     <None Remove="Battefield3.png" />

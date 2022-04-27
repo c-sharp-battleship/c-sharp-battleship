@@ -62,5 +62,26 @@ namespace Battleship
             /// </summary>
             GAME_ENDED
         }
+
+        /// <summary>
+        /// Types of game types.
+        /// </summary>
+        public enum GameType
+        {
+            /// <summary>
+            /// Represents a player to player game.
+            /// </summary>
+            PLAYER_TO_PLAYER,
+
+            /// <summary>
+            /// Represents a player to computer game.
+            /// </summary>
+            PLAYER_TO_COMPUTER,
+
+            /// <summary>
+            /// Represents a computer to computer game.
+            /// </summary>
+            COMPUTER_TO_COMPUTER
+        }
     }
 }

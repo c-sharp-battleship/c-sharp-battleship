@@ -1,69 +1,198 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Ship.cs" company="Team">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Battleship
 {
-    class Ship : UserControl
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+
+    /// <summary>
+    /// Interaction logic for SHip
+    /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not taught.")]
+    public class Ship : UserControl
     {
         /// <summary>
-        /// Private fields
+        /// The left to parent left.
         /// </summary>
-        private int ShipType_;
-        private string Name_;
-        private int Resistance_;
-        private int Grids_;
-        private int PlayerID_;
-        private bool H_direction = true;
-        public double Left_To_ParentLeft;
-        public double Top_To_ParentTop;
-        public bool ShipIsSunk;
-
-        private Coordinate shipStartCoords;
-        public Coordinate ShipStartCoords { get { return shipStartCoords; } }
-
-        private Coordinate shipEndCoords;
-        public Coordinate ShipEndCoords { get { return shipEndCoords; } }
-
-        public event EventHandler OnShipIsSunk;
+        public double LeftToParentLeft;
 
         /// <summary>
-        /// This is the Ship constructor
+        /// The top to parent top.
         /// </summary>
-        /// <param name="PlayerID"> This is the player ID passed from player class</param>
-        /// <param name="ShipName"> This is the name for the ship,refer to player class</param>
-        /// <param name="Resistance">this is the number of hits ths ship will resist</param>
-        /// <param name="ShipType"> this is the type of ship, Submarine,warship...</param>
-        /// <param name="Grids"> This is the number of gridsquares the ship will cover on the player class(canvas)</param>
+        public double TopToParentTop;
+
+        /// <summary>
+        /// Is ship sunk or not.
+        /// </summary>
+        public bool ShipIsSunk;
+
+        /// <summary>
+        /// The ship's type.
+        /// </summary>
+        private int shipType;
+
+        /// <summary>
+        /// The ship's name.
+        /// </summary>
+        private string name;
+
+        /// <summary>
+        /// The ship's resistance.
+        /// </summary>
+        private int resistance;
+
+        /// <summary>
+        /// The ship's length.
+        /// </summary>
+        private int grids;
+
+        /// <summary>
+        /// The ship's player ID.
+        /// </summary>
+        private int playerID;
+
+        /// <summary>
+        /// The ship's horizontal direction.
+        /// </summary>
+        private bool horDirection = true;
+
+        /// <summary>
+        /// The ship's start coordinate.
+        /// </summary>
+        private Coordinate shipStartCoords;
+
+        /// <summary>
+        /// The ship's end coordinate.
+        /// </summary>
+        private Coordinate shipEndCoords;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Ship" /> class.
+        /// </summary>
+        /// <param name="playerID"> This is the player ID passed from player class</param>
+        /// <param name="shipName"> This is the name for the ship,refer to player class</param>
+        /// <param name="resistance">this is the number of hits this ship will resist</param>
+        /// <param name="shipType"> this is the type of ship, Submarine,warship...</param>
+        /// <param name="grids"> This is the number of grid squares the ship will cover on the player class(canvas)</param>
         /// <param name="gridcellSize"> This is the size of the grid square passed from player class, determined in pixels</param>
-        public Ship(int PlayerID, string ShipName, int Resistance, int ShipType, int Grids,double gridcellSize, Coordinate startCoords, Coordinate endCoords) : base()
+        /// <param name="startCoords"> This is the start coordinates of the ship</param>
+        /// <param name="endCoords"> This is the end coordinates of the ship</param>
+        public Ship(int playerID, string shipName, int resistance, int shipType, int grids, double gridcellSize, Coordinate startCoords, Coordinate endCoords) : base()
         {
-            PlayerID_ = PlayerID;
-            Name_ = ShipName;
-            Resistance_ = Resistance;
-            ShipType_ = ShipType;
-            Grids_ = Grids;
-            Width = Grids * gridcellSize;
-            Height = gridcellSize;
+            this.playerID = playerID;
+            this.name = shipName;
+            this.resistance = resistance;
+            this.shipType = shipType;
+            this.grids = grids;
+            this.Width = grids * gridcellSize;
+            this.Height = gridcellSize;
 
             this.ShipIsSunk = false;
 
             this.shipStartCoords = startCoords;
             this.shipEndCoords = endCoords;
         }
+
         /// <summary>
-        /// This method will change the width fr the Height of this ship and viceversa
+        /// Event for the is ship sunk or not
         /// </summary>
-        /// <param name="trigger"></param>
+        public event EventHandler OnShipIsSunk;
+
+        /// <summary>
+        /// Gets the start coordinates of the ship
+        /// </summary>
+        public Coordinate ShipStartCoords
+        {
+            get { return this.shipStartCoords; }
+        }
+
+        /// <summary>
+        /// Gets the end coordinates of the ship
+        /// </summary>
+        public Coordinate ShipEndCoords
+        {
+            get { return this.shipEndCoords; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether horizontal direction is loading for the ship, set true at loading
+        /// </summary>
+        public bool HDirection
+        {
+            get { return this.horDirection; }
+            set { this.horDirection = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets type of shi
+        /// </summary>
+        public int ShipType
+        {
+            get { return this.shipType; }
+            set { this.shipType = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the number of hits this ship will resist
+        /// </summary>
+        public int Resistance
+        {
+            get { return this.resistance; }
+            set { this.resistance = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets ship length 
+        /// </summary>
+        public int GridSpaces
+        {
+            get { return this.grids; }
+            set { this.grids = value; }
+        }
+
+        /// <summary>
+        /// Gets the player ID passed from player class
+        /// </summary>
+        public int PlayerID
+        {
+            get { return this.playerID; }
+        }
+
+        /// <summary>
+        /// Gets or sets the ship's left to parent left.
+        /// </summary>
+        public double Left_Comp_ParentLeft
+        {
+            get { return this.LeftToParentLeft; }
+            set { this.LeftToParentLeft = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the ship's top to parent top.
+        /// </summary>
+        public double Top_Comp_ParentTop
+        {
+            get { return this.TopToParentTop; }
+            set { this.TopToParentTop = value; }
+        }
+
+        /// <summary>
+        /// This method will change the width or the Height of this ship and reverse it.
+        /// </summary>
+        /// <param name="trigger">The trigger</param>
         public void Rotateship(bool trigger)
         {
             if (trigger == true)
@@ -76,38 +205,45 @@ namespace Battleship
                 this.shipStartCoords = previousShipEndCoords;
                 this.shipEndCoords = previousShipStartCoords;
 
-                if (h_direction == true)
+                if (this.HDirection == true)
                 {
-                    h_direction = false;
-                    double switcher = Width;//base
-                    Width = Height;
-                    Height = switcher;
+                    this.HDirection = false;
+                    double switcher = Width; // base
+                    this.Width = this.Height;
+                    this.Height = switcher;
                 }
                 else 
                 {
-                    h_direction = true;
-                    double switcher = Width;//base
-                    Width = Height;
-                    Height = switcher;
+                    this.HDirection = true;
+                    double switcher = Width; // base
+                    this.Width = this.Height;
+                    this.Height = switcher;
                 }
             }
         }
 
+        /// <summary>
+        /// Set a method that attacks the coordinate.
+        /// </summary>
+        /// <param name="testCoordinate">The coordinate.</param>
+        /// <returns>The attack coordinate.</returns>
         public AttackCoordinate AttackGridSpace(Coordinate testCoordinate)
         {
             AttackCoordinate attackCoordinate = new AttackCoordinate(testCoordinate.XCoordinate, testCoordinate.YCoordinate);
 
             // If the ship is horizontal, we only have to compare the X-Coordinate of the attacked grid space with the ship's grid spaces.
-            if(this.h_direction == true)
+            if (this.HDirection == true)
             {
-                if((testCoordinate.YCoordinate == this.shipStartCoords.YCoordinate) && (testCoordinate.XCoordinate >= this.shipStartCoords.XCoordinate) && (testCoordinate.XCoordinate <= this.shipEndCoords.XCoordinate))
+                if ((testCoordinate.YCoordinate == this.shipStartCoords.YCoordinate) && (testCoordinate.XCoordinate >= this.shipStartCoords.XCoordinate) && (testCoordinate.XCoordinate <= this.shipEndCoords.XCoordinate))
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
                     
-                    this.Resistance_--;
+                    this.resistance--;
 
-                    if (this.Resistance_ <= 0)
-                        OnShipIsSunk?.Invoke(this, EventArgs.Empty);
+                    if (this.resistance <= 0)
+                    {
+                        this.OnShipIsSunk?.Invoke(this, EventArgs.Empty);
+                    }
                 }
                 else
                 {
@@ -120,10 +256,12 @@ namespace Battleship
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
 
-                    this.Resistance_--;
+                    this.resistance--;
 
-                    if (this.Resistance_ <= 0)
-                        OnShipIsSunk?.Invoke(this, EventArgs.Empty);
+                    if (this.resistance <= 0)
+                    { 
+                        this.OnShipIsSunk?.Invoke(this, EventArgs.Empty);
+                    }
                 }
                 else
                 {
@@ -135,84 +273,22 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Horizontal loading for the ship set true at loading
+        /// Set a method that updates the ship's coordinates.
         /// </summary>
-        public bool h_direction
+        /// <param name="shipStartCoords">The ship's start coordinate.</param>
+        /// <param name="shipEndCoords">The ship's end coordinate.</param>
+        public void UpdateShipCoords(Coordinate shipStartCoords, Coordinate shipEndCoords)
         {
-            get { return H_direction; }
-            set { H_direction = value; }
-        }
+            this.shipStartCoords = shipStartCoords;
+            this.shipEndCoords = shipEndCoords;
 
-        /// <summary>
-        /// this is the type of ship, Submarine,warship...
-        /// </summary>
-        public int shiptype
-        {
-            get { return ShipType_; }
-            set { ShipType_ = value; }
-        }
-
-        /// <summary>
-        /// this is the number of hits ths ship will resist
-        /// </summary>
-        public int resistance
-        {
-            get { return Resistance_; }
-            set { Resistance_ = value; }
-        }
-
-        /// <summary>
-        /// This is the name for the ship,refer to player class
-        /// </summary>
-        public string name
-        {
-            get { return Name_; }
-            set { Name_ = value; }
-        }
-
-         /// <summary>
-         ///Ship length 
-         /// </summary>
-        public int gridspaces
-        {
-            get { return Grids_; }
-            set { Grids_ = value; }
-        }
-
-        /// <summary>
-        /// This is the player ID passed from player class
-        /// </summary>
-        public int playerid
-        {
-            get { return PlayerID_; }
-        }
-
-        //Player Number property
-        public double Left_Comp_ParentLeft
-        {
-            get { return Left_To_ParentLeft; }
-            set { Left_To_ParentLeft = value; }
-        }
-
-        //Player ID property
-        public double Top_Comp_ParentTop
-        {
-            get { return Top_To_ParentTop; }
-            set { Top_To_ParentTop = value; }
-        }
-
-        public void UpdateShipCoords(Coordinate _shipStartCoords, Coordinate _shipEndCoords)
-        {
-            this.shipStartCoords = _shipStartCoords;
-            this.shipEndCoords = _shipEndCoords;
-
-            if(_shipStartCoords.YCoordinate == _shipEndCoords.YCoordinate)
+            if (shipStartCoords.YCoordinate == shipEndCoords.YCoordinate)
             {
-                this.h_direction = true;
+                this.HDirection = true;
             }
             else
             {
-                this.h_direction = false;
+                this.HDirection = false;
             }
         }
     }

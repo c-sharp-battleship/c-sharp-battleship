@@ -1,152 +1,214 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="GridCell.cs" company="Team">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Battleship
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Navigation;
+    using System.Windows.Shapes;
+
+    /// <summary>
+    /// Interaction logic for GridCell
+    /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not taught.")]
     public class GridCell : Button
     {
-        private int PlayerID_;
-        private string Name_;
-        private int ColumnNumber;
-        private int RowNumber;
-        private bool OffenseButton_ = true;
-        private bool ButtonOccupied_ = false;
-        public int Stricked_ = 0;
-        public int FireToEnemy = 0;
-        public double Left_To_ParentLeft;
-        public double Top_To_ParentTop;
+        /// <summary>
+        /// Is the grid cell stricked or not
+        /// </summary>
+        public int Stricked = 0;
 
         /// <summary>
-        /// Constructor
+        /// Is the grid cell fired an enemy's grid cell.
         /// </summary>
-        public GridCell(int PlayerID,int buttoncolor, string myname) : base()
+        public int FireToEnemy = 0;
+
+        /// <summary>
+        /// The left to the parent left.
+        /// </summary>
+        public double LeftToParentLeft;
+
+        /// <summary>
+        /// The top to the parent top.
+        /// </summary>
+        public double TopToParentTop;
+
+        /// <summary>
+        /// The grid cell's player ID.
+        /// </summary>
+        private int playerID;
+
+        /// <summary>
+        /// The grid cell's name.
+        /// </summary>
+        private string name;
+
+        /// <summary>
+        /// The grid cell's column number.
+        /// </summary>
+        private int columnNumber;
+
+        /// <summary>
+        /// The grid cell's row number.
+        /// </summary>
+        private int rowNumber;
+
+        /// <summary>
+        /// Is the offense button clicked or not.
+        /// </summary>
+        private bool offenseButton = true;
+
+        /// <summary>
+        /// Is the button occupied or not.
+        /// </summary>
+        private bool buttonOccupied = false;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GridCell" /> class.
+        /// </summary>
+        /// <param name="playerID"> This is the ID of the player </param>
+        /// <param name="buttonColor"> This is the button color </param>
+        /// <param name="myName"> This is the name of the grid cell. </param>
+        public GridCell(int playerID, int buttonColor, string myName) : base()
         {
-            PlayerID_ = PlayerID;
-            Name_ = myname;
-            switch (buttoncolor)
+            this.playerID = playerID;
+            this.name = myName;
+            switch (buttonColor)
             {
                 case 1:
-                    Background = Brushes.Black;//base
-                    BorderBrush = Brushes.White;//base
-                    BorderBrush = Brushes.White;//base
-                    BorderThickness = new Thickness(1);//base
-                    Foreground = Brushes.Black;
+                    this.Background = Brushes.Black; // base
+                    this.BorderBrush = Brushes.White; // base
+                    this.BorderBrush = Brushes.White; // base
+                    this.BorderThickness = new Thickness(1); // base
+                    this.Foreground = Brushes.Black;
                     break;
                 case 2:
-                    Background = Brushes.DarkBlue;//base
-                    BorderBrush = Brushes.White;//base
-                    BorderBrush = Brushes.White;//base
-                    BorderThickness = new Thickness(1);//base
-                    Foreground = Brushes.DarkBlue;
+                    this.Background = Brushes.DarkBlue; // base
+                    this.BorderBrush = Brushes.White; // base
+                    this.BorderBrush = Brushes.White; // base
+                    this.BorderThickness = new Thickness(1); // base
+                    this.Foreground = Brushes.DarkBlue;
                     break;
                 case 3:
-                    Background = Brushes.Magenta;//base
-                    BorderBrush = Brushes.White;//base
-                    BorderBrush = Brushes.White;//base
-                    BorderThickness = new Thickness(1);//base
-                    Foreground = Brushes.Magenta;
+                    this.Background = Brushes.Magenta; // base
+                    this.BorderBrush = Brushes.White; // base
+                    this.BorderBrush = Brushes.White; // base
+                    this.BorderThickness = new Thickness(1); // base
+                    this.Foreground = Brushes.Magenta;
                     break;
                 case 4:
-                    Background = Brushes.LightSeaGreen;//base
-                    BorderBrush = Brushes.White;//base
-                    BorderBrush = Brushes.White;//base
-                    BorderThickness = new Thickness(1);//base
-                    Foreground = Brushes.LightSeaGreen;
+                    this.Background = Brushes.LightSeaGreen; // base
+                    this.BorderBrush = Brushes.White; // base
+                    this.BorderBrush = Brushes.White; // base
+                    this.BorderThickness = new Thickness(1); // base
+                    this.Foreground = Brushes.LightSeaGreen;
                     break;
                 case 5:
-                    Background = Brushes.Purple;//base
-                    BorderBrush = Brushes.White;//base
-                    BorderBrush = Brushes.White;//base
-                    BorderThickness = new Thickness(1);//base
-                    Foreground = Brushes.Purple;
+                    this.Background = Brushes.Purple; // base
+                    this.BorderBrush = Brushes.White; // base
+                    this.BorderBrush = Brushes.White; // base
+                    this.BorderThickness = new Thickness(1); // base
+                    this.Foreground = Brushes.Purple;
                     break;
                 case 6:
-                    Background = Brushes.White;//base
-                    BorderBrush = Brushes.Black;//base
-                    Foreground = Brushes.LightSeaGreen;//base
-                    BorderThickness = new Thickness(1);//base
-                    Foreground = Brushes.White;
+                    this.Background = Brushes.White; // base
+                    this.BorderBrush = Brushes.Black; // base
+                    this.Foreground = Brushes.LightSeaGreen; // base
+                    this.BorderThickness = new Thickness(1); // base
+                    this.Foreground = Brushes.White;
                     break;
                 default:
-                    Background = Brushes.CadetBlue;//base
-                    BorderBrush = Brushes.Transparent;//base
-                    BorderThickness = new Thickness(0.1);//base
-                    Foreground = Brushes.CadetBlue;
-
+                    this.Background = Brushes.CadetBlue; // base
+                    this.BorderBrush = Brushes.Transparent; // base
+                    this.BorderThickness = new Thickness(0.1); // base
+                    this.Foreground = Brushes.CadetBlue;
                     break;
             }
-
         }
 
-
-
-
-        //Type of button , offense or defense
+        /// <summary>
+        /// Gets or sets a value indicating whether offense button is occupied or not.
+        /// </summary>
         public bool OffenseButton
         {
-            get { return OffenseButton_; }
-            set { OffenseButton_ = value; }
+            get { return this.offenseButton; }
+            set { this.offenseButton = value; }
         }
 
-        //occupied property is some other object over this button
+        /// <summary>
+        /// Gets or sets a value indicating whether button is occupied or not.
+        /// </summary>
         public bool ButtonOccupied
         {
-            get { return ButtonOccupied_; }
-            set { ButtonOccupied_ = value; }
+            get { return this.buttonOccupied; }
+            set { this.buttonOccupied = value; }
         }
 
-        //Player Number property
+        /// <summary>
+        /// Gets or sets grid cell's left to parent left.
+        /// </summary>
         public double Left_Comp_ParentLeft
         {
-            get { return Left_To_ParentLeft; }
-            set { Left_To_ParentLeft = value; }
+            get { return this.LeftToParentLeft; }
+            set { this.LeftToParentLeft = value; }
         }
 
-        //Player ID property
+        /// <summary>
+        /// Gets or sets grid cell's top to parent top.
+        /// </summary>
         public double Top_Comp_ParentTop
         {
-            get { return Top_To_ParentTop; }
-            set { Top_To_ParentTop = value; }
+            get { return this.TopToParentTop; }
+            set { this.TopToParentTop = value; }
         }
 
-        //Player Number property
-        public int playerid
+        /// <summary>
+        /// Gets or sets grid cell's player ID.
+        /// </summary>
+        public int PlayerID
         {
-            get { return PlayerID_; }
-            set { PlayerID_ = value; }
+            get { return this.playerID; }
+            set { this.playerID = value; }
         }
 
-        //buttonname Property
-        public string buttonname
+        /// <summary>
+        /// Gets or sets button's name.
+        /// </summary>
+        public string ButtonName
         {
-            get { return Name_; }
-            set { Name_ = value; }
+            get { return this.name; }
+            set { this.name = value; }
         }
 
-        //Player Number property
+        /// <summary>
+        /// Gets or sets grid cell's column number.
+        /// </summary>
         public int ColNum
         {
-            get { return ColumnNumber; }
-            set { ColumnNumber = value; }
+            get { return this.columnNumber; }
+            set { this.columnNumber = value; }
         }
 
-        //Player Number property
+        /// <summary>
+        /// Gets or sets grid cell's row number.
+        /// </summary>
         public int RowNum
         {
-            get { return RowNumber; }
-            set { RowNumber = value; }
+            get { return this.rowNumber; }
+            set { this.rowNumber = value; }
         }
     }
 }
