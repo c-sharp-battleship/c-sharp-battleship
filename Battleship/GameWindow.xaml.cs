@@ -19,6 +19,8 @@ namespace Battleship
     /// </summary>
     public partial class GameWindow : Window
     {
+        private StatusCodes.GameType gameType;
+
         private bool ScreenPlayerOne_ = true;
         
         public double Cellsize = 25;
@@ -38,11 +40,13 @@ namespace Battleship
         /// <summary>
         /// initiallize the game
         /// </summary>
-        public GameWindow()
+        public GameWindow(StatusCodes.GameType _gameType)
         {
             this.PlayersCellRecords = new List<GridCell>();
 
             InitializeComponent();
+
+            this.gameType = _gameType;
 
             this.isLocked = false;
             this.isLocked2 = false;

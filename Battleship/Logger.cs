@@ -28,6 +28,16 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Static method that outputs error to the screen in the form of a MessageBox.
+        /// </summary>
+        /// <param name="message">The message to be displayed to the user.</param>
+        public static void Error(string message)
+        {
+            MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            ConsoleInformation("MessageBox: " + message);
+        }
+
+        /// <summary>
         /// Static method that outputs information to the console.
         /// </summary>
         /// <param name="message">The message to be displayed to the console.</param>

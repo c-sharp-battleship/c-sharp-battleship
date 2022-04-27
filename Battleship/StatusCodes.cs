@@ -62,5 +62,12 @@ namespace Battleship
             /// </summary>
             GAME_ENDED
         }
+
+        public enum GameType
+        {
+            PLAYER_TO_PLAYER,
+            PLAYER_TO_COMPUTER,
+            COMPUTER_TO_COMPUTER
+        }
     }
 }

@@ -20,28 +20,53 @@ namespace Battleship
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GameWindow gameScreen;
+        private AboutWindow aboutScreen;
+        private UMLstructure projectInfo;
+
         public MainWindow()
         {
             InitializeComponent();
         }
+
         private void StartGameButton_Click(object sender, RoutedEventArgs e)
         {
-            GameWindow game = new GameWindow();
-            game.StartGame();
+            if(this.playerToPlayerRadioButton.IsChecked == true)
+            {
+                this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_PLAYER);
+                this.gameScreen.Show();
+                this.gameScreen.StartGame();
+            }
+            else if(this.playerToComputerRadioButton.IsChecked == true)
+            {
+                this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
+                this.gameScreen.Show();
+                this.gameScreen.StartGame();
+            }
+            else if(this.computerToComputerRadioButton.IsChecked == true)
+            {
+                this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
+                this.gameScreen.Show();
+                this.gameScreen.StartGame();
+            }
+            else
+            {
+                Logger.Error("Please Select a Game Type!");
+            }
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            AboutWindow aboutWindow = new AboutWindow();
-            UMLstructure Projectinfo = new UMLstructure();
-            aboutWindow.Show();
-            Projectinfo.Show();
+            this.aboutScreen = new AboutWindow();
+            this.projectInfo = new UMLstructure();
+
+            this.aboutScreen.Show();
+            this.projectInfo.Show();
         }
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
     }
 }
