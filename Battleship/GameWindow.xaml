@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Battleship"
-        mc:Ignorable="d"
+        mc:Ignorable="d" ResizeMode="NoResize"
         Title="GameWindow" Height="600" Width="800">
     <Window.Background>
         <ImageBrush/>
@@ -23,7 +23,7 @@
         </Button>
         <Image x:Name="PlayerOnelabel" HorizontalAlignment="Left" Height="66" Margin="132,26,0,0" VerticalAlignment="Top" Width="125" Source="/Playeroneturn.jpg" Stretch="Fill"/>
         <Image x:Name="PlayerTwolabel" HorizontalAlignment="Left" Height="66" Margin="112,26,0,0" VerticalAlignment="Top" Width="125" Source="/Playertwoturn.jpg" Stretch="Fill" RenderTransformOrigin="1.802,0.385"/>
-        <Button x:Name="Confirm_Button" Content="Confirm Ship Placement" HorizontalAlignment="Left" Margin="93,191,0,0" VerticalAlignment="Top" Height="30" Width="144" Click="Confirm_Button_Click"/>
+        <Button x:Name="Confirm_Button" Content="Confirm Ship Placement" HorizontalAlignment="Left" Margin="112,115,0,0" VerticalAlignment="Top" Height="35" Width="145" Click="Confirm_Button_Click" Background="#FF8EADB3"/>
 
     </Grid>
 </Window>

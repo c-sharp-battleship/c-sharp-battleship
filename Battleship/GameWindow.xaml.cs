@@ -99,13 +99,13 @@ namespace Battleship
 
             //Create two Canvas to place the player elements on them 
             this.PlayerWindow_1 = new Canvas();
-            this.PlayerWindow_1.HorizontalAlignment = HorizontalAlignment.Left;
+            this.PlayerWindow_1.HorizontalAlignment = HorizontalAlignment.Center;
             this.PlayerWindow_1.VerticalAlignment = VerticalAlignment.Center;
             this.PlayerWindow_1.Uid = "Player1Canvas";
             this.PlayerWindow_1.Width = (Cellsize * RowRep)*2;
 
             this.PlayerWindow_2 = new Canvas();
-            this.PlayerWindow_2.HorizontalAlignment = HorizontalAlignment.Left;
+            this.PlayerWindow_2.HorizontalAlignment = HorizontalAlignment.Center;
             this.PlayerWindow_2.VerticalAlignment = VerticalAlignment.Center;
             this.PlayerWindow_2.Uid = "Player2Canvas";
             this.PlayerWindow_2.Width = (Cellsize * RowRep) * 2;
