@@ -242,7 +242,7 @@ namespace Battleship
 
                     if (this.resistance <= 0)
                     {
-                        OnShipIsSunk?.Invoke(this, EventArgs.Empty);
+                        this.OnShipIsSunk?.Invoke(this, EventArgs.Empty);
                     }
                 }
                 else
@@ -260,7 +260,7 @@ namespace Battleship
 
                     if (this.resistance <= 0)
                     { 
-                        OnShipIsSunk?.Invoke(this, EventArgs.Empty); 
+                        this.OnShipIsSunk?.Invoke(this, EventArgs.Empty);
                     }
                 }
                 else

@@ -198,8 +198,7 @@ namespace Battleship
                 if (player_1_Offense_button.OffenseButton == true)
                 {
                     // add click event
-                    player_1_Offense_button.Click += new RoutedEventHandler(button_Click); // base
-                    void button_Click(object sender, System.EventArgs e)
+                    player_1_Offense_button.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
                     {
                         // go check the list of buttons for player two and change the status for them
                         foreach (GridCell player_2_deffense_button in this.player2.Playergridsquarecollection)
@@ -230,14 +229,13 @@ namespace Battleship
 
                         // Swicth windows between players 
                         this.SwitchPlayerWindows();
-                    }
+                    });
                 }
-                else 
+                else
                 {
                     // add the drag over event for when ships are dragged over the cells only if the cell is deffense type
                     // Create a method when an object is drag over this left button
-                    player_1_Offense_button.DragOver += new DragEventHandler(Onbuttondragover);
-                    void Onbuttondragover(object sender, DragEventArgs e)
+                    player_1_Offense_button.DragOver += new DragEventHandler(delegate(object sender, DragEventArgs e)
                     {
                         // find the sender uid extracting the date of the event
                         string myWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
@@ -251,11 +249,11 @@ namespace Battleship
                                 Point grabPos = e.GetPosition(this.playerWindow1); // find the position of the mouse compared to the canvas for player one
                                 double shipMaxX = (this.playerWindow1.Width / 2) - ship.Width + this.Cellsize;
                                 double shipMaxY = (this.playerWindow1.Width / 2) - ship.Height + this.Cellsize;
-                                 if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
-                                 {
-                                   Canvas.SetTop(ship, player_1_Offense_button.Top_Comp_ParentTop);
+                                if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
+                                {
+                                    Canvas.SetTop(ship, player_1_Offense_button.Top_Comp_ParentTop);
                                     ship.Top_Comp_ParentTop = player_1_Offense_button.Top_Comp_ParentTop;
-                                   Canvas.SetLeft(ship, player_1_Offense_button.Left_Comp_ParentLeft);
+                                    Canvas.SetLeft(ship, player_1_Offense_button.Left_Comp_ParentLeft);
                                     ship.Left_Comp_ParentLeft = player_1_Offense_button.Left_Comp_ParentLeft;
 
                                     Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
@@ -274,7 +272,7 @@ namespace Battleship
                                 }
                             }
                         }
-                    }
+                    });
                 }
                 //// Add player 1 cells to the window grid
                 this.playerWindow1.Children.Add(player_1_Offense_button);
@@ -287,49 +285,45 @@ namespace Battleship
                 foreach (Ship ship_1 in this.player1.Playershipcollection)
                 {
                     // create a move move event for player 1 ships to attacch the rectangle to the mouse
-                    ship_1.MouseMove += new MouseEventHandler(Warship_MouseMove);
-                    ship_1.MouseRightButtonDown += new MouseButtonEventHandler(Warship_MouseRightButtonDown);
-
-                    void Warship_MouseMove(object sender, MouseEventArgs e)
+                    ship_1.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
                     {
                         if (this.isLocked == false)
                         {
                             if (e.LeftButton == MouseButtonState.Pressed)
                             {
-                            string objectUniqueID = ship_1.Uid;
-                            Point grabPos = e.GetPosition(ship_1);
-                            Canvas.SetTop(ship_1, grabPos.Y);
-                            Canvas.SetLeft(ship_1, grabPos.X);
-                            DragDrop.DoDragDrop(ship_1, objectUniqueID, DragDropEffects.Move);
+                                string objectUniqueID = ship_1.Uid;
+                                Point grabPos = e.GetPosition(ship_1);
+                                Canvas.SetTop(ship_1, grabPos.Y);
+                                Canvas.SetLeft(ship_1, grabPos.X);
+                                DragDrop.DoDragDrop(ship_1, objectUniqueID, DragDropEffects.Move);
                             }
                         }
-                    }
+                    });
 
-                    // Rotate ships for player one with rigth click(refer to ship class constructor)
-                    void Warship_MouseRightButtonDown(object sender, System.EventArgs e)
+                    ship_1.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
                     {
                         if (this.isLocked == false)
                         {
-                           if (ship_1.HDirection == true)
-                           {
-                              double shipMaxY = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
-                              double shipMaxX = this.playerWindow1.Width / 2;
-                              if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
-                              {
-                                ship_1.Rotateship(true);
-                              }
-                           }
-                           else 
-                           {
-                              double shipMaxY = this.playerWindow1.Width / 2;
-                              double shipMaxX = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
-                              if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
-                              {
-                                ship_1.Rotateship(true);
-                              }
-                           }
+                            if (ship_1.HDirection == true)
+                            {
+                                double shipMaxY = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
+                                double shipMaxX = this.playerWindow1.Width / 2;
+                                if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
+                                {
+                                    ship_1.Rotateship(true);
+                                }
+                            }
+                            else
+                            {
+                                double shipMaxY = this.playerWindow1.Width / 2;
+                                double shipMaxX = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
+                                if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
+                                {
+                                    ship_1.Rotateship(true);
+                                }
+                            }
                         }
-                    }
+                    });
 
                     // Add player 1 Ships to the window grid
                     this.playerWindow1.Children.Add(ship_1);
@@ -346,8 +340,7 @@ namespace Battleship
                 if (player_2_Offense_button.OffenseButton == true)
                 {
                     // add click event
-                    player_2_Offense_button.Click += new RoutedEventHandler(button_Click); // base
-                    void button_Click(object sender, System.EventArgs e)
+                    player_2_Offense_button.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
                     {
                         // go check the list of buttons for player one and change the status for them
                         foreach (GridCell player_1_deffense_button in this.player1.Playergridsquarecollection)
@@ -378,32 +371,30 @@ namespace Battleship
 
                         // Swicth windows between players
                         this.SwitchPlayerWindows();
-                    }
+                    });
                 }
                 else 
                 {
                     // add the drag over event for when ships are dragged over the cells only if the cell is deffense type
                     // Create a method when an object is drag over this left button
-                    player_2_Offense_button.DragOver += new DragEventHandler(Onbuttondragover);
+                    player_2_Offense_button.DragOver += new DragEventHandler(delegate(object sender, DragEventArgs e)
+                    {
+                        // find the sender uid extracting the date of the event
+                        string myWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
 
-                        void Onbuttondragover(object sender, DragEventArgs e)
+                        // iterate thru the collection of ships to find the sender element with matching uid
+                        foreach (Ship ship in this.player2.Playershipcollection)
                         {
-                            // find the sender uid extracting the date of the event
-                            string myWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
-
-                            // iterate thru the collection of ships to find the sender element with matching uid
-                            foreach (Ship ship in this.player2.Playershipcollection)
+                            if (this.isLocked2 == false)
                             {
-                                if (this.isLocked2 == false)
+                                // if the sender element uid matches then this is my element, then move it with the mouse
+                                if (myWarshipUid == ship.Uid)
                                 {
-                                    // if the sender element uid matches then this is my element, then move it with the mouse
-                                    if (myWarshipUid == ship.Uid)
+                                    Point grabPos = e.GetPosition(this.playerWindow2); // find the position of the mouse compared to the canvas for player two
+                                    double shipMaxX = (this.playerWindow2.Width / 2) - ship.Width + this.Cellsize;
+                                    double shipMaxY = (this.playerWindow2.Width / 2) - ship.Height + this.Cellsize;
+                                    if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
                                     {
-                                        Point grabPos = e.GetPosition(this.playerWindow2); // find the position of the mouse compared to the canvas for player two
-                                        double shipMaxX = (this.playerWindow2.Width / 2) - ship.Width + this.Cellsize;
-                                        double shipMaxY = (this.playerWindow2.Width / 2) - ship.Height + this.Cellsize;
-                                       if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
-                                       {
                                         Canvas.SetTop(ship, player_2_Offense_button.Top_Comp_ParentTop);
                                         ship.Top_Comp_ParentTop = player_2_Offense_button.Top_Comp_ParentTop;
                                         Canvas.SetLeft(ship, player_2_Offense_button.Left_Comp_ParentLeft);
@@ -423,10 +414,10 @@ namespace Battleship
 
                                         this.UpdateShipCoords(ship, shipStartCoords, shipEndCoords);
                                     }
-                                    }
                                 }
                             }
                         }
+                    });
                 }
                 //// Add player 2 cells to the window grid
                 this.playerWindow2.Children.Add(player_2_Offense_button);
@@ -438,10 +429,7 @@ namespace Battleship
             foreach (Ship ship_2 in this.player2.Playershipcollection)
             {
                 // create a move move event for player 2 ships to attacch the rectangle to the mouse
-                ship_2.MouseMove += new MouseEventHandler(Warship_MouseMove);
-                ship_2.MouseRightButtonDown += new MouseButtonEventHandler(Warship_MouseRightButtonDown);
-
-                void Warship_MouseMove(object sender, MouseEventArgs e)
+                ship_2.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
                 {
                     if (this.isLocked2 == false)
                     {
@@ -454,10 +442,10 @@ namespace Battleship
                             DragDrop.DoDragDrop(ship_2, objectUniqueID, DragDropEffects.Move);
                         }
                     }
-                }
+                });
 
                 // Rotate ships for player two with rigth click(refer to ship class constructor)
-                void Warship_MouseRightButtonDown(object sender, System.EventArgs e)
+                ship_2.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
                 {
                     if (this.isLocked2 == false)
                     {
@@ -480,7 +468,7 @@ namespace Battleship
                             }
                         }
                     }
-                }
+                });
 
                 // Add player 2 Ships to the window grid
                 this.playerWindow2.Children.Add(ship_2);
