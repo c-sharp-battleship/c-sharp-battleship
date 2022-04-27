@@ -104,6 +104,17 @@ namespace Battleship
                                 Player_1_Offense_button.Visibility = Visibility.Hidden;
                             }
                         }
+
+                        Coordinate attackedGridSpace = new Coordinate((short)Player_1_Offense_button.ColNum, (short)Player_1_Offense_button.RowNum);
+
+                        Logger.ConsoleInformation("Row Number: " + Player_1_Offense_button.RowNum);
+                        Logger.ConsoleInformation("Column Number: " + Player_1_Offense_button.ColNum);
+
+                        foreach (Ship testShip in this.Player_1.Playershipcollection)
+                        {
+                            AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                        }
+
                         //Swicth windows between players 
                         SwitchPlayerWindows();
                     }
@@ -248,7 +259,7 @@ namespace Battleship
                         Logger.ConsoleInformation("Row Number: " + Player_2_Offense_button.RowNum);
                         Logger.ConsoleInformation("Column Number: " + Player_2_Offense_button.ColNum);
 
-                        foreach (Ship testShip in this.Player_1.Playershipcollection)
+                        foreach (Ship testShip in this.Player_2.Playershipcollection)
                         {
                             AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
                         }
@@ -366,12 +377,6 @@ namespace Battleship
             //load both canvas to this window grid
             this.Maingrid.Children.Add(this.PlayerWindow_1);
             this.Maingrid.Children.Add(this.PlayerWindow_2);
-
-
-            foreach (GridCell cell in PlayersCellRecords)
-            {
-                listbtn.Items.Add("Pid= "+cell.playerid.ToString()+" offense "+cell.Uid+" "+cell.OffenseButton+ "  stricked= "+cell.Stricked_);
-            }
 
             this.Show();
         }
