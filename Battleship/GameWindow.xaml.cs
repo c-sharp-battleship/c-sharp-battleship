@@ -34,6 +34,9 @@ namespace Battleship
         private Player Player_1;
         private Player Player_2;
 
+        private ComputerPlayer ComputerPlayer_1;
+        private ComputerPlayer ComputerPlayer_2;
+
         private Canvas PlayerWindow_1;
         private Canvas PlayerWindow_2;
 
@@ -50,9 +53,40 @@ namespace Battleship
 
             this.isLocked = false;
             this.isLocked2 = false;
+
+            switch (_gameType)
+            {
+                case StatusCodes.GameType.PLAYER_TO_PLAYER:
+                    this.Loaded += StartPlayerToPlayerGame;
+                    break;
+                case StatusCodes.GameType.PLAYER_TO_COMPUTER:
+                    this.Loaded += StartPlayerToComputerGame;
+                    break;
+                case StatusCodes.GameType.COMPUTER_TO_COMPUTER:
+                    this.Loaded += StartComputerToComputerGame;
+                    break;
+                default:
+                    this.Loaded += StartGame;
+                    break;
+            }
         }
 
-        public void StartGame()
+        public void StartPlayerToPlayerGame(object sender, EventArgs e)
+        {
+            this.StartGame(sender, e);
+        }
+
+        public void StartPlayerToComputerGame(object sender, EventArgs e)
+        {
+
+        }
+
+        public void StartComputerToComputerGame(object sender, EventArgs e)
+        {
+
+        }
+
+        public void StartGame(object sender, EventArgs e)
         {
             //start player one label visible
             PlayerOnelabel.Visibility = Visibility.Visible;

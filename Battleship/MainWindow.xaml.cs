@@ -35,19 +35,16 @@ namespace Battleship
             {
                 this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_PLAYER);
                 this.gameScreen.Show();
-                this.gameScreen.StartGame();
             }
             else if(this.playerToComputerRadioButton.IsChecked == true)
             {
                 this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
                 this.gameScreen.Show();
-                this.gameScreen.StartGame();
             }
             else if(this.computerToComputerRadioButton.IsChecked == true)
             {
                 this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
                 this.gameScreen.Show();
-                this.gameScreen.StartGame();
             }
             else
             {
