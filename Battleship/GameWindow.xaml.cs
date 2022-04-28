@@ -255,7 +255,34 @@ namespace Battleship
                                     ship.Top_Comp_ParentTop = player_1_Offense_button.Top_Comp_ParentTop;
                                     Canvas.SetLeft(ship, player_1_Offense_button.Left_Comp_ParentLeft);
                                     ship.Left_Comp_ParentLeft = player_1_Offense_button.Left_Comp_ParentLeft;
-
+                                    int row = player_1_Offense_button.Buttonid / 10;
+                                    int col = player_1_Offense_button.Buttonid - player_1_Offense_button.Buttonid / 10 * 10;
+                                    string letter = ship.Name.Substring(0, 2);
+                                    int length = ship.GridSpaces;
+                                    if (ship.HDirection == true)
+                                    {
+                                        for(int i = 0; i < length; i++)
+                                        {
+                                            player1.Board[row, col] = letter;
+                                            col++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        for(int i = 0; i < length; i++)
+                                        {
+                                            player1.Board[row, col] = letter;
+                                            row++;
+                                        }
+                                    }
+                                    for(int i = 0; i < RowRep; i++)
+                                    {
+                                        for(int j = 0; j < RowRep; j++)
+                                        {
+                                            Logger.ConsoleInformationForArray(player1.Board[i, j] + ", ");
+                                        }
+                                        Logger.ConsoleInformation("");
+                                    }
                                     Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
                                     Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
 

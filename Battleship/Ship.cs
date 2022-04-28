@@ -90,13 +90,38 @@ namespace Battleship
         /// <param name="gridcellSize"> This is the size of the grid square passed from player class, determined in pixels</param>
         /// <param name="startCoords"> This is the start coordinates of the ship</param>
         /// <param name="endCoords"> This is the end coordinates of the ship</param>
-        public Ship(int playerID, string shipName, int resistance, int shipType, int grids, double gridcellSize, Coordinate startCoords, Coordinate endCoords) : base()
+        public Ship(int playerID, int resistance, int shipType, double gridcellSize, Coordinate startCoords, Coordinate endCoords) : base()
         {
+            switch (shipType)
+            {
+                case 1:
+                    this.name = "Destroyer";
+                    this.grids = 2;
+                    break;
+                case 2:
+                    this.name = "Submarine";
+                    this.grids = 3;
+                    break;
+                case 3:
+                    this.name = "Cruiser";
+                    this.grids = 3;
+                    break;
+                case 4:
+                    this.name = "Battleship";
+                    this.grids = 4;
+                    break;
+                case 5:
+                    this.name = "Carrier";
+                    this.grids = 5;
+                    break;
+                default:
+                    this.name = "Mistake";
+                    this.grids = 0;
+                    break;
+            }
             this.playerID = playerID;
-            this.name = shipName;
             this.resistance = resistance;
             this.shipType = shipType;
-            this.grids = grids;
             this.Width = grids * gridcellSize;
             this.Height = gridcellSize;
 
@@ -104,6 +129,7 @@ namespace Battleship
 
             this.shipStartCoords = startCoords;
             this.shipEndCoords = endCoords;
+            
         }
 
         /// <summary>
@@ -157,7 +183,7 @@ namespace Battleship
         /// <summary>
         /// Gets or sets ship grids 
         /// </summary>
-        public int gridspaces
+        public int GridSpaces
         {
             get { return this.grids; }
             set { this.grids = value; }
@@ -169,6 +195,11 @@ namespace Battleship
         public int PlayerID
         {
             get { return this.playerID; }
+        }
+
+        public string Name
+        {
+            get { return this.name; }
         }
 
         /// <summary>

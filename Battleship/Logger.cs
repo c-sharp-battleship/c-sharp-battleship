@@ -44,5 +44,10 @@ namespace Battleship
         {
             Trace.WriteLine(message);
         }
+
+        public static void ConsoleInformationForArray(string message)
+        {
+            Trace.Write(message);
+        }
     }
 }

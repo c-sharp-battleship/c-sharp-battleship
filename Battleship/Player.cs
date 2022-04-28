@@ -69,11 +69,11 @@ namespace Battleship
             // List of Alphabet letters to give names to gridcells
             string[] capital_letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
-            this.board = new string[(int)gridcellSize, (int)gridcellSize];
+            this.board = new string[maxCol, maxCol];
 
-            for (int i = 0; i < gridcellSize; i++)
+            for (int i = 0; i < maxCol; i++)
             {
-                for(int j = 0; j < gridcellSize; j++)
+                for(int j = 0; j < maxCol; j++)
                 {
                     board[i, j] = "O";
                 }
@@ -103,6 +103,7 @@ namespace Battleship
                             myButton.ColNum = col + 1;
                             myButton.OffenseButton = false;
                             myButton.AllowDrop = true;
+                            myButton.Buttonid = col * 10 + row;
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
@@ -135,6 +136,7 @@ namespace Battleship
                             myButton.ColNum = col + 1;
                             myButton.OffenseButton = true;
                             myButton.AllowDrop = false;
+                            myButton.Buttonid = col * 10 + row;
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
@@ -160,16 +162,7 @@ namespace Battleship
                 Coordinate endCoords = new Coordinate((short)3, (short)i);
 
                 // Construct the ships with the image above
-                Ship warship;
-                if (i == 1 || i == 2)
-                {
-                    warship = new Ship(player_ID, "Ship" + i.ToString(), 3, 0, i + 1, gridcellSize, startCoords, endCoords);
-                }
-                else
-                {
-                    warship = new Ship(player_ID, "Ship" + i.ToString(), 3, 0, i, gridcellSize, startCoords, endCoords);
-                }
-                //Ship warship = new Ship(player_ID, "Ship" + i.ToString(), 3, 0, 3, gridcellSize, startCoords, endCoords);
+                Ship warship = new Ship(player_ID, 3, i, gridcellSize, startCoords, endCoords);
                 warship.Background = new ImageBrush(shipPic);
                 warship.Uid = i.ToString();
                 Canvas.SetTop(warship, i * gridcellSize);
@@ -214,6 +207,12 @@ namespace Battleship
         public List<GridCell> Playergridsquarecollection
         {
             get { return this.playerGridCells; }
+        }
+
+        public string[,] Board
+        {
+            get { return this.board; }
+            set { this.board = value; }
         }
 
         /// <summary>

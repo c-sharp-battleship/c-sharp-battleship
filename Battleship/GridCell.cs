@@ -67,6 +67,11 @@ namespace Battleship
         private int rowNumber;
 
         /// <summary>
+        /// The grid cell's row number.
+        /// </summary>
+        private int buttonID;
+
+        /// <summary>
         /// Is the offense button clicked or not.
         /// </summary>
         private bool offenseButton = true;
@@ -182,6 +187,15 @@ namespace Battleship
         {
             get { return this.playerID; }
             set { this.playerID = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets grid cell's player ID.
+        /// </summary>
+        public int Buttonid
+        {
+            get { return buttonID; }
+            set { buttonID = value; }
         }
 
         /// <summary>
