@@ -50,16 +50,6 @@ namespace Battleship
         private bool screenPlayerOne = true;
 
         /// <summary>
-        /// Is screen for player 1 locked or not.
-        /// </summary>
-        private bool isLocked = false;
-
-        /// <summary>
-        /// Is screen for player 2 locked or not.
-        /// </summary>
-        private bool isLocked2 = false;
-
-        /// <summary>
         /// The player 1.
         /// </summary>
         private Player player1;
@@ -100,9 +90,6 @@ namespace Battleship
             this.InitializeComponent();
 
             this.gameType = gameType;
-
-            this.isLocked = false;
-            this.isLocked2 = false;
 
             switch (gameType)
             {
@@ -180,50 +167,64 @@ namespace Battleship
             this.playerWindow1.VerticalAlignment = VerticalAlignment.Center;
             this.playerWindow1.Uid = "Player1Canvas";
             this.playerWindow1.Width = (this.Cellsize * this.RowRep) * 2;
+            this.playerWindow1.Visibility = Visibility.Visible;
 
             this.playerWindow2 = new Canvas();
             this.playerWindow2.HorizontalAlignment = HorizontalAlignment.Center;
             this.playerWindow2.VerticalAlignment = VerticalAlignment.Center;
             this.playerWindow2.Uid = "Player2Canvas";
             this.playerWindow2.Width = (this.Cellsize * this.RowRep) * 2;
-            this.playerWindow2.Visibility = Visibility.Hidden; // load this canvas hidden for player 2
+            this.playerWindow2.Visibility = Visibility.Hidden;
 
-            //////Offense buttons for player one actions
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Load all cells from player one to the player one canvas
-            foreach (GridCell player_1_Offense_button in this.player1.Playergridsquarecollection)
+
+            DeclarePlayerGrid(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
+            DeclarePlayerShips(this.player1, this.playerWindow1, this.Cellsize);
+
+            DeclarePlayerGrid(this.player2, this.player1, this.PlayersCellRecords, this.playerWindow2, this.Cellsize);
+            DeclarePlayerShips(this.player2, this.playerWindow2, this.Cellsize);
+
+            // load both canvas to this window grid
+            this.Maingrid.Children.Add(this.playerWindow1);
+            this.Maingrid.Children.Add(this.playerWindow2);
+
+            this.Show();
+        }
+
+        private void DeclarePlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
+        {
+            foreach (GridCell currentPlayerOffenseButton in p_currentPlayer.Playergridsquarecollection)
             {
-                this.PlayersCellRecords.Add(player_1_Offense_button);
-                
+                p_playersCellRecords.Add(currentPlayerOffenseButton);
+
                 // add a click event for all cells in Player 1 grid only if the button is attack type
-                if (player_1_Offense_button.OffenseButton == true)
+                if (currentPlayerOffenseButton.OffenseButton == true)
                 {
                     // add click event
-                    player_1_Offense_button.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
+                    currentPlayerOffenseButton.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
                     {
                         // go check the list of buttons for player two and change the status for them
-                        foreach (GridCell player_2_deffense_button in this.player2.Playergridsquarecollection)
+                        foreach (GridCell otherPlayerDefenseButton in p_otherPlayer.Playergridsquarecollection)
                         {
                             // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                            if (player_1_Offense_button.Uid == player_2_deffense_button.Uid && player_2_deffense_button.OffenseButton == false)
+                            if (currentPlayerOffenseButton.Uid == otherPlayerDefenseButton.Uid && otherPlayerDefenseButton.OffenseButton == false)
                             {
                                 // make changes to player two grid
-                                player_2_deffense_button.Background = Brushes.Red;
-                                player_2_deffense_button.Content = "X";
-                                player_2_deffense_button.Stricked = 1;
-                                player_2_deffense_button.AllowDrop = false;
+                                otherPlayerDefenseButton.Background = Brushes.Red;
+                                otherPlayerDefenseButton.Content = "X";
+                                otherPlayerDefenseButton.Stricked = 1;
+                                otherPlayerDefenseButton.AllowDrop = false;
 
                                 // make changes to player one grid
-                                player_1_Offense_button.Visibility = Visibility.Hidden;
+                                currentPlayerOffenseButton.Visibility = Visibility.Hidden;
                             }
                         }
 
-                        Coordinate attackedGridSpace = new Coordinate((short)player_1_Offense_button.ColNum, (short)player_1_Offense_button.RowNum);
+                        Coordinate attackedGridSpace = new Coordinate((short)currentPlayerOffenseButton.ColNum, (short)currentPlayerOffenseButton.RowNum);
 
-                        Logger.ConsoleInformation("Row Number: " + player_1_Offense_button.RowNum);
-                        Logger.ConsoleInformation("Column Number: " + player_1_Offense_button.ColNum);
+                        Logger.ConsoleInformation("Row Number: " + currentPlayerOffenseButton.RowNum);
+                        Logger.ConsoleInformation("Column Number: " + currentPlayerOffenseButton.ColNum);
 
-                        foreach (Ship testShip in this.player1.Playershipcollection)
+                        foreach (Ship testShip in p_currentPlayer.Playershipcollection)
                         {
                             AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
                         }
@@ -236,36 +237,36 @@ namespace Battleship
                 {
                     // add the drag over event for when ships are dragged over the cells only if the cell is deffense type
                     // Create a method when an object is drag over this left button
-                    player_1_Offense_button.DragOver += new DragEventHandler(delegate(object sender, DragEventArgs e)
+                    currentPlayerOffenseButton.DragOver += new DragEventHandler(delegate (object sender, DragEventArgs e)
                     {
                         // find the sender uid extracting the date of the event
                         string myWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
 
                         // iterate thru the collection of ships to find the sender element with matching uid
-                        foreach (Ship ship in this.player1.Playershipcollection)
+                        foreach (Ship ship in p_currentPlayer.Playershipcollection)
                         {
                             // if the sender element uid matches then this is my element, then move it with the mouse
                             if (myWarshipUid == ship.Uid)
                             {
-                                Point grabPos = e.GetPosition(this.playerWindow1); // find the position of the mouse compared to the canvas for player one
-                                double shipMaxX = (this.playerWindow1.Width / 2) - ship.Width + this.Cellsize;
-                                double shipMaxY = (this.playerWindow1.Width / 2) - ship.Height + this.Cellsize;
+                                Point grabPos = e.GetPosition(p_currentPlayerWindow); // find the position of the mouse compared to the canvas for player one
+                                double shipMaxX = (p_currentPlayerWindow.Width / 2) - ship.Width + p_cellsize;
+                                double shipMaxY = (p_currentPlayerWindow.Width / 2) - ship.Height + p_cellsize;
                                 if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
                                 {
-                                    Canvas.SetTop(ship, player_1_Offense_button.Top_Comp_ParentTop);
-                                    ship.Top_Comp_ParentTop = player_1_Offense_button.Top_Comp_ParentTop;
-                                    Canvas.SetLeft(ship, player_1_Offense_button.Left_Comp_ParentLeft);
-                                    ship.Left_Comp_ParentLeft = player_1_Offense_button.Left_Comp_ParentLeft;
+                                    Canvas.SetTop(ship, currentPlayerOffenseButton.Top_Comp_ParentTop);
+                                    ship.Top_Comp_ParentTop = currentPlayerOffenseButton.Top_Comp_ParentTop;
+                                    Canvas.SetLeft(ship, currentPlayerOffenseButton.Left_Comp_ParentLeft);
+                                    ship.Left_Comp_ParentLeft = currentPlayerOffenseButton.Left_Comp_ParentLeft;
                                     Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
                                     Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
 
                                     if (ship.HDirection == true)
                                     {
-                                        shipEndCoords.XCoordinate += (short)((ship.Width / this.Cellsize) - 1);
+                                        shipEndCoords.XCoordinate += (short)((ship.Width / p_cellsize) - 1);
                                     }
                                     else if (ship.HDirection == false)
                                     {
-                                        shipEndCoords.YCoordinate += (short)((ship.Height / this.Cellsize) - 1);
+                                        shipEndCoords.YCoordinate += (short)((ship.Height / p_cellsize) - 1);
                                     }
 
                                     this.UpdateShipCoords(ship, shipStartCoords, shipEndCoords);
@@ -274,20 +275,20 @@ namespace Battleship
                         }
                     });
                 }
-                
-                //// Add player 1 cells to the window grid
-                this.playerWindow1.Children.Add(player_1_Offense_button);
-            }
 
-            //// Ships for player one actions
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //// Load all ships from player one to the player one canvas
-            foreach (Ship ship_1 in this.player1.Playershipcollection)
+                //// Add player 1 cells to the window grid
+                p_currentPlayerWindow.Children.Add(currentPlayerOffenseButton);
+            }
+        }
+
+        private void DeclarePlayerShips(Player p_currentPlayer, Canvas p_currentPlayerWindow, double p_cellsize)
+        {
+            foreach (Ship ship_1 in p_currentPlayer.Playershipcollection)
             {
                 // create a move move event for player 1 ships to attacch the rectangle to the mouse
                 ship_1.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
                 {
-                    if (this.isLocked == false)
+                    if (p_currentPlayer.isLocked == false)
                     {
                         if (e.LeftButton == MouseButtonState.Pressed)
                         {
@@ -300,22 +301,14 @@ namespace Battleship
                     }
                 });
 
-                ship_1.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
+                ship_1.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
                 {
-                    if (this.isLocked == false)
+                    if (p_currentPlayer.isLocked == false)
                     {
                         if (ship_1.HDirection == true)
                         {
-                            /*double shipMaxY = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
-                            double shipMaxX = this.playerWindow1.Width / 2;
-                            if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
-                            {
-                                ship_1.RotateShip(true);
-                                Logger.ConsoleInformation("New Ship Start Coords: " + ship_1.ShipStartCoords.XCoordinate.ToString() + ", " + ship_1.ShipStartCoords.YCoordinate.ToString());
-                                Logger.ConsoleInformation("New Ship End Coords: " + ship_1.ShipEndCoords.XCoordinate.ToString() + ", " + ship_1.ShipEndCoords.YCoordinate.ToString());
-                            }*/
-                            double shipMaxY = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
-                            double shipMaxX = this.playerWindow1.Width / 2;
+                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - (this.Cellsize * 2);
+                            double shipMaxX = p_currentPlayerWindow.Width / 2;
                             bool canRotateShip = true;
                             // check the borders
                             if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
@@ -325,14 +318,14 @@ namespace Battleship
                                     new Coordinate(ship_1.ShipStartCoords.XCoordinate,
                                         (short)(ship_1.ShipStartCoords.YCoordinate + ship_1.Length - 1));
                                 // loop through the list of ships
-                                foreach (Ship ship_1_neighbor in player1.Playershipcollection)
+                                foreach (Ship ship_2_neighbor in player2.Playershipcollection)
                                 {
                                     // check that the ship is not the same ship and it creates a cross with other ships
-                                    if (ship_1.ShipStartCoords != ship_1_neighbor.ShipStartCoords
-                                        && ship_1.ShipStartCoords.YCoordinate <= ship_1_neighbor.ShipEndCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate >= ship_1_neighbor.ShipStartCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate >= ship_1_neighbor.ShipStartCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate <= ship_1_neighbor.ShipEndCoords.XCoordinate)
+                                    if (ship_1.ShipStartCoords != ship_2_neighbor.ShipStartCoords
+                                        && ship_1.ShipStartCoords.YCoordinate <= ship_2_neighbor.ShipEndCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate >= ship_2_neighbor.ShipStartCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate >= ship_2_neighbor.ShipStartCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate <= ship_2_neighbor.ShipEndCoords.XCoordinate)
                                     {
                                         // if yes, doesn't allow to rotate
                                         canRotateShip = false;
@@ -344,22 +337,12 @@ namespace Battleship
                                 {
                                     ship_1.RotateShip(true);
                                 }
-                                //Logger.ConsoleInformation("New Ship Start Coords: " + ship_2.ShipStartCoords.XCoordinate.ToString() + ", " + ship_2.ShipStartCoords.YCoordinate.ToString());
-                                //Logger.ConsoleInformation("New Ship End Coords: " + ship_2.ShipEndCoords.XCoordinate.ToString() + ", " + ship_2.ShipEndCoords.YCoordinate.ToString());
                             }
                         }
                         else
                         {
-                            /*double shipMaxY = this.playerWindow1.Width / 2;
-                            double shipMaxX = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
-                            if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
-                            {
-                                ship_1.RotateShip(true);
-                                Logger.ConsoleInformation("New Ship Start Coords: " + ship_1.ShipStartCoords.XCoordinate.ToString() + ", " + ship_1.ShipStartCoords.YCoordinate.ToString());
-                                Logger.ConsoleInformation("New Ship End Coords: " + ship_1.ShipEndCoords.XCoordinate.ToString() + ", " + ship_1.ShipEndCoords.YCoordinate.ToString());
-                            }*/
-                            double shipMaxY = this.playerWindow1.Width / 2;
-                            double shipMaxX = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
+                            double shipMaxY = p_currentPlayerWindow.Width / 2;
+                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - (this.Cellsize * 2);
                             bool canRotateShip = true;
                             // check the borders
                             if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
@@ -369,14 +352,14 @@ namespace Battleship
                                     new Coordinate((short)(ship_1.ShipStartCoords.XCoordinate + ship_1.Length - 1),
                                         ship_1.ShipStartCoords.YCoordinate);
                                 // loop through the list of ships
-                                foreach (Ship ship_1_neighbor in player1.Playershipcollection)
+                                foreach (Ship ship_2_neighbor in player2.Playershipcollection)
                                 {
                                     // check that the ship is not the same ship and it creates a cross with other ships
-                                    if (ship_1.ShipStartCoords != ship_1_neighbor.ShipStartCoords
-                                        && ship_1.ShipStartCoords.XCoordinate <= ship_1_neighbor.ShipEndCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate >= ship_1_neighbor.ShipStartCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate >= ship_1_neighbor.ShipStartCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate <= ship_1_neighbor.ShipEndCoords.YCoordinate)
+                                    if (ship_1.ShipStartCoords != ship_2_neighbor.ShipStartCoords
+                                        && ship_1.ShipStartCoords.XCoordinate <= ship_2_neighbor.ShipEndCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate >= ship_2_neighbor.ShipStartCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate >= ship_2_neighbor.ShipStartCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate <= ship_2_neighbor.ShipEndCoords.YCoordinate)
                                     {
                                         // if the ship creates cross with other ships, doesn't allow to rotate
                                         canRotateShip = false;
@@ -396,213 +379,8 @@ namespace Battleship
                 });
 
                 // Add player 1 Ships to the window grid
-                this.playerWindow1.Children.Add(ship_1);
+                p_currentPlayerWindow.Children.Add(ship_1);
             }
-
-            // offense buttons for player two actions 
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Load all cells from player two to the player two canvas
-            foreach (GridCell player_2_Offense_button in this.player2.Playergridsquarecollection)
-            {
-                this.PlayersCellRecords.Add(player_2_Offense_button);
-
-                // add a click event for all cells in Player 1 grid only if the button is attack type
-                if (player_2_Offense_button.OffenseButton == true)
-                {
-                    // add click event
-                    player_2_Offense_button.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
-                    {
-                        // go check the list of buttons for player one and change the status for them
-                        foreach (GridCell player_1_deffense_button in this.player1.Playergridsquarecollection)
-                        {
-                            // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                            if (player_2_Offense_button.Uid == player_1_deffense_button.Uid && player_1_deffense_button.OffenseButton == false)
-                            {
-                                // make changes to player two grid
-                                player_1_deffense_button.Background = Brushes.Red;
-                                player_1_deffense_button.Content = "X";
-                                player_1_deffense_button.Stricked = 1;
-                                player_1_deffense_button.AllowDrop = false;
-
-                                // make changes to player one grid
-                                player_2_Offense_button.Visibility = Visibility.Hidden;
-                            }
-                        }
-
-                        Coordinate attackedGridSpace = new Coordinate((short)player_2_Offense_button.ColNum, (short)player_2_Offense_button.RowNum);
-
-                        Logger.ConsoleInformation("Row Number: " + player_2_Offense_button.RowNum);
-                        Logger.ConsoleInformation("Column Number: " + player_2_Offense_button.ColNum);
-
-                        foreach (Ship testShip in this.player2.Playershipcollection)
-                        {
-                            AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
-                        }
-
-                        // Swicth windows between players
-                        this.SwitchPlayerWindows();
-                    });
-                }
-                else 
-                {
-                    // add the drag over event for when ships are dragged over the cells only if the cell is deffense type
-                    // Create a method when an object is drag over this left button
-                    player_2_Offense_button.DragOver += new DragEventHandler(delegate(object sender, DragEventArgs e)
-                    {
-                        // find the sender uid extracting the date of the event
-                        string myWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
-
-                        // iterate thru the collection of ships to find the sender element with matching uid
-                        foreach (Ship ship in this.player2.Playershipcollection)
-                        {
-                            if (this.isLocked2 == false)
-                            {
-                                // if the sender element uid matches then this is my element, then move it with the mouse
-                                if (myWarshipUid == ship.Uid)
-                                {
-                                    Point grabPos = e.GetPosition(this.playerWindow2); // find the position of the mouse compared to the canvas for player two
-                                    double shipMaxX = (this.playerWindow2.Width / 2) - ship.Width + this.Cellsize;
-                                    double shipMaxY = (this.playerWindow2.Width / 2) - ship.Height + this.Cellsize;
-                                    if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
-                                    {
-                                        Canvas.SetTop(ship, player_2_Offense_button.Top_Comp_ParentTop);
-                                        ship.Top_Comp_ParentTop = player_2_Offense_button.Top_Comp_ParentTop;
-                                        Canvas.SetLeft(ship, player_2_Offense_button.Left_Comp_ParentLeft);
-                                        ship.Left_Comp_ParentLeft = player_2_Offense_button.Left_Comp_ParentLeft;
-
-                                        Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
-                                        Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
-
-                                        if (ship.HDirection == true)
-                                        {
-                                            shipEndCoords.XCoordinate += (short)((ship.Width / this.Cellsize) - 1);
-                                        }
-                                        else if (ship.HDirection == false)
-                                        {
-                                            shipEndCoords.YCoordinate += (short)((ship.Height / this.Cellsize) - 1);
-                                        }
-
-                                        this.UpdateShipCoords(ship, shipStartCoords, shipEndCoords);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-                //// Add player 2 cells to the window grid
-                this.playerWindow2.Children.Add(player_2_Offense_button);
-            }
-
-            // player two ships actions
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Load all ships from player two to the player two canvas
-            foreach (Ship ship_2 in this.player2.Playershipcollection)
-            {
-                // create a move move event for player 2 ships to attacch the rectangle to the mouse
-                ship_2.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
-                {
-                    if (this.isLocked2 == false)
-                    {
-                        if (e.LeftButton == MouseButtonState.Pressed)
-                        {
-                            string objectUniqueID = ship_2.Uid;
-                            Point grabPos = e.GetPosition(ship_2);
-                            Canvas.SetTop(ship_2, grabPos.Y);
-                            Canvas.SetLeft(ship_2, grabPos.X);
-                            DragDrop.DoDragDrop(ship_2, objectUniqueID, DragDropEffects.Move);
-                        }
-                    }
-                });
-
-                // Rotate ships for player two with rigth click(refer to ship class constructor)
-                ship_2.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
-                {
-                    if (this.isLocked2 == false)
-                    {
-                        if (ship_2.HDirection == true)
-                        {
-                            double shipMaxY = (this.playerWindow2.Width / 2) - (this.Cellsize * 2);
-                            double shipMaxX = this.playerWindow2.Width / 2;
-                            bool canRotateShip = true;
-                            // check the borders
-                            if (ship_2.Top_Comp_ParentTop < shipMaxY && ship_2.Left_Comp_ParentLeft < shipMaxX)
-                            {
-                                // the end coordinates of the ship after rotation
-                                Coordinate shipAfterRotateEndCoords =
-                                    new Coordinate(ship_2.ShipStartCoords.XCoordinate,
-                                        (short)(ship_2.ShipStartCoords.YCoordinate + ship_2.Length - 1));
-                                // loop through the list of ships
-                                foreach (Ship ship_2_neighbor in player2.Playershipcollection)
-                                {
-                                    // check that the ship is not the same ship and it creates a cross with other ships
-                                    if (ship_2.ShipStartCoords != ship_2_neighbor.ShipStartCoords 
-                                        && ship_2.ShipStartCoords.YCoordinate <= ship_2_neighbor.ShipEndCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate >= ship_2_neighbor.ShipStartCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate >= ship_2_neighbor.ShipStartCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate <= ship_2_neighbor.ShipEndCoords.XCoordinate)
-                                    {
-                                        // if yes, doesn't allow to rotate
-                                        canRotateShip = false;
-                                        break;
-                                    }
-                                }
-
-                                if (canRotateShip)
-                                {
-                                    ship_2.RotateShip(true);
-                                }
-                                //Logger.ConsoleInformation("New Ship Start Coords: " + ship_2.ShipStartCoords.XCoordinate.ToString() + ", " + ship_2.ShipStartCoords.YCoordinate.ToString());
-                                //Logger.ConsoleInformation("New Ship End Coords: " + ship_2.ShipEndCoords.XCoordinate.ToString() + ", " + ship_2.ShipEndCoords.YCoordinate.ToString());
-                            }
-                        }
-                        else
-                        {
-                            double shipMaxY = this.playerWindow2.Width / 2;
-                            double shipMaxX = (this.playerWindow2.Width / 2) - (this.Cellsize * 2);
-                            bool canRotateShip = true;
-                            // check the borders
-                            if (ship_2.Top_Comp_ParentTop < shipMaxY && ship_2.Left_Comp_ParentLeft < shipMaxX)
-                            {
-                                // the end coordinates of the ship after rotation
-                                Coordinate shipAfterRotateEndCoords =
-                                    new Coordinate((short)(ship_2.ShipStartCoords.XCoordinate + ship_2.Length - 1),
-                                        ship_2.ShipStartCoords.YCoordinate);
-                                // loop through the list of ships
-                                foreach (Ship ship_2_neighbor in player2.Playershipcollection)
-                                {
-                                    // check that the ship is not the same ship and it creates a cross with other ships
-                                    if (ship_2.ShipStartCoords != ship_2_neighbor.ShipStartCoords
-                                        && ship_2.ShipStartCoords.XCoordinate <= ship_2_neighbor.ShipEndCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate >= ship_2_neighbor.ShipStartCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate >= ship_2_neighbor.ShipStartCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate <= ship_2_neighbor.ShipEndCoords.YCoordinate)
-                                    {
-                                        // if the ship creates cross with other ships, doesn't allow to rotate
-                                        canRotateShip = false;
-                                        break;
-                                    }
-                                }
-
-                                if (canRotateShip)
-                                {
-                                    ship_2.RotateShip(true);
-                                }
-                                //Logger.ConsoleInformation("New Ship Start Coords: " + ship_2.ShipStartCoords.XCoordinate.ToString() + ", " + ship_2.ShipStartCoords.YCoordinate.ToString());
-                                //Logger.ConsoleInformation("New Ship End Coords: " + ship_2.ShipEndCoords.XCoordinate.ToString() + ", " + ship_2.ShipEndCoords.YCoordinate.ToString());
-                            }
-                        }
-                    }
-                });
-
-                // Add player 2 Ships to the window grid
-                this.playerWindow2.Children.Add(ship_2);
-            }
-
-            // load both canvas to this window grid
-            this.Maingrid.Children.Add(this.playerWindow1);
-            this.Maingrid.Children.Add(this.playerWindow2);
-
-            this.Show();
         }
 
         /// <summary>
@@ -662,7 +440,7 @@ namespace Battleship
         /// <param name="canvasUid">The id of the canvas.</param>
         private void SetConfirmButtonVisibility(string canvasUid)
         {
-            if ((canvasUid == "Player1Canvas" && this.isLocked == true) || (canvasUid == "Player2Canvas" && this.isLocked2 == true))
+            if ((canvasUid == "Player1Canvas" && this.player1.isLocked == true) || (canvasUid == "Player2Canvas" && this.player2.isLocked == true))
             {
                 this.Confirm_Button.IsEnabled = false;
                 this.AttackBtn.IsEnabled = true;
@@ -737,7 +515,7 @@ namespace Battleship
                     }
                 }
             }
-            else if ((canvasUid == "Player1Canvas" && this.isLocked == false) || (canvasUid == "Player2Canvas" && this.isLocked2 == false))
+            else if ((canvasUid == "Player1Canvas" && this.player1.isLocked == false) || (canvasUid == "Player2Canvas" && this.player2.isLocked == false))
             { 
                 this.Confirm_Button.IsEnabled = true;
                 this.AttackBtn.IsEnabled = false;
@@ -752,12 +530,12 @@ namespace Battleship
         {
             if (canvasUid == "Player1Canvas")
             {
-                this.isLocked = true;
+                this.player1.isLocked = true;
                 
             }
             else if (canvasUid == "Player2Canvas")
             {
-                this.isLocked2 = true;
+                this.player2.isLocked = true;
             }
 
             this.SetConfirmButtonVisibility(canvasUid);

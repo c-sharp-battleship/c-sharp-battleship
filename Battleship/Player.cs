@@ -23,6 +23,8 @@ namespace Battleship
     /// </summary>
     public class Player
     {
+        public bool isLocked;
+
         /// <summary>
         /// The player's ID.
         /// </summary>
@@ -56,6 +58,8 @@ namespace Battleship
         /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one</param>
         public Player(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense)
         {
+            this.isLocked = false;
+
             // set the fixed properties
             this.name = player_Name;
             this.playerID = player_ID;
