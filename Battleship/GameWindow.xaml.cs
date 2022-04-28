@@ -167,6 +167,7 @@ namespace Battleship
             // start player one label visible
             PlayerOnelabel.Visibility = Visibility.Visible;
             PlayerTwolabel.Visibility = Visibility.Hidden;
+            AttackBtn.IsEnabled = false;
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
@@ -193,7 +194,7 @@ namespace Battleship
             foreach (GridCell player_1_Offense_button in this.player1.Playergridsquarecollection)
             {
                 this.PlayersCellRecords.Add(player_1_Offense_button);
-
+                
                 // add a click event for all cells in Player 1 grid only if the button is attack type
                 if (player_1_Offense_button.OffenseButton == true)
                 {
@@ -255,34 +256,6 @@ namespace Battleship
                                     ship.Top_Comp_ParentTop = player_1_Offense_button.Top_Comp_ParentTop;
                                     Canvas.SetLeft(ship, player_1_Offense_button.Left_Comp_ParentLeft);
                                     ship.Left_Comp_ParentLeft = player_1_Offense_button.Left_Comp_ParentLeft;
-                                    int row = player_1_Offense_button.Buttonid / 10;
-                                    int col = player_1_Offense_button.Buttonid - player_1_Offense_button.Buttonid / 10 * 10;
-                                    string letter = ship.Name.Substring(0, 2);
-                                    int length = ship.GridSpaces;
-                                    if (ship.HDirection == true)
-                                    {
-                                        for(int i = 0; i < length; i++)
-                                        {
-                                            player1.Board[row, col] = letter;
-                                            col++;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        for(int i = 0; i < length; i++)
-                                        {
-                                            player1.Board[row, col] = letter;
-                                            row++;
-                                        }
-                                    }
-                                    for(int i = 0; i < RowRep; i++)
-                                    {
-                                        for(int j = 0; j < RowRep; j++)
-                                        {
-                                            Logger.ConsoleInformationForArray(player1.Board[i, j] + ", ");
-                                        }
-                                        Logger.ConsoleInformation("");
-                                    }
                                     Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
                                     Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
 
@@ -301,6 +274,7 @@ namespace Battleship
                         }
                     });
                 }
+                
                 //// Add player 1 cells to the window grid
                 this.playerWindow1.Children.Add(player_1_Offense_button);
             }
@@ -308,53 +282,122 @@ namespace Battleship
             //// Ships for player one actions
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //// Load all ships from player one to the player one canvas
-            
-                foreach (Ship ship_1 in this.player1.Playershipcollection)
+            foreach (Ship ship_1 in this.player1.Playershipcollection)
+            {
+                // create a move move event for player 1 ships to attacch the rectangle to the mouse
+                ship_1.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
                 {
-                    // create a move move event for player 1 ships to attacch the rectangle to the mouse
-                    ship_1.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
+                    if (this.isLocked == false)
                     {
-                        if (this.isLocked == false)
+                        if (e.LeftButton == MouseButtonState.Pressed)
                         {
-                            if (e.LeftButton == MouseButtonState.Pressed)
+                            string objectUniqueID = ship_1.Uid;
+                            Point grabPos = e.GetPosition(ship_1);
+                            Canvas.SetTop(ship_1, grabPos.Y);
+                            Canvas.SetLeft(ship_1, grabPos.X);
+                            DragDrop.DoDragDrop(ship_1, objectUniqueID, DragDropEffects.Move);
+                        }
+                    }
+                });
+
+                ship_1.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
+                {
+                    if (this.isLocked == false)
+                    {
+                        if (ship_1.HDirection == true)
+                        {
+                            /*double shipMaxY = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
+                            double shipMaxX = this.playerWindow1.Width / 2;
+                            if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
                             {
-                                string objectUniqueID = ship_1.Uid;
-                                Point grabPos = e.GetPosition(ship_1);
-                                Canvas.SetTop(ship_1, grabPos.Y);
-                                Canvas.SetLeft(ship_1, grabPos.X);
-                                DragDrop.DoDragDrop(ship_1, objectUniqueID, DragDropEffects.Move);
+                                ship_1.RotateShip(true);
+                                Logger.ConsoleInformation("New Ship Start Coords: " + ship_1.ShipStartCoords.XCoordinate.ToString() + ", " + ship_1.ShipStartCoords.YCoordinate.ToString());
+                                Logger.ConsoleInformation("New Ship End Coords: " + ship_1.ShipEndCoords.XCoordinate.ToString() + ", " + ship_1.ShipEndCoords.YCoordinate.ToString());
+                            }*/
+                            double shipMaxY = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
+                            double shipMaxX = this.playerWindow1.Width / 2;
+                            bool canRotateShip = true;
+                            // check the borders
+                            if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
+                            {
+                                // the end coordinates of the ship after rotation
+                                Coordinate shipAfterRotateEndCoords =
+                                    new Coordinate(ship_1.ShipStartCoords.XCoordinate,
+                                        (short)(ship_1.ShipStartCoords.YCoordinate + ship_1.Length - 1));
+                                // loop through the list of ships
+                                foreach (Ship ship_1_neighbor in player1.Playershipcollection)
+                                {
+                                    // check that the ship is not the same ship and it creates a cross with other ships
+                                    if (ship_1.ShipStartCoords != ship_1_neighbor.ShipStartCoords
+                                        && ship_1.ShipStartCoords.YCoordinate <= ship_1_neighbor.ShipEndCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate >= ship_1_neighbor.ShipStartCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate >= ship_1_neighbor.ShipStartCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate <= ship_1_neighbor.ShipEndCoords.XCoordinate)
+                                    {
+                                        // if yes, doesn't allow to rotate
+                                        canRotateShip = false;
+                                        break;
+                                    }
+                                }
+
+                                if (canRotateShip)
+                                {
+                                    ship_1.RotateShip(true);
+                                }
+                                //Logger.ConsoleInformation("New Ship Start Coords: " + ship_2.ShipStartCoords.XCoordinate.ToString() + ", " + ship_2.ShipStartCoords.YCoordinate.ToString());
+                                //Logger.ConsoleInformation("New Ship End Coords: " + ship_2.ShipEndCoords.XCoordinate.ToString() + ", " + ship_2.ShipEndCoords.YCoordinate.ToString());
                             }
                         }
-                    });
-
-                    ship_1.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
-                    {
-                        if (this.isLocked == false)
+                        else
                         {
-                            if (ship_1.HDirection == true)
+                            /*double shipMaxY = this.playerWindow1.Width / 2;
+                            double shipMaxX = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
+                            if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
                             {
-                                double shipMaxY = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
-                                double shipMaxX = this.playerWindow1.Width / 2;
-                                if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
-                                {
-                                    ship_1.Rotateship(true);
-                                }
-                            }
-                            else
+                                ship_1.RotateShip(true);
+                                Logger.ConsoleInformation("New Ship Start Coords: " + ship_1.ShipStartCoords.XCoordinate.ToString() + ", " + ship_1.ShipStartCoords.YCoordinate.ToString());
+                                Logger.ConsoleInformation("New Ship End Coords: " + ship_1.ShipEndCoords.XCoordinate.ToString() + ", " + ship_1.ShipEndCoords.YCoordinate.ToString());
+                            }*/
+                            double shipMaxY = this.playerWindow1.Width / 2;
+                            double shipMaxX = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
+                            bool canRotateShip = true;
+                            // check the borders
+                            if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
                             {
-                                double shipMaxY = this.playerWindow1.Width / 2;
-                                double shipMaxX = (this.playerWindow1.Width / 2) - (this.Cellsize * 2);
-                                if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
+                                // the end coordinates of the ship after rotation
+                                Coordinate shipAfterRotateEndCoords =
+                                    new Coordinate((short)(ship_1.ShipStartCoords.XCoordinate + ship_1.Length - 1),
+                                        ship_1.ShipStartCoords.YCoordinate);
+                                // loop through the list of ships
+                                foreach (Ship ship_1_neighbor in player1.Playershipcollection)
                                 {
-                                    ship_1.Rotateship(true);
+                                    // check that the ship is not the same ship and it creates a cross with other ships
+                                    if (ship_1.ShipStartCoords != ship_1_neighbor.ShipStartCoords
+                                        && ship_1.ShipStartCoords.XCoordinate <= ship_1_neighbor.ShipEndCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate >= ship_1_neighbor.ShipStartCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate >= ship_1_neighbor.ShipStartCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate <= ship_1_neighbor.ShipEndCoords.YCoordinate)
+                                    {
+                                        // if the ship creates cross with other ships, doesn't allow to rotate
+                                        canRotateShip = false;
+                                        break;
+                                    }
                                 }
+
+                                if (canRotateShip)
+                                {
+                                    ship_1.RotateShip(true);
+                                }
+                                //Logger.ConsoleInformation("New Ship Start Coords: " + ship_2.ShipStartCoords.XCoordinate.ToString() + ", " + ship_2.ShipStartCoords.YCoordinate.ToString());
+                                //Logger.ConsoleInformation("New Ship End Coords: " + ship_2.ShipEndCoords.XCoordinate.ToString() + ", " + ship_2.ShipEndCoords.YCoordinate.ToString());
                             }
                         }
-                    });
+                    }
+                });
 
-                    // Add player 1 Ships to the window grid
-                    this.playerWindow1.Children.Add(ship_1);
-                }
+                // Add player 1 Ships to the window grid
+                this.playerWindow1.Children.Add(ship_1);
+            }
 
             // offense buttons for player two actions 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -480,18 +523,72 @@ namespace Battleship
                         {
                             double shipMaxY = (this.playerWindow2.Width / 2) - (this.Cellsize * 2);
                             double shipMaxX = this.playerWindow2.Width / 2;
+                            bool canRotateShip = true;
+                            // check the borders
                             if (ship_2.Top_Comp_ParentTop < shipMaxY && ship_2.Left_Comp_ParentLeft < shipMaxX)
                             {
-                                ship_2.Rotateship(true);
+                                // the end coordinates of the ship after rotation
+                                Coordinate shipAfterRotateEndCoords =
+                                    new Coordinate(ship_2.ShipStartCoords.XCoordinate,
+                                        (short)(ship_2.ShipStartCoords.YCoordinate + ship_2.Length - 1));
+                                // loop through the list of ships
+                                foreach (Ship ship_2_neighbor in player2.Playershipcollection)
+                                {
+                                    // check that the ship is not the same ship and it creates a cross with other ships
+                                    if (ship_2.ShipStartCoords != ship_2_neighbor.ShipStartCoords 
+                                        && ship_2.ShipStartCoords.YCoordinate <= ship_2_neighbor.ShipEndCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate >= ship_2_neighbor.ShipStartCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate >= ship_2_neighbor.ShipStartCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate <= ship_2_neighbor.ShipEndCoords.XCoordinate)
+                                    {
+                                        // if yes, doesn't allow to rotate
+                                        canRotateShip = false;
+                                        break;
+                                    }
+                                }
+
+                                if (canRotateShip)
+                                {
+                                    ship_2.RotateShip(true);
+                                }
+                                //Logger.ConsoleInformation("New Ship Start Coords: " + ship_2.ShipStartCoords.XCoordinate.ToString() + ", " + ship_2.ShipStartCoords.YCoordinate.ToString());
+                                //Logger.ConsoleInformation("New Ship End Coords: " + ship_2.ShipEndCoords.XCoordinate.ToString() + ", " + ship_2.ShipEndCoords.YCoordinate.ToString());
                             }
                         }
                         else
                         {
                             double shipMaxY = this.playerWindow2.Width / 2;
                             double shipMaxX = (this.playerWindow2.Width / 2) - (this.Cellsize * 2);
+                            bool canRotateShip = true;
+                            // check the borders
                             if (ship_2.Top_Comp_ParentTop < shipMaxY && ship_2.Left_Comp_ParentLeft < shipMaxX)
                             {
-                                ship_2.Rotateship(true);
+                                // the end coordinates of the ship after rotation
+                                Coordinate shipAfterRotateEndCoords =
+                                    new Coordinate((short)(ship_2.ShipStartCoords.XCoordinate + ship_2.Length - 1),
+                                        ship_2.ShipStartCoords.YCoordinate);
+                                // loop through the list of ships
+                                foreach (Ship ship_2_neighbor in player2.Playershipcollection)
+                                {
+                                    // check that the ship is not the same ship and it creates a cross with other ships
+                                    if (ship_2.ShipStartCoords != ship_2_neighbor.ShipStartCoords
+                                        && ship_2.ShipStartCoords.XCoordinate <= ship_2_neighbor.ShipEndCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate >= ship_2_neighbor.ShipStartCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate >= ship_2_neighbor.ShipStartCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate <= ship_2_neighbor.ShipEndCoords.YCoordinate)
+                                    {
+                                        // if the ship creates cross with other ships, doesn't allow to rotate
+                                        canRotateShip = false;
+                                        break;
+                                    }
+                                }
+
+                                if (canRotateShip)
+                                {
+                                    ship_2.RotateShip(true);
+                                }
+                                //Logger.ConsoleInformation("New Ship Start Coords: " + ship_2.ShipStartCoords.XCoordinate.ToString() + ", " + ship_2.ShipStartCoords.YCoordinate.ToString());
+                                //Logger.ConsoleInformation("New Ship End Coords: " + ship_2.ShipEndCoords.XCoordinate.ToString() + ", " + ship_2.ShipEndCoords.YCoordinate.ToString());
                             }
                         }
                     }
@@ -519,7 +616,6 @@ namespace Battleship
                 this.screenPlayerOne = false;
                 PlayerOnelabel.Visibility = Visibility.Hidden;
                 PlayerTwolabel.Visibility = Visibility.Visible;
-
                 foreach (UIElement canvas in this.Maingrid.Children)
                 {
                     if (canvas.Uid == "Player1Canvas")
@@ -569,10 +665,82 @@ namespace Battleship
             if ((canvasUid == "Player1Canvas" && this.isLocked == true) || (canvasUid == "Player2Canvas" && this.isLocked2 == true))
             {
                 this.Confirm_Button.IsEnabled = false;
+                this.AttackBtn.IsEnabled = true;
+                if (canvasUid == "Player1Canvas")
+                {
+                    foreach (Ship ship in this.player1.Playershipcollection)
+                    {
+                        int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;
+                        int startRow = (int)ship.ShipStartCoords.YCoordinate - 1;
+                        int endColumn = (int)ship.ShipEndCoords.XCoordinate - 1;
+                        int endRow = (int)ship.ShipEndCoords.YCoordinate - 1;
+                        string letter = ship.Name.Substring(0, 2);
+                        if (ship.HDirection == true)
+                        {
+                            for (int i = startColumn; i <= endColumn; i++)
+                            {
+                                player1.Board[startRow, i] = letter;
+                            }
+                        }
+                        else if (ship.HDirection == false)
+                        {
+                            for (int i = startRow; i <= endRow; i++)
+                            {
+                                player1.Board[i, startColumn] = letter;
+                            }
+                        }
+                    }
+                    Logger.ConsoleInformation("------- " + canvasUid + " ------");
+                    for (int i = 0; i < RowRep; i++)
+                    {
+                        for (int j = 0; j < RowRep; j++)
+                        {
+                            Logger.ConsoleInformationForArray(player1.Board[i, j] + ", ");
+                        }
+
+                        Logger.ConsoleInformation("");
+                    }
+                }
+                else if(canvasUid == "Player2Canvas")
+                {
+                    foreach (Ship ship in this.player2.Playershipcollection)
+                    {
+                        int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;
+                        int startRow = (int)ship.ShipStartCoords.YCoordinate - 1;
+                        int endColumn = (int)ship.ShipEndCoords.XCoordinate - 1;
+                        int endRow = (int)ship.ShipEndCoords.YCoordinate - 1;
+                        string letter = ship.Name.Substring(0, 2);
+                        if (ship.HDirection == true)
+                        {
+                            for (int i = startColumn; i <= endColumn; i++)
+                            {
+                                player2.Board[startRow, i] = letter;
+                            }
+                        }
+                        else if (ship.HDirection == false)
+                        {
+                            for (int i = startRow; i <= endRow; i++)
+                            {
+                                player2.Board[i, startColumn] = letter;
+                            }
+                        }
+                    }
+                    Logger.ConsoleInformation("------- " + canvasUid + " ------");
+                    for (int i = 0; i < RowRep; i++)
+                    {
+                        for (int j = 0; j < RowRep; j++)
+                        {
+                            Logger.ConsoleInformationForArray(player2.Board[i, j] + ", ");
+                        }
+
+                        Logger.ConsoleInformation("");
+                    }
+                }
             }
-            else if ((canvasUid == "Player1Canvas" && this.isLocked) == false || (canvasUid == "Player2Canvas" && this.isLocked2 == false))
+            else if ((canvasUid == "Player1Canvas" && this.isLocked == false) || (canvasUid == "Player2Canvas" && this.isLocked2 == false))
             { 
                 this.Confirm_Button.IsEnabled = true;
+                this.AttackBtn.IsEnabled = false;
             }
         }
 
@@ -585,6 +753,7 @@ namespace Battleship
             if (canvasUid == "Player1Canvas")
             {
                 this.isLocked = true;
+                
             }
             else if (canvasUid == "Player2Canvas")
             {
@@ -618,8 +787,8 @@ namespace Battleship
         /// <param name="shipEndCoords">The ending (bottom-right) coordinates of the ship.</param>
         private void UpdateShipCoords(Ship shipToUpdate, Coordinate shipStartCoords, Coordinate shipEndCoords)
         {
-            Logger.ConsoleInformation("New Ship Start Coords: " + shipStartCoords.XCoordinate.ToString() + ", " + shipStartCoords.YCoordinate.ToString());
-            Logger.ConsoleInformation("New Ship End Coords: " + shipEndCoords.XCoordinate.ToString() + ", " + shipEndCoords.YCoordinate.ToString());
+            //Logger.ConsoleInformation("New Ship Start Coords: " + shipStartCoords.XCoordinate.ToString() + ", " + shipStartCoords.YCoordinate.ToString());
+            //Logger.ConsoleInformation("New Ship End Coords: " + shipEndCoords.XCoordinate.ToString() + ", " + shipEndCoords.YCoordinate.ToString());
             shipToUpdate.UpdateShipCoords(shipStartCoords, shipEndCoords);
         }
 

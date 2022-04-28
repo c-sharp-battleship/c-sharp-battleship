@@ -109,6 +109,16 @@ namespace Battleship
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             myButton.Left_Comp_ParentLeft = col * gridcellSize;
                             myButton.Top_Comp_ParentTop = row * gridcellSize;
+                            if (grids == 0)
+                            {
+                                myButton.OffenseButton = false;
+                                myButton.AllowDrop = true;
+                            }
+                            else
+                            {
+                                myButton.OffenseButton = true;
+                                myButton.AllowDrop = false;
+                            }
                             loader.Add(myButton);
                         }
                     }
@@ -159,10 +169,9 @@ namespace Battleship
                 shipPic.EndInit();
 
                 Coordinate startCoords = new Coordinate(1, (short)(i + 1));
-                Coordinate endCoords = new Coordinate((short)3, (short)i);
 
                 // Construct the ships with the image above
-                Ship warship = new Ship(player_ID, 3, i, gridcellSize, startCoords, endCoords);
+                Ship warship = new Ship(player_ID, 3, i, gridcellSize, startCoords);
                 warship.Background = new ImageBrush(shipPic);
                 warship.Uid = i.ToString();
                 Canvas.SetTop(warship, i * gridcellSize);

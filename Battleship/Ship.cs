@@ -55,9 +55,9 @@ namespace Battleship
         private int resistance;
 
         /// <summary>
-        /// The ship's grids.
+        /// The ship's length.
         /// </summary>
-        private int grids;
+        private int length;
 
         /// <summary>
         /// The ship's player ID.
@@ -83,53 +83,49 @@ namespace Battleship
         /// Initializes a new instance of the <see cref="Ship" /> class.
         /// </summary>
         /// <param name="playerID"> This is the player ID passed from player class</param>
-        /// <param name="shipName"> This is the name for the ship,refer to player class</param>
         /// <param name="resistance">this is the number of hits this ship will resist</param>
         /// <param name="shipType"> this is the type of ship, Submarine,warship...</param>
-        /// <param name="grids"> This is the number of grid squares the ship will cover on the player class(canvas)</param>
-        /// <param name="gridcellSize"> This is the size of the grid square passed from player class, determined in pixels</param>
+        /// <param name="gridCellSize"> This is the size of the grid square passed from player class, determined in pixels</param>
         /// <param name="startCoords"> This is the start coordinates of the ship</param>
         /// <param name="endCoords"> This is the end coordinates of the ship</param>
-        public Ship(int playerID, int resistance, int shipType, double gridcellSize, Coordinate startCoords, Coordinate endCoords) : base()
+        public Ship(int playerID, int resistance, int shipType, double gridCellSize, Coordinate startCoords) : base()
         {
+            this.playerID = playerID;
+            this.resistance = resistance;
+            this.shipType = shipType;
+            this.ShipIsSunk = false;
+            this.shipStartCoords = startCoords;
             switch (shipType)
             {
                 case 1:
                     this.name = "Destroyer";
-                    this.grids = 2;
+                    this.length = 2;
                     break;
                 case 2:
                     this.name = "Submarine";
-                    this.grids = 3;
+                    this.length = 3;
                     break;
                 case 3:
                     this.name = "Cruiser";
-                    this.grids = 3;
+                    this.length = 3;
                     break;
                 case 4:
                     this.name = "Battleship";
-                    this.grids = 4;
+                    this.length = 4;
                     break;
                 case 5:
                     this.name = "Carrier";
-                    this.grids = 5;
+                    this.length = 5;
                     break;
                 default:
                     this.name = "Mistake";
-                    this.grids = 0;
+                    this.length = 0;
                     break;
             }
-            this.playerID = playerID;
-            this.resistance = resistance;
-            this.shipType = shipType;
-            this.Width = grids * gridcellSize;
-            this.Height = gridcellSize;
-
-            this.ShipIsSunk = false;
-
-            this.shipStartCoords = startCoords;
+            Coordinate endCoords = new Coordinate((short)(this.shipStartCoords.XCoordinate + this.length - 1), this.ShipStartCoords.YCoordinate);
             this.shipEndCoords = endCoords;
-            
+            this.Width = length * gridCellSize;
+            this.Height = gridCellSize;
         }
 
         /// <summary>
@@ -181,12 +177,12 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets ship grids 
+        /// Gets or sets ship length 
         /// </summary>
-        public int GridSpaces
+        public int Length
         {
-            get { return this.grids; }
-            set { this.grids = value; }
+            get { return this.length; }
+            set { this.length = value; }
         }
 
         /// <summary>
@@ -224,17 +220,13 @@ namespace Battleship
         /// This method will change the width or the Height of this ship and reverse it.
         /// </summary>
         /// <param name="trigger">The trigger</param>
-        public void Rotateship(bool trigger)
+        public void RotateShip(bool trigger)
         {
             if (trigger == true)
             {
                 // Instantiate new coordinate objects to store the ship's previous coordinates.
-                Coordinate previousShipStartCoords = new Coordinate(this.shipStartCoords.XCoordinate, this.shipStartCoords.YCoordinate);
-                Coordinate previousShipEndCoords = new Coordinate(this.shipStartCoords.XCoordinate, this.shipStartCoords.YCoordinate);
-
-                // Update the coordinate properties of the current ship.
-                this.shipStartCoords = previousShipEndCoords;
-                this.shipEndCoords = previousShipStartCoords;
+                Coordinate previousShipStartCoords;
+                Coordinate previousShipEndCoords;
 
                 if (this.HDirection == true)
                 {
@@ -242,6 +234,8 @@ namespace Battleship
                     double switcher = Width; // base
                     this.Width = this.Height;
                     this.Height = switcher;
+                    previousShipStartCoords = new Coordinate(this.shipStartCoords.XCoordinate, this.shipStartCoords.YCoordinate);
+                    previousShipEndCoords = new Coordinate(this.shipStartCoords.XCoordinate, (short)(this.shipStartCoords.YCoordinate + this.length - 1));
                 }
                 else 
                 {
@@ -249,7 +243,13 @@ namespace Battleship
                     double switcher = Width; // base
                     this.Width = this.Height;
                     this.Height = switcher;
+                    previousShipStartCoords = new Coordinate(this.shipStartCoords.XCoordinate, this.shipStartCoords.YCoordinate);
+                    previousShipEndCoords = new Coordinate((short)(this.shipStartCoords.XCoordinate + this.length - 1), this.shipStartCoords.YCoordinate);
                 }
+
+                // Update the coordinate properties of the current ship.
+                this.shipStartCoords = previousShipStartCoords;
+                this.shipEndCoords = previousShipEndCoords;
             }
         }
 
