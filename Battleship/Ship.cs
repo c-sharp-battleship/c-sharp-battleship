@@ -55,7 +55,7 @@ namespace Battleship
         private int resistance;
 
         /// <summary>
-        /// The ship's length.
+        /// The ship's grids.
         /// </summary>
         private int grids;
 
@@ -155,9 +155,9 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets ship length 
+        /// Gets or sets ship grids 
         /// </summary>
-        public int GridSpaces
+        public int gridspaces
         {
             get { return this.grids; }
             set { this.grids = value; }

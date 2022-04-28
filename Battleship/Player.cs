@@ -43,6 +43,8 @@ namespace Battleship
         /// </summary>
         private List<GridCell> playerGridCells;
 
+        private string[,] board;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Player" /> class.
         /// </summary>
@@ -66,6 +68,16 @@ namespace Battleship
 
             // List of Alphabet letters to give names to gridcells
             string[] capital_letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+            this.board = new string[(int)gridcellSize, (int)gridcellSize];
+
+            for (int i = 0; i < gridcellSize; i++)
+            {
+                for(int j = 0; j < gridcellSize; j++)
+                {
+                    board[i, j] = "O";
+                }
+            }
 
             // set the player cstom button(grid) collection list if it is placed on the right side of screen
             // Make two grids of buttons for each player one for defense and one for offense(Defense buttons wnot have click events)
@@ -148,7 +160,16 @@ namespace Battleship
                 Coordinate endCoords = new Coordinate((short)3, (short)i);
 
                 // Construct the ships with the image above
-                Ship warship = new Ship(player_ID, "Ship" + i.ToString(), 3, 0, 3, gridcellSize, startCoords, endCoords);
+                Ship warship;
+                if (i == 1 || i == 2)
+                {
+                    warship = new Ship(player_ID, "Ship" + i.ToString(), 3, 0, i + 1, gridcellSize, startCoords, endCoords);
+                }
+                else
+                {
+                    warship = new Ship(player_ID, "Ship" + i.ToString(), 3, 0, i, gridcellSize, startCoords, endCoords);
+                }
+                //Ship warship = new Ship(player_ID, "Ship" + i.ToString(), 3, 0, 3, gridcellSize, startCoords, endCoords);
                 warship.Background = new ImageBrush(shipPic);
                 warship.Uid = i.ToString();
                 Canvas.SetTop(warship, i * gridcellSize);
