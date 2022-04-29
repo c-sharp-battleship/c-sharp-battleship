@@ -125,7 +125,7 @@ namespace Battleship
             }
 
             // load the button collection to the list field if it is right
-            this.playerGridCells = loader;
+            this.playerGridCellsList = loader;
 
             this.playerShips = RandomShipPlacement(player_ID, gridcellSize, maxCol, shiploader);
             foreach (Ship warship in this.playerShips)
@@ -137,8 +137,8 @@ namespace Battleship
 
                 warship.Background = new ImageBrush(shipPic);
                 warship.Uid = warship.ShipType.ToString();
-                Canvas.SetTop(warship, warship.ShipStartCoords.YCoordinate * gridcellSize);
-                Canvas.SetLeft(warship, warship.ShipStartCoords.XCoordinate * gridcellSize);
+                Canvas.SetTop(warship, (warship.ShipStartCoords.YCoordinate - 1) * gridcellSize);
+                Canvas.SetLeft(warship, (warship.ShipStartCoords.XCoordinate - 1) * gridcellSize);
 
                 warship.OnShipIsSunk += this.PlayerShipSunk;
             }
@@ -167,7 +167,9 @@ namespace Battleship
                 shipPosition = SetRandomShipCoordinate(warship, board, maxCol, horDirection);
                 int rowShip = shipPosition.YCoordinate;
                 int colShip = shipPosition.XCoordinate;
-                warship.ShipStartCoords = shipPosition;
+                Coordinate shipPositionFinal = new Coordinate((short) (shipPosition.XCoordinate + 1),
+                    (short) (shipPosition.YCoordinate + 1));
+                warship.ShipStartCoords = shipPositionFinal;
                 for (int j = 0; j < warship.Length; j++)
                 {
                     string letter = warship.Name.Substring(0, 2);

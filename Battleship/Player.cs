@@ -38,18 +38,18 @@ namespace Battleship
         /// <summary>
         /// The list of player's ships.
         /// </summary>
-        private List<Ship> playerShips = new List<Ship>();
+        protected List<Ship> playerShips = new List<Ship>();
 
         /// <summary>
         /// The list of player's gris cells.
-        //private List<GridCell> playerGridCells = new List<GridCell>();
+        protected List<GridCell> playerGridCellsList = new List<GridCell>();
 
         /// <summary>
         /// Tracking changes event dictionary
         /// </summary>
-        public Dictionary<int, GridCell> playerGridCells = new Dictionary<int, GridCell>();
+        protected Dictionary<int, GridCell> playerGridCells = new Dictionary<int, GridCell>();
 
-        private string[,] board;
+        protected string[,] board;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player" /> class.
@@ -210,6 +210,14 @@ namespace Battleship
         public List<Ship> Playershipcollection
         {
             get { return this.playerShips; }
+        }
+
+        /// <summary>
+        /// Gets player Button collections for its personal grid 
+        /// </summary>
+        public List<GridCell> PlayerGridCellList
+        {
+            get { return this.playerGridCellsList; }
         }
 
         /// <summary>

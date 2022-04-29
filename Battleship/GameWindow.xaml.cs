@@ -133,6 +133,7 @@ namespace Battleship
         /// <param name="e">The event arguments for the event.</param>
         public void StartPlayerToComputerGame(object sender, EventArgs e)
         {
+            this.StartGamePlayerComputer(sender, e);
         }
 
         /// <summary>
@@ -159,19 +160,7 @@ namespace Battleship
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.player1 = new Player(1, "PlayerOne", this.Cellsize, this.RowRep, 1, 3);
-            this.player2 = new Player(2, "PlayerOne", this.Cellsize, this.RowRep, 3, 6);
-
-            this.computerPlayer1 = new ComputerPlayer(3, "PlayerThree", this.Cellsize, this.RowRep, 3, 6);
-            Logger.ConsoleInformation("------- Computer Grid ------");
-            for (int i = 0; i < RowRep; i++)
-            {
-                for (int j = 0; j < RowRep; j++)
-                {
-                    Logger.ConsoleInformationForArray(computerPlayer1.Board[i, j] + ", ");
-                }
-
-                Logger.ConsoleInformation("");
-            }
+            this.player2 = new Player(2, "PlayerTwo", this.Cellsize, this.RowRep, 3, 6);
 
             // Create two Canvas to place the player elements on them 
             this.playerWindow1 = new Canvas();
@@ -202,6 +191,63 @@ namespace Battleship
             this.Show();
         }
 
+        /// <summary>
+        /// Start the game.
+        /// </summary>
+        /// <param name="sender">The object that initiated the event.</param>
+        /// <param name="e">The event arguments for the event.</param>
+        public void StartGamePlayerComputer(object sender, EventArgs e)
+        {
+            // start player one label visible
+            PlayerOnelabel.Visibility = Visibility.Visible;
+            PlayerTwolabel.Visibility = Visibility.Hidden;
+            AttackBtn.IsEnabled = false;
+
+            // Create Players with their cells and their ships and grids colors
+            // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
+            this.player1 = new Player(1, "PlayerOne", this.Cellsize, this.RowRep, 1, 3);
+            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6);
+
+            Logger.ConsoleInformation("------- Computer Grid ------");
+            for (int i = 0; i < RowRep; i++)
+            {
+                for (int j = 0; j < RowRep; j++)
+                {
+                    Logger.ConsoleInformationForArray(player2.Board[i, j] + ", ");
+                }
+
+                Logger.ConsoleInformation("");
+            }
+
+            // Create two Canvas to place the player elements on them 
+            this.playerWindow1 = new Canvas();
+            this.playerWindow1.HorizontalAlignment = HorizontalAlignment.Center;
+            this.playerWindow1.VerticalAlignment = VerticalAlignment.Center;
+            this.playerWindow1.Uid = "Player1Canvas";
+            this.playerWindow1.Width = (this.Cellsize * this.RowRep) * 2;
+            this.playerWindow1.Visibility = Visibility.Visible;
+
+            this.playerWindow2 = new Canvas();
+            this.playerWindow2.HorizontalAlignment = HorizontalAlignment.Center;
+            this.playerWindow2.VerticalAlignment = VerticalAlignment.Center;
+            this.playerWindow2.Uid = "Player2Canvas";
+            this.playerWindow2.Width = (this.Cellsize * this.RowRep) * 2;
+            this.playerWindow2.Visibility = Visibility.Hidden;
+
+
+            DeclarePlayerGrid(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
+            DeclarePlayerShips(this.player1, this.playerWindow1, this.Cellsize);
+
+            DeclareComputerPlayerGrid(this.player2, this.player1, this.PlayersCellRecords, this.playerWindow2, this.Cellsize);
+            DeclareComputerPlayerShips(this.player2, this.playerWindow2, this.Cellsize);
+
+            // load both canvas to this window grid
+            this.Maingrid.Children.Add(this.playerWindow1);
+            this.Maingrid.Children.Add(this.playerWindow2);
+
+            this.Show();
+        }
+
         private void DeclarePlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
             foreach (KeyValuePair<int,GridCell> MainPlayerPair in p_currentPlayer.Playergridsquarecollection)
@@ -222,7 +268,7 @@ namespace Battleship
                             int otherPlayercellnumber = otherPlayerPair.Key;
                             GridCell otherPlayerPlayerCell = otherPlayerPair.Value;
                             // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                            if (gridcellnumber == otherPlayercellnumber)
+                            if (MainPlayerCell.Uid == otherPlayerPlayerCell.Uid && otherPlayerPlayerCell.OffenseButton == false)
                             {
                                 // make changes to player two grid
                                 otherPlayerPlayerCell.Background = Brushes.Red;
@@ -306,6 +352,56 @@ namespace Battleship
 
                 //// Add player 1 cells to the window grid
                 p_currentPlayerWindow.Children.Add(MainPlayerCell);
+            }
+        }
+
+        private void DeclareComputerPlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
+        {
+            foreach (GridCell currentPlayerOffenseButton in p_currentPlayer.PlayerGridCellList)
+            {
+                p_playersCellRecords.Add(currentPlayerOffenseButton);
+
+                // add a click event for all cells in Player 1 grid only if the button is attack type
+                if (currentPlayerOffenseButton.OffenseButton == true)
+                {
+                    // add click event
+                    currentPlayerOffenseButton.Click += new RoutedEventHandler(delegate (object sender, RoutedEventArgs e)
+                    {
+                        // go check the list of buttons for player two and change the status for them
+                        foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
+                        {
+                            GridCell otherPlayerDefenseButton = otherPlayerPair.Value;
+                            // turn off buttons on the enemy grid(player two left side)only if it is a defense button
+                            if (currentPlayerOffenseButton.Uid == otherPlayerDefenseButton.Uid && otherPlayerDefenseButton.OffenseButton == false)
+                            {
+                                // make changes to player two grid
+                                otherPlayerDefenseButton.Background = Brushes.Red;
+                                otherPlayerDefenseButton.Content = "X";
+                                otherPlayerDefenseButton.Stricked = 1;
+                                otherPlayerDefenseButton.AllowDrop = false;
+
+                                // make changes to player one grid
+                                currentPlayerOffenseButton.Visibility = Visibility.Hidden;
+                            }
+                        }
+
+                        Coordinate attackedGridSpace = new Coordinate((short)currentPlayerOffenseButton.ColNum, (short)currentPlayerOffenseButton.RowNum);
+
+                        Logger.ConsoleInformation("Row Number: " + currentPlayerOffenseButton.RowNum);
+                        Logger.ConsoleInformation("Column Number: " + currentPlayerOffenseButton.ColNum);
+
+                        foreach (Ship testShip in p_currentPlayer.Playershipcollection)
+                        {
+                            AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                        }
+
+                        // Swicth windows between players 
+                        this.SwitchPlayerWindows();
+                    });
+                }
+                
+                //// Add player 1 cells to the window grid
+                p_currentPlayerWindow.Children.Add(currentPlayerOffenseButton);
             }
         }
 
@@ -406,6 +502,15 @@ namespace Battleship
                     }
                 });
 
+                // Add player 1 Ships to the window grid
+                p_currentPlayerWindow.Children.Add(ship_1);
+            }
+        }
+
+        private void DeclareComputerPlayerShips(Player p_currentPlayer, Canvas p_currentPlayerWindow, double p_cellsize)
+        {
+            foreach (Ship ship_1 in p_currentPlayer.Playershipcollection)
+            {
                 // Add player 1 Ships to the window grid
                 p_currentPlayerWindow.Children.Add(ship_1);
             }
@@ -515,6 +620,7 @@ namespace Battleship
                         int startRow = (int)ship.ShipStartCoords.YCoordinate - 1;
                         int endColumn = (int)ship.ShipEndCoords.XCoordinate - 1;
                         int endRow = (int)ship.ShipEndCoords.YCoordinate - 1;
+                        
                         string letter = ship.Name.Substring(0, 2);
                         if (ship.HDirection == true)
                         {
