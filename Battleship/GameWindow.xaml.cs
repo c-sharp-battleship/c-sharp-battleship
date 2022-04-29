@@ -307,7 +307,7 @@ namespace Battleship
                     {
                         if (ship_1.HDirection == true)
                         {
-                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - (this.Cellsize * 2);
+                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - (p_cellsize * ship_1.Length);
                             double shipMaxX = p_currentPlayerWindow.Width / 2;
                             bool canRotateShip = true;
                             // check the borders
@@ -318,14 +318,14 @@ namespace Battleship
                                     new Coordinate(ship_1.ShipStartCoords.XCoordinate,
                                         (short)(ship_1.ShipStartCoords.YCoordinate + ship_1.Length - 1));
                                 // loop through the list of ships
-                                foreach (Ship ship_2_neighbor in player2.Playershipcollection)
+                                foreach (Ship ship_1_neighbor in p_currentPlayer.Playershipcollection)
                                 {
                                     // check that the ship is not the same ship and it creates a cross with other ships
-                                    if (ship_1.ShipStartCoords != ship_2_neighbor.ShipStartCoords
-                                        && ship_1.ShipStartCoords.YCoordinate <= ship_2_neighbor.ShipEndCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate >= ship_2_neighbor.ShipStartCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate >= ship_2_neighbor.ShipStartCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate <= ship_2_neighbor.ShipEndCoords.XCoordinate)
+                                    if (ship_1.ShipStartCoords != ship_1_neighbor.ShipStartCoords
+                                        && ship_1.ShipStartCoords.YCoordinate <= ship_1_neighbor.ShipEndCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate >= ship_1_neighbor.ShipStartCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate >= ship_1_neighbor.ShipStartCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate <= ship_1_neighbor.ShipEndCoords.XCoordinate)
                                     {
                                         // if yes, doesn't allow to rotate
                                         canRotateShip = false;
@@ -342,7 +342,7 @@ namespace Battleship
                         else
                         {
                             double shipMaxY = p_currentPlayerWindow.Width / 2;
-                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - (this.Cellsize * 2);
+                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - (p_cellsize * ship_1.Length);
                             bool canRotateShip = true;
                             // check the borders
                             if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
@@ -352,14 +352,14 @@ namespace Battleship
                                     new Coordinate((short)(ship_1.ShipStartCoords.XCoordinate + ship_1.Length - 1),
                                         ship_1.ShipStartCoords.YCoordinate);
                                 // loop through the list of ships
-                                foreach (Ship ship_2_neighbor in player2.Playershipcollection)
+                                foreach (Ship ship_1_neighbor in p_currentPlayer.Playershipcollection)
                                 {
                                     // check that the ship is not the same ship and it creates a cross with other ships
-                                    if (ship_1.ShipStartCoords != ship_2_neighbor.ShipStartCoords
-                                        && ship_1.ShipStartCoords.XCoordinate <= ship_2_neighbor.ShipEndCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate >= ship_2_neighbor.ShipStartCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate >= ship_2_neighbor.ShipStartCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate <= ship_2_neighbor.ShipEndCoords.YCoordinate)
+                                    if (ship_1.ShipStartCoords != ship_1_neighbor.ShipStartCoords
+                                        && ship_1.ShipStartCoords.XCoordinate <= ship_1_neighbor.ShipEndCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.XCoordinate >= ship_1_neighbor.ShipStartCoords.XCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate >= ship_1_neighbor.ShipStartCoords.YCoordinate
+                                        && shipAfterRotateEndCoords.YCoordinate <= ship_1_neighbor.ShipEndCoords.YCoordinate)
                                     {
                                         // if the ship creates cross with other ships, doesn't allow to rotate
                                         canRotateShip = false;
