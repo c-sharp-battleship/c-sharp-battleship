@@ -192,37 +192,41 @@ namespace Battleship
 
         private void DeclarePlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
-            foreach (GridCell currentPlayerOffenseButton in p_currentPlayer.Playergridsquarecollection)
+            foreach (KeyValuePair<int,GridCell> MainPlayerPair in p_currentPlayer.Playergridsquarecollection)
             {
-                p_playersCellRecords.Add(currentPlayerOffenseButton);
+                int gridcellnumber = MainPlayerPair.Key;
+                GridCell MainPlayerCell = MainPlayerPair.Value;
+               // p_playersCellRecords.Add(currentPlayerOffenseButton);
 
                 // add a click event for all cells in Player 1 grid only if the button is attack type
-                if (currentPlayerOffenseButton.OffenseButton == true)
+                if (MainPlayerCell.OffenseButton == true)
                 {
                     // add click event
-                    currentPlayerOffenseButton.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
+                    MainPlayerCell.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
                     {
                         // go check the list of buttons for player two and change the status for them
-                        foreach (GridCell otherPlayerDefenseButton in p_otherPlayer.Playergridsquarecollection)
+                        foreach (KeyValuePair<int,GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
                         {
+                            int otherPlayercellnumber = otherPlayerPair.Key;
+                            GridCell otherPlayerPlayerCell = otherPlayerPair.Value;
                             // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                            if (currentPlayerOffenseButton.Uid == otherPlayerDefenseButton.Uid && otherPlayerDefenseButton.OffenseButton == false)
+                            if (gridcellnumber == otherPlayercellnumber)
                             {
                                 // make changes to player two grid
-                                otherPlayerDefenseButton.Background = Brushes.Red;
-                                otherPlayerDefenseButton.Content = "X";
-                                otherPlayerDefenseButton.Stricked = 1;
-                                otherPlayerDefenseButton.AllowDrop = false;
+                                otherPlayerPlayerCell.Background = Brushes.Red;
+                                otherPlayerPlayerCell.Content = "X";
+                                otherPlayerPlayerCell.Stricked = 1;
+                                otherPlayerPlayerCell.AllowDrop = false;
 
                                 // make changes to player one grid
-                                currentPlayerOffenseButton.Visibility = Visibility.Hidden;
+                                MainPlayerCell.Visibility = Visibility.Hidden;
                             }
                         }
 
-                        Coordinate attackedGridSpace = new Coordinate((short)currentPlayerOffenseButton.ColNum, (short)currentPlayerOffenseButton.RowNum);
+                        Coordinate attackedGridSpace = new Coordinate((short)MainPlayerCell.ColNum, (short)MainPlayerCell.RowNum);
 
-                        Logger.ConsoleInformation("Row Number: " + currentPlayerOffenseButton.RowNum);
-                        Logger.ConsoleInformation("Column Number: " + currentPlayerOffenseButton.ColNum);
+                        Logger.ConsoleInformation("Row Number: " + MainPlayerCell.RowNum);
+                        Logger.ConsoleInformation("Column Number: " + MainPlayerCell.ColNum);
 
                         foreach (Ship testShip in p_currentPlayer.Playershipcollection)
                         {
@@ -237,7 +241,7 @@ namespace Battleship
                 {
                     // add the drag over event for when ships are dragged over the cells only if the cell is deffense type
                     // Create a method when an object is drag over this left button
-                    currentPlayerOffenseButton.DragOver += new DragEventHandler(delegate (object sender, DragEventArgs e)
+                    MainPlayerCell.DragOver += new DragEventHandler(delegate (object sender, DragEventArgs e)
                     {
                         // find the sender uid extracting the date of the event
                         string myWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
@@ -253,10 +257,16 @@ namespace Battleship
                                 double shipMaxY = (p_currentPlayerWindow.Width / 2) - ship.Height + p_cellsize;
                                 if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
                                 {
-                                    Canvas.SetTop(ship, currentPlayerOffenseButton.Top_Comp_ParentTop);
-                                    ship.Top_Comp_ParentTop = currentPlayerOffenseButton.Top_Comp_ParentTop;
-                                    Canvas.SetLeft(ship, currentPlayerOffenseButton.Left_Comp_ParentLeft);
-                                    ship.Left_Comp_ParentLeft = currentPlayerOffenseButton.Left_Comp_ParentLeft;
+
+                                    /*
+                                    StatusCodes.GridSpaceStatus isDesiredShipPositionOccupied = p_currentPlayer.checkshipcrewmembers()
+                                    ship.SetCrewmembers(ship.Length, MainPlayerCell.TrackingID, ship.HDirection);
+                                    */
+
+                                    Canvas.SetTop(ship, MainPlayerCell.Top_Comp_ParentTop);
+                                    ship.Top_Comp_ParentTop = MainPlayerCell.Top_Comp_ParentTop;
+                                    Canvas.SetLeft(ship, MainPlayerCell.Left_Comp_ParentLeft);
+                                    ship.Left_Comp_ParentLeft = MainPlayerCell.Left_Comp_ParentLeft;
                                     Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
                                     Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
 
@@ -272,12 +282,18 @@ namespace Battleship
                                     this.UpdateShipCoords(ship, shipStartCoords, shipEndCoords);
                                 }
                             }
+
+                            foreach (int crewmember in ship.Delayed_H_Crewmembers)
+                            {
+                                Logger.ConsoleInformation(crewmember.ToString());
+                            }
+
                         }
                     });
                 }
 
                 //// Add player 1 cells to the window grid
-                p_currentPlayerWindow.Children.Add(currentPlayerOffenseButton);
+                p_currentPlayerWindow.Children.Add(MainPlayerCell);
             }
         }
 

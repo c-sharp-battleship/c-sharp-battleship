@@ -80,6 +80,41 @@ namespace Battleship
         private Coordinate shipEndCoords;
 
         /// <summary>
+        /// Horizontal crew members
+        /// </summary>
+        private List<int> Moving_H_crewmembers;
+
+        /// <summary>
+        /// Vertical Crew mwmbers
+        /// </summary>
+        private List<int> Moving_V_crewmembers;
+
+        /// <summary>
+        /// Horizontal crew members
+        /// </summary>
+        private List<int> Fixed_H_crewmembers;
+
+        /// <summary>
+        /// Vertical Crew mwmbers
+        /// </summary>
+        private List<int> Fixed_V_crewmembers;
+
+        /// <summary>
+        /// Ship current crew
+        /// </summary>
+        private List<int> actualship_crewmembers;
+
+        /// <summary>
+        /// Ship driver cell
+        /// </summary>
+        private int captain_;
+
+        /// <summary>
+        /// The ship's length.
+        /// </summary>
+        private int grids;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Ship" /> class.
         /// </summary>
         /// <param name="playerID"> This is the player ID passed from player class</param>
@@ -88,44 +123,81 @@ namespace Battleship
         /// <param name="gridCellSize"> This is the size of the grid square passed from player class, determined in pixels</param>
         /// <param name="startCoords"> This is the start coordinates of the ship</param>
         /// <param name="endCoords"> This is the end coordinates of the ship</param>
-        public Ship(int playerID, int resistance, int shipType, double gridCellSize, Coordinate startCoords) : base()
+        public Ship(int playerID,int driver, int shipType, double gridCellSize, int RowTotal, Coordinate startCoords) : base()
         {
+            this.Moving_H_crewmembers = new List<int>();
+            this.Moving_V_crewmembers = new List<int>();
+            this.Fixed_H_crewmembers = new List<int>();
+            this.Fixed_V_crewmembers = new List<int>();
+            this.actualship_crewmembers = new List<int>();
             this.playerID = playerID;
-            this.resistance = resistance;
             this.shipType = shipType;
             this.ShipIsSunk = false;
             this.shipStartCoords = startCoords;
+
             switch (shipType)
             {
                 case 1:
                     this.name = "Destroyer";
                     this.length = 2;
+                    this.resistance = 2;
+                    this.grids = 2;
                     break;
                 case 2:
                     this.name = "Submarine";
                     this.length = 3;
+                    this.resistance = 3;
+                    this.grids = 3;
                     break;
                 case 3:
                     this.name = "Cruiser";
                     this.length = 3;
+                    this.resistance = 3;
+                    this.grids = 3;
                     break;
                 case 4:
                     this.name = "Battleship";
                     this.length = 4;
+                    this.resistance = 4;
+                    this.grids = 4;
                     break;
                 case 5:
                     this.name = "Carrier";
                     this.length = 5;
+                    this.resistance = 5;
+                    this.grids = 5;
                     break;
                 default:
                     this.name = "Mistake";
                     this.length = 0;
+                    this.resistance = 0;
+                    this.grids = 0;
                     break;
             }
             Coordinate endCoords = new Coordinate((short)(this.shipStartCoords.XCoordinate + this.length - 1), this.ShipStartCoords.YCoordinate);
             this.shipEndCoords = endCoords;
             this.Width = length * gridCellSize;
             this.Height = gridCellSize;
+            this.captain_ = driver;
+
+            //set the entry point crew member to compare future moves
+            Fixed_H_crewmembers.Clear();
+            Fixed_V_crewmembers.Clear();
+            int Hvalue = driver;
+            int Vvalue = driver;
+
+            for (int i = 0; i < grids; i++)
+            {
+                Fixed_H_crewmembers.Add(Hvalue);
+                Hvalue++;
+            }
+
+            for (int i = 0; i < grids; i++)
+            {
+                Fixed_V_crewmembers.Add(Vvalue);
+                Vvalue += RowTotal;
+            }
+
         }
 
         /// <summary>
@@ -214,6 +286,49 @@ namespace Battleship
         {
             get { return this.TopToParentTop; }
             set { this.TopToParentTop = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets ship length 
+        /// </summary>
+        public int GridSpaces
+        {
+            get { return this.grids; }
+            set { this.grids = value; }
+        }
+
+        public List<int> H_Crewmembers
+        {
+            get { return Moving_H_crewmembers; }
+        }
+
+        public List<int> V_Crewmembers
+        {
+            get { return Moving_V_crewmembers; }
+        }
+
+        public List<int> Delayed_H_Crewmembers
+        {
+            get { return Fixed_H_crewmembers; }
+        }
+
+        public List<int> Delayed_V_Crewmembers
+        {
+            get { return Fixed_V_crewmembers; }
+        }
+
+        public List<int> Ship_Crewmembers
+        {
+            get { return actualship_crewmembers; }
+        }
+
+        /// <summary>
+        /// Set the entry point for the ship when loaded 
+        /// </summary>
+        public int Captain
+        {
+            get { return this.captain_; }
+            set { this.captain_ = value; }
         }
 
         /// <summary>
@@ -321,6 +436,38 @@ namespace Battleship
             {
                 this.HDirection = false;
             }
+        }
+
+        public void SetCrewmembers(int p_shipLength, int p_capitan, bool p_horDirection)
+        {
+            this.Moving_H_crewmembers.Clear();
+            this.Moving_V_crewmembers.Clear();
+            int Hvalue = p_capitan;
+            int Vvalue = p_capitan;
+
+            for (int i = 0; i < GridSpaces; i++)
+            {
+                this.Moving_H_crewmembers.Add(Hvalue);
+                Hvalue++;
+            }
+
+            for (int i = 0; i < GridSpaces; i++)
+            {
+                this.Moving_V_crewmembers.Add(Vvalue);
+                Vvalue += this.GridSpaces;
+            }
+
+            if (p_horDirection == true)
+            {
+                this.actualship_crewmembers.Clear();
+                this.actualship_crewmembers = this.H_Crewmembers;
+            }
+            else
+            {
+                this.actualship_crewmembers.Clear();
+                this.actualship_crewmembers = this.V_Crewmembers;
+            }
+
         }
     }
 }
