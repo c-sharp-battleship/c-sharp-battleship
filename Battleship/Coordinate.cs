@@ -25,6 +25,14 @@ namespace Battleship
         /// </summary>
         public short YCoordinate;
 
+        public short GetShipID()
+        {
+            short x = this.XCoordinate;
+            short y = (short)(10 * this.YCoordinate);
+
+            return (short)(x + y);
+        }
+
         /// <summary>
         ///  Initializes a new instance of the <see cref="Coordinate" /> class.
         /// </summary>

@@ -38,14 +38,18 @@ namespace Battleship
         /// <summary>
         /// The list of player's ships.
         /// </summary>
-        protected List<Ship> playerShips;
+        private List<Ship> playerShips = new List<Ship>();
 
         /// <summary>
         /// The list of player's gris cells.
-        /// </summary>
-        protected List<GridCell> playerGridCells;
+        //private List<GridCell> playerGridCells = new List<GridCell>();
 
-        protected string[,] board;
+        /// <summary>
+        /// Tracking changes event dictionary
+        /// </summary>
+        public Dictionary<int, GridCell> playerGridCells = new Dictionary<int, GridCell>();
+
+        private string[,] board;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player" /> class.
@@ -63,12 +67,6 @@ namespace Battleship
             // set the fixed properties
             this.name = player_Name;
             this.playerID = player_ID;
-
-            // List of buttons for each player returned to the personal grid builder 
-            List<GridCell> loader = new List<GridCell>();
-
-            // List of ships for each player to return to the personal grid builder
-            List<Ship> shiploader = new List<Ship>();
 
             // List of Alphabet letters to give names to gridcells
             string[] capital_letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -100,7 +98,9 @@ namespace Battleship
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
 
                             GridCell myButton = new GridCell(player_ID, buttoncolorForDeffense, rowthousand.ToString());
-                            myButton.Content = capital_letters[col] + (row + 1);
+                            //myButton.Content = capital_letters[col] + (row + 1);
+                            myButton.TrackingID = (col + 1) + (row * maxCol);
+                            myButton.Content = (col + 1) + (row * maxCol);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
                             myButton.RowNum = row + 1;
@@ -113,17 +113,7 @@ namespace Battleship
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             myButton.Left_Comp_ParentLeft = col * gridcellSize;
                             myButton.Top_Comp_ParentTop = row * gridcellSize;
-                            if (grids == 0)
-                            {
-                                myButton.OffenseButton = false;
-                                myButton.AllowDrop = true;
-                            }
-                            else
-                            {
-                                myButton.OffenseButton = true;
-                                myButton.AllowDrop = false;
-                            }
-                            loader.Add(myButton);
+                            playerGridCells.Add(col + 1 + (row * maxCol), myButton);
                         }
                     }
                 }
@@ -141,9 +131,11 @@ namespace Battleship
                         {
                             // create a name for this button will result in a string(10.0001, this is elevated to the ten thounsans to allow a high number of buttons without the repeating of the name)
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
-
+                            int DictionaryOffset = maxCol * maxCol;
                             GridCell myButton = new GridCell(player_ID, buttoncolorForOffense, rowthousand.ToString());
-                            myButton.Content = capital_letters[col] + (row + 1);
+                            //myButton.Content = capital_letters[col] + (row + 1);
+                            myButton.TrackingID = col + 1 + (row * maxCol);
+                            myButton.Content = col + 1 + (row * maxCol);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
                             myButton.RowNum = row + 1; 
@@ -154,16 +146,14 @@ namespace Battleship
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
-                            loader.Add(myButton);
+                            playerGridCells.Add(DictionaryOffset + col + 1 + (row * maxCol),myButton);
                         }
                     }
                 }
             }
 
-            // load the button collection to the list field if it is right
-            this.playerGridCells = loader;
-
-            // Create a collection of 5 ships for any player 
+            // Create a collection of 5 ships for any player
+            int driver = 11;
             for (int i = 1; i <= 5; i++)
             {
                 // get an iamge retainer for the iteration
@@ -171,23 +161,31 @@ namespace Battleship
                 shipPic.BeginInit();
                 shipPic.UriSource = new Uri(@"./warship.jpg", UriKind.Relative);
                 shipPic.EndInit();
-
                 Coordinate startCoords = new Coordinate(1, (short)(i + 1));
 
                 // Construct the ships with the image above
-                Ship warship = new Ship(player_ID, 3, i, gridcellSize, startCoords);
+                Ship warship = new Ship(player_ID, driver, i, gridcellSize, maxCol, startCoords);
                 warship.Background = new ImageBrush(shipPic);
                 warship.Uid = i.ToString();
-                Canvas.SetTop(warship, i * gridcellSize);
-                Canvas.SetLeft(warship, 0);
-
+                //Find the loading cell requested for the ship horizontally
+                foreach (KeyValuePair<int,GridCell> pair in playerGridCells)
+                {
+                    int gridcellnumber = pair.Key;
+                    GridCell gridCellbutton = pair.Value;
+                    if (gridcellnumber == driver && gridCellbutton.OffenseButton == false)
+                    {
+                        Canvas.SetTop(warship, gridCellbutton.TopToParentTop);
+                        Canvas.SetLeft(warship, gridCellbutton.LeftToParentLeft);
+                        warship.Captain = gridCellbutton.TrackingID;
+                        gridCellbutton.ButtonOccupied = true;//occupies the driver_pilot_cell inside the dictionary
+                    }
+                }
                 warship.OnShipIsSunk += this.PlayerShipSunk;
+                driver += maxCol;
 
                 // load the ship to the list of ships
-                shiploader.Add(warship);
+                playerShips.Add(warship);
             }
-            //// Load the ships to the list passed down the line with the field
-            this.playerShips = shiploader;
         }
 
         /// <summary>
@@ -217,7 +215,7 @@ namespace Battleship
         /// <summary>
         /// Gets player Button collections for its personal grid 
         /// </summary>
-        public List<GridCell> Playergridsquarecollection
+        public Dictionary<int,GridCell> Playergridsquarecollection
         {
             get { return this.playerGridCells; }
         }
@@ -261,6 +259,28 @@ namespace Battleship
             {
                 Logger.Information("You Have Won!");
             }
+        }
+
+        public StatusCodes.GridSpaceStatus checkshipcrewmembers(List<int> p_crew)
+        {
+            StatusCodes.GridSpaceStatus shipCrewMemberStatus = StatusCodes.GridSpaceStatus.GRID_SPACE_NOT_OCCUPIED;
+
+            foreach(int crewMember in p_crew)
+            {
+                foreach(Ship testShip in this.playerShips)
+                {
+                    foreach(int testShipCrewMember in testShip.Ship_Crewmembers)
+                    {
+                        if(testShipCrewMember == crewMember)
+                        {
+                            shipCrewMemberStatus = StatusCodes.GridSpaceStatus.GRID_SPACE_OCCUPIED;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return shipCrewMemberStatus;
         }
     }
 }

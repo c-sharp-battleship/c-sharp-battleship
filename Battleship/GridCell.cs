@@ -82,6 +82,11 @@ namespace Battleship
         private bool buttonOccupied = false;
 
         /// <summary>
+        /// The grid cell's row number.
+        /// </summary>
+        private int trackingID_;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GridCell" /> class.
         /// </summary>
         /// <param name="playerID"> This is the ID of the player </param>
@@ -223,6 +228,15 @@ namespace Battleship
         {
             get { return this.rowNumber; }
             set { this.rowNumber = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets grid cell's player ID.
+        /// </summary>
+        public int TrackingID
+        {
+            get { return this.trackingID_; }
+            set { this.trackingID_ = value; }
         }
     }
 }

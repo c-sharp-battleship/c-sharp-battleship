@@ -83,5 +83,11 @@ namespace Battleship
             /// </summary>
             COMPUTER_TO_COMPUTER
         }
+
+        public enum GridSpaceStatus
+        {
+            GRID_SPACE_OCCUPIED,
+            GRID_SPACE_NOT_OCCUPIED
+        }
     }
 }
