@@ -307,7 +307,7 @@ namespace Battleship
                     {
                         if (ship_1.HDirection == true)
                         {
-                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - (p_cellsize * ship_1.Length);
+                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - (p_cellsize * (ship_1.Length - 1));
                             double shipMaxX = p_currentPlayerWindow.Width / 2;
                             bool canRotateShip = true;
                             // check the borders
@@ -342,7 +342,7 @@ namespace Battleship
                         else
                         {
                             double shipMaxY = p_currentPlayerWindow.Width / 2;
-                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - (p_cellsize * ship_1.Length);
+                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - (p_cellsize * (ship_1.Length - 1));
                             bool canRotateShip = true;
                             // check the borders
                             if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
