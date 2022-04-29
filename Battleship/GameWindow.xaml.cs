@@ -65,7 +65,7 @@ namespace Battleship
         private ComputerPlayer computerPlayer1;
 
         /// <summary>
-        /// The computer player 1.
+        /// The computer player 2.
         /// </summary>
         private ComputerPlayer computerPlayer2;
 
