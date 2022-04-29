@@ -128,6 +128,59 @@ namespace Battleship
             this.Height = gridCellSize;
         }
 
+        public Ship(int playerID, int shipType, double gridCellSize, bool horDirection) : base()
+        {
+            this.playerID = playerID;
+            this.shipType = shipType;
+            this.ShipIsSunk = false;
+            this.horDirection = horDirection;
+            switch (shipType)
+            {
+                case 1:
+                    this.name = "Destroyer";
+                    this.length = 2;
+                    this.resistance = 2;
+                    break;
+                case 2:
+                    this.name = "Submarine";
+                    this.length = 3;
+                    this.resistance = 3;
+                    break;
+                case 3:
+                    this.name = "Cruiser";
+                    this.length = 3;
+                    this.resistance = 3;
+                    break;
+                case 4:
+                    this.name = "Battleship";
+                    this.length = 4;
+                    this.resistance = 4;
+                    break;
+                case 5:
+                    this.name = "Carrier";
+                    this.length = 5;
+                    this.resistance = 5;
+                    break;
+                default:
+                    this.name = "Mistake";
+                    this.length = 0;
+                    this.resistance = 0;
+                    break;
+            }
+            this.Width = length * gridCellSize;
+            this.Height = gridCellSize;
+            if (horDirection)
+            {
+                this.Width = length * gridCellSize;
+                this.Height = gridCellSize;
+            }
+            else
+            {
+                this.Width = gridCellSize;
+                this.Height = length * gridCellSize;
+            }
+        }
+
         /// <summary>
         /// Event for the is ship sunk or not
         /// </summary>
@@ -139,6 +192,20 @@ namespace Battleship
         public Coordinate ShipStartCoords
         {
             get { return this.shipStartCoords; }
+            set
+            {
+                this.shipStartCoords = value;
+                Coordinate endCoords = new Coordinate();
+                if (this.horDirection)
+                {
+                    endCoords = new Coordinate((short)(this.shipStartCoords.XCoordinate + this.length - 1), this.ShipStartCoords.YCoordinate);
+                }
+                else
+                {
+                    endCoords = new Coordinate(this.shipStartCoords.XCoordinate, (short)(this.ShipStartCoords.YCoordinate + this.length - 1));
+                }
+                this.shipEndCoords = endCoords;
+            }
         }
 
         /// <summary>

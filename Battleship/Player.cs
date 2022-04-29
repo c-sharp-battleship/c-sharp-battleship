@@ -38,14 +38,14 @@ namespace Battleship
         /// <summary>
         /// The list of player's ships.
         /// </summary>
-        private List<Ship> playerShips;
+        protected List<Ship> playerShips;
 
         /// <summary>
         /// The list of player's gris cells.
         /// </summary>
-        private List<GridCell> playerGridCells;
+        protected List<GridCell> playerGridCells;
 
-        private string[,] board;
+        protected string[,] board;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player" /> class.
@@ -233,7 +233,7 @@ namespace Battleship
         /// </summary>
         /// <param name="sender">The object that initiated the event</param>
         /// <param name="e">The event arguments for the event.</param>
-        private void PlayerShipSunk(object sender, EventArgs e)
+        protected void PlayerShipSunk(object sender, EventArgs e)
         {
             Ship ship = sender as Ship;
             ship.ShipIsSunk = true;

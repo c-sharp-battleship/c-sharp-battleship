@@ -161,6 +161,18 @@ namespace Battleship
             this.player1 = new Player(1, "PlayerOne", this.Cellsize, this.RowRep, 1, 3);
             this.player2 = new Player(2, "PlayerOne", this.Cellsize, this.RowRep, 3, 6);
 
+            this.computerPlayer1 = new ComputerPlayer(3, "PlayerThree", this.Cellsize, this.RowRep, 3, 6);
+            Logger.ConsoleInformation("------- Computer Grid ------");
+            for (int i = 0; i < RowRep; i++)
+            {
+                for (int j = 0; j < RowRep; j++)
+                {
+                    Logger.ConsoleInformationForArray(computerPlayer1.Board[i, j] + ", ");
+                }
+
+                Logger.ConsoleInformation("");
+            }
+
             // Create two Canvas to place the player elements on them 
             this.playerWindow1 = new Canvas();
             this.playerWindow1.HorizontalAlignment = HorizontalAlignment.Center;
