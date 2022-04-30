@@ -102,9 +102,6 @@ namespace Battleship
                 case StatusCodes.GameType.COMPUTER_TO_COMPUTER:
                     this.Loaded += this.StartComputerToComputerGame;
                     break;
-                default:
-                    this.Loaded += this.StartGame;
-                    break;
             }
         }
 
@@ -122,35 +119,6 @@ namespace Battleship
         /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
         public void StartPlayerToPlayerGame(object sender, EventArgs e)
-        {
-            this.StartGame(sender, e);
-        }
-
-        /// <summary>
-        /// Start a player to computer game.
-        /// </summary>
-        /// <param name="sender">The object that initiated the event.</param>
-        /// <param name="e">The event arguments for the event.</param>
-        public void StartPlayerToComputerGame(object sender, EventArgs e)
-        {
-            this.StartGamePlayerComputer(sender, e);
-        }
-
-        /// <summary>
-        /// Start a computer to computer game.
-        /// </summary>
-        /// <param name="sender">The object that initiated the event.</param>
-        /// <param name="e">The event arguments for the event.</param>
-        public void StartComputerToComputerGame(object sender, EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Start the game.
-        /// </summary>
-        /// <param name="sender">The object that initiated the event.</param>
-        /// <param name="e">The event arguments for the event.</param>
-        public void StartGame(object sender, EventArgs e)
         {
             // start player one label visible
             PlayerOnelabel.Visibility = Visibility.Visible;
@@ -189,6 +157,25 @@ namespace Battleship
             this.Maingrid.Children.Add(this.playerWindow2);
 
             this.Show();
+        }
+
+        /// <summary>
+        /// Start a player to computer game.
+        /// </summary>
+        /// <param name="sender">The object that initiated the event.</param>
+        /// <param name="e">The event arguments for the event.</param>
+        public void StartPlayerToComputerGame(object sender, EventArgs e)
+        {
+            this.StartGamePlayerComputer(sender, e);
+        }
+
+        /// <summary>
+        /// Start a computer to computer game.
+        /// </summary>
+        /// <param name="sender">The object that initiated the event.</param>
+        /// <param name="e">The event arguments for the event.</param>
+        public void StartComputerToComputerGame(object sender, EventArgs e)
+        {
         }
 
         /// <summary>
