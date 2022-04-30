@@ -92,12 +92,17 @@ namespace Battleship
         /// <summary>
         /// Horizontal crew members
         /// </summary>
-        private List<int> Fixed_H_crewmembers;
+        private List<int> Ini_H_crewmembers;
 
         /// <summary>
         /// Vertical Crew mwmbers
         /// </summary>
-        private List<int> Fixed_V_crewmembers;
+        private List<int> Ini_V_crewmembers;
+
+        /// <summary>
+        /// Ship current crew
+        /// </summary>
+        private List<int> Delayed_crewmembers;
 
         /// <summary>
         /// Ship current crew
@@ -110,9 +115,24 @@ namespace Battleship
         private int captain_;
 
         /// <summary>
+        /// Ship driver cell
+        /// </summary>
+        private int Newcaptain_;
+
+        /// <summary>
         /// The ship's length.
         /// </summary>
         private int grids;
+
+        /// <summary>
+        /// The ship's number of gridsh.
+        /// </summary>
+        private int Rowsgrid;
+
+        /// <summary>
+        /// Counter for the number of drags
+        /// </summary>
+        private int drags_ = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Ship" /> class.
@@ -127,13 +147,15 @@ namespace Battleship
         {
             this.Moving_H_crewmembers = new List<int>();
             this.Moving_V_crewmembers = new List<int>();
-            this.Fixed_H_crewmembers = new List<int>();
-            this.Fixed_V_crewmembers = new List<int>();
+            this.Ini_H_crewmembers = new List<int>();
+            this.Ini_V_crewmembers = new List<int>();
             this.actualship_crewmembers = new List<int>();
+            this.Delayed_crewmembers = new List<int>();
             this.playerID = playerID;
             this.shipType = shipType;
             this.ShipIsSunk = false;
             this.shipStartCoords = startCoords;
+            this.Rowsgrid = RowTotal;
 
             switch (shipType)
             {
@@ -181,21 +203,30 @@ namespace Battleship
             this.captain_ = driver;
 
             //set the entry point crew member to compare future moves
-            Fixed_H_crewmembers.Clear();
-            Fixed_V_crewmembers.Clear();
+            Ini_H_crewmembers.Clear();
+            Ini_V_crewmembers.Clear();
             int Hvalue = driver;
             int Vvalue = driver;
 
             for (int i = 0; i < grids; i++)
             {
-                Fixed_H_crewmembers.Add(Hvalue);
+                Ini_H_crewmembers.Add(Hvalue);
                 Hvalue++;
             }
 
             for (int i = 0; i < grids; i++)
             {
-                Fixed_V_crewmembers.Add(Vvalue);
+                Ini_V_crewmembers.Add(Vvalue);
                 Vvalue += RowTotal;
+            }
+
+            if (this.HDirection == true)
+            {
+                Delayed_crewmembers = Ini_H_crewmembers;
+            }
+            else
+            {
+                Delayed_crewmembers = Ini_V_crewmembers;
             }
 
         }
@@ -316,6 +347,15 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Gets or sets the number of drags
+        /// </summary>
+        public int DragsCounter
+        {
+            get { return this.drags_; }
+            set { this.drags_ = value; }
+        }
+
+        /// <summary>
         /// Gets or sets ship length 
         /// </summary>
         public int Length
@@ -364,26 +404,18 @@ namespace Battleship
             set { this.grids = value; }
         }
 
-        public List<int> H_Crewmembers
+        /// <summary>
+        /// Retained crew members before aproving drags
+        /// </summary>
+        public List<int> Delayed_Crew_Crewmembers
         {
-            get { return Moving_H_crewmembers; }
+            get { return Delayed_crewmembers; }
+            set { Delayed_crewmembers = value; }
         }
 
-        public List<int> V_Crewmembers
-        {
-            get { return Moving_V_crewmembers; }
-        }
-
-        public List<int> Delayed_H_Crewmembers
-        {
-            get { return Fixed_H_crewmembers; }
-        }
-
-        public List<int> Delayed_V_Crewmembers
-        {
-            get { return Fixed_V_crewmembers; }
-        }
-
+        /// <summary>
+        /// Current crew members for each ship
+        /// </summary>
         public List<int> Ship_Crewmembers
         {
             get { return actualship_crewmembers; }
@@ -396,6 +428,15 @@ namespace Battleship
         {
             get { return this.captain_; }
             set { this.captain_ = value; }
+        }
+
+        /// <summary>
+        /// New captain of the ship after drags
+        /// </summary>
+        public int newCaptain
+        {
+            get { return this.Newcaptain_; }
+            set { this.Newcaptain_ = value; }
         }
 
         /// <summary>
@@ -505,8 +546,14 @@ namespace Battleship
             }
         }
 
-        public void SetCrewmembers(int p_shipLength, int p_capitan, bool p_horDirection)
+        /// <summary>
+        /// Return a list of new crew members of a ship if a drag occurs
+        /// </summary>
+        /// <param name="p_capitan">see the cell for the ship has a crew</param>
+        /// <returns></returns>
+        public List<int> SetCrewmembers(int p_capitan)
         {
+            List<int> Back = new List<int>();
             this.Moving_H_crewmembers.Clear();
             this.Moving_V_crewmembers.Clear();
             int Hvalue = p_capitan;
@@ -521,19 +568,18 @@ namespace Battleship
             for (int i = 0; i < GridSpaces; i++)
             {
                 this.Moving_V_crewmembers.Add(Vvalue);
-                Vvalue += this.GridSpaces;
+                Vvalue += this.Rowsgrid;
             }
 
-            if (p_horDirection == true)
+            if (this.HDirection == true)
             {
-                this.actualship_crewmembers.Clear();
-                this.actualship_crewmembers = this.H_Crewmembers;
+                Back = Moving_H_crewmembers;
             }
             else
             {
-                this.actualship_crewmembers.Clear();
-                this.actualship_crewmembers = this.V_Crewmembers;
+                Back = Moving_V_crewmembers;
             }
+            return Back;
 
         }
     }

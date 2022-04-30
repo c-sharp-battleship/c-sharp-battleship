@@ -254,7 +254,6 @@ namespace Battleship
             {
                 int gridcellnumber = MainPlayerPair.Key;
                 GridCell MainPlayerCell = MainPlayerPair.Value;
-               // p_playersCellRecords.Add(currentPlayerOffenseButton);
 
                 // add a click event for all cells in Player 1 grid only if the button is attack type
                 if (MainPlayerCell.OffenseButton == true)
@@ -304,48 +303,67 @@ namespace Battleship
                         // find the sender uid extracting the date of the event
                         string myWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
 
+                        MainPlayerCell.Background = Brushes.Green;//delete this line, used to debug only
+
                         // iterate thru the collection of ships to find the sender element with matching uid
-                        foreach (Ship ship in p_currentPlayer.Playershipcollection)
+                        foreach (Ship Myship in p_currentPlayer.Playershipcollection)
                         {
                             // if the sender element uid matches then this is my element, then move it with the mouse
-                            if (myWarshipUid == ship.Uid)
+                            if (myWarshipUid == Myship.Uid)
                             {
-                                Point grabPos = e.GetPosition(p_currentPlayerWindow); // find the position of the mouse compared to the canvas for player one
-                                double shipMaxX = (p_currentPlayerWindow.Width / 2) - ship.Width + p_cellsize;
-                                double shipMaxY = (p_currentPlayerWindow.Width / 2) - ship.Height + p_cellsize;
-                                if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
+                                double shipMaxX = (p_currentPlayerWindow.Width / 2) - (Myship.Width) + p_cellsize;
+                                double shipMaxY = (p_currentPlayerWindow.Width / 2) - (Myship.Height) + p_cellsize;
+                                //double MyshipTopReturnIfNoGood = Myship.TopToParentTop;
+                                //double MyshipLeftReturnIfNoGood = Myship.LeftToParentLeft;
+
+                                //check this method to see if its ok to move ship to requested cell
+                                int MoveShipTrigger = SetshipMovePerCrewCheck(Myship, MainPlayerCell, p_currentPlayer);
+
+                                if (MoveShipTrigger == 0)
                                 {
+                                    Point grabPos = e.GetPosition(p_currentPlayerWindow);
+                                    if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
+                                    {
+                                        Logger.ConsoleInformation("it is good");
+                                        Logger.ConsoleInformation("top = " + Myship.TopToParentTop.ToString() + "  left = " + Myship.LeftToParentLeft.ToString());
+                                        Myship.Delayed_Crew_Crewmembers = Myship.SetCrewmembers(MainPlayerCell.TrackingID);
+                                        Canvas.SetTop(Myship, MainPlayerCell.Top_Comp_ParentTop);
+                                        Myship.Top_Comp_ParentTop = MainPlayerCell.Top_Comp_ParentTop;
+                                        Canvas.SetLeft(Myship, MainPlayerCell.Left_Comp_ParentLeft);
+                                        Myship.Left_Comp_ParentLeft = MainPlayerCell.Left_Comp_ParentLeft;
+                                    }
 
                                     /*
-                                    StatusCodes.GridSpaceStatus isDesiredShipPositionOccupied = p_currentPlayer.checkshipcrewmembers()
-                                    ship.SetCrewmembers(ship.Length, MainPlayerCell.TrackingID, ship.HDirection);
+                                    if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
+                                    {
+
+                                        
+                                        StatusCodes.GridSpaceStatus isDesiredShipPositionOccupied = p_currentPlayer.checkshipcrewmembers()
+                                        ship.SetCrewmembers(ship.Length, MainPlayerCell.TrackingID, ship.HDirection);
+                                        
+
+                                        Canvas.SetTop(Myship, MainPlayerCell.Top_Comp_ParentTop);
+                                        Myship.Top_Comp_ParentTop = MainPlayerCell.Top_Comp_ParentTop;
+                                        Canvas.SetLeft(Myship, MainPlayerCell.Left_Comp_ParentLeft);
+                                        Myship.Left_Comp_ParentLeft = MainPlayerCell.Left_Comp_ParentLeft;
+                                        Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
+                                        Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
+
+                                        if (Myship.HDirection == true)
+                                        {
+                                            shipEndCoords.XCoordinate += (short)((Myship.Width / p_cellsize) - 1);
+                                        }
+                                        else if (Myship.HDirection == false)
+                                        {
+                                            shipEndCoords.YCoordinate += (short)((Myship.Height / p_cellsize) - 1);
+                                        }
+
+                                        this.UpdateShipCoords(Myship, shipStartCoords, shipEndCoords);
+                                    }
                                     */
-
-                                    Canvas.SetTop(ship, MainPlayerCell.Top_Comp_ParentTop);
-                                    ship.Top_Comp_ParentTop = MainPlayerCell.Top_Comp_ParentTop;
-                                    Canvas.SetLeft(ship, MainPlayerCell.Left_Comp_ParentLeft);
-                                    ship.Left_Comp_ParentLeft = MainPlayerCell.Left_Comp_ParentLeft;
-                                    Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
-                                    Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
-
-                                    if (ship.HDirection == true)
-                                    {
-                                        shipEndCoords.XCoordinate += (short)((ship.Width / p_cellsize) - 1);
-                                    }
-                                    else if (ship.HDirection == false)
-                                    {
-                                        shipEndCoords.YCoordinate += (short)((ship.Height / p_cellsize) - 1);
-                                    }
-
-                                    this.UpdateShipCoords(ship, shipStartCoords, shipEndCoords);
                                 }
+                            
                             }
-
-                            foreach (int crewmember in ship.Delayed_H_Crewmembers)
-                            {
-                                Logger.ConsoleInformation(crewmember.ToString());
-                            }
-
                         }
                     });
                 }
@@ -353,6 +371,43 @@ namespace Battleship
                 //// Add player 1 cells to the window grid
                 p_currentPlayerWindow.Children.Add(MainPlayerCell);
             }
+        }
+
+        /// <summary>
+        /// return a confirmation to do a move if there is no ships overlapping
+        /// </summary>
+        /// <param name="Myship"></param>
+        /// <param name="MainPlayerCell"></param>
+        /// <param name="p_currentPlayer"></param>
+        /// <returns></returns>
+        private int SetshipMovePerCrewCheck(Ship Myship, GridCell MainPlayerCell, Player p_currentPlayer)
+        {
+            int OverlapingCrewMembers = 0;
+            int newCaptain = MainPlayerCell.TrackingID;
+            List<int> NewCrewmembers = new List<int>();
+            NewCrewmembers = Myship.SetCrewmembers(newCaptain);
+
+            foreach (int NewMember in NewCrewmembers)
+            {
+                // Logger.ConsoleInformation(NewMember.ToString());
+                foreach (Ship ShipCheck in p_currentPlayer.Playershipcollection)
+                {
+                    if (ShipCheck.Uid != Myship.Uid)
+                    {
+                        foreach (int OldCrewMember in ShipCheck.Delayed_Crew_Crewmembers)
+                        {
+                            if (NewMember == OldCrewMember)
+                            {
+                                OverlapingCrewMembers++;
+                            }
+                            else
+                            {
+                            }
+                        }
+                    }
+                }
+            }
+            return OverlapingCrewMembers;
         }
 
         private void DeclareComputerPlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
@@ -414,13 +469,18 @@ namespace Battleship
                 {
                     if (p_currentPlayer.isLocked == false)
                     {
-                        if (e.LeftButton == MouseButtonState.Pressed)
+                        //This if statement will be used when the ship enters the boards for the first time
+                        int dragfirsttime = ship_1.DragsCounter;
+                        if (dragfirsttime > 0)
                         {
                             string objectUniqueID = ship_1.Uid;
-                            Point grabPos = e.GetPosition(ship_1);
-                            Canvas.SetTop(ship_1, grabPos.Y);
-                            Canvas.SetLeft(ship_1, grabPos.X);
                             DragDrop.DoDragDrop(ship_1, objectUniqueID, DragDropEffects.Move);
+                        }
+                        else
+                        {
+                            Canvas.SetTop(ship_1, ship_1.Top_Comp_ParentTop);
+                            Canvas.SetLeft(ship_1, ship_1.LeftToParentLeft);
+                            ship_1.DragsCounter += 1;
                         }
                     }
                 });

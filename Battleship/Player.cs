@@ -49,6 +49,9 @@ namespace Battleship
         /// </summary>
         protected Dictionary<int, GridCell> playerGridCells = new Dictionary<int, GridCell>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected string[,] board;
 
         /// <summary>
@@ -174,9 +177,13 @@ namespace Battleship
                     GridCell gridCellbutton = pair.Value;
                     if (gridcellnumber == driver && gridCellbutton.OffenseButton == false)
                     {
-                        Canvas.SetTop(warship, gridCellbutton.TopToParentTop);
-                        Canvas.SetLeft(warship, gridCellbutton.LeftToParentLeft);
+                        // Canvas.SetTop(warship, gridCellbutton.TopToParentTop);
+                        // Canvas.SetLeft(warship, gridCellbutton.LeftToParentLeft);
+                        Canvas.SetTop(warship, -i * gridcellSize);
+                        Canvas.SetLeft(warship, 0);
                         warship.Captain = gridCellbutton.TrackingID;
+                        warship.LeftToParentLeft = gridCellbutton.LeftToParentLeft;
+                        warship.Top_Comp_ParentTop = gridCellbutton.Top_Comp_ParentTop;
                         gridCellbutton.ButtonOccupied = true;//occupies the driver_pilot_cell inside the dictionary
                     }
                 }
@@ -215,19 +222,22 @@ namespace Battleship
         /// <summary>
         /// Gets player Button collections for its personal grid 
         /// </summary>
+        public Dictionary<int,GridCell> Playergridsquarecollection
+        {
+            get { return this.playerGridCells; }
+        }
+
+        /// <summary>
+        /// Gets player Button collections for its personal grid 
+        /// </summary>
         public List<GridCell> PlayerGridCellList
         {
             get { return this.playerGridCellsList; }
         }
 
         /// <summary>
-        /// Gets player Button collections for its personal grid 
+        /// 
         /// </summary>
-        public Dictionary<int,GridCell> Playergridsquarecollection
-        {
-            get { return this.playerGridCells; }
-        }
-
         public string[,] Board
         {
             get { return this.board; }
