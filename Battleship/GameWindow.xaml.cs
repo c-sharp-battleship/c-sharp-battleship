@@ -274,8 +274,21 @@ namespace Battleship
                                 otherPlayerPlayerCell.Content = "X";
                                 otherPlayerPlayerCell.Stricked = 1;
                                 otherPlayerPlayerCell.AllowDrop = false;
+                                foreach (Ship NavyShip in p_otherPlayer.Playershipcollection)
+                                {
+                                    foreach (int cell in NavyShip.Ship_Crewmembers)
+                                    {
+                                        MessageBox.Show(cell.ToString());
 
-                                // make changes to player one grid
+                                        /*
+                                        if (otherPlayerPlayerCell.TrackingID == cell)
+                                        {
+                                            MessageBox.Show("You Just Hit my" + NavyShip.Name);
+                                        }
+                                        else { MessageBox.Show("You wont Succed"); }
+                                        */
+                                    }
+                                }
                                 MainPlayerCell.Visibility = Visibility.Hidden;
                             }
                         }
@@ -303,8 +316,6 @@ namespace Battleship
                         // find the sender uid extracting the date of the event
                         string myWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
 
-                        MainPlayerCell.Background = Brushes.Green;//delete this line, used to debug only
-
                         // iterate thru the collection of ships to find the sender element with matching uid
                         foreach (Ship Myship in p_currentPlayer.Playershipcollection)
                         {
@@ -313,54 +324,22 @@ namespace Battleship
                             {
                                 double shipMaxX = (p_currentPlayerWindow.Width / 2) - (Myship.Width) + p_cellsize;
                                 double shipMaxY = (p_currentPlayerWindow.Width / 2) - (Myship.Height) + p_cellsize;
-                                //double MyshipTopReturnIfNoGood = Myship.TopToParentTop;
-                                //double MyshipLeftReturnIfNoGood = Myship.LeftToParentLeft;
 
                                 //check this method to see if its ok to move ship to requested cell
-                                int MoveShipTrigger = SetshipMovePerCrewCheck(Myship, MainPlayerCell, p_currentPlayer);
+                                int OverlappingCrew = SetshipMovePerCrewCheck(Myship, MainPlayerCell, p_currentPlayer,0);
 
-                                if (MoveShipTrigger == 0)
+                                if (OverlappingCrew == 0)
                                 {
                                     Point grabPos = e.GetPosition(p_currentPlayerWindow);
                                     if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
                                     {
-                                        Logger.ConsoleInformation("it is good");
-                                        Logger.ConsoleInformation("top = " + Myship.TopToParentTop.ToString() + "  left = " + Myship.LeftToParentLeft.ToString());
-                                        Myship.Delayed_Crew_Crewmembers = Myship.SetCrewmembers(MainPlayerCell.TrackingID);
+                                        Myship.Delayed_Crew_Crewmembers = Myship.SetCrewmembers(MainPlayerCell.TrackingID,0);
                                         Canvas.SetTop(Myship, MainPlayerCell.Top_Comp_ParentTop);
                                         Myship.Top_Comp_ParentTop = MainPlayerCell.Top_Comp_ParentTop;
                                         Canvas.SetLeft(Myship, MainPlayerCell.Left_Comp_ParentLeft);
                                         Myship.Left_Comp_ParentLeft = MainPlayerCell.Left_Comp_ParentLeft;
+                                        Myship.Captain = MainPlayerCell.TrackingID;
                                     }
-
-                                    /*
-                                    if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
-                                    {
-
-                                        
-                                        StatusCodes.GridSpaceStatus isDesiredShipPositionOccupied = p_currentPlayer.checkshipcrewmembers()
-                                        ship.SetCrewmembers(ship.Length, MainPlayerCell.TrackingID, ship.HDirection);
-                                        
-
-                                        Canvas.SetTop(Myship, MainPlayerCell.Top_Comp_ParentTop);
-                                        Myship.Top_Comp_ParentTop = MainPlayerCell.Top_Comp_ParentTop;
-                                        Canvas.SetLeft(Myship, MainPlayerCell.Left_Comp_ParentLeft);
-                                        Myship.Left_Comp_ParentLeft = MainPlayerCell.Left_Comp_ParentLeft;
-                                        Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
-                                        Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
-
-                                        if (Myship.HDirection == true)
-                                        {
-                                            shipEndCoords.XCoordinate += (short)((Myship.Width / p_cellsize) - 1);
-                                        }
-                                        else if (Myship.HDirection == false)
-                                        {
-                                            shipEndCoords.YCoordinate += (short)((Myship.Height / p_cellsize) - 1);
-                                        }
-
-                                        this.UpdateShipCoords(Myship, shipStartCoords, shipEndCoords);
-                                    }
-                                    */
                                 }
                             
                             }
@@ -380,12 +359,12 @@ namespace Battleship
         /// <param name="MainPlayerCell"></param>
         /// <param name="p_currentPlayer"></param>
         /// <returns></returns>
-        private int SetshipMovePerCrewCheck(Ship Myship, GridCell MainPlayerCell, Player p_currentPlayer)
+        private int SetshipMovePerCrewCheck(Ship Myship, GridCell MainPlayerCell, Player p_currentPlayer, int Drag_Turn)
         {
             int OverlapingCrewMembers = 0;
             int newCaptain = MainPlayerCell.TrackingID;
             List<int> NewCrewmembers = new List<int>();
-            NewCrewmembers = Myship.SetCrewmembers(newCaptain);
+            NewCrewmembers = Myship.SetCrewmembers(newCaptain, Drag_Turn);
 
             foreach (int NewMember in NewCrewmembers)
             {
@@ -462,108 +441,76 @@ namespace Battleship
 
         private void DeclarePlayerShips(Player p_currentPlayer, Canvas p_currentPlayerWindow, double p_cellsize)
         {
-            foreach (Ship ship_1 in p_currentPlayer.Playershipcollection)
+            foreach (Ship NavyShip in p_currentPlayer.Playershipcollection)
             {
-                // create a move move event for player 1 ships to attacch the rectangle to the mouse
-                ship_1.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
+
+                NavyShip.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
                 {
                     if (p_currentPlayer.isLocked == false)
                     {
-                        //This if statement will be used when the ship enters the boards for the first time
-                        int dragfirsttime = ship_1.DragsCounter;
-                        if (dragfirsttime > 0)
+                        //create a cell to pass a cell to this method and return the possible crew members for this turn
+                        GridCell Fakecell = new GridCell(p_currentPlayer.PlayerID,0,"");
+                        Fakecell.TrackingID = NavyShip.Captain;
+                        int Overlappingcrew = SetshipMovePerCrewCheck(NavyShip, Fakecell, p_currentPlayer,1);
+
+                        if (Overlappingcrew == 0)
                         {
-                            string objectUniqueID = ship_1.Uid;
-                            DragDrop.DoDragDrop(ship_1, objectUniqueID, DragDropEffects.Move);
-                        }
-                        else
-                        {
-                            Canvas.SetTop(ship_1, ship_1.Top_Comp_ParentTop);
-                            Canvas.SetLeft(ship_1, ship_1.LeftToParentLeft);
-                            ship_1.DragsCounter += 1;
+
+                            if (NavyShip.HDirection == true)
+                            {
+                                double shipMaxX = (p_currentPlayerWindow.Width / 2) - (NavyShip.Height);
+                                double shipMaxY = (p_currentPlayerWindow.Width / 2) - (NavyShip.Width);
+
+
+
+                                if (NavyShip.Top_Comp_ParentTop <= shipMaxY && NavyShip.LeftToParentLeft <= shipMaxX)
+                                {
+                                    NavyShip.RotateShip(true);
+                                    NavyShip.Delayed_Crew_Crewmembers = NavyShip.SetCrewmembers(NavyShip.Captain, 0);
+                                }
+                            }
+                            else
+                            {
+                                double shipMaxX = (p_currentPlayerWindow.Width / 2) - (NavyShip.Height);
+                                double shipMaxY = (p_currentPlayerWindow.Width / 2) - (NavyShip.Width);
+
+                                if (NavyShip.Top_Comp_ParentTop <= shipMaxY && NavyShip.LeftToParentLeft <= shipMaxX)
+                                {
+                                    NavyShip.RotateShip(true);
+                                    NavyShip.Delayed_Crew_Crewmembers = NavyShip.SetCrewmembers(NavyShip.Captain, 0);
+                                }
+                            }
+
                         }
                     }
                 });
 
-                ship_1.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
+                // create a move move event for player 1 ships to attacch the rectangle to the mouse
+                NavyShip.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
                 {
                     if (p_currentPlayer.isLocked == false)
                     {
-                        if (ship_1.HDirection == true)
+                        if (e.LeftButton == MouseButtonState.Pressed)
                         {
-                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - (p_cellsize * (ship_1.Length - 1));
-                            double shipMaxX = p_currentPlayerWindow.Width / 2;
-                            bool canRotateShip = true;
-                            // check the borders
-                            if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
+                            //This if statement will be used when the ship enters the boards for the first time
+                            int dragfirsttime = NavyShip.DragsCounter;
+                            if (dragfirsttime > 0)
                             {
-                                // the end coordinates of the ship after rotation
-                                Coordinate shipAfterRotateEndCoords =
-                                    new Coordinate(ship_1.ShipStartCoords.XCoordinate,
-                                        (short)(ship_1.ShipStartCoords.YCoordinate + ship_1.Length - 1));
-                                // loop through the list of ships
-                                foreach (Ship ship_1_neighbor in p_currentPlayer.Playershipcollection)
-                                {
-                                    // check that the ship is not the same ship and it creates a cross with other ships
-                                    if (ship_1.ShipStartCoords != ship_1_neighbor.ShipStartCoords
-                                        && ship_1.ShipStartCoords.YCoordinate <= ship_1_neighbor.ShipEndCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate >= ship_1_neighbor.ShipStartCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate >= ship_1_neighbor.ShipStartCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate <= ship_1_neighbor.ShipEndCoords.XCoordinate)
-                                    {
-                                        // if yes, doesn't allow to rotate
-                                        canRotateShip = false;
-                                        break;
-                                    }
-                                }
-
-                                if (canRotateShip)
-                                {
-                                    ship_1.RotateShip(true);
-                                }
+                                string objectUniqueID = NavyShip.Uid;
+                                DragDrop.DoDragDrop(NavyShip, objectUniqueID, DragDropEffects.Move);
                             }
-                        }
-                        else
-                        {
-                            double shipMaxY = p_currentPlayerWindow.Width / 2;
-                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - (p_cellsize * (ship_1.Length - 1));
-                            bool canRotateShip = true;
-                            // check the borders
-                            if (ship_1.Top_Comp_ParentTop < shipMaxY && ship_1.Left_Comp_ParentLeft < shipMaxX)
+                            else
                             {
-                                // the end coordinates of the ship after rotation
-                                Coordinate shipAfterRotateEndCoords =
-                                    new Coordinate((short)(ship_1.ShipStartCoords.XCoordinate + ship_1.Length - 1),
-                                        ship_1.ShipStartCoords.YCoordinate);
-                                // loop through the list of ships
-                                foreach (Ship ship_1_neighbor in p_currentPlayer.Playershipcollection)
-                                {
-                                    // check that the ship is not the same ship and it creates a cross with other ships
-                                    if (ship_1.ShipStartCoords != ship_1_neighbor.ShipStartCoords
-                                        && ship_1.ShipStartCoords.XCoordinate <= ship_1_neighbor.ShipEndCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.XCoordinate >= ship_1_neighbor.ShipStartCoords.XCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate >= ship_1_neighbor.ShipStartCoords.YCoordinate
-                                        && shipAfterRotateEndCoords.YCoordinate <= ship_1_neighbor.ShipEndCoords.YCoordinate)
-                                    {
-                                        // if the ship creates cross with other ships, doesn't allow to rotate
-                                        canRotateShip = false;
-                                        break;
-                                    }
-                                }
-
-                                if (canRotateShip)
-                                {
-                                    ship_1.RotateShip(true);
-                                }
-                                //Logger.ConsoleInformation("New Ship Start Coords: " + ship_2.ShipStartCoords.XCoordinate.ToString() + ", " + ship_2.ShipStartCoords.YCoordinate.ToString());
-                                //Logger.ConsoleInformation("New Ship End Coords: " + ship_2.ShipEndCoords.XCoordinate.ToString() + ", " + ship_2.ShipEndCoords.YCoordinate.ToString());
+                                Canvas.SetTop(NavyShip, NavyShip.Top_Comp_ParentTop);
+                                Canvas.SetLeft(NavyShip, NavyShip.LeftToParentLeft);
+                                NavyShip.DragsCounter += 1;
                             }
                         }
                     }
                 });
 
                 // Add player 1 Ships to the window grid
-                p_currentPlayerWindow.Children.Add(ship_1);
+                p_currentPlayerWindow.Children.Add(NavyShip);
             }
         }
 

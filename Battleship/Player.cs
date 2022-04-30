@@ -101,9 +101,9 @@ namespace Battleship
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
 
                             GridCell myButton = new GridCell(player_ID, buttoncolorForDeffense, rowthousand.ToString());
-                            //myButton.Content = capital_letters[col] + (row + 1);
+                            myButton.Content = capital_letters[col] + (row + 1);
                             myButton.TrackingID = (col + 1) + (row * maxCol);
-                            myButton.Content = (col + 1) + (row * maxCol);
+                            //myButton.Content = (col + 1) + (row * maxCol);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
                             myButton.RowNum = row + 1;
@@ -136,9 +136,9 @@ namespace Battleship
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
                             int DictionaryOffset = maxCol * maxCol;
                             GridCell myButton = new GridCell(player_ID, buttoncolorForOffense, rowthousand.ToString());
-                            //myButton.Content = capital_letters[col] + (row + 1);
+                            myButton.Content = capital_letters[col] + (row + 1);
                             myButton.TrackingID = col + 1 + (row * maxCol);
-                            myButton.Content = col + 1 + (row * maxCol);
+                            //myButton.Content = col + 1 + (row * maxCol);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
                             myButton.RowNum = row + 1; 

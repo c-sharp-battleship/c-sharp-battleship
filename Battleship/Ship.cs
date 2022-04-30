@@ -551,7 +551,7 @@ namespace Battleship
         /// </summary>
         /// <param name="p_capitan">see the cell for the ship has a crew</param>
         /// <returns></returns>
-        public List<int> SetCrewmembers(int p_capitan)
+        public List<int> SetCrewmembers(int p_capitan,int Drag_Turn)
         {
             List<int> Back = new List<int>();
             this.Moving_H_crewmembers.Clear();
@@ -571,14 +571,27 @@ namespace Battleship
                 Vvalue += this.Rowsgrid;
             }
 
-            if (this.HDirection == true)
+            //draging crewmembers request for check
+            if (this.HDirection == true && Drag_Turn == 0)
             {
                 Back = Moving_H_crewmembers;
             }
-            else
+            //draging crewmembers request for check
+            if (this.HDirection == false && Drag_Turn == 0)
             {
                 Back = Moving_V_crewmembers;
             }
+            //turning crewmembers request for check
+            if (this.HDirection == true && Drag_Turn == 1)
+            {
+                Back = Moving_V_crewmembers;
+            }
+            //turning crewmembers request for check
+            if (this.HDirection == false && Drag_Turn == 1)
+            {
+                Back = Moving_H_crewmembers;
+            }
+
             return Back;
 
         }
