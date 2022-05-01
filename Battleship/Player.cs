@@ -116,7 +116,7 @@ namespace Battleship
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             myButton.Left_Comp_ParentLeft = col * gridcellSize;
                             myButton.Top_Comp_ParentTop = row * gridcellSize;
-                            playerGridCells.Add(col + 1 + (row * maxCol), myButton);
+                            this.playerGridCells.Add(col + 1 + (row * maxCol), myButton);
                         }
                     }
                 }
@@ -149,7 +149,7 @@ namespace Battleship
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
-                            playerGridCells.Add(DictionaryOffset + col + 1 + (row * maxCol),myButton);
+                            this.playerGridCells.Add(DictionaryOffset + col + 1 + (row * maxCol),myButton);
                         }
                     }
                 }
@@ -159,7 +159,7 @@ namespace Battleship
             int driver = 11;
             for (int i = 1; i <= 5; i++)
             {
-                // get an iamge retainer for the iteration
+                // get an image retainer for the iteration
                 BitmapImage shipPic = new BitmapImage();
                 shipPic.BeginInit();
                 shipPic.UriSource = new Uri(@"./warship.jpg", UriKind.Relative);
@@ -179,7 +179,7 @@ namespace Battleship
                     {
                         // Canvas.SetTop(warship, gridCellbutton.TopToParentTop);
                         // Canvas.SetLeft(warship, gridCellbutton.LeftToParentLeft);
-                        Canvas.SetTop(warship, -i * gridcellSize);
+                        Canvas.SetTop(warship, i * gridcellSize);
                         Canvas.SetLeft(warship, 0);
                         warship.Captain = gridCellbutton.TrackingID;
                         warship.LeftToParentLeft = gridCellbutton.LeftToParentLeft;

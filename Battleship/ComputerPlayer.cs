@@ -7,6 +7,7 @@ namespace Battleship
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Eventing.Reader;
     using System.Text;
     using System.Windows.Controls;
     using System.Windows.Media;
@@ -33,6 +34,8 @@ namespace Battleship
 
             // List of ships for each player to return to the personal grid builder
             List<Ship> shiploader = new List<Ship>();
+
+            Dictionary<int, GridCell> playerGridCellsComputer = new Dictionary<int, GridCell>();
 
             // List of Alphabet letters to give names to gridcells
             string[] capital_letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -65,6 +68,7 @@ namespace Battleship
 
                             GridCell myButton = new GridCell(player_ID, buttoncolorForDeffense, rowthousand.ToString());
                             myButton.Content = capital_letters[col] + (row + 1);
+                            myButton.TrackingID = (col + 1) + (row * maxCol);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
                             myButton.RowNum = row + 1;
@@ -77,17 +81,9 @@ namespace Battleship
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             myButton.Left_Comp_ParentLeft = col * gridcellSize;
                             myButton.Top_Comp_ParentTop = row * gridcellSize;
-                            if (grids == 0)
-                            {
-                                myButton.OffenseButton = false;
-                                myButton.AllowDrop = true;
-                            }
-                            else
-                            {
-                                myButton.OffenseButton = true;
-                                myButton.AllowDrop = false;
-                            }
+                            
                             loader.Add(myButton);
+                            playerGridCellsComputer.Add(col + 1 + (row * maxCol), myButton);
                         }
                     }
                 }
@@ -105,9 +101,10 @@ namespace Battleship
                         {
                             // create a name for this button will result in a string(10.0001, this is elevated to the ten thounsans to allow a high number of buttons without the repeating of the name)
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
-
+                            int DictionaryOffset = maxCol * maxCol;
                             GridCell myButton = new GridCell(player_ID, buttoncolorForOffense, rowthousand.ToString());
                             myButton.Content = capital_letters[col] + (row + 1);
+                            myButton.TrackingID = col + 1 + (row * maxCol);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
                             myButton.RowNum = row + 1;
@@ -119,6 +116,7 @@ namespace Battleship
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
                             loader.Add(myButton);
+                            playerGridCellsComputer.Add(DictionaryOffset + col + 1 + (row * maxCol), myButton);
                         }
                     }
                 }
@@ -126,6 +124,7 @@ namespace Battleship
 
             // load the button collection to the list field if it is right
             this.playerGridCellsList = loader;
+            this.playerGridCells = playerGridCellsComputer;
 
             this.playerShips = RandomShipPlacement(player_ID, gridcellSize, maxCol, shiploader);
             foreach (Ship warship in this.playerShips)
@@ -162,9 +161,9 @@ namespace Battleship
                 }
 
                 Ship warship = new Ship(player_ID, i, gridcellSize, horDirection);
-                
+
                 Coordinate shipPosition = new Coordinate();
-                shipPosition = SetRandomShipCoordinate(warship, board, maxCol, horDirection);
+                shipPosition = SetRandomShipCoordinate(warship, maxCol, horDirection);
                 int rowShip = shipPosition.YCoordinate;
                 int colShip = shipPosition.XCoordinate;
                 Coordinate shipPositionFinal = new Coordinate((short) (shipPosition.XCoordinate + 1),
@@ -183,7 +182,7 @@ namespace Battleship
                         rowShip++;
                     }
                 }
-                
+
                 // load the ship to the list of ships
                 shiploader.Add(warship);
             }
@@ -191,7 +190,7 @@ namespace Battleship
             return shiploader;
         }
 
-        private Coordinate SetRandomShipCoordinate(Ship warship, string[,] board, int maxCol, bool horDirection)
+        private Coordinate SetRandomShipCoordinate(Ship warship, int maxCol, bool horDirection)
         {
             Random random = new Random();
             Coordinate position = new Coordinate();
@@ -215,7 +214,7 @@ namespace Battleship
                     {
                         if (tempCol <= (maxCol - 1))
                         {
-                            if (board[rowNumber, tempCol] == "O")
+                            if (this.board[rowNumber, tempCol] == "O")
                             {
                                 checks++;
                                 tempCol++;
@@ -236,7 +235,7 @@ namespace Battleship
                     {
                         if (tempRow <= (maxCol - 1))
                         {
-                            if (board[tempRow, colNumber] == "O")
+                            if (this.board[tempRow, colNumber] == "O")
                             {
                                 checks++;
                                 tempRow++;
@@ -254,16 +253,60 @@ namespace Battleship
                         }
                     }
                 }
+
                 if (checks == warship.Length)
                 {
                     availableToPlace = true;
-                    position.XCoordinate = (short)colNumber;
-                    position.YCoordinate = (short)rowNumber;
+                    position.XCoordinate = (short) colNumber;
+                    position.YCoordinate = (short) rowNumber;
                 }
+            }
+
+            return position;
+        }
+
+        public Coordinate SetRandomAttackCoordinate(Player p_otherPlayer)
+        {
+            Random random = new Random();
+            Coordinate position = new Coordinate();
+            bool availableToChoose = false;
+
+            int rowNumber = 0;
+            int colNumber = 0;
+
+            while (!availableToChoose)
+            {
+                rowNumber = random.Next(0, 10);
+                colNumber = random.Next(0, 10);
+                string letterAttackGrid = p_otherPlayer.Board[rowNumber, colNumber];
+
+                if (letterAttackGrid != "H" || letterAttackGrid != "M")
+                {
+                    availableToChoose = true;
+                    if (letterAttackGrid == "O")
+                    {
+                        p_otherPlayer.Board[rowNumber, colNumber] = "M";
+                    }
+                    else
+                    {
+                        p_otherPlayer.Board[rowNumber, colNumber] = "H" + letterAttackGrid;
+                    }
+                }
+            }
+
+            position.XCoordinate = (short)colNumber;
+            position.YCoordinate = (short)rowNumber;
+            Logger.ConsoleInformation("------- Player Grid ------");
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Logger.ConsoleInformationForArray(p_otherPlayer.Board[i, j] + ", ");
+                }
+
+                Logger.ConsoleInformation("");
             }
             return position;
         }
     }
-
-    
 }

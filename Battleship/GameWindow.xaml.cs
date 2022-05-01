@@ -176,6 +176,7 @@ namespace Battleship
         /// <param name="e">The event arguments for the event.</param>
         public void StartComputerToComputerGame(object sender, EventArgs e)
         {
+            this.StartGameComputerComputer(sender, e);
         }
 
         /// <summary>
@@ -188,13 +189,69 @@ namespace Battleship
             // start player one label visible
             PlayerOnelabel.Visibility = Visibility.Visible;
             PlayerTwolabel.Visibility = Visibility.Hidden;
-            AttackBtn.IsEnabled = false;
+            AttackBtn.Visibility = Visibility.Hidden;
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.player1 = new Player(1, "PlayerOne", this.Cellsize, this.RowRep, 1, 3);
             this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6);
 
+            Logger.ConsoleInformation("------- Computer Grid ------");
+            for (int i = 0; i < RowRep; i++)
+            {
+                for (int j = 0; j < RowRep; j++)
+                {
+                    Logger.ConsoleInformationForArray(player2.Board[i, j] + ", ");
+                }
+
+                Logger.ConsoleInformation("");
+            }
+
+            // Create two Canvas to place the player elements on them 
+            this.playerWindow1 = new Canvas();
+            this.playerWindow1.HorizontalAlignment = HorizontalAlignment.Center;
+            this.playerWindow1.VerticalAlignment = VerticalAlignment.Center;
+            this.playerWindow1.Uid = "Player1Canvas";
+            this.playerWindow1.Width = (this.Cellsize * this.RowRep) * 2;
+            this.playerWindow1.Visibility = Visibility.Visible;
+
+            DeclarePlayerGrid(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
+            DeclarePlayerShips(this.player1, this.playerWindow1, this.Cellsize);
+
+            // load both canvas to this window grid
+            this.Maingrid.Children.Add(this.playerWindow1);
+
+            this.Show();
+        }
+
+        /// <summary>
+        /// Start the game.
+        /// </summary>
+        /// <param name="sender">The object that initiated the event.</param>
+        /// <param name="e">The event arguments for the event.</param>
+        public void StartGameComputerComputer(object sender, EventArgs e)
+        {
+            // start player one label visible
+            PlayerOnelabel.Visibility = Visibility.Visible;
+            PlayerTwolabel.Visibility = Visibility.Hidden;
+            AttackBtn.Visibility = Visibility.Hidden;
+            Confirm_Button.Visibility = Visibility.Hidden;
+            
+            // Create Players with their cells and their ships and grids colors
+            // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
+            this.player1 = new ComputerPlayer(1, "ComputerPlayerOne", this.Cellsize, this.RowRep, 1, 3);
+            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6);
+
+            Logger.ConsoleInformation("------- Computer Grid ------");
+            for (int i = 0; i < RowRep; i++)
+            {
+                for (int j = 0; j < RowRep; j++)
+                {
+                    Logger.ConsoleInformationForArray(player1.Board[i, j] + ", ");
+                }
+
+                Logger.ConsoleInformation("");
+            }
             Logger.ConsoleInformation("------- Computer Grid ------");
             for (int i = 0; i < RowRep; i++)
             {
@@ -221,9 +278,8 @@ namespace Battleship
             this.playerWindow2.Width = (this.Cellsize * this.RowRep) * 2;
             this.playerWindow2.Visibility = Visibility.Hidden;
 
-
-            DeclarePlayerGrid(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
-            DeclarePlayerShips(this.player1, this.playerWindow1, this.Cellsize);
+            DeclareComputerPlayerGrid(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
+            DeclareComputerPlayerShips(this.player1, this.playerWindow1, this.Cellsize);
 
             DeclareComputerPlayerGrid(this.player2, this.player1, this.PlayersCellRecords, this.playerWindow2, this.Cellsize);
             DeclareComputerPlayerShips(this.player2, this.playerWindow2, this.Cellsize);
@@ -258,25 +314,55 @@ namespace Battleship
                             {
                                 // make changes to player two grid
                                 otherPlayerPlayerCell.Background = Brushes.Red;
+
                                 otherPlayerPlayerCell.Content = "X";
                                 otherPlayerPlayerCell.Stricked = 1;
                                 otherPlayerPlayerCell.AllowDrop = false;
-                                foreach (Ship NavyShip in p_otherPlayer.Playershipcollection)
+
+                                /*foreach (Ship NavyShip in p_otherPlayer.Playershipcollection)
                                 {
                                     foreach (int cell in NavyShip.Ship_Crewmembers)
                                     {
                                         MessageBox.Show(cell.ToString());
 
-                                        /*
+                                        
                                         if (otherPlayerPlayerCell.TrackingID == cell)
                                         {
                                             MessageBox.Show("You Just Hit my" + NavyShip.Name);
                                         }
                                         else { MessageBox.Show("You wont Succed"); }
-                                        */
+                                        
                                     }
+                                }*/
+                                int rowNum;
+                                if ((gridcellnumber - 100) % 10 == 0)
+                                {
+                                    rowNum = (gridcellnumber - 100) / 10 - 1;
                                 }
-                                MainPlayerCell.Visibility = Visibility.Hidden;
+                                else
+                                {
+                                    rowNum = (gridcellnumber - 100) / 10;
+                                }
+                                int colNum = ((gridcellnumber-100) - (gridcellnumber-100) / 10 * 10) -1;
+                                if (colNum == -1)
+                                {
+                                    colNum = 9;
+                                }
+                                string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
+                                if (letterAttackGrid != "O" && letterAttackGrid != "H" && letterAttackGrid != "M")
+                                {
+                                    p_otherPlayer.Board[rowNum, colNum] = "H" + letterAttackGrid;
+                                    MainPlayerCell.Background = Brushes.Green;
+                                    MainPlayerCell.Content = "H";
+                                    MainPlayerCell.IsEnabled = false;
+                                    MainPlayerCell.Stricked = 1;
+                                    MainPlayerCell.AllowDrop = false;
+                                }
+                                else
+                                {
+                                    MainPlayerCell.Visibility = Visibility.Hidden;
+                                    p_otherPlayer.Board[rowNum, colNum] = "M";
+                                }
                             }
                         }
 
@@ -291,7 +377,39 @@ namespace Battleship
                         }
 
                         // Swicth windows between players 
-                        this.SwitchPlayerWindows();
+                        if (p_otherPlayer.Name == "ComputerPlayerTwo")
+                        {
+                            Coordinate position = ((ComputerPlayer)p_otherPlayer).SetRandomAttackCoordinate(p_currentPlayer);
+                            Logger.ConsoleInformation(position.XCoordinate.ToString() + ' '+ position.YCoordinate.ToString());
+                            foreach (KeyValuePair<int, GridCell> playerPair in p_currentPlayer.Playergridsquarecollection)
+                            {
+                                GridCell playerCell = playerPair.Value;
+                                int y = (position.YCoordinate + 1) * 10 + (position.XCoordinate + 1);
+                                if (playerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
+                                    playerCell.OffenseButton == false)
+                                {
+                                    // make changes to player two grid
+                                    playerCell.Background = Brushes.Red;
+                                    playerCell.Content = "X";
+                                    playerCell.Stricked = 1;
+                                    playerCell.AllowDrop = false;
+                                }
+                            }
+                            Logger.ConsoleInformation("------- Computer Grid ------");
+                            for (int i = 0; i < RowRep; i++)
+                            {
+                                for (int j = 0; j < RowRep; j++)
+                                {
+                                    Logger.ConsoleInformationForArray(player2.Board[i, j] + ", ");
+                                }
+
+                                Logger.ConsoleInformation("");
+                            }
+                        }
+                        else
+                        {
+                            this.SwitchPlayerWindows();
+                        }
                     });
                 }
                 else
@@ -326,6 +444,18 @@ namespace Battleship
                                         Canvas.SetLeft(Myship, MainPlayerCell.Left_Comp_ParentLeft);
                                         Myship.Left_Comp_ParentLeft = MainPlayerCell.Left_Comp_ParentLeft;
                                         Myship.Captain = MainPlayerCell.TrackingID;
+
+                                        Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
+                                        Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
+                                        if (Myship.HDirection == true)
+                                        {
+                                            shipEndCoords.XCoordinate += (short)((Myship.Width / p_cellsize) - 1);
+                                        }
+                                        else if (Myship.HDirection == false)
+                                        {
+                                            shipEndCoords.YCoordinate += (short)((Myship.Height / p_cellsize) - 1);
+                                        }
+                                        this.UpdateShipCoords(Myship, shipStartCoords, shipEndCoords);
                                     }
                                 }
                             
@@ -382,55 +512,65 @@ namespace Battleship
             {
                 p_playersCellRecords.Add(currentPlayerOffenseButton);
 
-                // add a click event for all cells in Player 1 grid only if the button is attack type
-                if (currentPlayerOffenseButton.OffenseButton == true)
+                Coordinate position = ((ComputerPlayer)p_currentPlayer).SetRandomAttackCoordinate(p_otherPlayer);
+
+                foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
                 {
-                    // add click event
-                    currentPlayerOffenseButton.Click += new RoutedEventHandler(delegate (object sender, RoutedEventArgs e)
+                    GridCell playerCell = otherPlayerPair.Value;
+                    int y = (position.YCoordinate + 1) * 10 + (position.XCoordinate + 1);
+                    if (otherPlayerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
+                        playerCell.OffenseButton == false)
                     {
-                        // go check the list of buttons for player two and change the status for them
-                        foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
+                        // make changes to player two grid
+                        playerCell.Background = Brushes.Red;
+                        playerCell.Content = "X";
+                        playerCell.Stricked = 1;
+                        playerCell.AllowDrop = false;
+                    }
+                }
+                    // add a click event for all cells in Player 1 grid only if the button is attack type
+                    if (currentPlayerOffenseButton.OffenseButton == true)
+                {
+                    foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
+                    {
+                        GridCell otherPlayerDefenseButton = otherPlayerPair.Value;
+                        // turn off buttons on the enemy grid(player two left side)only if it is a defense button
+                        if (currentPlayerOffenseButton.Uid == otherPlayerDefenseButton.Uid && otherPlayerDefenseButton.OffenseButton == false)
                         {
-                            GridCell otherPlayerDefenseButton = otherPlayerPair.Value;
-                            // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                            if (currentPlayerOffenseButton.Uid == otherPlayerDefenseButton.Uid && otherPlayerDefenseButton.OffenseButton == false)
-                            {
-                                // make changes to player two grid
-                                otherPlayerDefenseButton.Background = Brushes.Red;
-                                otherPlayerDefenseButton.Content = "X";
-                                otherPlayerDefenseButton.Stricked = 1;
-                                otherPlayerDefenseButton.AllowDrop = false;
+                            // make changes to player two grid
+                            otherPlayerDefenseButton.Background = Brushes.Red;
+                            otherPlayerDefenseButton.Content = "X";
+                            otherPlayerDefenseButton.Stricked = 1;
+                            otherPlayerDefenseButton.AllowDrop = false;
 
-                                // make changes to player one grid
-                                currentPlayerOffenseButton.Visibility = Visibility.Hidden;
-                            }
+                            // make changes to player one grid
+                            currentPlayerOffenseButton.Visibility = Visibility.Hidden;
                         }
+                    }
 
-                        Coordinate attackedGridSpace = new Coordinate((short)currentPlayerOffenseButton.ColNum, (short)currentPlayerOffenseButton.RowNum);
+                    Coordinate attackedGridSpace = new Coordinate((short)currentPlayerOffenseButton.ColNum, (short)currentPlayerOffenseButton.RowNum);
 
-                        Logger.ConsoleInformation("Row Number: " + currentPlayerOffenseButton.RowNum);
-                        Logger.ConsoleInformation("Column Number: " + currentPlayerOffenseButton.ColNum);
+                    Logger.ConsoleInformation("Row Number: " + currentPlayerOffenseButton.RowNum);
+                    Logger.ConsoleInformation("Column Number: " + currentPlayerOffenseButton.ColNum);
 
-                        foreach (Ship testShip in p_currentPlayer.Playershipcollection)
-                        {
-                            AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
-                        }
+                    foreach (Ship testShip in p_currentPlayer.Playershipcollection)
+                    { 
+                        AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                    }
 
-                        // Swicth windows between players 
-                        this.SwitchPlayerWindows();
-                    });
+                    // Swicth windows between players 
+                    this.SwitchPlayerWindows();
                 }
                 
                 //// Add player 1 cells to the window grid
                 p_currentPlayerWindow.Children.Add(currentPlayerOffenseButton);
             }
         }
-
+        
         private void DeclarePlayerShips(Player p_currentPlayer, Canvas p_currentPlayerWindow, double p_cellsize)
         {
             foreach (Ship NavyShip in p_currentPlayer.Playershipcollection)
             {
-
                 NavyShip.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
                 {
                     if (p_currentPlayer.isLocked == false)
@@ -442,13 +582,10 @@ namespace Battleship
 
                         if (Overlappingcrew == 0)
                         {
-
                             if (NavyShip.HDirection == true)
                             {
                                 double shipMaxX = (p_currentPlayerWindow.Width / 2) - (NavyShip.Height);
                                 double shipMaxY = (p_currentPlayerWindow.Width / 2) - (NavyShip.Width);
-
-
 
                                 if (NavyShip.Top_Comp_ParentTop <= shipMaxY && NavyShip.LeftToParentLeft <= shipMaxX)
                                 {
@@ -467,7 +604,6 @@ namespace Battleship
                                     NavyShip.Delayed_Crew_Crewmembers = NavyShip.SetCrewmembers(NavyShip.Captain, 0);
                                 }
                             }
-
                         }
                     }
                 });
@@ -556,7 +692,6 @@ namespace Battleship
                         canvas.Visibility = Visibility.Hidden;
                     }
                 }
-
                 this.SetConfirmButtonVisibility("Player1Canvas");
             }
         }
@@ -571,77 +706,6 @@ namespace Battleship
             {
                 this.Confirm_Button.IsEnabled = false;
                 this.AttackBtn.IsEnabled = true;
-                if (canvasUid == "Player1Canvas")
-                {
-                    foreach (Ship ship in this.player1.Playershipcollection)
-                    {
-                        int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;
-                        int startRow = (int)ship.ShipStartCoords.YCoordinate - 1;
-                        int endColumn = (int)ship.ShipEndCoords.XCoordinate - 1;
-                        int endRow = (int)ship.ShipEndCoords.YCoordinate - 1;
-                        string letter = ship.Name.Substring(0, 2);
-                        if (ship.HDirection == true)
-                        {
-                            for (int i = startColumn; i <= endColumn; i++)
-                            {
-                                player1.Board[startRow, i] = letter;
-                            }
-                        }
-                        else if (ship.HDirection == false)
-                        {
-                            for (int i = startRow; i <= endRow; i++)
-                            {
-                                player1.Board[i, startColumn] = letter;
-                            }
-                        }
-                    }
-                    Logger.ConsoleInformation("------- " + canvasUid + " ------");
-                    for (int i = 0; i < RowRep; i++)
-                    {
-                        for (int j = 0; j < RowRep; j++)
-                        {
-                            Logger.ConsoleInformationForArray(player1.Board[i, j] + ", ");
-                        }
-
-                        Logger.ConsoleInformation("");
-                    }
-                }
-                else if(canvasUid == "Player2Canvas")
-                {
-                    foreach (Ship ship in this.player2.Playershipcollection)
-                    {
-                        int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;
-                        int startRow = (int)ship.ShipStartCoords.YCoordinate - 1;
-                        int endColumn = (int)ship.ShipEndCoords.XCoordinate - 1;
-                        int endRow = (int)ship.ShipEndCoords.YCoordinate - 1;
-                        
-                        string letter = ship.Name.Substring(0, 2);
-                        if (ship.HDirection == true)
-                        {
-                            for (int i = startColumn; i <= endColumn; i++)
-                            {
-                                player2.Board[startRow, i] = letter;
-                            }
-                        }
-                        else if (ship.HDirection == false)
-                        {
-                            for (int i = startRow; i <= endRow; i++)
-                            {
-                                player2.Board[i, startColumn] = letter;
-                            }
-                        }
-                    }
-                    Logger.ConsoleInformation("------- " + canvasUid + " ------");
-                    for (int i = 0; i < RowRep; i++)
-                    {
-                        for (int j = 0; j < RowRep; j++)
-                        {
-                            Logger.ConsoleInformationForArray(player2.Board[i, j] + ", ");
-                        }
-
-                        Logger.ConsoleInformation("");
-                    }
-                }
             }
             else if ((canvasUid == "Player1Canvas" && this.player1.isLocked == false) || (canvasUid == "Player2Canvas" && this.player2.isLocked == false))
             { 
@@ -659,11 +723,75 @@ namespace Battleship
             if (canvasUid == "Player1Canvas")
             {
                 this.player1.isLocked = true;
-                
+                foreach (Ship ship in this.player1.Playershipcollection)
+                {
+                    int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;
+                    int startRow = (int)ship.ShipStartCoords.YCoordinate - 1;
+                    int endColumn = (int)ship.ShipEndCoords.XCoordinate - 1;
+                    int endRow = (int)ship.ShipEndCoords.YCoordinate - 1;
+                    string letter = ship.Name.Substring(0, 2);
+                    if (ship.HDirection == true)
+                    {
+                        for (int i = startColumn; i <= endColumn; i++)
+                        {
+                            player1.Board[startRow, i] = letter;
+                        }
+                    }
+                    else if (ship.HDirection == false)
+                    {
+                        for (int i = startRow; i <= endRow; i++)
+                        {
+                            player1.Board[i, startColumn] = letter;
+                        }
+                    }
+                }
+                Logger.ConsoleInformation("------- " + canvasUid + " ------");
+                for (int i = 0; i < RowRep; i++)
+                {
+                    for (int j = 0; j < RowRep; j++)
+                    {
+                        Logger.ConsoleInformationForArray(player1.Board[i, j] + ", ");
+                    }
+
+                    Logger.ConsoleInformation("");
+                }
             }
             else if (canvasUid == "Player2Canvas")
             {
                 this.player2.isLocked = true;
+                foreach (Ship ship in this.player2.Playershipcollection)
+                {
+                    int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;
+                    int startRow = (int)ship.ShipStartCoords.YCoordinate - 1;
+                    int endColumn = (int)ship.ShipEndCoords.XCoordinate - 1;
+                    int endRow = (int)ship.ShipEndCoords.YCoordinate - 1;
+
+                    string letter = ship.Name.Substring(0, 2);
+                    if (ship.HDirection == true)
+                    {
+                        for (int i = startColumn; i <= endColumn; i++)
+                        {
+                            player2.Board[startRow, i] = letter;
+                        }
+                    }
+                    else if (ship.HDirection == false)
+                    {
+                        for (int i = startRow; i <= endRow; i++)
+                        {
+                            player2.Board[i, startColumn] = letter;
+                        }
+                    }
+                }
+                Logger.ConsoleInformation("------- " + canvasUid + " ------");
+                for (int i = 0; i < RowRep; i++)
+                {
+                    for (int j = 0; j < RowRep; j++)
+                    {
+                        Logger.ConsoleInformationForArray(player2.Board[i, j] + ", ");
+                    }
+
+                    Logger.ConsoleInformation("");
+                }
             }
 
             this.SetConfirmButtonVisibility(canvasUid);
