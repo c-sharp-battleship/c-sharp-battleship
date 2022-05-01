@@ -331,7 +331,7 @@ namespace Battleship
                                 string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
                                 if (letterAttackGrid != "O" && letterAttackGrid != "H" && letterAttackGrid != "M")
                                 {
-                                    p_otherPlayer.Board[rowNum, colNum] = "H" + letterAttackGrid;
+                                    p_otherPlayer.Board[rowNum, colNum] = "H";
                                     MainPlayerCell.Background = Brushes.Green;
                                     MainPlayerCell.Content = "H";
                                     MainPlayerCell.IsEnabled = false;
@@ -351,45 +351,22 @@ namespace Battleship
                         Logger.ConsoleInformation("Row Number: " + MainPlayerCell.RowNum);
                         Logger.ConsoleInformation("Column Number: " + MainPlayerCell.ColNum);
 
-                        foreach (Ship testShip in p_currentPlayer.Playershipcollection)
+                        foreach (Ship testShip in p_otherPlayer.Playershipcollection)
                         {
+                            //Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
                             AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
                         }
 
                         // Swicth windows between players 
                         if (p_otherPlayer.Name == "ComputerPlayerTwo")
                         {
-                            Coordinate position = ((ComputerPlayer)p_otherPlayer).SetRandomAttackCoordinate(p_currentPlayer);
-                            Logger.ConsoleInformation(position.XCoordinate.ToString() + ' '+ position.YCoordinate.ToString());
-                            foreach (KeyValuePair<int, GridCell> playerPair in p_currentPlayer.Playergridsquarecollection)
-                            {
-                                GridCell playerCell = playerPair.Value;
-                                int y = (position.YCoordinate + 1) * 10 + (position.XCoordinate + 1);
-                                if (playerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
-                                    playerCell.OffenseButton == false)
-                                {
-                                    // make changes to player two grid
-                                    playerCell.Background = Brushes.Red;
-                                    playerCell.Content = "X";
-                                    playerCell.Stricked = 1;
-                                    playerCell.AllowDrop = false;
-                                }
-                            }
-                            Logger.ConsoleInformation("------- Computer Grid ------");
-                            for (int i = 0; i < RowRep; i++)
-                            {
-                                for (int j = 0; j < RowRep; j++)
-                                {
-                                    Logger.ConsoleInformationForArray(player2.Board[i, j] + ", ");
-                                }
-
-                                Logger.ConsoleInformation("");
-                            }
+                            ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, RowRep);
                         }
                         else
                         {
                             this.SwitchPlayerWindows();
                         }
+                        
                     });
                 }
                 else
@@ -508,8 +485,8 @@ namespace Battleship
                         playerCell.AllowDrop = false;
                     }
                 }
-                    // add a click event for all cells in Player 1 grid only if the button is attack type
-                    if (currentPlayerOffenseButton.OffenseButton == true)
+                // add a click event for all cells in Player 1 grid only if the button is attack type
+                if (currentPlayerOffenseButton.OffenseButton == true)
                 {
                     foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
                     {

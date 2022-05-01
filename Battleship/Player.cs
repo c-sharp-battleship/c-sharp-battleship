@@ -253,8 +253,7 @@ namespace Battleship
         {
             Ship ship = sender as Ship;
             ship.ShipIsSunk = true;
-            Logger.ConsoleInformation("Ship " + ship.Uid + " has been sunk!");
-
+            Logger.Information(ship.Name + " has been sunk!");
             this.CheckIfPlayerHasWon();
         }
 
@@ -275,7 +274,7 @@ namespace Battleship
 
             if (numberOfShipsThatHaveBeenSunk == this.Playershipcollection.Count)
             {
-                Logger.Information("You Have Won!");
+                Logger.Information(this.Name + "Has Won!");
             }
         }
 

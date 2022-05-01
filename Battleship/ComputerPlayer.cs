@@ -265,6 +265,44 @@ namespace Battleship
             return position;
         }
 
+        public void CompPlayerAttack(Player p_otherPlayer, int RowRep)
+        {
+            Coordinate position = this.SetRandomAttackCoordinate(p_otherPlayer);
+            Logger.ConsoleInformation(position.XCoordinate.ToString() + ' '+ position.YCoordinate.ToString());
+            foreach (KeyValuePair<int, GridCell> playerPair in p_otherPlayer.Playergridsquarecollection)
+            {
+                GridCell playerCell = playerPair.Value;
+                int y = (position.YCoordinate + 1) * 10 + (position.XCoordinate + 1);
+                if (playerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
+                    playerCell.OffenseButton == false)
+                {
+                    // make changes to player two grid
+                    playerCell.Background = Brushes.Red;
+                    playerCell.Content = "X";
+                    playerCell.Stricked = 1;
+                    playerCell.AllowDrop = false;
+                }
+            }
+            
+            Coordinate attackedGridSpace = new Coordinate((short)(position.XCoordinate + 1), (short)(position.YCoordinate + 1));
+
+            foreach (Ship testShip in p_otherPlayer.Playershipcollection)
+            {
+                //Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
+                AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+            }
+            Logger.ConsoleInformation("------- Computer Grid ------");
+            for (int i = 0; i < RowRep; i++)
+            {
+                for (int j = 0; j < RowRep; j++)
+                {
+                    Logger.ConsoleInformationForArray(this.Board[i, j] + ", ");
+                }
+
+                Logger.ConsoleInformation("");
+            }
+        }
+
         public Coordinate SetRandomAttackCoordinate(Player p_otherPlayer)
         {
             Random random = new Random();
@@ -280,7 +318,7 @@ namespace Battleship
                 colNumber = random.Next(0, 10);
                 string letterAttackGrid = p_otherPlayer.Board[rowNumber, colNumber];
 
-                if (letterAttackGrid != "H" || letterAttackGrid != "M")
+                if (letterAttackGrid != "H" | letterAttackGrid != "M")
                 {
                     availableToChoose = true;
                     if (letterAttackGrid == "O")
@@ -289,7 +327,7 @@ namespace Battleship
                     }
                     else
                     {
-                        p_otherPlayer.Board[rowNumber, colNumber] = "H" + letterAttackGrid;
+                        p_otherPlayer.Board[rowNumber, colNumber] = "H";
                     }
                 }
             }
