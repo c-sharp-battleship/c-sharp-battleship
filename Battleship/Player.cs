@@ -35,6 +35,8 @@ namespace Battleship
         /// </summary>
         private string name;
 
+        private bool winner = false;
+
         /// <summary>
         /// The list of player's ships.
         /// </summary>
@@ -211,6 +213,12 @@ namespace Battleship
             get { return this.playerID; }
         }
 
+        public bool Winner
+        {
+            get { return this.winner; }
+            set { this.winner = value; }
+        }
+
         /// <summary>
         /// Gets player collection of ships 
         /// </summary>
@@ -274,7 +282,8 @@ namespace Battleship
 
             if (numberOfShipsThatHaveBeenSunk == this.Playershipcollection.Count)
             {
-                Logger.Information(this.Name + "Has Won!");
+                this.winner = true;
+                Logger.Information(this.Name + "Lost");
             }
         }
 

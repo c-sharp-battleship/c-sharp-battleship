@@ -9,6 +9,7 @@ namespace Battleship
     using System.Collections.Generic;
     using System.Security.Cryptography.X509Certificates;
     using System.Text;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
@@ -17,6 +18,7 @@ namespace Battleship
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
+    using System.Windows.Threading;
 
     /// <summary>
     /// Interaction logic for GameWindow.xaml
@@ -78,6 +80,8 @@ namespace Battleship
         /// The player 2 window.
         /// </summary>
         private Canvas playerWindow2;
+
+        private DispatcherTimer dispatcherTimer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow" /> class.
@@ -268,8 +272,28 @@ namespace Battleship
             this.Maingrid.Children.Add(this.playerWindow1);
             this.Maingrid.Children.Add(this.playerWindow2);
 
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Start();
+
             this.Show();
         }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            if (player1.Winner || player2.Winner)
+            {
+                dispatcherTimer.Stop();
+            }
+            else
+            {
+                ((ComputerPlayer)player1).CompPlayerAttack(player2, RowRep);
+                this.SwitchPlayerWindows();
+                ((ComputerPlayer)player2).CompPlayerAttack(player1, RowRep);
+            }
+        }
+
 
         private void DeclarePlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
@@ -285,12 +309,13 @@ namespace Battleship
                     MainPlayerCell.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
                     {
                         // go check the list of buttons for player two and change the status for them
-                        foreach (KeyValuePair<int,GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
+                        foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
                         {
                             int otherPlayercellnumber = otherPlayerPair.Key;
                             GridCell otherPlayerPlayerCell = otherPlayerPair.Value;
                             // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                            if (MainPlayerCell.Uid == otherPlayerPlayerCell.Uid && otherPlayerPlayerCell.OffenseButton == false)
+                            if (MainPlayerCell.Uid == otherPlayerPlayerCell.Uid &&
+                                otherPlayerPlayerCell.OffenseButton == false)
                             {
                                 // make changes to player two grid
                                 otherPlayerPlayerCell.Background = Brushes.Red;
@@ -323,11 +348,13 @@ namespace Battleship
                                 {
                                     rowNum = (gridcellnumber - 100) / 10;
                                 }
-                                int colNum = ((gridcellnumber-100) - (gridcellnumber-100) / 10 * 10) -1;
+
+                                int colNum = ((gridcellnumber - 100) - (gridcellnumber - 100) / 10 * 10) - 1;
                                 if (colNum == -1)
                                 {
                                     colNum = 9;
                                 }
+
                                 string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
                                 if (letterAttackGrid != "O" && letterAttackGrid != "H" && letterAttackGrid != "M")
                                 {
@@ -465,62 +492,13 @@ namespace Battleship
 
         private void DeclareComputerPlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
-            foreach (GridCell currentPlayerOffenseButton in p_currentPlayer.PlayerGridCellList)
+            foreach (KeyValuePair<int, GridCell> MainPlayerPair in p_currentPlayer.Playergridsquarecollection)
             {
-                p_playersCellRecords.Add(currentPlayerOffenseButton);
+                int gridcellnumber = MainPlayerPair.Key;
+                GridCell MainPlayerCell = MainPlayerPair.Value;
 
-                Coordinate position = ((ComputerPlayer)p_currentPlayer).SetRandomAttackCoordinate(p_otherPlayer);
-
-                foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
-                {
-                    GridCell playerCell = otherPlayerPair.Value;
-                    int y = (position.YCoordinate + 1) * 10 + (position.XCoordinate + 1);
-                    if (otherPlayerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
-                        playerCell.OffenseButton == false)
-                    {
-                        // make changes to player two grid
-                        playerCell.Background = Brushes.Red;
-                        playerCell.Content = "X";
-                        playerCell.Stricked = 1;
-                        playerCell.AllowDrop = false;
-                    }
-                }
-                // add a click event for all cells in Player 1 grid only if the button is attack type
-                if (currentPlayerOffenseButton.OffenseButton == true)
-                {
-                    foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
-                    {
-                        GridCell otherPlayerDefenseButton = otherPlayerPair.Value;
-                        // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                        if (currentPlayerOffenseButton.Uid == otherPlayerDefenseButton.Uid && otherPlayerDefenseButton.OffenseButton == false)
-                        {
-                            // make changes to player two grid
-                            otherPlayerDefenseButton.Background = Brushes.Red;
-                            otherPlayerDefenseButton.Content = "X";
-                            otherPlayerDefenseButton.Stricked = 1;
-                            otherPlayerDefenseButton.AllowDrop = false;
-
-                            // make changes to player one grid
-                            currentPlayerOffenseButton.Visibility = Visibility.Hidden;
-                        }
-                    }
-
-                    Coordinate attackedGridSpace = new Coordinate((short)currentPlayerOffenseButton.ColNum, (short)currentPlayerOffenseButton.RowNum);
-
-                    Logger.ConsoleInformation("Row Number: " + currentPlayerOffenseButton.RowNum);
-                    Logger.ConsoleInformation("Column Number: " + currentPlayerOffenseButton.ColNum);
-
-                    foreach (Ship testShip in p_currentPlayer.Playershipcollection)
-                    { 
-                        AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
-                    }
-
-                    // Swicth windows between players 
-                    this.SwitchPlayerWindows();
-                }
-                
-                //// Add player 1 cells to the window grid
-                p_currentPlayerWindow.Children.Add(currentPlayerOffenseButton);
+                //// Add player cells to the window grid
+                p_currentPlayerWindow.Children.Add(MainPlayerCell);
             }
         }
         

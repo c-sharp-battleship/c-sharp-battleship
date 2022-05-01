@@ -9,6 +9,7 @@ namespace Battleship
     using System.Collections.Generic;
     using System.Diagnostics.Eventing.Reader;
     using System.Text;
+    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
@@ -321,19 +322,38 @@ namespace Battleship
                 if (letterAttackGrid != "H" | letterAttackGrid != "M")
                 {
                     availableToChoose = true;
+                    GridCell playerCell = this.playerGridCells[(rowNumber * 10 + (colNumber + 1)) + 100];
                     if (letterAttackGrid == "O")
                     {
                         p_otherPlayer.Board[rowNumber, colNumber] = "M";
+                        playerCell.Visibility = Visibility.Hidden;
                     }
                     else
                     {
                         p_otherPlayer.Board[rowNumber, colNumber] = "H";
+                        playerCell.Background = Brushes.Green;
+                        playerCell.Content = "H";
+                        playerCell.Stricked = 1;
+                        playerCell.AllowDrop = false;
                     }
                 }
             }
 
             position.XCoordinate = (short)colNumber;
             position.YCoordinate = (short)rowNumber;
+            foreach (KeyValuePair<int, GridCell> playerPair in this.Playergridsquarecollection)
+            {
+                GridCell playerCell = playerPair.Value;
+                if (playerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
+                    playerCell.OffenseButton == true)
+                {
+                    // make changes to player two grid
+                    playerCell.Background = Brushes.Red;
+                    playerCell.Content = "X";
+                    playerCell.Stricked = 1;
+                    playerCell.AllowDrop = false;
+                }
+            }
             Logger.ConsoleInformation("------- Player Grid ------");
             for (int i = 0; i < 10; i++)
             {
