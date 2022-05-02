@@ -308,92 +308,93 @@ namespace Battleship
                     // add click event
                     MainPlayerCell.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
                     {
-                        // go check the list of buttons for player two and change the status for them
-                        foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
+                        // Double-check that both players ships are locked into place before allowing the user to attack grid spaces.
+                        if (p_currentPlayer.isLocked == true && p_otherPlayer.isLocked == true)
                         {
-                            int otherPlayercellnumber = otherPlayerPair.Key;
-                            GridCell otherPlayerPlayerCell = otherPlayerPair.Value;
-                            // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                            if (MainPlayerCell.Uid == otherPlayerPlayerCell.Uid &&
-                                otherPlayerPlayerCell.OffenseButton == false)
+                            // go check the list of buttons for player two and change the status for them
+                            foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
                             {
-                                // make changes to player two grid
-                                otherPlayerPlayerCell.Background = Brushes.Red;
-
-                                otherPlayerPlayerCell.Content = "X";
-                                otherPlayerPlayerCell.Stricked = 1;
-                                otherPlayerPlayerCell.AllowDrop = false;
-
-                                /*foreach (Ship NavyShip in p_otherPlayer.Playershipcollection)
+                                int otherPlayercellnumber = otherPlayerPair.Key;
+                                GridCell otherPlayerPlayerCell = otherPlayerPair.Value;
+                                // turn off buttons on the enemy grid(player two left side)only if it is a defense button
+                                if (MainPlayerCell.Uid == otherPlayerPlayerCell.Uid &&
+                                    otherPlayerPlayerCell.OffenseButton == false)
                                 {
-                                    foreach (int cell in NavyShip.Ship_Crewmembers)
+                                    // make changes to player two grid
+                                    otherPlayerPlayerCell.Background = Brushes.Red;
+
+                                    otherPlayerPlayerCell.Content = "X";
+                                    otherPlayerPlayerCell.Stricked = 1;
+                                    otherPlayerPlayerCell.AllowDrop = false;
+                                    
+                                    int rowNum;
+                                    if ((gridcellnumber - 100) % 10 == 0)
                                     {
-                                        MessageBox.Show(cell.ToString());
-
-                                        
-                                        if (otherPlayerPlayerCell.TrackingID == cell)
-                                        {
-                                            MessageBox.Show("You Just Hit my" + NavyShip.Name);
-                                        }
-                                        else { MessageBox.Show("You wont Succed"); }
-                                        
+                                        rowNum = (gridcellnumber - 100) / 10 - 1;
                                     }
-                                }*/
-                                int rowNum;
-                                if ((gridcellnumber - 100) % 10 == 0)
-                                {
-                                    rowNum = (gridcellnumber - 100) / 10 - 1;
-                                }
-                                else
-                                {
-                                    rowNum = (gridcellnumber - 100) / 10;
-                                }
+                                    else
+                                    {
+                                        rowNum = (gridcellnumber - 100) / 10;
+                                    }
 
-                                int colNum = ((gridcellnumber - 100) - (gridcellnumber - 100) / 10 * 10) - 1;
-                                if (colNum == -1)
-                                {
-                                    colNum = 9;
-                                }
+                                    int colNum = ((gridcellnumber - 100) - (gridcellnumber - 100) / 10 * 10) - 1;
+                                    if (colNum == -1)
+                                    {
+                                        colNum = 9;
+                                    }
 
-                                string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
-                                if (letterAttackGrid != "O" && letterAttackGrid != "H" && letterAttackGrid != "M")
-                                {
-                                    p_otherPlayer.Board[rowNum, colNum] = "H";
-                                    MainPlayerCell.Background = Brushes.Green;
-                                    MainPlayerCell.Content = "H";
-                                    MainPlayerCell.IsEnabled = false;
-                                    MainPlayerCell.Stricked = 1;
-                                    MainPlayerCell.AllowDrop = false;
-                                }
-                                else
-                                {
-                                    MainPlayerCell.Visibility = Visibility.Hidden;
-                                    p_otherPlayer.Board[rowNum, colNum] = "M";
+                                    string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
+                                    if (letterAttackGrid != "O" && letterAttackGrid != "H" && letterAttackGrid != "M")
+                                    {
+                                        p_otherPlayer.Board[rowNum, colNum] = "H";
+                                        MainPlayerCell.Background = Brushes.Green;
+                                        MainPlayerCell.Content = "H";
+                                        MainPlayerCell.IsEnabled = false;
+                                        MainPlayerCell.Stricked = 1;
+                                        MainPlayerCell.AllowDrop = false;
+                                    }
+                                    else
+                                    {
+                                        MainPlayerCell.Visibility = Visibility.Hidden;
+                                        p_otherPlayer.Board[rowNum, colNum] = "M";
+                                    }
                                 }
                             }
-                        }
 
-                        Coordinate attackedGridSpace = new Coordinate((short)MainPlayerCell.ColNum, (short)MainPlayerCell.RowNum);
+                            Coordinate attackedGridSpace = new Coordinate((short)MainPlayerCell.ColNum, (short)MainPlayerCell.RowNum);
 
-                        Logger.ConsoleInformation("Row Number: " + MainPlayerCell.RowNum);
-                        Logger.ConsoleInformation("Column Number: " + MainPlayerCell.ColNum);
+                            Logger.ConsoleInformation("Row Number: " + MainPlayerCell.RowNum);
+                            Logger.ConsoleInformation("Column Number: " + MainPlayerCell.ColNum);
 
-                        foreach (Ship testShip in p_otherPlayer.Playershipcollection)
-                        {
-                            //Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
-                            AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
-                        }
+                            foreach (Ship testShip in p_otherPlayer.Playershipcollection)
+                            {
+                                //Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
+                                AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                            }
 
-                        // Swicth windows between players 
-                        if (p_otherPlayer.Name == "ComputerPlayerTwo")
-                        {
-                            ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, RowRep);
+                            // Swicth windows between players 
+                            if (p_otherPlayer.Name == "ComputerPlayerTwo")
+                            {
+                                ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, RowRep);
+                            }
+                            else
+                            {
+                                this.SwitchPlayerWindows();
+                            }
                         }
                         else
                         {
-                            this.SwitchPlayerWindows();
+                            // If the current player's ship placement is locked, but the other player's ship placement is not locked, let the player know.
+                            if (p_currentPlayer.isLocked == true && p_otherPlayer.isLocked == false)
+                            {
+                                Logger.Error("Error: The other player has not yet confirmed their ship placement.");
+                            }
+                            // Otherwise, let the user know that they need to confirm ship placement.
+                            else
+                            {
+                                Logger.Error("Error: Please confirm your ship placement before proceeding to attack.");
+                            }
                         }
-                        
                     });
                 }
                 else
