@@ -5,10 +5,6 @@
 //-----------------------------------------------------------------------
 namespace Battleship
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
     /// Interaction logic for AttackCoordinate
     /// </summary>
