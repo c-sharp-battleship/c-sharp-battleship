@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
-        Title="Battleship" Height="445" Width="630" Background="Black">
+        Title="Battleship" Height="445" Width="630" Background="Black"
+        Loaded="MainWindow_OnLoaded">
     <Grid Margin="0,0,0,0" Width="600" Height="400">
         <Grid.Background>
             <ImageBrush ImageSource="/battlefield-5-pacific-map-volcanic-rock.jpg"/>
@@ -24,10 +25,24 @@
         <Button x:Name="StartGameButton" Content="Start Game" HorizontalAlignment="Left" Margin="10,297,0,0" VerticalAlignment="Top" Width="322" Grid.ColumnSpan="2" Grid.Column="1" Click="StartGameButton_Click" Height="64"/>
         <Button x:Name="AboutButton" Content="About" Grid.Column="2" HorizontalAlignment="Left" Margin="277,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.681,-0.015" Grid.ColumnSpan="2" Width="140" Click="AboutButton_Click"/>
         <Button x:Name="QuitButton" Content="Quit" Grid.Column="2" HorizontalAlignment="Left" Margin="248,297,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.681,-0.015" Grid.ColumnSpan="2" Width="169" Click="QuitButton_Click" Height="64"/>
+        <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,224,23,154" Grid.Column="1">
+            <Label x:Name="AIDifficultyLabel1" Content="AI Player 1 - Difficulty Settings" Margin="0,0,375,0"/>
+            <RadioButton x:Name="easyAIRadioButton1" Content="Easy AI" Margin="215,2,233,-2" />
+            <RadioButton x:Name="hardAIRadioButton1" Content="Hard AI" Margin="408,0,0,1" Height="22" VerticalAlignment="Bottom" />
+        </Grid>
+        <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,247,23,131" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="21*"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="AIDifficultyLabel2" Content="AI Player 2 - Difficulty Settings" Margin="0,0,375,0" Grid.Row="1"/>
+            <RadioButton x:Name="easyAIRadioButton2" Content="Easy AI" Margin="216,0,231,0" Grid.RowSpan="2" />
+            <RadioButton x:Name="hardAIRadioButton2" Content="Hard AI" Margin="408,0,0,1" Height="22" VerticalAlignment="Bottom" Grid.RowSpan="2" />
+        </Grid>
         <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,270,23,108" Grid.Column="1">
-            <RadioButton x:Name="playerToPlayerRadioButton" Content="Player to Player" Margin="0,0,448,0" />
-            <RadioButton x:Name="playerToComputerRadioButton" Content="Player to Computer" Margin="216,0,215,0" />
-            <RadioButton x:Name="computerToComputerRadioButton" Content="Computer to Computer" Margin="408,0,0,1" Height="22" VerticalAlignment="Bottom" />
+            <RadioButton x:Name="playerToPlayerRadioButton" Content="Player to Player" Margin="0,2,448,2" Checked="playerToPlayerRadioButton_Checked" />
+            <RadioButton x:Name="playerToComputerRadioButton" Content="Player to Computer" Margin="216,2,215,2" Checked="playerToComputerRadioButton_Checked" />
+            <RadioButton x:Name="computerToComputerRadioButton" Content="Computer to Computer" Margin="408,0,0,0" Height="14" VerticalAlignment="Center" Checked="computerToComputerRadioButton_Checked" />
         </Grid>
     </Grid>
 </Window>

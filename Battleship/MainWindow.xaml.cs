@@ -98,5 +98,53 @@ namespace Battleship
         {
             this.Close();
         }
+
+        private void UpdateRadioButtonOptions()
+        {
+            if (this.playerToComputerRadioButton.IsChecked == true)
+            {
+                this.easyAIRadioButton1.IsEnabled = true;
+                this.hardAIRadioButton1.IsEnabled = true;
+
+                this.easyAIRadioButton2.IsEnabled = false;
+                this.hardAIRadioButton2.IsEnabled = false;
+            }
+            else if (this.computerToComputerRadioButton.IsChecked == true)
+            {
+                this.easyAIRadioButton1.IsEnabled = true;
+                this.hardAIRadioButton1.IsEnabled = true;
+
+                this.easyAIRadioButton2.IsEnabled = true;
+                this.hardAIRadioButton2.IsEnabled = true;
+            }
+            else
+            {
+                this.easyAIRadioButton1.IsEnabled = false;
+                this.hardAIRadioButton1.IsEnabled = false;
+
+                this.easyAIRadioButton2.IsEnabled = false;
+                this.hardAIRadioButton2.IsEnabled = false;
+            }
+        }
+
+        private void playerToPlayerRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            this.UpdateRadioButtonOptions();
+        }
+
+        private void playerToComputerRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            this.UpdateRadioButtonOptions();
+        }
+
+        private void computerToComputerRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            this.UpdateRadioButtonOptions();
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.UpdateRadioButtonOptions();
+        }
     }
 }
