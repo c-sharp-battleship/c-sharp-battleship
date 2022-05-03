@@ -4,6 +4,7 @@
       <Value>Stricked</Value>
       <Value>Striked</Value>
       <Value>xaml</Value>
+      <Value>Sanaaia</Value>
     </CollectionProperty>
   </GlobalSettings>
   <Analyzers>
@@ -14,4 +15,7 @@
       </AnalyzerSettings>
     </Analyzer>
   </Analyzers>
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
 </StyleCopSettings>

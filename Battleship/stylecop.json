@@ -1,0 +1,11 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "Battleship Coding Group",
+      "copyrightText": "Battleship Coding Group, 2022",
+      "xmlHeader": true,
+      "headerDecoration": "-----------------------------------------------------------------------"
+    }
+  }
+}
