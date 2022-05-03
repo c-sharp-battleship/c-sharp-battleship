@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="MainWindow.xaml.cs" company="Team">
-//     Company copyright tag.
+// <copyright file="MainWindow.xaml.cs" company="Battleship Coding Group">
+//     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Battleship
@@ -115,17 +115,17 @@ namespace Battleship
             }
         }
 
-        private void playerToPlayerRadioButton_Checked(object sender, RoutedEventArgs e)
+        private void PlayerToPlayerRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();
         }
 
-        private void playerToComputerRadioButton_Checked(object sender, RoutedEventArgs e)
+        private void PlayerToComputerRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();
         }
 
-        private void computerToComputerRadioButton_Checked(object sender, RoutedEventArgs e)
+        private void ComputerToComputerRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();
         }

@@ -40,9 +40,9 @@
             <RadioButton x:Name="hardAIRadioButton2" Content="Hard AI" Margin="408,0,0,1" Height="22" VerticalAlignment="Bottom" Grid.RowSpan="2" />
         </Grid>
         <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,270,23,108" Grid.Column="1">
-            <RadioButton x:Name="playerToPlayerRadioButton" Content="Player to Player" Margin="0,2,448,2" Checked="playerToPlayerRadioButton_Checked" />
-            <RadioButton x:Name="playerToComputerRadioButton" Content="Player to Computer" Margin="216,2,215,2" Checked="playerToComputerRadioButton_Checked" />
-            <RadioButton x:Name="computerToComputerRadioButton" Content="Computer to Computer" Margin="408,0,0,0" Height="14" VerticalAlignment="Center" Checked="computerToComputerRadioButton_Checked" />
+            <RadioButton x:Name="playerToPlayerRadioButton" Content="Player to Player" Margin="0,2,448,2" Checked="PlayerToPlayerRadioButton_Checked" />
+            <RadioButton x:Name="playerToComputerRadioButton" Content="Player to Computer" Margin="216,2,215,2" Checked="PlayerToComputerRadioButton_Checked" />
+            <RadioButton x:Name="computerToComputerRadioButton" Content="Computer to Computer" Margin="408,0,0,0" Height="14" VerticalAlignment="Center" Checked="ComputerToComputerRadioButton_Checked" />
         </Grid>
     </Grid>
 </Window>

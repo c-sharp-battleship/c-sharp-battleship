@@ -227,7 +227,7 @@ namespace Battleship
                     Logger.ConsoleInformationForArray(this.player1.Board[i, j] + ", ");
                 }
 
-                Logger.ConsoleInformation("");
+                Logger.ConsoleInformation("\n");
             }
 
             Logger.ConsoleInformation("------- Computer Grid ------");
@@ -238,10 +238,10 @@ namespace Battleship
                     Logger.ConsoleInformationForArray(this.player2.Board[i, j] + ", ");
                 }
 
-                Logger.ConsoleInformation("");
+                Logger.ConsoleInformation("\n");
             }
 
-            // Create two Canvas to place the player elements on them 
+            // Create two Canvas to place the player elements on them
             this.playerWindow1 = new Canvas();
             this.playerWindow1.HorizontalAlignment = HorizontalAlignment.Center;
             this.playerWindow1.VerticalAlignment = VerticalAlignment.Center;
@@ -320,7 +320,7 @@ namespace Battleship
                         canvas.Visibility = Visibility.Hidden;
                     }
                 }
-                
+
                 this.SetConfirmButtonVisibility("Player1Canvas");
             }
         }
@@ -341,16 +341,16 @@ namespace Battleship
 
         private void DeclarePlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
-            foreach (KeyValuePair<int, GridCell> MainPlayerPair in p_currentPlayer.Playergridsquarecollection)
+            foreach (KeyValuePair<int, GridCell> mainPlayerPair in p_currentPlayer.Playergridsquarecollection)
             {
-                int gridcellnumber = MainPlayerPair.Key;
-                GridCell MainPlayerCell = MainPlayerPair.Value;
+                int gridcellnumber = mainPlayerPair.Key;
+                GridCell mainPlayerCell = mainPlayerPair.Value;
 
                 // add a click event for all cells in Player 1 grid only if the button is attack type
-                if (MainPlayerCell.OffenseButton == true)
+                if (mainPlayerCell.OffenseButton == true)
                 {
                     // add click event
-                    MainPlayerCell.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
+                    mainPlayerCell.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
                     {
                         // Double-check that both players ships are locked into place before allowing the user to attack grid spaces.
                         if (p_currentPlayer.IsLocked == true && p_otherPlayer.IsLocked == true)
@@ -362,7 +362,7 @@ namespace Battleship
                                 GridCell otherPlayerPlayerCell = otherPlayerPair.Value;
 
                                 // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                                if (MainPlayerCell.Uid == otherPlayerPlayerCell.Uid &&
+                                if (mainPlayerCell.Uid == otherPlayerPlayerCell.Uid &&
                                     otherPlayerPlayerCell.OffenseButton == false)
                                 {
                                     // make changes to player two grid
@@ -392,24 +392,24 @@ namespace Battleship
                                     if (letterAttackGrid != "O" && letterAttackGrid != "H" && letterAttackGrid != "M")
                                     {
                                         p_otherPlayer.Board[rowNum, colNum] = "H";
-                                        MainPlayerCell.Background = Brushes.Green;
-                                        MainPlayerCell.Content = "H";
-                                        MainPlayerCell.IsEnabled = false;
-                                        MainPlayerCell.Stricked = 1;
-                                        MainPlayerCell.AllowDrop = false;
+                                        mainPlayerCell.Background = Brushes.Green;
+                                        mainPlayerCell.Content = "H";
+                                        mainPlayerCell.IsEnabled = false;
+                                        mainPlayerCell.Stricked = 1;
+                                        mainPlayerCell.AllowDrop = false;
                                     }
                                     else
                                     {
-                                        MainPlayerCell.Visibility = Visibility.Hidden;
+                                        mainPlayerCell.Visibility = Visibility.Hidden;
                                         p_otherPlayer.Board[rowNum, colNum] = "M";
                                     }
                                 }
                             }
 
-                            Coordinate attackedGridSpace = new Coordinate((short)MainPlayerCell.ColNum, (short)MainPlayerCell.RowNum);
+                            Coordinate attackedGridSpace = new Coordinate((short)mainPlayerCell.ColNum, (short)mainPlayerCell.RowNum);
 
-                            Logger.ConsoleInformation("Row Number: " + MainPlayerCell.RowNum);
-                            Logger.ConsoleInformation("Column Number: " + MainPlayerCell.ColNum);
+                            Logger.ConsoleInformation("Row Number: " + mainPlayerCell.RowNum);
+                            Logger.ConsoleInformation("Column Number: " + mainPlayerCell.ColNum);
 
                             foreach (Ship testShip in p_otherPlayer.Playershipcollection)
                             {
@@ -417,7 +417,7 @@ namespace Battleship
                                 AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
                             }
 
-                            // Swicth windows between players 
+                            // Swicth windows between players
                             if (p_otherPlayer.Name == "ComputerPlayerTwo")
                             {
                                 ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, RowRep);
@@ -434,7 +434,7 @@ namespace Battleship
                             {
                                 Logger.Error("Error: The other player has not yet confirmed their ship placement.");
                             }
-                            
+
                             // Otherwise, let the user know that they need to confirm ship placement.
                             else
                             {
@@ -447,47 +447,47 @@ namespace Battleship
                 {
                     // add the drag over event for when ships are dragged over the cells only if the cell is deffense type
                     // Create a method when an object is drag over this left button
-                    MainPlayerCell.DragOver += new DragEventHandler(delegate(object sender, DragEventArgs e)
+                    mainPlayerCell.DragOver += new DragEventHandler(delegate(object sender, DragEventArgs e)
                     {
                         // find the sender uid extracting the date of the event
                         string myWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
 
                         // iterate thru the collection of ships to find the sender element with matching uid
-                        foreach (Ship Myship in p_currentPlayer.Playershipcollection)
+                        foreach (Ship myShip in p_currentPlayer.Playershipcollection)
                         {
                             // if the sender element uid matches then this is my element, then move it with the mouse
-                            if (myWarshipUid == Myship.Uid)
+                            if (myWarshipUid == myShip.Uid)
                             {
-                                double shipMaxX = (p_currentPlayerWindow.Width / 2) - (Myship.Width) + p_cellsize;
-                                double shipMaxY = (p_currentPlayerWindow.Width / 2) - (Myship.Height) + p_cellsize;
+                                double shipMaxX = (p_currentPlayerWindow.Width / 2) - myShip.Width + p_cellsize;
+                                double shipMaxY = (p_currentPlayerWindow.Width / 2) - myShip.Height + p_cellsize;
 
                                 // check this method to see if its ok to move ship to requested cell
-                                int OverlappingCrew = SetshipMovePerCrewCheck(Myship, MainPlayerCell, p_currentPlayer, 0);
+                                int OverlappingCrew = SetshipMovePerCrewCheck(myShip, mainPlayerCell, p_currentPlayer, 0);
 
                                 if (OverlappingCrew == 0)
                                 {
                                     Point grabPos = e.GetPosition(p_currentPlayerWindow);
                                     if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
                                     {
-                                        Myship.Delayed_Crew_Crewmembers = Myship.SetCrewmembers(MainPlayerCell.TrackingID, 0);
-                                        Canvas.SetTop(Myship, MainPlayerCell.Top_Comp_ParentTop);
-                                        Myship.Top_Comp_ParentTop = MainPlayerCell.Top_Comp_ParentTop;
-                                        Canvas.SetLeft(Myship, MainPlayerCell.Left_Comp_ParentLeft);
-                                        Myship.Left_Comp_ParentLeft = MainPlayerCell.Left_Comp_ParentLeft;
-                                        Myship.Captain = MainPlayerCell.TrackingID;
+                                        myShip.Delayed_Crew_Crewmembers = myShip.SetCrewmembers(mainPlayerCell.TrackingID, 0);
+                                        Canvas.SetTop(myShip, mainPlayerCell.Top_Comp_ParentTop);
+                                        myShip.Top_Comp_ParentTop = mainPlayerCell.Top_Comp_ParentTop;
+                                        Canvas.SetLeft(myShip, mainPlayerCell.Left_Comp_ParentLeft);
+                                        myShip.Left_Comp_ParentLeft = mainPlayerCell.Left_Comp_ParentLeft;
+                                        myShip.Captain = mainPlayerCell.TrackingID;
 
                                         Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
                                         Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
-                                        if (Myship.HDirection == true)
+                                        if (myShip.HDirection == true)
                                         {
-                                            shipEndCoords.XCoordinate += (short)((Myship.Width / p_cellsize) - 1);
+                                            shipEndCoords.XCoordinate += (short)((myShip.Width / p_cellsize) - 1);
                                         }
-                                        else if (Myship.HDirection == false)
+                                        else if (myShip.HDirection == false)
                                         {
-                                            shipEndCoords.YCoordinate += (short)((Myship.Height / p_cellsize) - 1);
+                                            shipEndCoords.YCoordinate += (short)((myShip.Height / p_cellsize) - 1);
                                         }
 
-                                        this.UpdateShipCoords(Myship, shipStartCoords, shipEndCoords);
+                                        this.UpdateShipCoords(myShip, shipStartCoords, shipEndCoords);
                                     }
                                 }
                             }
@@ -496,36 +496,36 @@ namespace Battleship
                 }
 
                 //// Add player 1 cells to the window grid
-                p_currentPlayerWindow.Children.Add(MainPlayerCell);
+                p_currentPlayerWindow.Children.Add(mainPlayerCell);
             }
         }
 
         /// <summary>
         /// return a confirmation to do a move if there is no ships overlapping
         /// </summary>
-        /// <param name="Myship"></param>
-        /// <param name="MainPlayerCell"></param>
+        /// <param name="myShip"></param>
+        /// <param name="mainPlayerCell"></param>
         /// <param name="p_currentPlayer"></param>
         /// <returns></returns>
-        private int SetshipMovePerCrewCheck(Ship Myship, GridCell MainPlayerCell, Player p_currentPlayer, int Drag_Turn)
+        private int SetshipMovePerCrewCheck(Ship myShip, GridCell mainPlayerCell, Player p_currentPlayer, int dragTurn)
         {
-            int OverlapingCrewMembers = 0;
-            int newCaptain = MainPlayerCell.TrackingID;
-            List<int> NewCrewmembers = new List<int>();
-            NewCrewmembers = Myship.SetCrewmembers(newCaptain, Drag_Turn);
+            int overlapingCrewMembers = 0;
+            int newCaptain = mainPlayerCell.TrackingID;
+            List<int> newCrewmembers = new List<int>();
+            newCrewmembers = myShip.SetCrewmembers(newCaptain, dragTurn);
 
-            foreach (int NewMember in NewCrewmembers)
+            foreach (int newMember in newCrewmembers)
             {
-                // Logger.ConsoleInformation(NewMember.ToString());
-                foreach (Ship ShipCheck in p_currentPlayer.Playershipcollection)
+                // Logger.ConsoleInformation(newMember.ToString());
+                foreach (Ship shipCheck in p_currentPlayer.Playershipcollection)
                 {
-                    if (ShipCheck.Uid != Myship.Uid)
+                    if (shipCheck.Uid != myShip.Uid)
                     {
-                        foreach (int OldCrewMember in ShipCheck.Delayed_Crew_Crewmembers)
+                        foreach (int oldCrewMember in shipCheck.Delayed_Crew_Crewmembers)
                         {
-                            if (NewMember == OldCrewMember)
+                            if (newMember == oldCrewMember)
                             {
-                                OverlapingCrewMembers++;
+                                overlapingCrewMembers++;
                             }
                             else
                             {
@@ -535,21 +535,21 @@ namespace Battleship
                 }
             }
 
-            return OverlapingCrewMembers;
+            return overlapingCrewMembers;
         }
 
         private void DeclareComputerPlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
-            foreach (KeyValuePair<int, GridCell> MainPlayerPair in p_currentPlayer.Playergridsquarecollection)
+            foreach (KeyValuePair<int, GridCell> mainPlayerPair in p_currentPlayer.Playergridsquarecollection)
             {
-                int gridcellnumber = MainPlayerPair.Key;
-                GridCell MainPlayerCell = MainPlayerPair.Value;
+                int gridcellnumber = mainPlayerPair.Key;
+                GridCell mainPlayerCell = mainPlayerPair.Value;
 
                 //// Add player cells to the window grid
-                p_currentPlayerWindow.Children.Add(MainPlayerCell);
+                p_currentPlayerWindow.Children.Add(mainPlayerCell);
             }
         }
-        
+
         private void DeclarePlayerShips(Player p_currentPlayer, Canvas p_currentPlayerWindow, double p_cellsize)
         {
             foreach (Ship NavyShip in p_currentPlayer.Playershipcollection)
@@ -565,8 +565,8 @@ namespace Battleship
 
                         if (Overlappingcrew == 0)
                         {
-                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - (NavyShip.Height);
-                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - (NavyShip.Width);
+                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - NavyShip.Height;
+                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - NavyShip.Width;
 
                             if (NavyShip.Top_Comp_ParentTop <= shipMaxY && NavyShip.LeftToParentLeft <= shipMaxX)
                             {
@@ -627,7 +627,7 @@ namespace Battleship
                 this.AttackBtn.IsEnabled = true;
             }
             else if ((canvasUid == "Player1Canvas" && this.player1.IsLocked == false) || (canvasUid == "Player2Canvas" && this.player2.IsLocked == false))
-            { 
+            {
                 this.Confirm_Button.IsEnabled = true;
                 this.AttackBtn.IsEnabled = false;
             }
@@ -665,7 +665,7 @@ namespace Battleship
                         }
                     }
                 }
-                
+
                 Logger.ConsoleInformation("------- " + canvasUid + " ------");
                 for (int i = 0; i < RowRep; i++)
                 {

@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Player.cs" company="Team">
-//     Company copyright tag.
+// <copyright file="Player.cs" company="Battleship Coding Group">
+//     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Battleship
@@ -270,7 +270,7 @@ namespace Battleship
             }
         }
 
-        public StatusCodes.GridSpaceStatus checkshipcrewmembers(List<int> p_crew)
+        public StatusCodes.GridSpaceStatus Checkshipcrewmembers(List<int> p_crew)
         {
             StatusCodes.GridSpaceStatus shipCrewMemberStatus = StatusCodes.GridSpaceStatus.GRID_SPACE_NOT_OCCUPIED;
 
