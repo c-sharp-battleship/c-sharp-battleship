@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Ship.cs" company="Battleship Coding Group">
-// Battleship Coding Group
+//     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Battleship
@@ -187,13 +187,14 @@ namespace Battleship
                     this.grids = 0;
                     break;
             }
+
             Coordinate endCoords = new Coordinate((short)(this.shipStartCoords.XCoordinate + this.length - 1), this.ShipStartCoords.YCoordinate);
             this.shipEndCoords = endCoords;
             this.Width = this.length * gridCellSize;
             this.Height = gridCellSize;
             this.captain = driver;
 
-            //set the entry point crew member to compare future moves
+            // set the entry point crew member to compare future moves
             this.initialHorizontalCrewmembers.Clear();
             this.initialVerticalCrewmembers.Clear();
             int hValue = driver;
@@ -260,6 +261,7 @@ namespace Battleship
                     this.resistance = 0;
                     break;
             }
+
             this.Width = this.length * gridCellSize;
             this.Height = gridCellSize;
             if (horDirection)
@@ -288,7 +290,7 @@ namespace Battleship
             {
                 return this.shipStartCoords;
             }
-            
+
             set
             {
                 this.shipStartCoords = value;
@@ -301,6 +303,7 @@ namespace Battleship
                 {
                     endCoords = new Coordinate(this.shipStartCoords.XCoordinate, (short)(this.ShipStartCoords.YCoordinate + this.length - 1));
                 }
+
                 this.shipEndCoords = endCoords;
             }
         }
@@ -350,7 +353,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets ship length 
+        /// Gets or sets ship length
         /// </summary>
         public int Length
         {
@@ -390,7 +393,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets ship length 
+        /// Gets or sets ship length
         /// </summary>
         public int GridSpaces
         {
@@ -416,7 +419,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Set the entry point for the ship when loaded 
+        /// Set the entry point for the ship when loaded
         /// </summary>
         public int Captain
         {
@@ -454,7 +457,7 @@ namespace Battleship
                     previousShipStartCoords = new Coordinate(this.shipStartCoords.XCoordinate, this.shipStartCoords.YCoordinate);
                     previousShipEndCoords = new Coordinate(this.shipStartCoords.XCoordinate, (short)(this.shipStartCoords.YCoordinate + this.length - 1));
                 }
-                else 
+                else
                 {
                     this.HDirection = true;
                     double switcher = this.Width; // base
@@ -485,7 +488,7 @@ namespace Battleship
                 if ((testCoordinate.YCoordinate == this.shipStartCoords.YCoordinate) && (testCoordinate.XCoordinate >= this.shipStartCoords.XCoordinate) && (testCoordinate.XCoordinate <= this.shipEndCoords.XCoordinate))
                 {
                     attackCoordinate.CoordinateStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
-                    
+
                     this.resistance--;
 
                     if (this.resistance <= 0)
@@ -507,7 +510,7 @@ namespace Battleship
                     this.resistance--;
 
                     if (this.resistance <= 0)
-                    { 
+                    {
                         this.OnShipIsSunk?.Invoke(this, EventArgs.Empty);
                     }
                 }
@@ -545,7 +548,7 @@ namespace Battleship
         /// </summary>
         /// <param name="p_capitan">see the cell for the ship has a crew</param>
         /// <returns></returns>
-        public List<int> SetCrewmembers(int p_capitan,int dragTurn)
+        public List<int> SetCrewmembers(int p_capitan, int dragTurn)
         {
             List<int> back = new List<int>();
             this.movingHorizontalCrewmembers.Clear();
@@ -565,22 +568,25 @@ namespace Battleship
                 vValue += this.rowsgrid;
             }
 
-            //draging crewmembers request for check
+            // draging crewmembers request for check
             if (this.HDirection == true && dragTurn == 0)
             {
                 back = this.movingHorizontalCrewmembers;
             }
-            //draging crewmembers request for check
+
+            // draging crewmembers request for check
             if (this.HDirection == false && dragTurn == 0)
             {
                 back = this.movingVerticalCrewmembers;
             }
-            //turning crewmembers request for check
+
+            // turning crewmembers request for check
             if (this.HDirection == true && dragTurn == 1)
             {
                 back = this.movingVerticalCrewmembers;
             }
-            //turning crewmembers request for check
+
+            // turning crewmembers request for check
             if (this.HDirection == false && dragTurn == 1)
             {
                 back = this.movingHorizontalCrewmembers;
