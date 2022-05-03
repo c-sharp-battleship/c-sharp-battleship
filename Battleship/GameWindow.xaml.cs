@@ -172,6 +172,7 @@ namespace Battleship
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.player1 = new Player(1, "PlayerOne", this.Cellsize, this.RowRep, 1, 3);
             this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6);
+            this.player2.isLocked = true;
 
             Logger.ConsoleInformation("------- Computer Grid ------");
             for (int i = 0; i < RowRep; i++)
