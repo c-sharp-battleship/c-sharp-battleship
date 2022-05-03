@@ -58,6 +58,8 @@ jobs:
     env:
       Solution_Name: Battleship.sln
       Test_Project_Path: Battleship\Battleship.csproj
+      Wap_Project_Directory: Battleship\
+      Wap_Project_Path: Battleship\Battleship.csproj
 
     steps:
     - name: Checkout
