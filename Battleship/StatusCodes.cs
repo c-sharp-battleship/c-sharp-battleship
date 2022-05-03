@@ -89,5 +89,18 @@ namespace Battleship
             GRID_SPACE_OCCUPIED,
             GRID_SPACE_NOT_OCCUPIED
         }
+
+        public enum AttackStrategy
+        {
+            ATTACK_DIFFICULTY_EASY,
+            ATTACK_DIFFICULTY_HARD
+        }
+
+        public enum DefenseStrategy
+        {
+            DEFENSE_DIFFICULTY_EASY,
+            DEFENSE_DIFFICULTY_CORNER,
+            DEFENSE_DIFFICULTY_CENTER
+        }
     }
 }

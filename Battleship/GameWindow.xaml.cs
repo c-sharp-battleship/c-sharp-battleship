@@ -512,27 +512,13 @@ namespace Battleship
 
                         if (Overlappingcrew == 0)
                         {
-                            if (NavyShip.HDirection == true)
-                            {
-                                double shipMaxX = (p_currentPlayerWindow.Width / 2) - (NavyShip.Height);
-                                double shipMaxY = (p_currentPlayerWindow.Width / 2) - (NavyShip.Width);
+                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - (NavyShip.Height);
+                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - (NavyShip.Width);
 
-                                if (NavyShip.Top_Comp_ParentTop <= shipMaxY && NavyShip.LeftToParentLeft <= shipMaxX)
-                                {
-                                    NavyShip.RotateShip(true);
-                                    NavyShip.Delayed_Crew_Crewmembers = NavyShip.SetCrewmembers(NavyShip.Captain, 0);
-                                }
-                            }
-                            else
+                            if (NavyShip.Top_Comp_ParentTop <= shipMaxY && NavyShip.LeftToParentLeft <= shipMaxX)
                             {
-                                double shipMaxX = (p_currentPlayerWindow.Width / 2) - (NavyShip.Height);
-                                double shipMaxY = (p_currentPlayerWindow.Width / 2) - (NavyShip.Width);
-
-                                if (NavyShip.Top_Comp_ParentTop <= shipMaxY && NavyShip.LeftToParentLeft <= shipMaxX)
-                                {
-                                    NavyShip.RotateShip(true);
-                                    NavyShip.Delayed_Crew_Crewmembers = NavyShip.SetCrewmembers(NavyShip.Captain, 0);
-                                }
+                                NavyShip.RotateShip(true);
+                                NavyShip.Delayed_Crew_Crewmembers = NavyShip.SetCrewmembers(NavyShip.Captain, 0);
                             }
                         }
                     }
@@ -653,6 +639,7 @@ namespace Battleship
             if (canvasUid == "Player1Canvas")
             {
                 this.player1.isLocked = true;
+                this.player1.LockShipsIntoPlace();
                 foreach (Ship ship in this.player1.Playershipcollection)
                 {
                     int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;
@@ -689,6 +676,7 @@ namespace Battleship
             else if (canvasUid == "Player2Canvas")
             {
                 this.player2.isLocked = true;
+                this.player2.LockShipsIntoPlace();
                 foreach (Ship ship in this.player2.Playershipcollection)
                 {
                     int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;

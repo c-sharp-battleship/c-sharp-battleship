@@ -7,6 +7,7 @@ namespace Battleship
 {
     using System;
     using System.Collections.Generic;
+    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
@@ -187,6 +188,24 @@ namespace Battleship
 
                 // load the ship to the list of ships
                 playerShips.Add(warship);
+            }
+        }
+
+        public void LockShipsIntoPlace()
+        {
+            foreach (Ship ship in this.playerShips)
+            {
+                string shipName = ship.Name.Substring(0, 2);
+                // Loop through each of the GridCells that the ship is currently placed on.
+                foreach (int crewMember in ship.Delayed_Crew_Crewmembers)
+                {
+                    // Set the GridCell's color to Azure.
+                    this.playerGridCells[crewMember].Background = Brushes.Azure;
+                    this.playerGridCells[crewMember].Content = shipName;
+                }
+                
+                // Hide the ships visibility.
+                ship.Visibility = Visibility.Hidden;
             }
         }
 
