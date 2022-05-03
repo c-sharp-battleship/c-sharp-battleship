@@ -81,7 +81,7 @@ namespace Battleship
         /// <param name="playerID"> This is the ID of the player </param>
         /// <param name="buttonColor"> This is the button color </param>
         /// <param name="myName"> This is the name of the grid cell. </param>
-        public GridCell(int playerID, int buttonColor, string myName) : base()
+        public GridCell(int playerID, int buttonColor, string myName)
         {
             this.playerID = playerID;
             this.name = myName;

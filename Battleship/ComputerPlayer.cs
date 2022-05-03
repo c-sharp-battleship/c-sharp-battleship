@@ -74,7 +74,7 @@ namespace Battleship
                             myButton.ColNum = col + 1;
                             myButton.OffenseButton = false;
                             myButton.AllowDrop = true;
-                            myButton.Buttonid = col * 10 + row;
+                            myButton.Buttonid = (col * 10) + row;
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
@@ -110,7 +110,7 @@ namespace Battleship
                             myButton.ColNum = col + 1;
                             myButton.OffenseButton = true;
                             myButton.AllowDrop = false;
-                            myButton.Buttonid = col * 10 + row;
+                            myButton.Buttonid = (col * 10) + row;
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
@@ -149,8 +149,8 @@ namespace Battleship
             foreach (KeyValuePair<int, GridCell> playerPair in p_otherPlayer.Playergridsquarecollection)
             {
                 GridCell playerCell = playerPair.Value;
-                int y = (position.YCoordinate + 1) * 10 + (position.XCoordinate + 1);
-                if (playerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
+                int y = ((position.YCoordinate + 1) * 10) + (position.XCoordinate + 1);
+                if (playerPair.Key == (position.YCoordinate * 10) + (position.XCoordinate + 1) &&
                     playerCell.OffenseButton == false)
                 {
                     // make changes to player two grid
@@ -177,7 +177,7 @@ namespace Battleship
                     Logger.ConsoleInformationForArray(this.Board[i, j] + ", ");
                 }
 
-                Logger.ConsoleInformation("");
+                Logger.ConsoleInformation(String.Empty);
             }
         }
 
@@ -199,7 +199,7 @@ namespace Battleship
                 if (letterAttackGrid != "H" | letterAttackGrid != "M")
                 {
                     availableToChoose = true;
-                    GridCell playerCell = this.playerGridCells[(rowNumber * 10 + (colNumber + 1)) + 100];
+                    GridCell playerCell = this.playerGridCells[((rowNumber * 10) + (colNumber + 1)) + 100];
                     if (letterAttackGrid == "O")
                     {
                         p_otherPlayer.Board[rowNumber, colNumber] = "M";

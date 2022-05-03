@@ -134,7 +134,7 @@ namespace Battleship
         /// <param name="gridCellSize"> This is the size of the grid square passed from player class, determined in pixels</param>
         /// <param name="startCoords"> This is the start coordinates of the ship</param>
         /// <param name="endCoords"> This is the end coordinates of the ship</param>
-        public Ship(int playerID,int driver, int shipType, double gridCellSize, int RowTotal, Coordinate startCoords) : base()
+        public Ship(int playerID,int driver, int shipType, double gridCellSize, int rowTotal, Coordinate startCoords) : base()
         {
             this.movingHorizontalCrewmembers = new List<int>();
             this.movingVerticalCrewmembers = new List<int>();
@@ -146,7 +146,7 @@ namespace Battleship
             this.shipType = shipType;
             this.ShipIsSunk = false;
             this.shipStartCoords = startCoords;
-            this.rowsgrid = RowTotal;
+            this.rowsgrid = rowTotal;
 
             switch (shipType)
             {
@@ -189,35 +189,35 @@ namespace Battleship
             }
             Coordinate endCoords = new Coordinate((short)(this.shipStartCoords.XCoordinate + this.length - 1), this.ShipStartCoords.YCoordinate);
             this.shipEndCoords = endCoords;
-            this.Width = length * gridCellSize;
+            this.Width = this.length * gridCellSize;
             this.Height = gridCellSize;
             this.captain = driver;
 
             //set the entry point crew member to compare future moves
-            initialHorizontalCrewmembers.Clear();
-            initialVerticalCrewmembers.Clear();
+            this.initialHorizontalCrewmembers.Clear();
+            this.initialVerticalCrewmembers.Clear();
             int hValue = driver;
             int vValue = driver;
 
-            for (int i = 0; i < grids; i++)
+            for (int i = 0; i < this.grids; i++)
             {
-                initialHorizontalCrewmembers.Add(hValue);
+                this.initialHorizontalCrewmembers.Add(hValue);
                 hValue++;
             }
 
-            for (int i = 0; i < grids; i++)
+            for (int i = 0; i < this.grids; i++)
             {
-                initialVerticalCrewmembers.Add(vValue);
-                vValue += RowTotal;
+                this.initialVerticalCrewmembers.Add(vValue);
+                vValue += rowTotal;
             }
 
             if (this.HDirection == true)
             {
-                delayedCrewmembers = initialHorizontalCrewmembers;
+                this.delayedCrewmembers = initialHorizontalCrewmembers;
             }
             else
             {
-                delayedCrewmembers = initialVerticalCrewmembers;
+                this.delayedCrewmembers = initialVerticalCrewmembers;
             }
         }
 
@@ -366,7 +366,7 @@ namespace Battleship
             get { return this.playerID; }
         }
 
-        public string Name
+        public string ShipName
         {
             get { return this.name; }
         }
@@ -403,8 +403,8 @@ namespace Battleship
         /// </summary>
         public List<int> Delayed_Crew_Crewmembers
         {
-            get { return delayedCrewmembers; }
-            set { delayedCrewmembers = value; }
+            get { return this.delayedCrewmembers; }
+            set { this.delayedCrewmembers = value; }
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Battleship
         /// </summary>
         public List<int> Ship_Crewmembers
         {
-            get { return actualCrewmembers; }
+            get { return this.actualCrewmembers; }
         }
 
         /// <summary>

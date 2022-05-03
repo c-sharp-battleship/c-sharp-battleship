@@ -256,7 +256,7 @@ namespace Battleship
         {
             foreach (Ship ship in this.playerShips)
             {
-                string shipName = ship.Name.Substring(0, 2);
+                string shipName = ship.ShipName.Substring(0, 2);
                 // Loop through each of the GridCells that the ship is currently placed on.
                 foreach (int crewMember in ship.Delayed_Crew_Crewmembers)
                 {
