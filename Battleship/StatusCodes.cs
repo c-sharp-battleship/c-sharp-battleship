@@ -84,22 +84,56 @@ namespace Battleship
             COMPUTER_TO_COMPUTER,
         }
 
+        /// <summary>
+        /// Types of grid space statuses.
+        /// </summary>
         public enum GridSpaceStatus
         {
+            /// <summary>
+            /// Indicates that the grid space is occupied.
+            /// </summary>
             GRID_SPACE_OCCUPIED,
+
+            /// <summary>
+            /// Indicates that the grid space is not occupied.
+            /// </summary>
             GRID_SPACE_NOT_OCCUPIED,
         }
 
+        /// <summary>
+        /// Indicates the computer attack strategy.
+        /// </summary>
         public enum AttackStrategy
         {
+            /// <summary>
+            /// Represents an easy attack strategy.
+            /// </summary>
             ATTACK_DIFFICULTY_EASY,
+
+            /// <summary>
+            /// Represents a hard attack strategy.
+            /// </summary>
             ATTACK_DIFFICULTY_HARD,
         }
 
+        /// <summary>
+        /// Indicates the computer defense strategy.
+        /// </summary>
         public enum DefenseStrategy
         {
+            /// <summary>
+            /// Represents an easy defense strategy.
+            /// </summary>
             DEFENSE_DIFFICULTY_EASY,
+
+            /// <summary>
+            /// Indicates a defense strategy in which ships are placed towards the corners.
+            /// </summary>
             DEFENSE_DIFFICULTY_CORNER,
+
+            /// <summary>
+            /// Indicates a defense strategy in which ships are placed towards the cener.
+            /// </summary>
             DEFENSE_DIFFICULTY_CENTER,
         }
     }

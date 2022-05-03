@@ -42,6 +42,10 @@ namespace Battleship
             Trace.WriteLine(message);
         }
 
+        /// <summary>
+        /// Static method that outputs information to the console without ending a line in the process.
+        /// </summary>
+        /// <param name="message">The message to be displayed to the console.</param>
         public static void ConsoleInformationForArray(string message)
         {
             Trace.Write(message);

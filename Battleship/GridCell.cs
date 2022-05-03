@@ -10,13 +10,13 @@ namespace Battleship
     using System.Windows.Media;
 
     /// <summary>
-    /// Interaction logic for GridCell
+    /// Interaction logic for GridCell.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not taught.")]
     public class GridCell : Button
     {
         /// <summary>
-        /// Is the grid cell stricked or not
+        /// Is the grid cell stricked or not.
         /// </summary>
         public int Stricked = 0;
 
@@ -78,8 +78,8 @@ namespace Battleship
         /// <summary>
         /// Initializes a new instance of the <see cref="GridCell" /> class.
         /// </summary>
-        /// <param name="playerID"> This is the ID of the player </param>
-        /// <param name="buttonColor"> This is the button color </param>
+        /// <param name="playerID"> This is the ID of the player. </param>
+        /// <param name="buttonColor"> This is the button color. </param>
         /// <param name="myName"> This is the name of the grid cell. </param>
         public GridCell(int playerID, int buttonColor, string myName)
         {

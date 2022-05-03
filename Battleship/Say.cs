@@ -9,7 +9,7 @@ namespace Battleship
     using System.Windows;
 
     /// <summary>
-    /// Interaction logic for Say
+    /// Interaction logic for Say.
     /// </summary>
     public class Say
     {

@@ -6,7 +6,7 @@
 namespace Battleship
 {
     /// <summary>
-    /// Interaction logic for Coordinate
+    /// Interaction logic for Coordinate.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not taught.")]
     public class Coordinate
@@ -33,7 +33,7 @@ namespace Battleship
         /// <summary>
         ///  Initializes a new instance of the <see cref="Coordinate" /> class.
         /// </summary>
-        /// <param name="xCoordinate">The x coordinate</param>
+        /// <param name="xCoordinate">The x coordinate.</param>
         /// <param name="yCoordinate">The y coordinate.</param>
         public Coordinate(short xCoordinate, short yCoordinate)
         {
@@ -87,6 +87,10 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Retrieves the ship id.
+        /// </summary>
+        /// <returns>The ship's ID.</returns>
         public short GetShipID()
         {
             short x = this.XCoordinate;

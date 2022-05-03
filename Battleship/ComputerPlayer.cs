@@ -13,19 +13,19 @@ namespace Battleship
     using System.Windows.Media.Imaging;
 
     /// <summary>
-    /// Interaction logic for ComputerPlayer
+    /// Interaction logic for ComputerPlayer.
     /// </summary>
     public class ComputerPlayer : Player
     {
         /// <summary>
         ///  Initializes a new instance of the <see cref="ComputerPlayer" /> class.
         /// </summary>
-        /// <param name="player_ID"> This is the ID of the player </param>
-        /// <param name="player_Name"> this is the name of the Player</param>
-        /// <param name="gridcellSize"> This is the size in pixels for the grid square dimension</param>
-        /// <param name="maxCol"> This is the max number of columns requested at the moment pf loading</param>
-        /// <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor)</param>
-        /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one</param>
+        /// <param name="player_ID"> This is the ID of the player. </param>
+        /// <param name="player_Name"> this is the name of the Player.</param>
+        /// <param name="gridcellSize"> This is the size in pixels for the grid square dimension.</param>
+        /// <param name="maxCol"> This is the max number of columns requested at the moment pf loading.</param>
+        /// <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor).</param>
+        /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
         public ComputerPlayer(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense)
             : base(player_ID, player_Name, gridcellSize, maxCol, buttoncolorForDeffense, buttoncolorForOffense)
         {
@@ -143,6 +143,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Method in which the computer attacks.
+        /// </summary>
+        /// <param name="p_otherPlayer">The other player being attacked.</param>
+        /// <param name="rowRep">The grid space being attacked.</param>
         public void CompPlayerAttack(Player p_otherPlayer, int rowRep)
         {
             Coordinate position = this.SetRandomAttackCoordinate(p_otherPlayer);
@@ -182,6 +187,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Method to retrieve a random attack coordinate.
+        /// </summary>
+        /// <param name="p_otherPlayer">The other player being attacked.</param>
+        /// <returns>The coordinate being attacked.</returns>
         public Coordinate SetRandomAttackCoordinate(Player p_otherPlayer)
         {
             Random random = new Random();

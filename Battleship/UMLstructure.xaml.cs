@@ -18,7 +18,7 @@ namespace Battleship
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for UML structure.xaml
+    /// Interaction logic for UML structure.xaml.
     /// </summary>
     public partial class UMLstructure : Window
     {

@@ -1,0 +1,1054 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Battleship</name>
+    </assembly>
+    <members>
+        <member name="T:Battleship.AboutWindow">
+            <summary>
+            Interaction logic for AboutWindow.xaml.
+            </summary>
+            <summary>
+            AboutWindow
+            </summary>
+        </member>
+        <member name="M:Battleship.AboutWindow.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Battleship.AboutWindow" /> class.
+            </summary>
+        </member>
+        <member name="M:Battleship.AboutWindow.CloseButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Closes the about window.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.AboutWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Battleship.App">
+            <summary>
+            Interaction logic for App.xaml.
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:Battleship.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Battleship.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:Battleship.AttackCoordinate">
+            <summary>
+            Interaction logic for AttackCoordinate.
+            </summary>
+        </member>
+        <member name="F:Battleship.AttackCoordinate.coordinateStatus">
+            <summary>
+            The status of coordinates that are attacked.
+            </summary>
+        </member>
+        <member name="M:Battleship.AttackCoordinate.#ctor">
+            <summary>
+             Initializes a new instance of the <see cref="T:Battleship.AttackCoordinate" /> class.
+            </summary>
+        </member>
+        <member name="M:Battleship.AttackCoordinate.#ctor(System.Int16,System.Int16)">
+            <summary>
+             Initializes a new instance of the <see cref="T:Battleship.AttackCoordinate" /> class.
+            </summary>
+            <param name="xCoordinate">The x coordinate.</param>
+            <param name="yCoordinate">The y coordinate.</param>
+        </member>
+        <member name="M:Battleship.AttackCoordinate.#ctor(Battleship.StatusCodes.AttackStatus)">
+            <summary>
+             Initializes a new instance of the <see cref="T:Battleship.AttackCoordinate" /> class.
+            </summary>
+            <param name="attackStatus">The first name to join.</param>
+        </member>
+        <member name="M:Battleship.AttackCoordinate.#ctor(Battleship.StatusCodes.AttackStatus,System.Int16,System.Int16)">
+            <summary>
+             Initializes a new instance of the <see cref="T:Battleship.AttackCoordinate" /> class.
+            </summary>
+            <param name="attackStatus">The attack status.</param>
+            <param name="xCoordinate">The x coordinate.</param>
+            <param name="yCoordinate">The y coordinate.</param>
+        </member>
+        <member name="P:Battleship.AttackCoordinate.CoordinateStatus">
+            <summary>
+            Gets or sets the status of coordinates that are attacked.
+            </summary>
+            <returns>The coordinate status.</returns>
+        </member>
+        <member name="M:Battleship.AttackCoordinate.GetAttackStatus">
+            <summary>
+            Returns the status of coordinates that are attacked.
+            </summary>
+            <returns>The coordinate status.</returns>
+        </member>
+        <member name="T:Battleship.ComputerPlayer">
+            <summary>
+            Interaction logic for ComputerPlayer.
+            </summary>
+        </member>
+        <member name="M:Battleship.ComputerPlayer.#ctor(System.Int32,System.String,System.Double,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Initializes a new instance of the <see cref="T:Battleship.ComputerPlayer" /> class.
+            </summary>
+            <param name="player_ID"> This is the ID of the player. </param>
+            <param name="player_Name"> this is the name of the Player.</param>
+            <param name="gridcellSize"> This is the size in pixels for the grid square dimension.</param>
+            <param name="maxCol"> This is the max number of columns requested at the moment pf loading.</param>
+            <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor).</param>
+            <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
+        </member>
+        <member name="M:Battleship.ComputerPlayer.CompPlayerAttack(Battleship.Player,System.Int32)">
+            <summary>
+            Method in which the computer attacks.
+            </summary>
+            <param name="p_otherPlayer">The other player being attacked.</param>
+            <param name="rowRep">The grid space being attacked.</param>
+        </member>
+        <member name="M:Battleship.ComputerPlayer.SetRandomAttackCoordinate(Battleship.Player)">
+            <summary>
+            Method to retrieve a random attack coordinate.
+            </summary>
+            <param name="p_otherPlayer">The other player being attacked.</param>
+            <returns>The coordinate being attacked.</returns>
+        </member>
+        <member name="T:Battleship.Coordinate">
+            <summary>
+            Interaction logic for Coordinate.
+            </summary>
+        </member>
+        <member name="F:Battleship.Coordinate.XCoordinate">
+            <summary>
+            The y position of the coordinate.
+            </summary>
+        </member>
+        <member name="F:Battleship.Coordinate.YCoordinate">
+            <summary>
+            The y position of the coordinate.
+            </summary>
+        </member>
+        <member name="M:Battleship.Coordinate.#ctor">
+            <summary>
+             Initializes a new instance of the <see cref="T:Battleship.Coordinate" /> class.
+            </summary>
+        </member>
+        <member name="M:Battleship.Coordinate.#ctor(System.Int16,System.Int16)">
+            <summary>
+             Initializes a new instance of the <see cref="T:Battleship.Coordinate" /> class.
+            </summary>
+            <param name="xCoordinate">The x coordinate.</param>
+            <param name="yCoordinate">The y coordinate.</param>
+        </member>
+        <member name="P:Battleship.Coordinate.XCoordinateLetter">
+            <summary>
+            Gets the letter of the coordinate according to the number of the x coordinate.
+            </summary>
+        </member>
+        <member name="M:Battleship.Coordinate.GetShipID">
+            <summary>
+            Retrieves the ship id.
+            </summary>
+            <returns>The ship's ID.</returns>
+        </member>
+        <member name="T:Battleship.GameWindow">
+            <summary>
+            Interaction logic for GameWindow.xaml.
+            </summary>
+            <summary>
+            GameWindow
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.Cellsize">
+            <summary>
+            The cell size.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.RowRep">
+            <summary>
+            The number of rows.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.PlayersCellRecords">
+            <summary>
+            The list of player cell grids.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.gameType">
+            <summary>
+            The game type.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.screenPlayerOne">
+            <summary>
+            The player 1 screen.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.player1">
+            <summary>
+            The player 1.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.player2">
+            <summary>
+            The player 2.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.computerPlayer1">
+            <summary>
+            The computer player 1.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.computerPlayer2">
+            <summary>
+            The computer player 2.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.playerWindow1">
+            <summary>
+            The player 1 window.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.playerWindow2">
+            <summary>
+            The player 2 window.
+            </summary>
+        </member>
+        <member name="M:Battleship.GameWindow.#ctor(Battleship.StatusCodes.GameType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Battleship.GameWindow" /> class.
+            </summary>
+            <param name="gameType"> This is the game type.</param>
+        </member>
+        <member name="P:Battleship.GameWindow.Switch">
+            <summary>
+             Gets a value indicating whether screen player1 is visible or not.
+            </summary>
+        </member>
+        <member name="M:Battleship.GameWindow.StartPlayerToPlayerGame(System.Object,System.EventArgs)">
+            <summary>
+            Start a player to player game.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.StartPlayerToComputerGame(System.Object,System.EventArgs)">
+            <summary>
+            Start a player to computer game.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.StartComputerToComputerGame(System.Object,System.EventArgs)">
+            <summary>
+            Start a computer to computer game.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.SwitchPlayerWindows">
+            <summary>
+            Make the windows visible with Attack button.
+            </summary>
+        </member>
+        <member name="M:Battleship.GameWindow.SetshipMovePerCrewCheck(Battleship.Ship,Battleship.GridCell,Battleship.Player,System.Int32)">
+            <summary>
+            Return a confirmation to do a move if there is no ships overlapping.
+            </summary>
+            <param name="myShip">The ship to be checked.</param>
+            <param name="mainPlayerCell">The former grid space of the captain.</param>
+            <param name="p_currentPlayer">The current player.</param>
+            <returns>The new captain of the ship.</returns>
+        </member>
+        <member name="M:Battleship.GameWindow.SetConfirmButtonVisibility(System.String)">
+            <summary>
+            Set a confirm button visibility.
+            </summary>
+            <param name="canvasUid">The id of the canvas.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.ConfirmShipPlacement(System.String)">
+            <summary>
+            Set a confirm ship placement button.
+            </summary>
+            <param name="canvasUid">The id of the canvas.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.ConvertCanvasCoordinatesToGridCoordinates(System.Double,System.Double)">
+            <summary>
+            Converts canvas coordinate into grid coordinate.
+            </summary>
+            <param name="canvasX">The canvas x coordinate.</param>
+            <param name="canvasY">The canvas y coordinate.</param>
+            <returns>The converted coordinates.</returns>
+        </member>
+        <member name="M:Battleship.GameWindow.UpdateShipCoords(Battleship.Ship,Battleship.Coordinate,Battleship.Coordinate)">
+            <summary>
+            Method to update the logical coordinates of the passed in <paramref name="shipToUpdate"/> object.
+            </summary>
+            <param name="shipToUpdate">The ship whose coordinates are to be updated.</param>
+            <param name="shipStartCoords">The starting (top-left) coordinates of the ship.</param>
+            <param name="shipEndCoords">The ending (bottom-right) coordinates of the ship.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.AttackBtn_Click_1(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Fire missiles.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.Reportbtn_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Set a report button click.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.Confirm_Button_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Set a confirm button click.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Battleship.GridCell">
+            <summary>
+            Interaction logic for GridCell.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.Stricked">
+            <summary>
+            Is the grid cell stricked or not.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.FireToEnemy">
+            <summary>
+            Is the grid cell fired an enemy's grid cell.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.LeftToParentLeft">
+            <summary>
+            The left to the parent left.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.TopToParentTop">
+            <summary>
+            The top to the parent top.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.playerID">
+            <summary>
+            The grid cell's player ID.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.name">
+            <summary>
+            The grid cell's name.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.columnNumber">
+            <summary>
+            The grid cell's column number.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.rowNumber">
+            <summary>
+            The grid cell's row number.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.buttonID">
+            <summary>
+            The grid cell's row number.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.offenseButton">
+            <summary>
+            Is the offense button clicked or not.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.buttonOccupied">
+            <summary>
+            Is the button occupied or not.
+            </summary>
+        </member>
+        <member name="F:Battleship.GridCell.trackingID">
+            <summary>
+            The grid cell's row number.
+            </summary>
+        </member>
+        <member name="M:Battleship.GridCell.#ctor(System.Int32,System.Int32,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Battleship.GridCell" /> class.
+            </summary>
+            <param name="playerID"> This is the ID of the player. </param>
+            <param name="buttonColor"> This is the button color. </param>
+            <param name="myName"> This is the name of the grid cell. </param>
+        </member>
+        <member name="P:Battleship.GridCell.OffenseButton">
+            <summary>
+            Gets or sets a value indicating whether offense button is occupied or not.
+            </summary>
+        </member>
+        <member name="P:Battleship.GridCell.ButtonOccupied">
+            <summary>
+            Gets or sets a value indicating whether button is occupied or not.
+            </summary>
+        </member>
+        <member name="P:Battleship.GridCell.Left_Comp_ParentLeft">
+            <summary>
+            Gets or sets grid cell's left to parent left.
+            </summary>
+        </member>
+        <member name="P:Battleship.GridCell.Top_Comp_ParentTop">
+            <summary>
+            Gets or sets grid cell's top to parent top.
+            </summary>
+        </member>
+        <member name="P:Battleship.GridCell.PlayerID">
+            <summary>
+            Gets or sets grid cell's player ID.
+            </summary>
+        </member>
+        <member name="P:Battleship.GridCell.Buttonid">
+            <summary>
+            Gets or sets grid cell's player ID.
+            </summary>
+        </member>
+        <member name="P:Battleship.GridCell.ButtonName">
+            <summary>
+            Gets or sets button's name.
+            </summary>
+        </member>
+        <member name="P:Battleship.GridCell.ColNum">
+            <summary>
+            Gets or sets grid cell's column number.
+            </summary>
+        </member>
+        <member name="P:Battleship.GridCell.RowNum">
+            <summary>
+            Gets or sets grid cell's row number.
+            </summary>
+        </member>
+        <member name="P:Battleship.GridCell.TrackingID">
+            <summary>
+            Gets or sets grid cell's player ID.
+            </summary>
+        </member>
+        <member name="T:Battleship.Logger">
+            <summary>
+            Class that outputs information (GUI and console).
+            </summary>
+        </member>
+        <member name="M:Battleship.Logger.Information(System.String)">
+            <summary>
+            Static method that outputs information to the screen in the form of a MessageBox.
+            </summary>
+            <param name="message">The message to be displayed to the user.</param>
+        </member>
+        <member name="M:Battleship.Logger.Error(System.String)">
+            <summary>
+            Static method that outputs error to the screen in the form of a MessageBox.
+            </summary>
+            <param name="message">The message to be displayed to the user.</param>
+        </member>
+        <member name="M:Battleship.Logger.ConsoleInformation(System.String)">
+            <summary>
+            Static method that outputs information to the console.
+            </summary>
+            <param name="message">The message to be displayed to the console.</param>
+        </member>
+        <member name="M:Battleship.Logger.ConsoleInformationForArray(System.String)">
+            <summary>
+            Static method that outputs information to the console without ending a line in the process.
+            </summary>
+            <param name="message">The message to be displayed to the console.</param>
+        </member>
+        <member name="T:Battleship.MainWindow">
+            <summary>
+            Interaction logic for MainWindow.xaml.
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="F:Battleship.MainWindow.gameScreen">
+            <summary>
+            The game screen.
+            </summary>
+        </member>
+        <member name="F:Battleship.MainWindow.aboutScreen">
+            <summary>
+            The about screen.
+            </summary>
+        </member>
+        <member name="F:Battleship.MainWindow.projectInfo">
+            <summary>
+            The project info screen.
+            </summary>
+        </member>
+        <member name="M:Battleship.MainWindow.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Battleship.MainWindow" /> class.
+            </summary>
+        </member>
+        <member name="M:Battleship.MainWindow.StartGameButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Set a start game button click.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.MainWindow.AboutButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Set a about button click.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.MainWindow.QuitButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Set a quit button click.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Battleship.Player">
+            <summary>
+            Interaction logic for Player. This class is a canvas that will load with a list of grid squares and a list of ships attached as a property.
+            </summary>
+        </member>
+        <member name="F:Battleship.Player.playerShips">
+            <summary>
+            The list of player's ships.
+            </summary>
+        </member>
+        <member name="F:Battleship.Player.playerGridCellsList">
+            <summary>
+            The list of player's gris cells.
+            </summary>
+        </member>
+        <member name="F:Battleship.Player.playerGridCells">
+            <summary>
+            Tracking changes event dictionary.
+            </summary>
+        </member>
+        <member name="F:Battleship.Player.board">
+            <summary>
+            Used to contain the board information.
+            </summary>
+        </member>
+        <member name="F:Battleship.Player.playerID">
+            <summary>
+            The player's ID.
+            </summary>
+        </member>
+        <member name="F:Battleship.Player.name">
+            <summary>
+            The player's name.
+            </summary>
+        </member>
+        <member name="M:Battleship.Player.#ctor(System.Int32,System.String,System.Double,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Battleship.Player" /> class.
+            </summary>
+            <param name="player_ID"> This is the ID of the player. </param>
+            <param name="player_Name"> this is the name of the Player.</param>
+            <param name="gridcellSize"> This is the size in pixels for the grid square dimension.</param>
+            <param name="maxCol"> This is the max number of columns requested at the moment pf loading.</param>
+            <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor).</param>
+            <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
+        </member>
+        <member name="P:Battleship.Player.IsLocked">
+            <summary>
+            Gets or sets a value indicating whether the ship placement is locked.
+            </summary>
+        </member>
+        <member name="P:Battleship.Player.Name">
+            <summary>
+            Gets player name.
+            </summary>
+        </member>
+        <member name="P:Battleship.Player.PlayerID">
+            <summary>
+            Gets player ID.
+            </summary>
+        </member>
+        <member name="P:Battleship.Player.Winner">
+            <summary>
+            Gets or sets a value indicating whether the player has won.
+            </summary>
+        </member>
+        <member name="P:Battleship.Player.Playershipcollection">
+            <summary>
+            Gets player collection of ships.
+            </summary>
+        </member>
+        <member name="P:Battleship.Player.Playergridsquarecollection">
+            <summary>
+            Gets player Button collections for its personal grid.
+            </summary>
+        </member>
+        <member name="P:Battleship.Player.PlayerGridCellList">
+            <summary>
+            Gets player Button collections for its personal grid.
+            </summary>
+        </member>
+        <member name="P:Battleship.Player.Board">
+            <summary>
+            Gets or sets the board information.
+            </summary>
+        </member>
+        <member name="M:Battleship.Player.LockShipsIntoPlace">
+            <summary>
+            Locks the ships into place.
+            </summary>
+        </member>
+        <member name="M:Battleship.Player.Checkshipcrewmembers(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Checks the crew members of the ship.
+            </summary>
+            <param name="p_crew">The list of crew members to be checked.</param>
+            <returns>Returns whether the potential crew members' grid spaces are currently occupied.</returns>
+        </member>
+        <member name="M:Battleship.Player.PlayerShipSunk(System.Object,System.EventArgs)">
+            <summary>
+            Set a player ship sunk.
+            </summary>
+            <param name="sender">The object that initiated the event.</param>
+            <param name="e">The event arguments for the event.</param>
+        </member>
+        <member name="M:Battleship.Player.CheckIfPlayerHasWon">
+            <summary>
+            Set a method that checks if player has won.
+            </summary>
+        </member>
+        <member name="T:Battleship.Say">
+            <summary>
+            Interaction logic for Say.
+            </summary>
+        </member>
+        <member name="M:Battleship.Say.Show(System.String)">
+            <summary>
+            Set a method that show a message box.
+            </summary>
+            <param name="say">The message.</param>
+        </member>
+        <member name="M:Battleship.Say.ConsoleShow(System.String)">
+            <summary>
+            Set a method that show a message in console.
+            </summary>
+            <param name="say">The message.</param>
+        </member>
+        <member name="T:Battleship.Ship">
+            <summary>
+            Interaction logic for SHip.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.LeftToParentLeft">
+            <summary>
+            The left to parent left.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.TopToParentTop">
+            <summary>
+            The top to parent top.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.ShipIsSunk">
+            <summary>
+            Is ship sunk or not.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.shipType">
+            <summary>
+            The ship's type.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.name">
+            <summary>
+            The ship's name.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.resistance">
+            <summary>
+            The ship's resistance.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.length">
+            <summary>
+            The ship's length.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.playerID">
+            <summary>
+            The ship's player ID.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.horDirection">
+            <summary>
+            The ship's horizontal direction.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.shipStartCoords">
+            <summary>
+            The ship's start coordinate.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.shipEndCoords">
+            <summary>
+            The ship's end coordinate.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.movingHorizontalCrewmembers">
+            <summary>
+            Horizontal crew members.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.movingVerticalCrewmembers">
+            <summary>
+            Vertical Crew mwmbers.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.initialHorizontalCrewmembers">
+            <summary>
+            Horizontal crew members.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.initialVerticalCrewmembers">
+            <summary>
+            Vertical Crew mwmbers.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.delayedCrewmembers">
+            <summary>
+            Ship current crew.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.actualCrewmembers">
+            <summary>
+            Ship current crew.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.captain">
+            <summary>
+            Ship driver cell.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.newCaptain">
+            <summary>
+            Ship driver cell.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.grids">
+            <summary>
+            The ship's length.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.rowsgrid">
+            <summary>
+            The ship's number of gridsh.
+            </summary>
+        </member>
+        <member name="F:Battleship.Ship.drags">
+            <summary>
+            Counter for the number of drags.
+            </summary>
+        </member>
+        <member name="M:Battleship.Ship.#ctor(System.Int32,System.Int32,System.Int32,System.Double,System.Int32,Battleship.Coordinate)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Battleship.Ship" /> class.
+            </summary>
+            <param name="playerID"> This is the player ID passed from player class.</param>
+            <param name="driver">The initial captain of the ship.</param>
+            <param name="shipType"> this is the type of ship, Submarine,warship...</param>
+            <param name="gridCellSize"> This is the size of the grid square passed from player class, determined in pixels.</param>
+            <param name="rowTotal">The total number of rows.</param>
+            <param name="startCoords"> This is the start coordinates of the ship.</param>
+        </member>
+        <member name="M:Battleship.Ship.#ctor(System.Int32,System.Int32,System.Double,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Battleship.Ship"/> class.
+            </summary>
+            <param name="playerID">The ID of the player.</param>
+            <param name="shipType">The type of ship to be created.</param>
+            <param name="gridCellSize">The pixel-to-grid-space conversion factor.</param>
+            <param name="horDirection">The direction of the ship (whether is is horizontal or not).</param>
+        </member>
+        <member name="E:Battleship.Ship.OnShipIsSunk">
+            <summary>
+            Event for the is ship sunk or not
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.ShipStartCoords">
+            <summary>
+            Gets or sets the start coordinates of the ship.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.ShipEndCoords">
+            <summary>
+            Gets the end coordinates of the ship.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.HDirection">
+            <summary>
+            Gets or sets a value indicating whether horizontal direction is loading for the ship, set true at loading.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.ShipType">
+            <summary>
+            Gets or sets type of ship.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.Resistance">
+            <summary>
+            Gets or sets the number of hits this ship will resist.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.DragsCounter">
+            <summary>
+            Gets or sets the number of drags.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.Length">
+            <summary>
+            Gets or sets ship length.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.PlayerID">
+            <summary>
+            Gets the player ID passed from player class.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.ShipName">
+            <summary>
+            Gets the name of the ship.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.Left_Comp_ParentLeft">
+            <summary>
+            Gets or sets the ship's left to parent left.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.Top_Comp_ParentTop">
+            <summary>
+            Gets or sets the ship's top to parent top.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.GridSpaces">
+            <summary>
+            Gets or sets ship length.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.Delayed_Crew_Crewmembers">
+            <summary>
+            Gets or sets the retained crew members before approving drags.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.Ship_Crewmembers">
+            <summary>
+            Gets the current crew members for each ship.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.Captain">
+            <summary>
+            Gets or sets the entry point for the ship when loaded.
+            </summary>
+        </member>
+        <member name="P:Battleship.Ship.NewCaptain">
+            <summary>
+            Gets or sets the new captain of the ship after drags.
+            </summary>
+        </member>
+        <member name="M:Battleship.Ship.RotateShip(System.Boolean)">
+            <summary>
+            This method will change the width or the Height of this ship and reverse it.
+            </summary>
+            <param name="trigger">The trigger.</param>
+        </member>
+        <member name="M:Battleship.Ship.AttackGridSpace(Battleship.Coordinate)">
+            <summary>
+            Set a method that attacks the coordinate.
+            </summary>
+            <param name="testCoordinate">The coordinate.</param>
+            <returns>The attack coordinate.</returns>
+        </member>
+        <member name="M:Battleship.Ship.UpdateShipCoords(Battleship.Coordinate,Battleship.Coordinate)">
+            <summary>
+            Set a method that updates the ship's coordinates.
+            </summary>
+            <param name="shipStartCoords">The ship's start coordinate.</param>
+            <param name="shipEndCoords">The ship's end coordinate.</param>
+        </member>
+        <member name="M:Battleship.Ship.SetCrewmembers(System.Int32,System.Int32)">
+            <summary>
+            Return a list of new crew members of a ship if a drag occurs.
+            </summary>
+            <param name="p_capitan">see the cell for the ship has a crew.</param>
+            <param name="dragTurn">The turn to be dragged.</param>
+            <returns>Returns the new crewmembers of the ship.</returns>
+        </member>
+        <member name="T:Battleship.StatusCodes">
+            <summary>
+            Implementation of project-wide status codes.
+            </summary>
+        </member>
+        <member name="T:Battleship.StatusCodes.AttackStatus">
+            <summary>
+            Types of attack statuses.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.AttackStatus.NOT_ATTACKED">
+            <summary>
+            Represents a not attacked status.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.AttackStatus.ATTACKED_NOT_HIT">
+            <summary>
+            Represents an attacked but not hit status.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.AttackStatus.ATTACKED_HIT">
+            <summary>
+            Represents an attacked and hit status.
+            </summary>
+        </member>
+        <member name="T:Battleship.StatusCodes.ApplicationStatus">
+            <summary>
+            Types of applications statuses.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.ApplicationStatus.GAME_NOT_STARTED">
+            <summary>
+            Represents a game not yet started.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.ApplicationStatus.GAME_STARTED">
+            <summary>
+            Represents a start of a game.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.ApplicationStatus.PLAYER_1_TURN">
+            <summary>
+            Represents a player1.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.ApplicationStatus.PLAYER_2_TURN">
+            <summary>
+            Represents a player2.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.ApplicationStatus.GAME_ENDED">
+            <summary>
+            Represents an end of the game.
+            </summary>
+        </member>
+        <member name="T:Battleship.StatusCodes.GameType">
+            <summary>
+            Types of game types.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.GameType.PLAYER_TO_PLAYER">
+            <summary>
+            Represents a player to player game.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.GameType.PLAYER_TO_COMPUTER">
+            <summary>
+            Represents a player to computer game.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.GameType.COMPUTER_TO_COMPUTER">
+            <summary>
+            Represents a computer to computer game.
+            </summary>
+        </member>
+        <member name="T:Battleship.StatusCodes.GridSpaceStatus">
+            <summary>
+            Types of grid space statuses.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.GridSpaceStatus.GRID_SPACE_OCCUPIED">
+            <summary>
+            Indicates that the grid space is occupied.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.GridSpaceStatus.GRID_SPACE_NOT_OCCUPIED">
+            <summary>
+            Indicates that the grid space is not occupied.
+            </summary>
+        </member>
+        <member name="T:Battleship.StatusCodes.AttackStrategy">
+            <summary>
+            Indicates the computer attack strategy.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.AttackStrategy.ATTACK_DIFFICULTY_EASY">
+            <summary>
+            Represents an easy attack strategy.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.AttackStrategy.ATTACK_DIFFICULTY_HARD">
+            <summary>
+            Represents a hard attack strategy.
+            </summary>
+        </member>
+        <member name="T:Battleship.StatusCodes.DefenseStrategy">
+            <summary>
+            Indicates the computer defense strategy.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.DefenseStrategy.DEFENSE_DIFFICULTY_EASY">
+            <summary>
+            Represents an easy defense strategy.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.DefenseStrategy.DEFENSE_DIFFICULTY_CORNER">
+            <summary>
+            Indicates a defense strategy in which ships are placed towards the corners.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.DefenseStrategy.DEFENSE_DIFFICULTY_CENTER">
+            <summary>
+            Indicates a defense strategy in which ships are placed towards the cener.
+            </summary>
+        </member>
+        <member name="T:Battleship.UMLstructure">
+            <summary>
+            Interaction logic for UML structure.xaml.
+            </summary>
+            <summary>
+            UMLstructure
+            </summary>
+        </member>
+        <member name="M:Battleship.UMLstructure.#ctor">
+            <summary>
+             Initializes a new instance of the <see cref="T:Battleship.UMLstructure" /> class.
+            </summary>
+        </member>
+        <member name="M:Battleship.UMLstructure.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>

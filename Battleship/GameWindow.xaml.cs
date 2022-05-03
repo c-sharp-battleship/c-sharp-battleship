@@ -14,7 +14,7 @@ namespace Battleship
     using System.Windows.Threading;
 
     /// <summary>
-    /// Interaction logic for GameWindow.xaml
+    /// Interaction logic for GameWindow.xaml.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not taught.")]
     public partial class GameWindow : Window
@@ -103,7 +103,7 @@ namespace Battleship
         }
 
         /// <summary>
-        ///  Gets a value indicating whether screen player1 is visible or not
+        ///  Gets a value indicating whether screen player1 is visible or not.
         /// </summary>
         public bool Switch
         {
@@ -275,7 +275,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Make the windows visible with Attack button
+        /// Make the windows visible with Attack button.
         /// </summary>
         public void SwitchPlayerWindows()
         {
@@ -501,12 +501,12 @@ namespace Battleship
         }
 
         /// <summary>
-        /// return a confirmation to do a move if there is no ships overlapping
+        /// Return a confirmation to do a move if there is no ships overlapping.
         /// </summary>
-        /// <param name="myShip"></param>
-        /// <param name="mainPlayerCell"></param>
-        /// <param name="p_currentPlayer"></param>
-        /// <returns></returns>
+        /// <param name="myShip">The ship to be checked.</param>
+        /// <param name="mainPlayerCell">The former grid space of the captain.</param>
+        /// <param name="p_currentPlayer">The current player.</param>
+        /// <returns>The new captain of the ship.</returns>
         private int SetshipMovePerCrewCheck(Ship myShip, GridCell mainPlayerCell, Player p_currentPlayer, int dragTurn)
         {
             int overlapingCrewMembers = 0;
@@ -750,9 +750,9 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Fire missiles
+        /// Fire missiles.
         /// </summary>
-        /// <param name="sender">The object that initiated the event</param>
+        /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
         private void AttackBtn_Click_1(object sender, RoutedEventArgs e)
         {
@@ -763,7 +763,7 @@ namespace Battleship
         /// <summary>
         /// Set a report button click.
         /// </summary>
-        /// <param name="sender">The object that initiated the event</param>
+        /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
         private void Reportbtn_Click(object sender, RoutedEventArgs e)
         {
@@ -772,7 +772,7 @@ namespace Battleship
         /// <summary>
         /// Set a confirm button click.
         /// </summary>
-        /// <param name="sender">The object that initiated the event</param>
+        /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
         {

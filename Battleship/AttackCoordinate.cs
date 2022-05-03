@@ -6,7 +6,7 @@
 namespace Battleship
 {
     /// <summary>
-    /// Interaction logic for AttackCoordinate
+    /// Interaction logic for AttackCoordinate.
     /// </summary>
     public class AttackCoordinate : Coordinate
     {

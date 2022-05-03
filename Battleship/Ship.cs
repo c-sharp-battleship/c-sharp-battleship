@@ -10,7 +10,7 @@ namespace Battleship
     using System.Windows.Controls;
 
     /// <summary>
-    /// Interaction logic for SHip
+    /// Interaction logic for SHip.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not taught.")]
     public class Ship : UserControl
@@ -71,42 +71,42 @@ namespace Battleship
         private Coordinate shipEndCoords;
 
         /// <summary>
-        /// Horizontal crew members
+        /// Horizontal crew members.
         /// </summary>
         private List<int> movingHorizontalCrewmembers;
 
         /// <summary>
-        /// Vertical Crew mwmbers
+        /// Vertical Crew mwmbers.
         /// </summary>
         private List<int> movingVerticalCrewmembers;
 
         /// <summary>
-        /// Horizontal crew members
+        /// Horizontal crew members.
         /// </summary>
         private List<int> initialHorizontalCrewmembers;
 
         /// <summary>
-        /// Vertical Crew mwmbers
+        /// Vertical Crew mwmbers.
         /// </summary>
         private List<int> initialVerticalCrewmembers;
 
         /// <summary>
-        /// Ship current crew
+        /// Ship current crew.
         /// </summary>
         private List<int> delayedCrewmembers;
 
         /// <summary>
-        /// Ship current crew
+        /// Ship current crew.
         /// </summary>
         private List<int> actualCrewmembers;
 
         /// <summary>
-        /// Ship driver cell
+        /// Ship driver cell.
         /// </summary>
         private int captain;
 
         /// <summary>
-        /// Ship driver cell
+        /// Ship driver cell.
         /// </summary>
         private int newCaptain;
 
@@ -121,18 +121,19 @@ namespace Battleship
         private int rowsgrid;
 
         /// <summary>
-        /// Counter for the number of drags
+        /// Counter for the number of drags.
         /// </summary>
         private int drags = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Ship" /> class.
         /// </summary>
-        /// <param name="playerID"> This is the player ID passed from player class</param>
+        /// <param name="playerID"> This is the player ID passed from player class.</param>
+        /// <param name="driver">The initial captain of the ship.</param>
         /// <param name="shipType"> this is the type of ship, Submarine,warship...</param>
-        /// <param name="gridCellSize"> This is the size of the grid square passed from player class, determined in pixels</param>
-        /// <param name="startCoords"> This is the start coordinates of the ship</param>
-        /// <param name="endCoords"> This is the end coordinates of the ship</param>
+        /// <param name="gridCellSize"> This is the size of the grid square passed from player class, determined in pixels.</param>
+        /// <param name="rowTotal">The total number of rows.</param>
+        /// <param name="startCoords"> This is the start coordinates of the ship.</param>
         public Ship(int playerID, int driver, int shipType, double gridCellSize, int rowTotal, Coordinate startCoords)
         {
             this.movingHorizontalCrewmembers = new List<int>();
@@ -221,6 +222,13 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Ship"/> class.
+        /// </summary>
+        /// <param name="playerID">The ID of the player.</param>
+        /// <param name="shipType">The type of ship to be created.</param>
+        /// <param name="gridCellSize">The pixel-to-grid-space conversion factor.</param>
+        /// <param name="horDirection">The direction of the ship (whether is is horizontal or not).</param>
         public Ship(int playerID, int shipType, double gridCellSize, bool horDirection)
         {
             this.playerID = playerID;
@@ -281,7 +289,7 @@ namespace Battleship
         public event EventHandler OnShipIsSunk;
 
         /// <summary>
-        /// Gets the start coordinates of the ship
+        /// Gets or sets the start coordinates of the ship.
         /// </summary>
         public Coordinate ShipStartCoords
         {
@@ -308,7 +316,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets the end coordinates of the ship
+        /// Gets the end coordinates of the ship.
         /// </summary>
         public Coordinate ShipEndCoords
         {
@@ -316,7 +324,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether horizontal direction is loading for the ship, set true at loading
+        /// Gets or sets a value indicating whether horizontal direction is loading for the ship, set true at loading.
         /// </summary>
         public bool HDirection
         {
@@ -325,7 +333,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets type of shi
+        /// Gets or sets type of ship.
         /// </summary>
         public int ShipType
         {
@@ -334,7 +342,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets the number of hits this ship will resist
+        /// Gets or sets the number of hits this ship will resist.
         /// </summary>
         public int Resistance
         {
@@ -343,7 +351,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets the number of drags
+        /// Gets or sets the number of drags.
         /// </summary>
         public int DragsCounter
         {
@@ -352,7 +360,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets ship length
+        /// Gets or sets ship length.
         /// </summary>
         public int Length
         {
@@ -361,13 +369,16 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets the player ID passed from player class
+        /// Gets the player ID passed from player class.
         /// </summary>
         public int PlayerID
         {
             get { return this.playerID; }
         }
 
+        /// <summary>
+        /// Gets the name of the ship.
+        /// </summary>
         public string ShipName
         {
             get { return this.name; }
@@ -392,7 +403,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets ship length
+        /// Gets or sets ship length.
         /// </summary>
         public int GridSpaces
         {
@@ -401,7 +412,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Retained crew members before aproving drags
+        /// Gets or sets the retained crew members before approving drags.
         /// </summary>
         public List<int> Delayed_Crew_Crewmembers
         {
@@ -410,7 +421,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Current crew members for each ship
+        /// Gets the current crew members for each ship.
         /// </summary>
         public List<int> Ship_Crewmembers
         {
@@ -418,7 +429,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Set the entry point for the ship when loaded
+        /// Gets or sets the entry point for the ship when loaded.
         /// </summary>
         public int Captain
         {
@@ -427,7 +438,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// New captain of the ship after drags
+        /// Gets or sets the new captain of the ship after drags.
         /// </summary>
         public int NewCaptain
         {
@@ -438,7 +449,7 @@ namespace Battleship
         /// <summary>
         /// This method will change the width or the Height of this ship and reverse it.
         /// </summary>
-        /// <param name="trigger">The trigger</param>
+        /// <param name="trigger">The trigger.</param>
         public void RotateShip(bool trigger)
         {
             if (trigger == true)
@@ -543,10 +554,11 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Return a list of new crew members of a ship if a drag occurs
+        /// Return a list of new crew members of a ship if a drag occurs.
         /// </summary>
-        /// <param name="p_capitan">see the cell for the ship has a crew</param>
-        /// <returns></returns>
+        /// <param name="p_capitan">see the cell for the ship has a crew.</param>
+        /// <param name="dragTurn">The turn to be dragged.</param>
+        /// <returns>Returns the new crewmembers of the ship.</returns>
         public List<int> SetCrewmembers(int p_capitan, int dragTurn)
         {
             List<int> back = new List<int>();

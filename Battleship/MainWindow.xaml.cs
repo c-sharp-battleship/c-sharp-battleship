@@ -8,7 +8,7 @@ namespace Battleship
     using System.Windows;
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -38,7 +38,7 @@ namespace Battleship
         /// <summary>
         /// Set a start game button click.
         /// </summary>
-        /// <param name="sender">The object that initiated the event</param>
+        /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
         private void StartGameButton_Click(object sender, RoutedEventArgs e)
         {
@@ -66,7 +66,7 @@ namespace Battleship
         /// <summary>
         /// Set a about button click.
         /// </summary>
-        /// <param name="sender">The object that initiated the event</param>
+        /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
@@ -80,7 +80,7 @@ namespace Battleship
         /// <summary>
         /// Set a quit button click.
         /// </summary>
-        /// <param name="sender">The object that initiated the event</param>
+        /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {

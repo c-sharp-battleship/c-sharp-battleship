@@ -13,7 +13,7 @@ namespace Battleship
     using System.Windows.Media.Imaging;
 
     /// <summary>
-    /// Interaction logic for Player. This class is a canvas that will load with a list of grid squares and a list of ships attached as a property
+    /// Interaction logic for Player. This class is a canvas that will load with a list of grid squares and a list of ships attached as a property.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not taught.")]
     public class Player
@@ -29,7 +29,7 @@ namespace Battleship
         protected List<GridCell> playerGridCellsList = new List<GridCell>();
 
         /// <summary>
-        /// Tracking changes event dictionary
+        /// Tracking changes event dictionary.
         /// </summary>
         protected Dictionary<int, GridCell> playerGridCells = new Dictionary<int, GridCell>();
 
@@ -54,12 +54,12 @@ namespace Battleship
         /// <summary>
         /// Initializes a new instance of the <see cref="Player" /> class.
         /// </summary>
-        /// <param name="player_ID"> This is the ID of the player </param>
-        /// <param name="player_Name"> this is the name of the Player</param>
-        /// <param name="gridcellSize"> This is the size in pixels for the grid square dimension</param>
-        /// <param name="maxCol"> This is the max number of columns requested at the moment pf loading</param>
-        /// <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor)</param>
-        /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one</param>
+        /// <param name="player_ID"> This is the ID of the player. </param>
+        /// <param name="player_Name"> this is the name of the Player.</param>
+        /// <param name="gridcellSize"> This is the size in pixels for the grid square dimension.</param>
+        /// <param name="maxCol"> This is the max number of columns requested at the moment pf loading.</param>
+        /// <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor).</param>
+        /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
         public Player(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense)
         {
             this.isLocked = false;
@@ -196,6 +196,9 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the ship placement is locked.
+        /// </summary>
         public bool IsLocked
         {
             get => this.isLocked;
@@ -203,7 +206,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player name
+        /// Gets player name.
         /// </summary>
         public string Name
         {
@@ -211,13 +214,16 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player ID
+        /// Gets player ID.
         /// </summary>
         public int PlayerID
         {
             get { return this.playerID; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the player has won.
+        /// </summary>
         public bool Winner
         {
             get { return this.winner; }
@@ -225,7 +231,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player collection of ships
+        /// Gets player collection of ships.
         /// </summary>
         public List<Ship> Playershipcollection
         {
@@ -233,7 +239,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player Button collections for its personal grid
+        /// Gets player Button collections for its personal grid.
         /// </summary>
         public Dictionary<int, GridCell> Playergridsquarecollection
         {
@@ -241,7 +247,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player Button collections for its personal grid
+        /// Gets player Button collections for its personal grid.
         /// </summary>
         public List<GridCell> PlayerGridCellList
         {
@@ -249,7 +255,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Contains the board information.
+        /// Gets or sets the board information.
         /// </summary>
         public string[,] Board
         {
@@ -257,6 +263,9 @@ namespace Battleship
             set { this.board = value; }
         }
 
+        /// <summary>
+        /// Locks the ships into place.
+        /// </summary>
         public void LockShipsIntoPlace()
         {
             foreach (Ship ship in this.playerShips)
@@ -276,6 +285,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Checks the crew members of the ship.
+        /// </summary>
+        /// <param name="p_crew">The list of crew members to be checked.</param>
+        /// <returns>Returns whether the potential crew members' grid spaces are currently occupied.</returns>
         public StatusCodes.GridSpaceStatus Checkshipcrewmembers(List<int> p_crew)
         {
             StatusCodes.GridSpaceStatus shipCrewMemberStatus = StatusCodes.GridSpaceStatus.GRID_SPACE_NOT_OCCUPIED;
@@ -301,7 +315,7 @@ namespace Battleship
         /// <summary>
         /// Set a player ship sunk.
         /// </summary>
-        /// <param name="sender">The object that initiated the event</param>
+        /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
         protected void PlayerShipSunk(object sender, EventArgs e)
         {
