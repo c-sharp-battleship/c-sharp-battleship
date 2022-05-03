@@ -296,6 +296,7 @@ namespace Battleship
             {
                 this.winner = true;
                 Logger.Information(this.Name + "Lost");
+                Environment.Exit(0);
             }
         }
 
