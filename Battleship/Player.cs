@@ -33,7 +33,7 @@ namespace Battleship
         protected Dictionary<int, GridCell> playerGridCells = new Dictionary<int, GridCell>();
 
         /// <summary>
-        /// 
+        /// Used to contain the board information.
         /// </summary>
         protected string[,] board;
         private bool isLocked;
@@ -74,9 +74,9 @@ namespace Battleship
 
             for (int i = 0; i < maxCol; i++)
             {
-                for(int j = 0; j < maxCol; j++)
+                for (int j = 0; j < maxCol; j++)
                 {
-                    board[i, j] = "O";
+                    this.board[i, j] = "O";
                 }
             }
 
@@ -99,14 +99,15 @@ namespace Battleship
                             GridCell myButton = new GridCell(player_ID, buttoncolorForDeffense, rowthousand.ToString());
                             myButton.Content = capital_letters[col] + (row + 1);
                             myButton.TrackingID = (col + 1) + (row * maxCol);
-                            //myButton.Content = (col + 1) + (row * maxCol);
+
+                            // myButton.Content = (col + 1) + (row * maxCol);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
                             myButton.RowNum = row + 1;
                             myButton.ColNum = col + 1;
                             myButton.OffenseButton = false;
                             myButton.AllowDrop = true;
-                            myButton.Buttonid = col * 10 + row;
+                            myButton.Buttonid = (col * 10) + row;
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
@@ -116,36 +117,37 @@ namespace Battleship
                         }
                     }
                 }
-                else 
+                else
                 {
                     // second iteration for creating the attack grid
-                    // offset this buttons from the left to become the attack grid to compaensate the space occupied by the defense grid 
+                    // offset this buttons from the left to become the attack grid to compaensate the space occupied by the defense grid
                     double gridOffsetWhenVisual = gridcellSize * maxCol;
 
                     // will iterate the number of columns requested
-                    for (int col = 0; col < maxCol; col++) 
+                    for (int col = 0; col < maxCol; col++)
                     {
-                        // will iterate the number of rows(same as the columns) requested 
-                        for (int row = 0; row < maxCol; row++) 
+                        // will iterate the number of rows(same as the columns) requested
+                        for (int row = 0; row < maxCol; row++)
                         {
                             // create a name for this button will result in a string(10.0001, this is elevated to the ten thounsans to allow a high number of buttons without the repeating of the name)
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
-                            int DictionaryOffset = maxCol * maxCol;
+                            int dictionaryOffset = maxCol * maxCol;
                             GridCell myButton = new GridCell(player_ID, buttoncolorForOffense, rowthousand.ToString());
                             myButton.Content = capital_letters[col] + (row + 1);
                             myButton.TrackingID = col + 1 + (row * maxCol);
-                            //myButton.Content = col + 1 + (row * maxCol);
+
+                            // myButton.Content = col + 1 + (row * maxCol);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
-                            myButton.RowNum = row + 1; 
+                            myButton.RowNum = row + 1;
                             myButton.ColNum = col + 1;
                             myButton.OffenseButton = true;
                             myButton.AllowDrop = false;
-                            myButton.Buttonid = col * 10 + row;
+                            myButton.Buttonid = (col * 10) + row;
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
-                            this.playerGridCells.Add(DictionaryOffset + col + 1 + (row * maxCol),myButton);
+                            this.playerGridCells.Add(dictionaryOffset + col + 1 + (row * maxCol), myButton);
                         }
                     }
                 }
@@ -166,8 +168,9 @@ namespace Battleship
                 Ship warship = new Ship(player_ID, driver, i, gridcellSize, maxCol, startCoords);
                 warship.Background = new ImageBrush(shipPic);
                 warship.Uid = i.ToString();
-                //Find the loading cell requested for the ship horizontally
-                foreach (KeyValuePair<int,GridCell> pair in playerGridCells)
+
+                // Find the loading cell requested for the ship horizontally
+                foreach (KeyValuePair<int, GridCell> pair in this.playerGridCells)
                 {
                     int gridcellnumber = pair.Key;
                     GridCell gridCellbutton = pair.Value;
@@ -180,14 +183,15 @@ namespace Battleship
                         warship.Captain = gridCellbutton.TrackingID;
                         warship.LeftToParentLeft = gridCellbutton.LeftToParentLeft;
                         warship.Top_Comp_ParentTop = gridCellbutton.Top_Comp_ParentTop;
-                        gridCellbutton.ButtonOccupied = true;//occupies the driver_pilot_cell inside the dictionary
+                        gridCellbutton.ButtonOccupied = true; // occupies the driver_pilot_cell inside the dictionary
                     }
                 }
+
                 warship.OnShipIsSunk += this.PlayerShipSunk;
                 driver += maxCol;
 
                 // load the ship to the list of ships
-                playerShips.Add(warship);
+                this.playerShips.Add(warship);
             }
         }
 
@@ -198,7 +202,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player name 
+        /// Gets player name
         /// </summary>
         public string Name
         {
@@ -206,7 +210,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player ID 
+        /// Gets player ID
         /// </summary>
         public int PlayerID
         {
@@ -220,7 +224,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player collection of ships 
+        /// Gets player collection of ships
         /// </summary>
         public List<Ship> Playershipcollection
         {
@@ -228,15 +232,15 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player Button collections for its personal grid 
+        /// Gets player Button collections for its personal grid
         /// </summary>
-        public Dictionary<int,GridCell> Playergridsquarecollection
+        public Dictionary<int, GridCell> Playergridsquarecollection
         {
             get { return this.playerGridCells; }
         }
 
         /// <summary>
-        /// Gets player Button collections for its personal grid 
+        /// Gets player Button collections for its personal grid
         /// </summary>
         public List<GridCell> PlayerGridCellList
         {
@@ -244,7 +248,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// 
+        /// Contains the board information.
         /// </summary>
         public string[,] Board
         {
@@ -257,6 +261,7 @@ namespace Battleship
             foreach (Ship ship in this.playerShips)
             {
                 string shipName = ship.ShipName.Substring(0, 2);
+
                 // Loop through each of the GridCells that the ship is currently placed on.
                 foreach (int crewMember in ship.Delayed_Crew_Crewmembers)
                 {
@@ -274,13 +279,13 @@ namespace Battleship
         {
             StatusCodes.GridSpaceStatus shipCrewMemberStatus = StatusCodes.GridSpaceStatus.GRID_SPACE_NOT_OCCUPIED;
 
-            foreach(int crewMember in p_crew)
+            foreach (int crewMember in p_crew)
             {
-                foreach(Ship testShip in this.playerShips)
+                foreach (Ship testShip in this.playerShips)
                 {
-                    foreach(int testShipCrewMember in testShip.Ship_Crewmembers)
+                    foreach (int testShipCrewMember in testShip.Ship_Crewmembers)
                     {
-                        if(testShipCrewMember == crewMember)
+                        if (testShipCrewMember == crewMember)
                         {
                             shipCrewMemberStatus = StatusCodes.GridSpaceStatus.GRID_SPACE_OCCUPIED;
                             break;

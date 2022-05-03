@@ -375,14 +375,14 @@ namespace Battleship
                                     int rowNum;
                                     if ((gridcellnumber - 100) % 10 == 0)
                                     {
-                                        rowNum = (gridcellnumber - 100) / 10 - 1;
+                                        rowNum = ((gridcellnumber - 100) / 10) - 1;
                                     }
                                     else
                                     {
                                         rowNum = (gridcellnumber - 100) / 10;
                                     }
 
-                                    int colNum = ((gridcellnumber - 100) - (gridcellnumber - 100) / 10 * 10) - 1;
+                                    int colNum = ((gridcellnumber - 100) - (((gridcellnumber - 100) / 10) * 10)) - 1;
                                     if (colNum == -1)
                                     {
                                         colNum = 9;
@@ -420,7 +420,7 @@ namespace Battleship
                             // Swicth windows between players
                             if (p_otherPlayer.Name == "ComputerPlayerTwo")
                             {
-                                ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, RowRep);
+                                ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, this.RowRep);
                             }
                             else
                             {
@@ -462,9 +462,9 @@ namespace Battleship
                                 double shipMaxY = (p_currentPlayerWindow.Width / 2) - myShip.Height + p_cellsize;
 
                                 // check this method to see if its ok to move ship to requested cell
-                                int OverlappingCrew = SetshipMovePerCrewCheck(myShip, mainPlayerCell, p_currentPlayer, 0);
+                                int overlappingCrew = this.SetshipMovePerCrewCheck(myShip, mainPlayerCell, p_currentPlayer, 0);
 
-                                if (OverlappingCrew == 0)
+                                if (overlappingCrew == 0)
                                 {
                                     Point grabPos = e.GetPosition(p_currentPlayerWindow);
                                     if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
@@ -552,57 +552,57 @@ namespace Battleship
 
         private void DeclarePlayerShips(Player p_currentPlayer, Canvas p_currentPlayerWindow, double p_cellsize)
         {
-            foreach (Ship NavyShip in p_currentPlayer.Playershipcollection)
+            foreach (Ship navyShip in p_currentPlayer.Playershipcollection)
             {
-                NavyShip.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
+                navyShip.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
                 {
                     if (p_currentPlayer.IsLocked == false)
                     {
                         // create a cell to pass a cell to this method and return the possible crew members for this turn
-                        GridCell Fakecell = new GridCell(p_currentPlayer.PlayerID, 0, "");
-                        Fakecell.TrackingID = NavyShip.Captain;
-                        int Overlappingcrew = SetshipMovePerCrewCheck(NavyShip, Fakecell, p_currentPlayer, 1);
+                        GridCell fakecell = new GridCell(p_currentPlayer.PlayerID, 0, string.Empty);
+                        fakecell.TrackingID = navyShip.Captain;
+                        int overlappingCrew = this.SetshipMovePerCrewCheck(navyShip, fakecell, p_currentPlayer, 1);
 
-                        if (Overlappingcrew == 0)
+                        if (overlappingCrew == 0)
                         {
-                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - NavyShip.Height;
-                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - NavyShip.Width;
+                            double shipMaxX = (p_currentPlayerWindow.Width / 2) - navyShip.Height;
+                            double shipMaxY = (p_currentPlayerWindow.Width / 2) - navyShip.Width;
 
-                            if (NavyShip.Top_Comp_ParentTop <= shipMaxY && NavyShip.LeftToParentLeft <= shipMaxX)
+                            if (navyShip.Top_Comp_ParentTop <= shipMaxY && navyShip.LeftToParentLeft <= shipMaxX)
                             {
-                                NavyShip.RotateShip(true);
-                                NavyShip.Delayed_Crew_Crewmembers = NavyShip.SetCrewmembers(NavyShip.Captain, 0);
+                                navyShip.RotateShip(true);
+                                navyShip.Delayed_Crew_Crewmembers = navyShip.SetCrewmembers(navyShip.Captain, 0);
                             }
                         }
                     }
                 });
 
                 // create a move move event for player 1 ships to attacch the rectangle to the mouse
-                NavyShip.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
+                navyShip.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
                 {
                     if (p_currentPlayer.IsLocked == false)
                     {
                         if (e.LeftButton == MouseButtonState.Pressed)
                         {
                             // This if statement will be used when the ship enters the boards for the first time
-                            int dragfirsttime = NavyShip.DragsCounter;
+                            int dragfirsttime = navyShip.DragsCounter;
                             if (dragfirsttime > 0)
                             {
-                                string objectUniqueID = NavyShip.Uid;
-                                DragDrop.DoDragDrop(NavyShip, objectUniqueID, DragDropEffects.Move);
+                                string objectUniqueID = navyShip.Uid;
+                                DragDrop.DoDragDrop(navyShip, objectUniqueID, DragDropEffects.Move);
                             }
                             else
                             {
-                                Canvas.SetTop(NavyShip, NavyShip.Top_Comp_ParentTop);
-                                Canvas.SetLeft(NavyShip, NavyShip.LeftToParentLeft);
-                                NavyShip.DragsCounter += 1;
+                                Canvas.SetTop(navyShip, navyShip.Top_Comp_ParentTop);
+                                Canvas.SetLeft(navyShip, navyShip.LeftToParentLeft);
+                                navyShip.DragsCounter += 1;
                             }
                         }
                     }
                 });
 
                 // Add player 1 Ships to the window grid
-                p_currentPlayerWindow.Children.Add(NavyShip);
+                p_currentPlayerWindow.Children.Add(navyShip);
             }
         }
 
@@ -654,27 +654,27 @@ namespace Battleship
                     {
                         for (int i = startColumn; i <= endColumn; i++)
                         {
-                            player1.Board[startRow, i] = letter;
+                            this.player1.Board[startRow, i] = letter;
                         }
                     }
                     else if (ship.HDirection == false)
                     {
                         for (int i = startRow; i <= endRow; i++)
                         {
-                            player1.Board[i, startColumn] = letter;
+                            this.player1.Board[i, startColumn] = letter;
                         }
                     }
                 }
 
                 Logger.ConsoleInformation("------- " + canvasUid + " ------");
-                for (int i = 0; i < RowRep; i++)
+                for (int i = 0; i < this.RowRep; i++)
                 {
-                    for (int j = 0; j < RowRep; j++)
+                    for (int j = 0; j < this.RowRep; j++)
                     {
-                        Logger.ConsoleInformationForArray(player1.Board[i, j] + ", ");
+                        Logger.ConsoleInformationForArray(this.player1.Board[i, j] + ", ");
                     }
 
-                    Logger.ConsoleInformation("");
+                    Logger.ConsoleInformation(string.Empty);
                 }
             }
             else if (canvasUid == "Player2Canvas")
@@ -693,27 +693,27 @@ namespace Battleship
                     {
                         for (int i = startColumn; i <= endColumn; i++)
                         {
-                            player2.Board[startRow, i] = letter;
+                            this.player2.Board[startRow, i] = letter;
                         }
                     }
                     else if (ship.HDirection == false)
                     {
                         for (int i = startRow; i <= endRow; i++)
                         {
-                            player2.Board[i, startColumn] = letter;
+                            this.player2.Board[i, startColumn] = letter;
                         }
                     }
                 }
 
                 Logger.ConsoleInformation("------- " + canvasUid + " ------");
-                for (int i = 0; i < RowRep; i++)
+                for (int i = 0; i < this.RowRep; i++)
                 {
-                    for (int j = 0; j < RowRep; j++)
+                    for (int j = 0; j < this.RowRep; j++)
                     {
-                        Logger.ConsoleInformationForArray(player2.Board[i, j] + ", ");
+                        Logger.ConsoleInformationForArray(this.player2.Board[i, j] + ", ");
                     }
 
-                    Logger.ConsoleInformation("");
+                    Logger.ConsoleInformation(string.Empty);
                 }
             }
 
