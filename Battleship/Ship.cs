@@ -196,19 +196,19 @@ namespace Battleship
             //set the entry point crew member to compare future moves
             initialHorizontalCrewmembers.Clear();
             initialVerticalCrewmembers.Clear();
-            int Hvalue = driver;
-            int Vvalue = driver;
+            int hValue = driver;
+            int vValue = driver;
 
             for (int i = 0; i < grids; i++)
             {
-                initialHorizontalCrewmembers.Add(Hvalue);
-                Hvalue++;
+                initialHorizontalCrewmembers.Add(hValue);
+                hValue++;
             }
 
             for (int i = 0; i < grids; i++)
             {
-                initialVerticalCrewmembers.Add(Vvalue);
-                Vvalue += RowTotal;
+                initialVerticalCrewmembers.Add(vValue);
+                vValue += RowTotal;
             }
 
             if (this.HDirection == true)
@@ -219,10 +219,9 @@ namespace Battleship
             {
                 delayedCrewmembers = initialVerticalCrewmembers;
             }
-
         }
 
-        public Ship(int playerID, int shipType, double gridCellSize, bool horDirection) : base()
+        public Ship(int playerID, int shipType, double gridCellSize, bool horDirection)
         {
             this.playerID = playerID;
             this.shipType = shipType;
@@ -261,17 +260,17 @@ namespace Battleship
                     this.resistance = 0;
                     break;
             }
-            this.Width = length * gridCellSize;
+            this.Width = this.length * gridCellSize;
             this.Height = gridCellSize;
             if (horDirection)
             {
-                this.Width = length * gridCellSize;
+                this.Width = this.length * gridCellSize;
                 this.Height = gridCellSize;
             }
             else
             {
                 this.Width = gridCellSize;
-                this.Height = length * gridCellSize;
+                this.Height = this.length * gridCellSize;
             }
         }
 
@@ -285,7 +284,11 @@ namespace Battleship
         /// </summary>
         public Coordinate ShipStartCoords
         {
-            get { return this.shipStartCoords; }
+            get
+            {
+                return this.shipStartCoords;
+            }
+            
             set
             {
                 this.shipStartCoords = value;
@@ -547,19 +550,19 @@ namespace Battleship
             List<int> Back = new List<int>();
             this.movingHorizontalCrewmembers.Clear();
             this.movingVerticalCrewmembers.Clear();
-            int Hvalue = p_capitan;
-            int Vvalue = p_capitan;
+            int hValue = p_capitan;
+            int vValue = p_capitan;
 
             for (int i = 0; i < GridSpaces; i++)
             {
-                this.movingHorizontalCrewmembers.Add(Hvalue);
-                Hvalue++;
+                this.movingHorizontalCrewmembers.Add(hValue);
+                hValue++;
             }
 
             for (int i = 0; i < GridSpaces; i++)
             {
-                this.movingVerticalCrewmembers.Add(Vvalue);
-                Vvalue += this.rowsgrid;
+                this.movingVerticalCrewmembers.Add(vValue);
+                vValue += this.rowsgrid;
             }
 
             //draging crewmembers request for check

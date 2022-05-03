@@ -18,7 +18,7 @@ namespace Battleship
         /// <summary>
         ///  Initializes a new instance of the <see cref="AttackCoordinate" /> class.
         /// </summary>
-        public AttackCoordinate() : base()
+        public AttackCoordinate()
         {
             this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
@@ -28,7 +28,8 @@ namespace Battleship
         /// </summary>
         /// <param name="xCoordinate">The x coordinate.</param>
         /// <param name="yCoordinate">The y coordinate.</param>
-        public AttackCoordinate(short xCoordinate, short yCoordinate) : base(xCoordinate, yCoordinate)
+        public AttackCoordinate(short xCoordinate, short yCoordinate)
+            : base(xCoordinate, yCoordinate)
         {
             this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
@@ -37,7 +38,7 @@ namespace Battleship
         ///  Initializes a new instance of the <see cref="AttackCoordinate" /> class.
         /// </summary>
         /// <param name="attackStatus">The first name to join.</param>
-        public AttackCoordinate(StatusCodes.AttackStatus attackStatus) : base()
+        public AttackCoordinate(StatusCodes.AttackStatus attackStatus)
         {
             this.coordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }
@@ -48,7 +49,8 @@ namespace Battleship
         /// <param name="attackStatus">The attack status.</param>
         /// <param name="xCoordinate">The x coordinate.</param>
         /// <param name="yCoordinate">The y coordinate.</param>
-        public AttackCoordinate(StatusCodes.AttackStatus attackStatus, short xCoordinate, short yCoordinate) : base(xCoordinate, yCoordinate)
+        public AttackCoordinate(StatusCodes.AttackStatus attackStatus, short xCoordinate, short yCoordinate)
+            : base(xCoordinate, yCoordinate)
         {
             this.CoordinateStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
         }

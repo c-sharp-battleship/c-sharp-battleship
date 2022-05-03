@@ -28,7 +28,7 @@ namespace Battleship
         /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one</param>
         public ComputerPlayer(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense) : base(player_ID, player_Name, gridcellSize, maxCol, buttoncolorForDeffense, buttoncolorForOffense)
         {
-            // List of buttons for each player returned to the personal grid builder 
+            // List of buttons for each player returned to the personal grid builder
             List<GridCell> loader = new List<GridCell>();
 
             // List of ships for each player to return to the personal grid builder
@@ -89,13 +89,13 @@ namespace Battleship
                 else
                 {
                     // second iteration for creating the attack grid
-                    // offset this buttons from the left to become the attack grid to compaensate the space occupied by the defense grid 
+                    // offset this buttons from the left to become the attack grid to compaensate the space occupied by the defense grid
                     double gridOffsetWhenVisual = gridcellSize * maxCol;
 
                     // will iterate the number of columns requested
                     for (int col = 0; col < maxCol; col++)
                     {
-                        // will iterate the number of rows(same as the columns) requested 
+                        // will iterate the number of rows(same as the columns) requested
                         for (int row = 0; row < maxCol; row++)
                         {
                             // create a name for this button will result in a string(10.0001, this is elevated to the ten thounsans to allow a high number of buttons without the repeating of the name)

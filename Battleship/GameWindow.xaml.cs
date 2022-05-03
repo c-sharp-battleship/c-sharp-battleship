@@ -118,9 +118,9 @@ namespace Battleship
         public void StartPlayerToPlayerGame(object sender, EventArgs e)
         {
             // start player one label visible
-            PlayerOnelabel.Visibility = Visibility.Visible;
-            PlayerTwolabel.Visibility = Visibility.Hidden;
-            AttackBtn.IsEnabled = false;
+            this.PlayerOnelabel.Visibility = Visibility.Visible;
+            this.PlayerTwolabel.Visibility = Visibility.Hidden;
+            this.AttackBtn.IsEnabled = false;
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
@@ -142,12 +142,11 @@ namespace Battleship
             this.playerWindow2.Width = (this.Cellsize * this.RowRep) * 2;
             this.playerWindow2.Visibility = Visibility.Hidden;
 
+            this.DeclarePlayerGrid(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
+            this.DeclarePlayerShips(this.player1, this.playerWindow1, this.Cellsize);
 
-            DeclarePlayerGrid(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
-            DeclarePlayerShips(this.player1, this.playerWindow1, this.Cellsize);
-
-            DeclarePlayerGrid(this.player2, this.player1, this.PlayersCellRecords, this.playerWindow2, this.Cellsize);
-            DeclarePlayerShips(this.player2, this.playerWindow2, this.Cellsize);
+            this.DeclarePlayerGrid(this.player2, this.player1, this.PlayersCellRecords, this.playerWindow2, this.Cellsize);
+            this.DeclarePlayerShips(this.player2, this.playerWindow2, this.Cellsize);
 
             // load both canvas to this window grid
             this.Maingrid.Children.Add(this.playerWindow1);
@@ -230,6 +229,7 @@ namespace Battleship
 
                 Logger.ConsoleInformation("");
             }
+            
             Logger.ConsoleInformation("------- Computer Grid ------");
             for (int i = 0; i < RowRep; i++)
             {
@@ -337,7 +337,6 @@ namespace Battleship
                 ((ComputerPlayer)player2).CompPlayerAttack(player1, RowRep);
             }
         }
-
 
         private void DeclarePlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
