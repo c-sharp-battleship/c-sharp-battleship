@@ -127,7 +127,7 @@ namespace Battleship
             this.player1 = new Player(1, "PlayerOne", this.Cellsize, this.RowRep, 1, 3);
             this.player2 = new Player(2, "PlayerTwo", this.Cellsize, this.RowRep, 3, 6);
 
-            // Create two Canvas to place the player elements on them 
+            // Create two Canvas to place the player elements on them
             this.playerWindow1 = new Canvas();
             this.playerWindow1.HorizontalAlignment = HorizontalAlignment.Center;
             this.playerWindow1.VerticalAlignment = VerticalAlignment.Center;
@@ -181,10 +181,10 @@ namespace Battleship
                     Logger.ConsoleInformationForArray(this.player2.Board[i, j] + ", ");
                 }
 
-                Logger.ConsoleInformation("");
+                Logger.ConsoleInformation("\n");
             }
 
-            // Create two Canvas to place the player elements on them 
+            // Create two Canvas to place the player elements on them
             this.playerWindow1 = new Canvas();
             this.playerWindow1.HorizontalAlignment = HorizontalAlignment.Center;
             this.playerWindow1.VerticalAlignment = VerticalAlignment.Center;
@@ -209,33 +209,33 @@ namespace Battleship
         public void StartComputerToComputerGame(object sender, EventArgs e)
         {
             // start player one label visible
-            PlayerOnelabel.Visibility = Visibility.Visible;
-            PlayerTwolabel.Visibility = Visibility.Hidden;
-            AttackBtn.Visibility = Visibility.Hidden;
-            Confirm_Button.Visibility = Visibility.Hidden;
-            
+            this.PlayerOnelabel.Visibility = Visibility.Visible;
+            this.PlayerTwolabel.Visibility = Visibility.Hidden;
+            this.AttackBtn.Visibility = Visibility.Hidden;
+            this.Confirm_Button.Visibility = Visibility.Hidden;
+
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.player1 = new ComputerPlayer(1, "ComputerPlayerOne", this.Cellsize, this.RowRep, 1, 3);
             this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6);
 
             Logger.ConsoleInformation("------- Computer Grid ------");
-            for (int i = 0; i < RowRep; i++)
+            for (int i = 0; i < this.RowRep; i++)
             {
-                for (int j = 0; j < RowRep; j++)
+                for (int j = 0; j < this.RowRep; j++)
                 {
-                    Logger.ConsoleInformationForArray(player1.Board[i, j] + ", ");
+                    Logger.ConsoleInformationForArray(this.player1.Board[i, j] + ", ");
                 }
 
                 Logger.ConsoleInformation("");
             }
-            
+
             Logger.ConsoleInformation("------- Computer Grid ------");
-            for (int i = 0; i < RowRep; i++)
+            for (int i = 0; i < this.RowRep; i++)
             {
-                for (int j = 0; j < RowRep; j++)
+                for (int j = 0; j < this.RowRep; j++)
                 {
-                    Logger.ConsoleInformationForArray(player2.Board[i, j] + ", ");
+                    Logger.ConsoleInformationForArray(this.player2.Board[i, j] + ", ");
                 }
 
                 Logger.ConsoleInformation("");
@@ -256,20 +256,20 @@ namespace Battleship
             this.playerWindow2.Width = (this.Cellsize * this.RowRep) * 2;
             this.playerWindow2.Visibility = Visibility.Hidden;
 
-            DeclareComputerPlayerGrid(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
-            DeclareComputerPlayerShips(this.player1, this.playerWindow1, this.Cellsize);
+            this.DeclareComputerPlayerGrid(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
+            this.DeclareComputerPlayerShips(this.player1, this.playerWindow1, this.Cellsize);
 
-            DeclareComputerPlayerGrid(this.player2, this.player1, this.PlayersCellRecords, this.playerWindow2, this.Cellsize);
-            DeclareComputerPlayerShips(this.player2, this.playerWindow2, this.Cellsize);
+            this.DeclareComputerPlayerGrid(this.player2, this.player1, this.PlayersCellRecords, this.playerWindow2, this.Cellsize);
+            this.DeclareComputerPlayerShips(this.player2, this.playerWindow2, this.Cellsize);
 
             // load both canvas to this window grid
             this.Maingrid.Children.Add(this.playerWindow1);
             this.Maingrid.Children.Add(this.playerWindow2);
 
-            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
-            dispatcherTimer.Start();
+            this.dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            this.dispatcherTimer.Tick += this.DispatcherTimer_Tick;
+            this.dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            this.dispatcherTimer.Start();
 
             this.Show();
         }
@@ -283,8 +283,8 @@ namespace Battleship
             {
                 // change the visual to off for player 1 and turn on the vissible to player two canvas
                 this.screenPlayerOne = false;
-                PlayerOnelabel.Visibility = Visibility.Hidden;
-                PlayerTwolabel.Visibility = Visibility.Visible;
+                this.PlayerOnelabel.Visibility = Visibility.Hidden;
+                this.PlayerTwolabel.Visibility = Visibility.Visible;
                 foreach (UIElement canvas in this.Maingrid.Children)
                 {
                     if (canvas.Uid == "Player1Canvas")
@@ -305,8 +305,8 @@ namespace Battleship
                 // if the screen player one entert the method in false condition
                 // change the visual to on for player 1 and turn off the vissible to player two canvas
                 this.screenPlayerOne = true;
-                PlayerOnelabel.Visibility = Visibility.Visible;
-                PlayerTwolabel.Visibility = Visibility.Hidden;
+                this.PlayerOnelabel.Visibility = Visibility.Visible;
+                this.PlayerTwolabel.Visibility = Visibility.Hidden;
 
                 foreach (UIElement canvas in this.Maingrid.Children)
                 {
@@ -325,17 +325,17 @@ namespace Battleship
             }
         }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            if (player1.Winner || player2.Winner)
+            if (this.player1.Winner || this.player2.Winner)
             {
-                dispatcherTimer.Stop();
+                this.dispatcherTimer.Stop();
             }
             else
             {
-                ((ComputerPlayer)player1).CompPlayerAttack(player2, RowRep);
+                ((ComputerPlayer)this.player1).CompPlayerAttack(this.player2, this.RowRep);
                 this.SwitchPlayerWindows();
-                ((ComputerPlayer)player2).CompPlayerAttack(player1, RowRep);
+                ((ComputerPlayer)this.player2).CompPlayerAttack(this.player1, this.RowRep);
             }
         }
 
@@ -413,7 +413,7 @@ namespace Battleship
 
                             foreach (Ship testShip in p_otherPlayer.Playershipcollection)
                             {
-                                //Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
+                                // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
                                 AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
                             }
 
@@ -447,7 +447,7 @@ namespace Battleship
                 {
                     // add the drag over event for when ships are dragged over the cells only if the cell is deffense type
                     // Create a method when an object is drag over this left button
-                    MainPlayerCell.DragOver += new DragEventHandler(delegate (object sender, DragEventArgs e)
+                    MainPlayerCell.DragOver += new DragEventHandler(delegate(object sender, DragEventArgs e)
                     {
                         // find the sender uid extracting the date of the event
                         string myWarshipUid = e.Data.GetData(DataFormats.StringFormat).ToString();
@@ -469,7 +469,7 @@ namespace Battleship
                                     Point grabPos = e.GetPosition(p_currentPlayerWindow);
                                     if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
                                     {
-                                        Myship.Delayed_Crew_Crewmembers = Myship.SetCrewmembers(MainPlayerCell.TrackingID,0);
+                                        Myship.Delayed_Crew_Crewmembers = Myship.SetCrewmembers(MainPlayerCell.TrackingID, 0);
                                         Canvas.SetTop(Myship, MainPlayerCell.Top_Comp_ParentTop);
                                         Myship.Top_Comp_ParentTop = MainPlayerCell.Top_Comp_ParentTop;
                                         Canvas.SetLeft(Myship, MainPlayerCell.Left_Comp_ParentLeft);
@@ -554,14 +554,14 @@ namespace Battleship
         {
             foreach (Ship NavyShip in p_currentPlayer.Playershipcollection)
             {
-                NavyShip.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
+                NavyShip.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
                 {
                     if (p_currentPlayer.IsLocked == false)
                     {
-                        //create a cell to pass a cell to this method and return the possible crew members for this turn
-                        GridCell Fakecell = new GridCell(p_currentPlayer.PlayerID,0,"");
+                        // create a cell to pass a cell to this method and return the possible crew members for this turn
+                        GridCell Fakecell = new GridCell(p_currentPlayer.PlayerID, 0, "");
                         Fakecell.TrackingID = NavyShip.Captain;
-                        int Overlappingcrew = SetshipMovePerCrewCheck(NavyShip, Fakecell, p_currentPlayer,1);
+                        int Overlappingcrew = SetshipMovePerCrewCheck(NavyShip, Fakecell, p_currentPlayer, 1);
 
                         if (Overlappingcrew == 0)
                         {
@@ -584,7 +584,7 @@ namespace Battleship
                     {
                         if (e.LeftButton == MouseButtonState.Pressed)
                         {
-                            //This if statement will be used when the ship enters the boards for the first time
+                            // This if statement will be used when the ship enters the boards for the first time
                             int dragfirsttime = NavyShip.DragsCounter;
                             if (dragfirsttime > 0)
                             {

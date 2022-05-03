@@ -26,7 +26,8 @@ namespace Battleship
         /// <param name="maxCol"> This is the max number of columns requested at the moment pf loading</param>
         /// <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor)</param>
         /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one</param>
-        public ComputerPlayer(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense) : base(player_ID, player_Name, gridcellSize, maxCol, buttoncolorForDeffense, buttoncolorForOffense)
+        public ComputerPlayer(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense)
+            : base(player_ID, player_Name, gridcellSize, maxCol, buttoncolorForDeffense, buttoncolorForOffense)
         {
             // List of buttons for each player returned to the personal grid builder
             List<GridCell> loader = new List<GridCell>();
@@ -45,7 +46,7 @@ namespace Battleship
             {
                 for (int j = 0; j < maxCol; j++)
                 {
-                    board[i, j] = "O";
+                    this.board[i, j] = "O";
                 }
             }
 
@@ -100,7 +101,7 @@ namespace Battleship
                         {
                             // create a name for this button will result in a string(10.0001, this is elevated to the ten thounsans to allow a high number of buttons without the repeating of the name)
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
-                            int DictionaryOffset = maxCol * maxCol;
+                            int dictionaryOffset = maxCol * maxCol;
                             GridCell myButton = new GridCell(player_ID, buttoncolorForOffense, rowthousand.ToString());
                             myButton.Content = capital_letters[col] + (row + 1);
                             myButton.TrackingID = col + 1 + (row * maxCol);
@@ -115,7 +116,7 @@ namespace Battleship
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
                             loader.Add(myButton);
-                            playerGridCellsComputer.Add(DictionaryOffset + col + 1 + (row * maxCol), myButton);
+                            playerGridCellsComputer.Add(dictionaryOffset + col + 1 + (row * maxCol), myButton);
                         }
                     }
                 }
@@ -125,7 +126,7 @@ namespace Battleship
             this.playerGridCellsList = loader;
             this.playerGridCells = playerGridCellsComputer;
 
-            this.playerShips = RandomShipPlacement(player_ID, gridcellSize, maxCol, shiploader);
+            this.playerShips = this.RandomShipPlacement(player_ID, gridcellSize, maxCol, shiploader);
             foreach (Ship warship in this.playerShips)
             {
                 BitmapImage shipPic = new BitmapImage();
@@ -142,10 +143,10 @@ namespace Battleship
             }
         }
 
-        public void CompPlayerAttack(Player p_otherPlayer, int RowRep)
+        public void CompPlayerAttack(Player p_otherPlayer, int rowRep)
         {
             Coordinate position = this.SetRandomAttackCoordinate(p_otherPlayer);
-            Logger.ConsoleInformation(position.XCoordinate.ToString() + ' '+ position.YCoordinate.ToString());
+            Logger.ConsoleInformation(position.XCoordinate.ToString() + ' ' + position.YCoordinate.ToString());
             foreach (KeyValuePair<int, GridCell> playerPair in p_otherPlayer.Playergridsquarecollection)
             {
                 GridCell playerCell = playerPair.Value;
@@ -170,14 +171,14 @@ namespace Battleship
             }
 
             Logger.ConsoleInformation("------- Computer Grid ------");
-            for (int i = 0; i < RowRep; i++)
+            for (int i = 0; i < rowRep; i++)
             {
-                for (int j = 0; j < RowRep; j++)
+                for (int j = 0; j < rowRep; j++)
                 {
                     Logger.ConsoleInformationForArray(this.Board[i, j] + ", ");
                 }
 
-                Logger.ConsoleInformation(String.Empty);
+                Logger.ConsoleInformation("\n");
             }
         }
 
@@ -221,7 +222,7 @@ namespace Battleship
             foreach (KeyValuePair<int, GridCell> playerPair in this.Playergridsquarecollection)
             {
                 GridCell playerCell = playerPair.Value;
-                if (playerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
+                if (playerPair.Key == (position.YCoordinate * 10) + (position.XCoordinate + 1) &&
                     playerCell.OffenseButton == true)
                 {
                     // make changes to player two grid
@@ -240,7 +241,7 @@ namespace Battleship
                     Logger.ConsoleInformationForArray(p_otherPlayer.Board[i, j] + ", ");
                 }
 
-                Logger.ConsoleInformation("");
+                Logger.ConsoleInformation("\n");
             }
 
             return position;
@@ -266,11 +267,10 @@ namespace Battleship
                 Ship warship = new Ship(player_ID, i, gridcellSize, horDirection);
 
                 Coordinate shipPosition = new Coordinate();
-                shipPosition = SetRandomShipCoordinate(warship, maxCol, horDirection);
+                shipPosition = this.SetRandomShipCoordinate(warship, maxCol, horDirection);
                 int rowShip = shipPosition.YCoordinate;
                 int colShip = shipPosition.XCoordinate;
-                Coordinate shipPositionFinal = new Coordinate((short)(shipPosition.XCoordinate + 1),
-                    (short)(shipPosition.YCoordinate + 1));
+                Coordinate shipPositionFinal = new Coordinate((short)(shipPosition.XCoordinate + 1), (short)(shipPosition.YCoordinate + 1));
                 warship.ShipStartCoords = shipPositionFinal;
                 for (int j = 0; j < warship.Length; j++)
                 {

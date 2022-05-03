@@ -188,8 +188,8 @@ namespace Battleship
         /// </summary>
         public int Buttonid
         {
-            get { return buttonID; }
-            set { buttonID = value; }
+            get { return this.buttonID; }
+            set { this.buttonID = value; }
         }
 
         /// <summary>
