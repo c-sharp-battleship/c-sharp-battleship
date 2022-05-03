@@ -46,4 +46,9 @@
     <AdditionalFiles Include="./stylecop.json" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+  </PropertyGroup>
+
 </Project>

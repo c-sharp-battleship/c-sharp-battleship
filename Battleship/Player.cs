@@ -25,6 +25,7 @@ namespace Battleship
 
         /// <summary>
         /// The list of player's gris cells.
+        /// </summary>
         protected List<GridCell> playerGridCellsList = new List<GridCell>();
 
         /// <summary>

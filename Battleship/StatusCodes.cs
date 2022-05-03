@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="StatusCodes.cs" company="Team">
-//     Company copyright tag.
+// <copyright file="StatusCodes.cs" company="Battleship Coding Group">
+//     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Battleship

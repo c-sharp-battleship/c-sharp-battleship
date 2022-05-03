@@ -129,7 +129,6 @@ namespace Battleship
         /// Initializes a new instance of the <see cref="Ship" /> class.
         /// </summary>
         /// <param name="playerID"> This is the player ID passed from player class</param>
-        /// <param name="resistance">this is the number of hits this ship will resist</param>
         /// <param name="shipType"> this is the type of ship, Submarine,warship...</param>
         /// <param name="gridCellSize"> This is the size of the grid square passed from player class, determined in pixels</param>
         /// <param name="startCoords"> This is the start coordinates of the ship</param>
