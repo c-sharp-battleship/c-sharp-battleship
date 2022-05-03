@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ComputerPlayer.cs" company="Team">
-//     Company copyright tag.
+// <copyright file="ComputerPlayer.cs" company="Battleship Coding Group">
+//     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Battleship
@@ -142,6 +142,110 @@ namespace Battleship
             }
         }
 
+        public void CompPlayerAttack(Player p_otherPlayer, int RowRep)
+        {
+            Coordinate position = this.SetRandomAttackCoordinate(p_otherPlayer);
+            Logger.ConsoleInformation(position.XCoordinate.ToString() + ' '+ position.YCoordinate.ToString());
+            foreach (KeyValuePair<int, GridCell> playerPair in p_otherPlayer.Playergridsquarecollection)
+            {
+                GridCell playerCell = playerPair.Value;
+                int y = (position.YCoordinate + 1) * 10 + (position.XCoordinate + 1);
+                if (playerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
+                    playerCell.OffenseButton == false)
+                {
+                    // make changes to player two grid
+                    playerCell.Background = Brushes.Red;
+                    playerCell.Content = "X";
+                    playerCell.Stricked = 1;
+                    playerCell.AllowDrop = false;
+                }
+            }
+            
+            Coordinate attackedGridSpace = new Coordinate((short)(position.XCoordinate + 1), (short)(position.YCoordinate + 1));
+
+            foreach (Ship testShip in p_otherPlayer.Playershipcollection)
+            {
+                // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
+                AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+            }
+            
+            Logger.ConsoleInformation("------- Computer Grid ------");
+            for (int i = 0; i < RowRep; i++)
+            {
+                for (int j = 0; j < RowRep; j++)
+                {
+                    Logger.ConsoleInformationForArray(this.Board[i, j] + ", ");
+                }
+
+                Logger.ConsoleInformation("");
+            }
+        }
+
+        public Coordinate SetRandomAttackCoordinate(Player p_otherPlayer)
+        {
+            Random random = new Random();
+            Coordinate position = new Coordinate();
+            bool availableToChoose = false;
+
+            int rowNumber = 0;
+            int colNumber = 0;
+
+            while (!availableToChoose)
+            {
+                rowNumber = random.Next(0, 10);
+                colNumber = random.Next(0, 10);
+                string letterAttackGrid = p_otherPlayer.Board[rowNumber, colNumber];
+
+                if (letterAttackGrid != "H" | letterAttackGrid != "M")
+                {
+                    availableToChoose = true;
+                    GridCell playerCell = this.playerGridCells[(rowNumber * 10 + (colNumber + 1)) + 100];
+                    if (letterAttackGrid == "O")
+                    {
+                        p_otherPlayer.Board[rowNumber, colNumber] = "M";
+                        playerCell.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        p_otherPlayer.Board[rowNumber, colNumber] = "H";
+                        playerCell.Background = Brushes.Green;
+                        playerCell.Content = "H";
+                        playerCell.Stricked = 1;
+                        playerCell.AllowDrop = false;
+                    }
+                }
+            }
+
+            position.XCoordinate = (short)colNumber;
+            position.YCoordinate = (short)rowNumber;
+            foreach (KeyValuePair<int, GridCell> playerPair in this.Playergridsquarecollection)
+            {
+                GridCell playerCell = playerPair.Value;
+                if (playerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
+                    playerCell.OffenseButton == true)
+                {
+                    // make changes to player two grid
+                    playerCell.Background = Brushes.Red;
+                    playerCell.Content = "X";
+                    playerCell.Stricked = 1;
+                    playerCell.AllowDrop = false;
+                }
+            }
+            
+            Logger.ConsoleInformation("------- Player Grid ------");
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Logger.ConsoleInformationForArray(p_otherPlayer.Board[i, j] + ", ");
+                }
+
+                Logger.ConsoleInformation("");
+            }
+            
+            return position;
+        }
+
         private List<Ship> RandomShipPlacement(int player_ID, double gridcellSize, int maxCol, List<Ship> shiploader)
         {
             bool horDirection;
@@ -188,7 +292,7 @@ namespace Battleship
 
             return shiploader;
         }
-
+        
         private Coordinate SetRandomShipCoordinate(Ship warship, int maxCol, bool horDirection)
         {
             Random random = new Random();
@@ -261,107 +365,6 @@ namespace Battleship
                 }
             }
 
-            return position;
-        }
-
-        public void CompPlayerAttack(Player p_otherPlayer, int RowRep)
-        {
-            Coordinate position = this.SetRandomAttackCoordinate(p_otherPlayer);
-            Logger.ConsoleInformation(position.XCoordinate.ToString() + ' '+ position.YCoordinate.ToString());
-            foreach (KeyValuePair<int, GridCell> playerPair in p_otherPlayer.Playergridsquarecollection)
-            {
-                GridCell playerCell = playerPair.Value;
-                int y = (position.YCoordinate + 1) * 10 + (position.XCoordinate + 1);
-                if (playerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
-                    playerCell.OffenseButton == false)
-                {
-                    // make changes to player two grid
-                    playerCell.Background = Brushes.Red;
-                    playerCell.Content = "X";
-                    playerCell.Stricked = 1;
-                    playerCell.AllowDrop = false;
-                }
-            }
-            
-            Coordinate attackedGridSpace = new Coordinate((short)(position.XCoordinate + 1), (short)(position.YCoordinate + 1));
-
-            foreach (Ship testShip in p_otherPlayer.Playershipcollection)
-            {
-                //Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
-                AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
-            }
-            Logger.ConsoleInformation("------- Computer Grid ------");
-            for (int i = 0; i < RowRep; i++)
-            {
-                for (int j = 0; j < RowRep; j++)
-                {
-                    Logger.ConsoleInformationForArray(this.Board[i, j] + ", ");
-                }
-
-                Logger.ConsoleInformation("");
-            }
-        }
-
-        public Coordinate SetRandomAttackCoordinate(Player p_otherPlayer)
-        {
-            Random random = new Random();
-            Coordinate position = new Coordinate();
-            bool availableToChoose = false;
-
-            int rowNumber = 0;
-            int colNumber = 0;
-
-            while (!availableToChoose)
-            {
-                rowNumber = random.Next(0, 10);
-                colNumber = random.Next(0, 10);
-                string letterAttackGrid = p_otherPlayer.Board[rowNumber, colNumber];
-
-                if (letterAttackGrid != "H" | letterAttackGrid != "M")
-                {
-                    availableToChoose = true;
-                    GridCell playerCell = this.playerGridCells[(rowNumber * 10 + (colNumber + 1)) + 100];
-                    if (letterAttackGrid == "O")
-                    {
-                        p_otherPlayer.Board[rowNumber, colNumber] = "M";
-                        playerCell.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        p_otherPlayer.Board[rowNumber, colNumber] = "H";
-                        playerCell.Background = Brushes.Green;
-                        playerCell.Content = "H";
-                        playerCell.Stricked = 1;
-                        playerCell.AllowDrop = false;
-                    }
-                }
-            }
-
-            position.XCoordinate = (short)colNumber;
-            position.YCoordinate = (short)rowNumber;
-            foreach (KeyValuePair<int, GridCell> playerPair in this.Playergridsquarecollection)
-            {
-                GridCell playerCell = playerPair.Value;
-                if (playerPair.Key == position.YCoordinate * 10 + (position.XCoordinate + 1) &&
-                    playerCell.OffenseButton == true)
-                {
-                    // make changes to player two grid
-                    playerCell.Background = Brushes.Red;
-                    playerCell.Content = "X";
-                    playerCell.Stricked = 1;
-                    playerCell.AllowDrop = false;
-                }
-            }
-            Logger.ConsoleInformation("------- Player Grid ------");
-            for (int i = 0; i < 10; i++)
-            {
-                for (int j = 0; j < 10; j++)
-                {
-                    Logger.ConsoleInformationForArray(p_otherPlayer.Board[i, j] + ", ");
-                }
-
-                Logger.ConsoleInformation("");
-            }
             return position;
         }
     }

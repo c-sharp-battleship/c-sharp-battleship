@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="GameWindow.xaml.cs" company="Team">
-//     Company copyright tag.
+// <copyright file="GameWindow.xaml.cs" company="Battleship Coding Group">
+//     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Battleship
@@ -172,7 +172,7 @@ namespace Battleship
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.player1 = new Player(1, "PlayerOne", this.Cellsize, this.RowRep, 1, 3);
             this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6);
-            this.player2.isLocked = true;
+            this.player2.IsLocked = true;
 
             Logger.ConsoleInformation("------- Computer Grid ------");
             for (int i = 0; i < RowRep; i++)
@@ -274,6 +274,56 @@ namespace Battleship
             this.Show();
         }
 
+        /// <summary>
+        /// Make the windows visible with Attack button
+        /// </summary>
+        public void SwitchPlayerWindows()
+        {
+            if (this.screenPlayerOne == true)
+            {
+                // change the visual to off for player 1 and turn on the vissible to player two canvas
+                this.screenPlayerOne = false;
+                PlayerOnelabel.Visibility = Visibility.Hidden;
+                PlayerTwolabel.Visibility = Visibility.Visible;
+                foreach (UIElement canvas in this.Maingrid.Children)
+                {
+                    if (canvas.Uid == "Player1Canvas")
+                    {
+                        canvas.Visibility = Visibility.Hidden;
+                    }
+
+                    if (canvas.Uid == "Player2Canvas")
+                    {
+                        canvas.Visibility = Visibility.Visible;
+                    }
+                }
+                //// if the switch button has been clicked for the first time then allow player2 to move their ships
+                this.SetConfirmButtonVisibility("Player2Canvas");
+            }
+            else
+            {
+                // if the screen player one entert the method in false condition
+                // change the visual to on for player 1 and turn off the vissible to player two canvas
+                this.screenPlayerOne = true;
+                PlayerOnelabel.Visibility = Visibility.Visible;
+                PlayerTwolabel.Visibility = Visibility.Hidden;
+
+                foreach (UIElement canvas in this.Maingrid.Children)
+                {
+                    if (canvas.Uid == "Player1Canvas")
+                    {
+                        canvas.Visibility = Visibility.Visible;
+                    }
+
+                    if (canvas.Uid == "Player2Canvas")
+                    {
+                        canvas.Visibility = Visibility.Hidden;
+                    }
+                }
+                this.SetConfirmButtonVisibility("Player1Canvas");
+            }
+        }
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (player1.Winner || player2.Winner)
@@ -303,7 +353,7 @@ namespace Battleship
                     MainPlayerCell.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
                     {
                         // Double-check that both players ships are locked into place before allowing the user to attack grid spaces.
-                        if (p_currentPlayer.isLocked == true && p_otherPlayer.isLocked == true)
+                        if (p_currentPlayer.IsLocked == true && p_otherPlayer.IsLocked == true)
                         {
                             // go check the list of buttons for player two and change the status for them
                             foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
@@ -379,7 +429,7 @@ namespace Battleship
                         else
                         {
                             // If the current player's ship placement is locked, but the other player's ship placement is not locked, let the player know.
-                            if (p_currentPlayer.isLocked == true && p_otherPlayer.isLocked == false)
+                            if (p_currentPlayer.IsLocked == true && p_otherPlayer.IsLocked == false)
                             {
                                 Logger.Error("Error: The other player has not yet confirmed their ship placement.");
                             }
@@ -484,7 +534,7 @@ namespace Battleship
             }
             return OverlapingCrewMembers;
         }
-
+        
         private void DeclareComputerPlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
             foreach (KeyValuePair<int, GridCell> MainPlayerPair in p_currentPlayer.Playergridsquarecollection)
@@ -503,7 +553,7 @@ namespace Battleship
             {
                 NavyShip.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
                 {
-                    if (p_currentPlayer.isLocked == false)
+                    if (p_currentPlayer.IsLocked == false)
                     {
                         //create a cell to pass a cell to this method and return the possible crew members for this turn
                         GridCell Fakecell = new GridCell(p_currentPlayer.PlayerID,0,"");
@@ -527,7 +577,7 @@ namespace Battleship
                 // create a move move event for player 1 ships to attacch the rectangle to the mouse
                 NavyShip.MouseMove += new MouseEventHandler(delegate(object sender, MouseEventArgs e)
                 {
-                    if (p_currentPlayer.isLocked == false)
+                    if (p_currentPlayer.IsLocked == false)
                     {
                         if (e.LeftButton == MouseButtonState.Pressed)
                         {
@@ -563,67 +613,17 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Make the windows visible with Attack button
-        /// </summary>
-        public void SwitchPlayerWindows()
-        {
-            if (this.screenPlayerOne == true)
-            {
-                // change the visual to off for player 1 and turn on the vissible to player two canvas
-                this.screenPlayerOne = false;
-                PlayerOnelabel.Visibility = Visibility.Hidden;
-                PlayerTwolabel.Visibility = Visibility.Visible;
-                foreach (UIElement canvas in this.Maingrid.Children)
-                {
-                    if (canvas.Uid == "Player1Canvas")
-                    {
-                        canvas.Visibility = Visibility.Hidden;
-                    }
-
-                    if (canvas.Uid == "Player2Canvas")
-                    {
-                        canvas.Visibility = Visibility.Visible;
-                    }
-                }
-                //// if the switch button has been clicked for the first time then allow player2 to move their ships
-                this.SetConfirmButtonVisibility("Player2Canvas");
-            }
-            else
-            {
-                // if the screen player one entert the method in false condition
-                // change the visual to on for player 1 and turn off the vissible to player two canvas
-                this.screenPlayerOne = true;
-                PlayerOnelabel.Visibility = Visibility.Visible;
-                PlayerTwolabel.Visibility = Visibility.Hidden;
-
-                foreach (UIElement canvas in this.Maingrid.Children)
-                {
-                    if (canvas.Uid == "Player1Canvas")
-                    {
-                        canvas.Visibility = Visibility.Visible;
-                    }
-
-                    if (canvas.Uid == "Player2Canvas")
-                    {
-                        canvas.Visibility = Visibility.Hidden;
-                    }
-                }
-                this.SetConfirmButtonVisibility("Player1Canvas");
-            }
-        }
-
-        /// <summary>
         /// Set a confirm button visibility.
         /// </summary>
         /// <param name="canvasUid">The id of the canvas.</param>
         private void SetConfirmButtonVisibility(string canvasUid)
         {
-            if ((canvasUid == "Player1Canvas" && this.player1.isLocked == true) || (canvasUid == "Player2Canvas" && this.player2.isLocked == true))
+            if ((canvasUid == "Player1Canvas" && this.player1.IsLocked == true) || (canvasUid == "Player2Canvas" && this.player2.IsLocked == true))
             {
                 this.Confirm_Button.IsEnabled = false;
                 this.AttackBtn.IsEnabled = true;
             }
-            else if ((canvasUid == "Player1Canvas" && this.player1.isLocked == false) || (canvasUid == "Player2Canvas" && this.player2.isLocked == false))
+            else if ((canvasUid == "Player1Canvas" && this.player1.IsLocked == false) || (canvasUid == "Player2Canvas" && this.player2.IsLocked == false))
             { 
                 this.Confirm_Button.IsEnabled = true;
                 this.AttackBtn.IsEnabled = false;
@@ -638,7 +638,7 @@ namespace Battleship
         {
             if (canvasUid == "Player1Canvas")
             {
-                this.player1.isLocked = true;
+                this.player1.IsLocked = true;
                 this.player1.LockShipsIntoPlace();
                 foreach (Ship ship in this.player1.Playershipcollection)
                 {
@@ -675,7 +675,7 @@ namespace Battleship
             }
             else if (canvasUid == "Player2Canvas")
             {
-                this.player2.isLocked = true;
+                this.player2.IsLocked = true;
                 this.player2.LockShipsIntoPlace();
                 foreach (Ship ship in this.player2.Playershipcollection)
                 {
@@ -739,8 +739,8 @@ namespace Battleship
         /// <param name="shipEndCoords">The ending (bottom-right) coordinates of the ship.</param>
         private void UpdateShipCoords(Ship shipToUpdate, Coordinate shipStartCoords, Coordinate shipEndCoords)
         {
-            //Logger.ConsoleInformation("New Ship Start Coords: " + shipStartCoords.XCoordinate.ToString() + ", " + shipStartCoords.YCoordinate.ToString());
-            //Logger.ConsoleInformation("New Ship End Coords: " + shipEndCoords.XCoordinate.ToString() + ", " + shipEndCoords.YCoordinate.ToString());
+            // Logger.ConsoleInformation("New Ship Start Coords: " + shipStartCoords.XCoordinate.ToString() + ", " + shipStartCoords.YCoordinate.ToString());
+            // Logger.ConsoleInformation("New Ship End Coords: " + shipEndCoords.XCoordinate.ToString() + ", " + shipEndCoords.YCoordinate.ToString());
             shipToUpdate.UpdateShipCoords(shipStartCoords, shipEndCoords);
         }
 

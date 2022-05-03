@@ -17,7 +17,7 @@ namespace Battleship
     /// </summary>
     public class Player
     {
-        public bool isLocked;
+        private bool isLocked;
 
         /// <summary>
         /// The player's ID.
@@ -191,22 +191,10 @@ namespace Battleship
             }
         }
 
-        public void LockShipsIntoPlace()
+        public bool IsLocked
         {
-            foreach (Ship ship in this.playerShips)
-            {
-                string shipName = ship.Name.Substring(0, 2);
-                // Loop through each of the GridCells that the ship is currently placed on.
-                foreach (int crewMember in ship.Delayed_Crew_Crewmembers)
-                {
-                    // Set the GridCell's color to Azure.
-                    this.playerGridCells[crewMember].Background = Brushes.Azure;
-                    this.playerGridCells[crewMember].Content = shipName;
-                }
-                
-                // Hide the ships visibility.
-                ship.Visibility = Visibility.Hidden;
-            }
+            get => this.isLocked;
+            set => this.isLocked = value;
         }
 
         /// <summary>
@@ -237,6 +225,24 @@ namespace Battleship
         public List<Ship> Playershipcollection
         {
             get { return this.playerShips; }
+        }
+
+        public void LockShipsIntoPlace()
+        {
+            foreach (Ship ship in this.playerShips)
+            {
+                string shipName = ship.Name.Substring(0, 2);
+                // Loop through each of the GridCells that the ship is currently placed on.
+                foreach (int crewMember in ship.Delayed_Crew_Crewmembers)
+                {
+                    // Set the GridCell's color to Azure.
+                    this.playerGridCells[crewMember].Background = Brushes.Azure;
+                    this.playerGridCells[crewMember].Content = shipName;
+                }
+
+                // Hide the ships visibility.
+                ship.Visibility = Visibility.Hidden;
+            }
         }
 
         /// <summary>

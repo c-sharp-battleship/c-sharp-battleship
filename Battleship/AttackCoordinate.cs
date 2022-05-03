@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="AttackCoordinate.cs" company="Team">
-//     Company copyright tag.
+// <copyright file="AttackCoordinate.cs" company="Battleship Coding Group">
+//     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Battleship

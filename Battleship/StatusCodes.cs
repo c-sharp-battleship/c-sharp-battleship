@@ -29,7 +29,7 @@ namespace Battleship
             /// <summary>
             /// Represents an attacked and hit status.
             /// </summary>
-            ATTACKED_HIT
+            ATTACKED_HIT,
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Battleship
             /// <summary>
             /// Represents an end of the game.
             /// </summary>
-            GAME_ENDED
+            GAME_ENDED,
         }
 
         /// <summary>

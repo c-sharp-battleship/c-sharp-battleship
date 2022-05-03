@@ -73,7 +73,7 @@ namespace Battleship
         /// <summary>
         /// The grid cell's row number.
         /// </summary>
-        private int trackingID_;
+        private int trackingID;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GridCell" /> class.
@@ -224,8 +224,8 @@ namespace Battleship
         /// </summary>
         public int TrackingID
         {
-            get { return this.trackingID_; }
-            set { this.trackingID_ = value; }
+            get { return this.trackingID; }
+            set { this.trackingID = value; }
         }
     }
 }

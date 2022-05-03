@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="App.xaml.cs" company="Team">
-//     Company copyright tag.
+// <copyright file="App.xaml.cs" company="Battleship Coding Group">
+//     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Battleship

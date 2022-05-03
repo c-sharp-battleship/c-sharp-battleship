@@ -21,12 +21,13 @@ namespace Battleship
         /// </summary>
         public short YCoordinate;
 
-        public short GetShipID()
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="Coordinate" /> class.
+        /// </summary>
+        public Coordinate()
         {
-            short x = this.XCoordinate;
-            short y = (short)(10 * this.YCoordinate);
-
-            return (short)(x + y);
+            this.XCoordinate = 0;
+            this.YCoordinate = 0;
         }
 
         /// <summary>
@@ -38,15 +39,6 @@ namespace Battleship
         {
             this.XCoordinate = xCoordinate;
             this.YCoordinate = yCoordinate;
-        }
-
-        /// <summary>
-        ///  Initializes a new instance of the <see cref="Coordinate" /> class.
-        /// </summary>
-        public Coordinate()
-        {
-            this.XCoordinate = 0;
-            this.YCoordinate = 0;
         }
 
         /// <summary>
@@ -93,6 +85,14 @@ namespace Battleship
                         break;
                 }
             }
+        }
+
+        public short GetShipID()
+        {
+            short x = this.XCoordinate;
+            short y = (short)(10 * this.YCoordinate);
+
+            return (short)(x + y);
         }
     }
 }
