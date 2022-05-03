@@ -81,26 +81,26 @@ namespace Battleship
             /// <summary>
             /// Represents a computer to computer game.
             /// </summary>
-            COMPUTER_TO_COMPUTER
+            COMPUTER_TO_COMPUTER,
         }
 
         public enum GridSpaceStatus
         {
             GRID_SPACE_OCCUPIED,
-            GRID_SPACE_NOT_OCCUPIED
+            GRID_SPACE_NOT_OCCUPIED,
         }
 
         public enum AttackStrategy
         {
             ATTACK_DIFFICULTY_EASY,
-            ATTACK_DIFFICULTY_HARD
+            ATTACK_DIFFICULTY_HARD,
         }
 
         public enum DefenseStrategy
         {
             DEFENSE_DIFFICULTY_EASY,
             DEFENSE_DIFFICULTY_CORNER,
-            DEFENSE_DIFFICULTY_CENTER
+            DEFENSE_DIFFICULTY_CENTER,
         }
     }
 }

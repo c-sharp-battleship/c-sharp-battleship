@@ -80,7 +80,7 @@ namespace Battleship
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             myButton.Left_Comp_ParentLeft = col * gridcellSize;
                             myButton.Top_Comp_ParentTop = row * gridcellSize;
-                            
+
                             loader.Add(myButton);
                             playerGridCellsComputer.Add(col + 1 + (row * maxCol), myButton);
                         }
@@ -160,7 +160,7 @@ namespace Battleship
                     playerCell.AllowDrop = false;
                 }
             }
-            
+
             Coordinate attackedGridSpace = new Coordinate((short)(position.XCoordinate + 1), (short)(position.YCoordinate + 1));
 
             foreach (Ship testShip in p_otherPlayer.Playershipcollection)
@@ -168,7 +168,7 @@ namespace Battleship
                 // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
                 AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
             }
-            
+
             Logger.ConsoleInformation("------- Computer Grid ------");
             for (int i = 0; i < RowRep; i++)
             {
@@ -231,7 +231,7 @@ namespace Battleship
                     playerCell.AllowDrop = false;
                 }
             }
-            
+
             Logger.ConsoleInformation("------- Player Grid ------");
             for (int i = 0; i < 10; i++)
             {
@@ -242,7 +242,7 @@ namespace Battleship
 
                 Logger.ConsoleInformation("");
             }
-            
+
             return position;
         }
 
@@ -269,8 +269,8 @@ namespace Battleship
                 shipPosition = SetRandomShipCoordinate(warship, maxCol, horDirection);
                 int rowShip = shipPosition.YCoordinate;
                 int colShip = shipPosition.XCoordinate;
-                Coordinate shipPositionFinal = new Coordinate((short) (shipPosition.XCoordinate + 1),
-                    (short) (shipPosition.YCoordinate + 1));
+                Coordinate shipPositionFinal = new Coordinate((short)(shipPosition.XCoordinate + 1),
+                    (short)(shipPosition.YCoordinate + 1));
                 warship.ShipStartCoords = shipPositionFinal;
                 for (int j = 0; j < warship.Length; j++)
                 {
@@ -292,7 +292,7 @@ namespace Battleship
 
             return shiploader;
         }
-        
+
         private Coordinate SetRandomShipCoordinate(Ship warship, int maxCol, bool horDirection)
         {
             Random random = new Random();
@@ -360,8 +360,8 @@ namespace Battleship
                 if (checks == warship.Length)
                 {
                     availableToPlace = true;
-                    position.XCoordinate = (short) colNumber;
-                    position.YCoordinate = (short) rowNumber;
+                    position.XCoordinate = (short)colNumber;
+                    position.YCoordinate = (short)rowNumber;
                 }
             }
 

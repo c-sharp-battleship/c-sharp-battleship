@@ -15,22 +15,9 @@ namespace Battleship
     /// <summary>
     /// Interaction logic for Player. This class is a canvas that will load with a list of grid squares and a list of ships attached as a property
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not taught.")]
     public class Player
     {
-        private bool isLocked;
-
-        /// <summary>
-        /// The player's ID.
-        /// </summary>
-        private int playerID;
-
-        /// <summary>
-        /// The player's name.
-        /// </summary>
-        private string name;
-
-        private bool winner = false;
-
         /// <summary>
         /// The list of player's ships.
         /// </summary>
@@ -49,6 +36,19 @@ namespace Battleship
         /// 
         /// </summary>
         protected string[,] board;
+        private bool isLocked;
+
+        /// <summary>
+        /// The player's ID.
+        /// </summary>
+        private int playerID;
+
+        /// <summary>
+        /// The player's name.
+        /// </summary>
+        private string name;
+
+        private bool winner = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player" /> class.
@@ -227,24 +227,6 @@ namespace Battleship
             get { return this.playerShips; }
         }
 
-        public void LockShipsIntoPlace()
-        {
-            foreach (Ship ship in this.playerShips)
-            {
-                string shipName = ship.Name.Substring(0, 2);
-                // Loop through each of the GridCells that the ship is currently placed on.
-                foreach (int crewMember in ship.Delayed_Crew_Crewmembers)
-                {
-                    // Set the GridCell's color to Azure.
-                    this.playerGridCells[crewMember].Background = Brushes.Azure;
-                    this.playerGridCells[crewMember].Content = shipName;
-                }
-
-                // Hide the ships visibility.
-                ship.Visibility = Visibility.Hidden;
-            }
-        }
-
         /// <summary>
         /// Gets player Button collections for its personal grid 
         /// </summary>
@@ -268,6 +250,46 @@ namespace Battleship
         {
             get { return this.board; }
             set { this.board = value; }
+        }
+
+        public void LockShipsIntoPlace()
+        {
+            foreach (Ship ship in this.playerShips)
+            {
+                string shipName = ship.Name.Substring(0, 2);
+                // Loop through each of the GridCells that the ship is currently placed on.
+                foreach (int crewMember in ship.Delayed_Crew_Crewmembers)
+                {
+                    // Set the GridCell's color to Azure.
+                    this.playerGridCells[crewMember].Background = Brushes.Azure;
+                    this.playerGridCells[crewMember].Content = shipName;
+                }
+
+                // Hide the ships visibility.
+                ship.Visibility = Visibility.Hidden;
+            }
+        }
+
+        public StatusCodes.GridSpaceStatus checkshipcrewmembers(List<int> p_crew)
+        {
+            StatusCodes.GridSpaceStatus shipCrewMemberStatus = StatusCodes.GridSpaceStatus.GRID_SPACE_NOT_OCCUPIED;
+
+            foreach(int crewMember in p_crew)
+            {
+                foreach(Ship testShip in this.playerShips)
+                {
+                    foreach(int testShipCrewMember in testShip.Ship_Crewmembers)
+                    {
+                        if(testShipCrewMember == crewMember)
+                        {
+                            shipCrewMemberStatus = StatusCodes.GridSpaceStatus.GRID_SPACE_OCCUPIED;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return shipCrewMemberStatus;
         }
 
         /// <summary>
@@ -304,28 +326,6 @@ namespace Battleship
                 Logger.Information(this.Name + "Lost");
                 Environment.Exit(0);
             }
-        }
-
-        public StatusCodes.GridSpaceStatus checkshipcrewmembers(List<int> p_crew)
-        {
-            StatusCodes.GridSpaceStatus shipCrewMemberStatus = StatusCodes.GridSpaceStatus.GRID_SPACE_NOT_OCCUPIED;
-
-            foreach(int crewMember in p_crew)
-            {
-                foreach(Ship testShip in this.playerShips)
-                {
-                    foreach(int testShipCrewMember in testShip.Ship_Crewmembers)
-                    {
-                        if(testShipCrewMember == crewMember)
-                        {
-                            shipCrewMemberStatus = StatusCodes.GridSpaceStatus.GRID_SPACE_OCCUPIED;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return shipCrewMemberStatus;
         }
     }
 }
