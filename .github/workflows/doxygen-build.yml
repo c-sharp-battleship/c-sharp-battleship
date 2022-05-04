@@ -1,9 +1,30 @@
-name: Invoke Doxygen Build in html-docs Repository
-on: [push, pull_request]
+name: Build Doxygen PDF
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  invoke-repo:
-    runs-on: ubuntu:latest
+  doxygen-build:
+    runs-on: ubuntu-latest
+
     steps:
-      - run: apt install curl -y
-      - run: curl -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/c-sharp-battleship/html-docs/actions/workflows/doxygen-build/dispatches -d '{"ref":"topic-branch"}'
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Doxygen Action
+      id: doxygen_build
+      uses: mattnotmitt/doxygen-action@1.9.3
+      with:
+        working-directory: 'docs/'
+        doxyfile-path: './Doxyfile'
+        enable-latex: true
+
+    - run: pwd && ls
+
+    - name: Upload Latex Build Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Documentation
+        path: |
+              './docs/build/latex/refman.pdf'
+              './docs/build/html/'
