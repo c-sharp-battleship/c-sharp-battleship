@@ -12,12 +12,12 @@ jobs:
         fetch-depth: 0
         
     - name: Doxygen Action
+      id: doxygen_build
       uses: mattnotmitt/doxygen-action@1.9.3
       with:
         working-directory: 'docs/'
         doxyfile-path: 'docs/Doxyfile'
         enable-latex: true
-        id: doxygen_build
     
     - name: Upload Latex Build Artifacts
       uses: actions/upload-artifact@v3
