@@ -1,0 +1,9 @@
+name: Invoke Doxygen Build in html-docs Repository
+on: [push, pull_request]
+
+jobs:
+  invoke-repo:
+    runs-on: ubuntu:latest
+    steps:
+      - run: apt install curl -y
+      - run: curl -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/c-sharp-battleship/html-docs/actions/workflows/doxygen-build/dispatches -d '{"ref":"topic-branch"}'

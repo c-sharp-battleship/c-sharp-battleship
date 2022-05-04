@@ -38,11 +38,7 @@
 
 name: Battleship
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
 
@@ -111,5 +107,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: MSIX Package
-        path: ${{ env.Wap_Project_Directory }}\AppPackages
+        name: Battleship
+        path: ${{ env.Wap_Project_Directory }}\bin\Release
