@@ -117,6 +117,13 @@
              Gets a computer player difficulty.
             </summary>
         </member>
+        <member name="M:Battleship.ComputerPlayer.AdvancedAttack(Battleship.Player,System.Int32)">
+            <summary>
+            Advanced attacking of computer player.
+            </summary>
+            <param name="p_otherPlayer">The enemy player.</param>
+            <param name="rowRep">The number of columns and rows.</param>
+        </member>
         <member name="M:Battleship.ComputerPlayer.CompPlayerAttack(Battleship.Player,System.Int32)">
             <summary>
             Method in which the computer attacks.

@@ -355,7 +355,7 @@ namespace Battleship
             }
             else
             {
-                if (ComputerPlayerDifficulty1 ==
+                if (this.computerPlayerDifficulty1 ==
                     StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
                 {
                     ((ComputerPlayer)this.player1).AdvancedAttack(this.player2, this.RowRep);
@@ -364,7 +364,10 @@ namespace Battleship
                 {
                     ((ComputerPlayer)this.player1).CompPlayerAttack(this.player2, this.RowRep);
                 }
-                if (ComputerPlayerDifficulty2 ==
+
+                this.SwitchPlayerWindows();
+
+                if (this.computerPlayerDifficulty2 ==
                     StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
                 {
                     ((ComputerPlayer)this.player2).AdvancedAttack(this.player1, this.RowRep);
@@ -373,8 +376,6 @@ namespace Battleship
                 {
                     ((ComputerPlayer)this.player2).CompPlayerAttack(this.player1, this.RowRep);
                 }
-                this.SwitchPlayerWindows();
-                
             }
         }
 
@@ -459,7 +460,7 @@ namespace Battleship
                             // Swicth windows between players
                             if (p_otherPlayer.Name == "ComputerPlayerTwo")
                             {
-                                if (ComputerPlayerDifficulty1 ==
+                                if (this.computerPlayerDifficulty1 ==
                                     StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
                                 {
                                     ((ComputerPlayer)p_otherPlayer).AdvancedAttack(p_currentPlayer, this.RowRep);
@@ -606,7 +607,7 @@ namespace Battleship
                     if (p_currentPlayer.IsLocked == false)
                     {
                         // create a cell to pass a cell to this method and return the possible crew members for this turn
-                        GridCell fakecell = new GridCell(p_currentPlayer.PlayerID, 0, "");
+                        GridCell fakecell = new GridCell(p_currentPlayer.PlayerID, 0, string.Empty);
                         fakecell.TrackingID = navyShip.Captain;
                         int overlappingCrew = this.SetshipMovePerCrewCheck(navyShip, fakecell, p_currentPlayer, 1);
 
