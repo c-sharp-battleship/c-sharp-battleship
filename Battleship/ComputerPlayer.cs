@@ -34,7 +34,7 @@ namespace Battleship
 
         private List<int> alreadyAttackedGrids;
 
-        private List<int> firstAttackGrids;
+        private List<int> attackedList;
         private bool allow;
         /// <summary>
         ///  Initializes a new instance of the <see cref="ComputerPlayer" /> class.
@@ -53,6 +53,7 @@ namespace Battleship
 
             this.hitList = new List<int>();
             this.alreadyAttackedGrids = new List<int>();
+            this.attackedList = new List<int>();
 
             // List of ships for each player to return to the personal grid builder
             List<Ship> shiploader = new List<Ship>();
@@ -177,9 +178,83 @@ namespace Battleship
             get { return this.difficulty; }
         }
 
+        private bool GridSearch(int rowNumber, int colNumber)
+        {
+            int gridNumber = rowNumber * 10 + colNumber;
+            bool allowToPlace = true;
+            if (gridNumber % 10 == 0)
+            {
+                foreach (int grid in attackedList)
+                {
+                    if (grid == (gridNumber + 1))
+                    {
+                        allowToPlace = false;
+                        break;
+                    }
+                }
+            }
+            else if (gridNumber % 10 == 9)
+            {
+                foreach (int grid in attackedList)
+                {
+                    if (grid == (gridNumber - 1))
+                    {
+                        allowToPlace = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (int grid in attackedList)
+                {
+                    if (grid == (gridNumber - 1) || grid == (gridNumber + 1))
+                    {
+                        allowToPlace = false;
+                        break;
+                    }
+                }
+            }
+
+            if (gridNumber < 10)
+            {
+                foreach (int grid in attackedList)
+                {
+                    if (grid == (gridNumber + 10))
+                    {
+                        allowToPlace = false;
+                        break;
+                    }
+                }
+            }
+            else if (gridNumber > 89)
+            {
+                foreach (int grid in attackedList)
+                {
+                    if (grid == (gridNumber - 10))
+                    {
+                        allowToPlace = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (int grid in attackedList)
+                {
+                    if (grid == (gridNumber - 10) || grid == (gridNumber + 10))
+                    {
+                        allowToPlace = false;
+                        break;
+                    }
+                }
+            }
+
+            return allowToPlace;
+        }
+
         public void AdvancedAttack(Player p_otherPlayer, int rowRep)
         {
-            
             if (this.hitList.Count == 0)
             {
                 Random random = new Random();
@@ -197,15 +272,20 @@ namespace Battleship
 
                     if (letterAttackGrid != "H" && letterAttackGrid != "M")
                     {
-                        availableToChoose = true;
                         GridCell playerCell = this.playerGridCells[((rowNumber * 10) + (colNumber + 1)) + 100];
                         if (letterAttackGrid == "O")
                         {
-                            p_otherPlayer.Board[rowNumber, colNumber] = "M";
-                            playerCell.Visibility = Visibility.Hidden;
+                            if (GridSearch(rowNumber, colNumber))
+                            {
+                                availableToChoose = true;
+                                p_otherPlayer.Board[rowNumber, colNumber] = "M";
+                                attackedList.Add(rowNumber * 10 + colNumber);
+                                playerCell.Visibility = Visibility.Hidden;
+                            }
                         }
                         else
                         {
+                            availableToChoose = true;
                             attackShipName = p_otherPlayer.Board[rowNumber, colNumber];
                             foreach (Ship testShip in p_otherPlayer.Playershipcollection)
                             {
@@ -224,6 +304,7 @@ namespace Battleship
                             prevGrid = rowNumber * 10 + colNumber;
                             alreadyAttackedGrids.Add(rowNumber * 10 + colNumber);
                             allow = true;
+                            attackedList.Add(rowNumber*10+colNumber);
                         }
                     }
                 }
@@ -304,7 +385,8 @@ namespace Battleship
                                     p_otherPlayer.Board[rowNumber, colNumber] = "M";
                                     playerCell.Visibility = Visibility.Hidden;
                                     this.hitList.RemoveAt(k);
-                                }
+                                    attackedList.Add(rowNumber * 10 + colNumber);
+                            }
                                 else
                                 {
                                     if (p_otherPlayer.Board[rowNumber, colNumber] == attackShipName)
@@ -332,7 +414,8 @@ namespace Battleship
                                     this.AddNeighborGrids(rowNumber * 10 + colNumber);
                                     alreadyAttackedGrids.Add(rowNumber * 10 + colNumber);
                                     this.hitList.RemoveAt(k);
-                                }
+                                    attackedList.Add(rowNumber * 10 + colNumber);
+                            }
                             }
                             else
                             {
@@ -433,6 +516,7 @@ namespace Battleship
                                         p_otherPlayer.Board[rowNumber, colNumber] = "M";
                                         playerCell.Visibility = Visibility.Hidden;
                                         this.hitList.RemoveAt(k);
+                                        attackedList.Add(rowNumber * 10 + colNumber);
                                     }
                                     else
                                     {
@@ -459,6 +543,7 @@ namespace Battleship
                                         this.AddNeighborGrids(rowNumber * 10 + colNumber);
                                         alreadyAttackedGrids.Add(rowNumber * 10 + colNumber);
                                         this.hitList.RemoveAt(k);
+                                        attackedList.Add(rowNumber * 10 + colNumber);
                                     }
                                 }
                                 else
@@ -544,6 +629,7 @@ namespace Battleship
                                         p_otherPlayer.Board[rowNumber, colNumber] = "M";
                                         playerCell.Visibility = Visibility.Hidden;
                                         this.hitList.RemoveAt(k);
+                                        attackedList.Add(rowNumber * 10 + colNumber);
                                     }
                                     else
                                     {
@@ -569,6 +655,7 @@ namespace Battleship
                                         //int gridNumber = this.ConvertCoordinateIntoGridNumber(position);
                                         this.AddNeighborGrids(rowNumber * 10 + colNumber);
                                         this.hitList.RemoveAt(k);
+                                        attackedList.Add(rowNumber * 10 + colNumber);
                                     }
                                 }
                                 else
@@ -650,29 +737,21 @@ namespace Battleship
             {
                 hitList.Clear();
             }
-            // If a ship is not destroyed add adjacent grids to hitList
             else
             {
-                // Computer hit a ship, add the adjacent grids to hitList
-                // If the position is on the left side
                 if (gridNumber % 10 == 0)
                     this.hitList.Add(gridNumber + 1);
-                // If the position is on the  right side
                 else if (gridNumber % 10 == 9)
                     this.hitList.Add(gridNumber - 1);
-                // Is the position is not on the left or right
                 else
                 {
                     this.hitList.Add(gridNumber + 1);
                     this.hitList.Add(gridNumber - 1);
                 }
-                // If the position is on the top
                 if (gridNumber < 10)
                     this.hitList.Add(gridNumber + 10);
-                // If the position is on the bottom
                 else if (gridNumber > 89)
                     this.hitList.Add(gridNumber - 10);
-                // If the position is not on the top or bottom
                 else
                 {
                     this.hitList.Add(gridNumber + 10);

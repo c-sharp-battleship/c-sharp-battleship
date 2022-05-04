@@ -355,9 +355,26 @@ namespace Battleship
             }
             else
             {
-                ((ComputerPlayer)this.player1).CompPlayerAttack(this.player2, this.RowRep);
+                if (ComputerPlayerDifficulty1 ==
+                    StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
+                {
+                    ((ComputerPlayer)this.player1).AdvancedAttack(this.player2, this.RowRep);
+                }
+                else
+                {
+                    ((ComputerPlayer)this.player1).CompPlayerAttack(this.player2, this.RowRep);
+                }
+                if (ComputerPlayerDifficulty2 ==
+                    StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
+                {
+                    ((ComputerPlayer)this.player2).AdvancedAttack(this.player1, this.RowRep);
+                }
+                else
+                {
+                    ((ComputerPlayer)this.player2).CompPlayerAttack(this.player1, this.RowRep);
+                }
                 this.SwitchPlayerWindows();
-                ((ComputerPlayer)this.player2).CompPlayerAttack(this.player1, this.RowRep);
+                
             }
         }
 
