@@ -25,4 +25,6 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Documentation
-        path: './docs/build/latex/refman.pdf'
+        path: |
+              './docs/build/latex/refman.pdf'
+              './docs/build/html/'
