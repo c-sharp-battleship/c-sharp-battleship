@@ -111,5 +111,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: MSIX Package
+        name: Battleship
         path: ${{ env.Wap_Project_Directory }}\bin\Release
