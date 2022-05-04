@@ -16,7 +16,7 @@ jobs:
       uses: mattnotmitt/doxygen-action@1.9.3
       with:
         working-directory: 'docs/'
-        doxyfile-path: 'docs/Doxyfile'
+        doxyfile-path: './Doxyfile'
         enable-latex: true
     
     - name: Upload Latex Build Artifacts
