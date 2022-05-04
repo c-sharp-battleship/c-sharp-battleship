@@ -22,10 +22,11 @@ jobs:
     - name: Upload Latex Documentation
       uses: actions/upload-artifact@v3
       with:
+        name: PDF Documentation
         path: './docs/build/latex/refman.pdf'
 
     - name: Upload HTML Documentation
       uses: actions/upload-artifact@v3
       with:
         name: HTML Documentation
-        path: './docs/build/'
+        path: './docs/build/html/'
