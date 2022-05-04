@@ -2,8 +2,8 @@ name: Build Doxygen PDF
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  invoke-repo:
-    runs-on: ubuntu:latest
+  doxygen-build:
+    runs-on: ubuntu-latest
       
     steps:
     - name: Checkout
