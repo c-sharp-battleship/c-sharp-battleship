@@ -151,7 +151,7 @@ namespace Battleship
             }
             else
             {
-                this.playerShips = this.RandomShipPlacement(player_ID, gridcellSize, maxCol, shiploader);
+                this.playerShips = this.AdvancedShipPlacement(player_ID, gridcellSize, maxCol, shiploader);
             }
 
             foreach (Ship warship in this.playerShips)
@@ -977,6 +977,246 @@ namespace Battleship
             }
 
             return position;
+        }
+
+        private List<Ship> AdvancedShipPlacement(int player_ID, double gridcellSize, int maxCol, List<Ship> shiploader)
+        {
+            bool horDirection;
+            Coordinate position = new Coordinate();
+            List<Ship> tempShips = new List<Ship>();
+
+            Random random = new Random();
+            for (int i = 1; i <= 5; i++)
+            {
+                if (random.Next(1, 3) == 1)
+                {
+                    horDirection = true;
+                }
+                else
+                {
+                    horDirection = false;
+                }
+
+                Ship warship = new Ship(player_ID, i, gridcellSize, horDirection);
+                tempShips.Add(warship);
+            }
+
+            int shipIndex1 = random.Next(0, 5);
+            this.SetShipOnEdge(tempShips[shipIndex1], maxCol);
+            this.SetToBoard(tempShips[shipIndex1]);
+            bool compare = true;
+            int shipIndex2 = 0;
+            while (compare)
+            {
+                shipIndex2 = random.Next(0, 5);
+                if (shipIndex2 != shipIndex1)
+                {
+                    this.SetShipOnEdge(tempShips[shipIndex2], maxCol);
+                    this.SetToBoard(tempShips[shipIndex2]);
+                    compare = false;
+                }
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (i != shipIndex1 && i != shipIndex2)
+                {
+                    Coordinate shipPosition = this.SetRandomShipCoordinate(tempShips[i], maxCol, tempShips[i].HDirection);
+                    int rowShip = shipPosition.YCoordinate;
+                    int colShip = shipPosition.XCoordinate;
+                    Coordinate shipPositionFinal = new Coordinate((short)(shipPosition.XCoordinate + 1), (short)(shipPosition.YCoordinate + 1));
+                    tempShips[i].ShipStartCoords = shipPositionFinal;
+                    this.SetToBoard(tempShips[i]);
+                }
+            }
+
+            shiploader = tempShips;
+
+            return shiploader;
+        }
+
+        private void SetToBoard(Ship warship)
+        {
+            int colShip = warship.ShipStartCoords.XCoordinate - 1;
+            int rowShip = warship.ShipStartCoords.YCoordinate - 1;
+            for (int j = 0; j < warship.Length; j++)
+            {
+                string letter = warship.ShipName.Substring(0, 2);
+                this.board[rowShip, colShip] = letter;
+                if (warship.HDirection)
+                {
+                    colShip++;
+                }
+                else
+                {
+                    rowShip++;
+                }
+            }
+        }
+
+        private void SetShipOnEdge(Ship testShip, int maxCol)
+        {
+            Random rand = new Random();
+            int rowNum;
+            int colNum;
+            bool checking = false;
+
+            while (!checking)
+            {
+                int side = rand.Next(0, 4);
+                if (testShip.HDirection && side == 1)
+                {
+                    checking = true;
+                    bool availableToPlace = false;
+                    rowNum = 0;
+                    while (!availableToPlace)
+                    {
+                        colNum = rand.Next(0, 10);
+                        int tempCol = colNum;
+
+                        int checks = 0;
+                        for (int j = 0; j < testShip.Length; j++)
+                        {
+                            if (tempCol <= (maxCol - 1))
+                            {
+                                if (this.board[rowNum, tempCol] == "O")
+                                {
+                                    checks++;
+                                    tempCol++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        if (checks == testShip.Length)
+                        {
+                            availableToPlace = true;
+                            testShip.ShipStartCoords = new Coordinate((short)(colNum + 1), (short)(rowNum + 1));
+                        }
+                    }
+                }
+                else if (testShip.HDirection && side == 3)
+                {
+                    checking = true;
+                    bool availableToPlace = false;
+                    rowNum = 9;
+                    while (!availableToPlace)
+                    {
+                        colNum = rand.Next(0, 10);
+                        int tempCol = colNum;
+
+                        int checks = 0;
+                        for (int j = 0; j < testShip.Length; j++)
+                        {
+                            if (tempCol <= (maxCol - 1))
+                            {
+                                if (this.board[rowNum, tempCol] == "O")
+                                {
+                                    checks++;
+                                    tempCol++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        if (checks == testShip.Length)
+                        {
+                            availableToPlace = true;
+                            testShip.ShipStartCoords = new Coordinate((short)(colNum + 1), (short)(rowNum + 1));
+                        }
+                    }
+                }
+                else if (!testShip.HDirection && side == 0)
+                {
+                    checking = true;
+                    bool availableToPlace = false;
+                    colNum = 0;
+                    while (!availableToPlace)
+                    {
+                        rowNum = rand.Next(0, 10);
+                        int tempRow = rowNum;
+
+                        int checks = 0;
+                        for (int j = 0; j < testShip.Length; j++)
+                        {
+                            if (tempRow <= (maxCol - 1))
+                            {
+                                if (this.board[rowNum, tempRow] == "O")
+                                {
+                                    checks++;
+                                    tempRow++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        if (checks == testShip.Length)
+                        {
+                            availableToPlace = true;
+                            testShip.ShipStartCoords = new Coordinate((short)(colNum + 1), (short)(rowNum + 1));
+                        }
+                    }
+                }
+                else if (!testShip.HDirection && side == 2)
+                {
+                    checking = true;
+                    bool availableToPlace = false;
+                    colNum = 9;
+                    while (!availableToPlace)
+                    {
+                        rowNum = rand.Next(0, 10);
+                        int tempRow = rowNum;
+
+                        int checks = 0;
+                        for (int j = 0; j < testShip.Length; j++)
+                        {
+                            if (tempRow <= (maxCol - 1))
+                            {
+                                if (this.board[rowNum, tempRow] == "O")
+                                {
+                                    checks++;
+                                    tempRow++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        if (checks == testShip.Length)
+                        {
+                            availableToPlace = true;
+                            testShip.ShipStartCoords = new Coordinate((short)(colNum + 1), (short)(rowNum + 1));
+                        }
+                    }
+                }
+            }
         }
     }
 }
