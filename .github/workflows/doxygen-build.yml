@@ -18,9 +18,11 @@ jobs:
         working-directory: 'docs/'
         doxyfile-path: './Doxyfile'
         enable-latex: true
+        
+    - run: pwd && ls
     
     - name: Upload Latex Build Artifacts
       uses: actions/upload-artifact@v3
       with:
         name: Documentation
-        path: './build/latex/refman.pdf'
+        path: './latex/refman.pdf'
