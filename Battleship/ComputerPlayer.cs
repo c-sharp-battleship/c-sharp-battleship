@@ -18,22 +18,49 @@ namespace Battleship
     /// </summary>
     public class ComputerPlayer : Player
     {
+        /// <summary>
+        /// The difficulty level of the computer.
+        /// </summary>
         private StatusCodes.ComputerPlayerDifficulty difficulty;
 
+        /// <summary>
+        /// The list of hits that the computer made.
+        /// </summary>
         private List<int> hitList;
 
+        /// <summary>
+        /// The length of the attack ship.
+        /// </summary>
         private int attackShipLength;
 
+        /// <summary>
+        /// The name of the attack ship.
+        /// </summary>
         private string attackShipName;
 
+        /// <summary>
+        /// The direction of the attack ship.
+        /// </summary>
         private bool attackShipDirection = true;
 
+        /// <summary>
+        /// The pervious grid space that was attacked.
+        /// </summary>
         private int prevGrid;
 
+        /// <summary>
+        /// The list of previously-attacked grid spaces.
+        /// </summary>
         private List<int> alreadyAttackedGrids;
 
+        /// <summary>
+        /// The list of attacked grid spaces.
+        /// </summary>
         private List<int> attackedList;
 
+        /// <summary>
+        /// Boolean that describes whether or not the computer is allowed to attack.
+        /// </summary>
         private bool allow;
 
         /// <summary>
@@ -745,6 +772,12 @@ namespace Battleship
             return position;
         }
 
+        /// <summary>
+        /// Method that searches the grid for information.
+        /// </summary>
+        /// <param name="rowNumber">The row number of the grid space.</param>
+        /// <param name="colNumber">The column number of the grid space.</param>
+        /// <returns>Whether or not the grid space is occupied.</returns>
         private bool GridSearch(int rowNumber, int colNumber)
         {
             int gridNumber = (rowNumber * 10) + colNumber;
@@ -820,6 +853,10 @@ namespace Battleship
             return allowToPlace;
         }
 
+        /// <summary>
+        /// Method that adds neighbor grids.
+        /// </summary>
+        /// <param name="gridNumber">The grid number to be added.</param>
         private void AddNeighborGrids(int gridNumber)
         {
             if (this.attackShipLength == 0)
@@ -858,6 +895,14 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Method that randomly-places ships.
+        /// </summary>
+        /// <param name="player_ID">The ID of the player.</param>
+        /// <param name="gridcellSize">The size of each grid space (in pixels).</param>
+        /// <param name="maxCol">The maximum number of columns.</param>
+        /// <param name="shiploader">The ship to be loaded.</param>
+        /// <returns>The list of ships that are loaded.</returns>
         private List<Ship> RandomShipPlacement(int player_ID, double gridcellSize, int maxCol, List<Ship> shiploader)
         {
             bool horDirection;
@@ -904,6 +949,13 @@ namespace Battleship
             return shiploader;
         }
 
+        /// <summary>
+        /// The random ship coordinate.
+        /// </summary>
+        /// <param name="warship">The ship to be randomly-placed.</param>
+        /// <param name="maxCol">The maximum number of column spaces.</param>
+        /// <param name="horDirection">Whether or not the ship is horizontal.</param>
+        /// <returns>The coordinate to place the ship in.</returns>
         private Coordinate SetRandomShipCoordinate(Ship warship, int maxCol, bool horDirection)
         {
             Random random = new Random();
@@ -979,6 +1031,14 @@ namespace Battleship
             return position;
         }
 
+        /// <summary>
+        /// Places the ships randomly in an advanced way.
+        /// </summary>
+        /// <param name="player_ID">The ID of the player.</param>
+        /// <param name="gridcellSize">The grid cell size (in pixels).</param>
+        /// <param name="maxCol">The maximum number of columns.</param>
+        /// <param name="shiploader">The list of ships to be randomly-placed.</param>
+        /// <returns>The list of ships after they are randomly-placed.</returns>
         private List<Ship> AdvancedShipPlacement(int player_ID, double gridcellSize, int maxCol, List<Ship> shiploader)
         {
             bool horDirection;
@@ -1035,6 +1095,10 @@ namespace Battleship
             return shiploader;
         }
 
+        /// <summary>
+        /// Method to set the board.
+        /// </summary>
+        /// <param name="warship">The ship to be placed on the board.</param>
         private void SetToBoard(Ship warship)
         {
             int colShip = warship.ShipStartCoords.XCoordinate - 1;
@@ -1054,6 +1118,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Method to set the ship on the edge of the board.
+        /// </summary>
+        /// <param name="testShip">The ship to be tested.</param>
+        /// <param name="maxCol">The maximum number of columns.</param>
         private void SetShipOnEdge(Ship testShip, int maxCol)
         {
             Random rand = new Random();

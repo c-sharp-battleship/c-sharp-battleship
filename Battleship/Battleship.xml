@@ -100,6 +100,51 @@
             Interaction logic for ComputerPlayer.
             </summary>
         </member>
+        <member name="F:Battleship.ComputerPlayer.difficulty">
+            <summary>
+            The difficulty level of the computer.
+            </summary>
+        </member>
+        <member name="F:Battleship.ComputerPlayer.hitList">
+            <summary>
+            The list of hits that the computer made.
+            </summary>
+        </member>
+        <member name="F:Battleship.ComputerPlayer.attackShipLength">
+            <summary>
+            The length of the attack ship.
+            </summary>
+        </member>
+        <member name="F:Battleship.ComputerPlayer.attackShipName">
+            <summary>
+            The name of the attack ship.
+            </summary>
+        </member>
+        <member name="F:Battleship.ComputerPlayer.attackShipDirection">
+            <summary>
+            The direction of the attack ship.
+            </summary>
+        </member>
+        <member name="F:Battleship.ComputerPlayer.prevGrid">
+            <summary>
+            The pervious grid space that was attacked.
+            </summary>
+        </member>
+        <member name="F:Battleship.ComputerPlayer.alreadyAttackedGrids">
+            <summary>
+            The list of previously-attacked grid spaces.
+            </summary>
+        </member>
+        <member name="F:Battleship.ComputerPlayer.attackedList">
+            <summary>
+            The list of attacked grid spaces.
+            </summary>
+        </member>
+        <member name="F:Battleship.ComputerPlayer.allow">
+            <summary>
+            Boolean that describes whether or not the computer is allowed to attack.
+            </summary>
+        </member>
         <member name="M:Battleship.ComputerPlayer.#ctor(System.Int32,System.String,System.Double,System.Int32,System.Int32,System.Int32,Battleship.StatusCodes.ComputerPlayerDifficulty)">
             <summary>
              Initializes a new instance of the <see cref="T:Battleship.ComputerPlayer" /> class.
@@ -137,6 +182,62 @@
             </summary>
             <param name="p_otherPlayer">The other player being attacked.</param>
             <returns>The coordinate being attacked.</returns>
+        </member>
+        <member name="M:Battleship.ComputerPlayer.GridSearch(System.Int32,System.Int32)">
+            <summary>
+            Method that searches the grid for information.
+            </summary>
+            <param name="rowNumber">The row number of the grid space.</param>
+            <param name="colNumber">The column number of the grid space.</param>
+            <returns>Whether or not the grid space is occupied.</returns>
+        </member>
+        <member name="M:Battleship.ComputerPlayer.AddNeighborGrids(System.Int32)">
+            <summary>
+            Method that adds neighbor grids.
+            </summary>
+            <param name="gridNumber">The grid number to be added.</param>
+        </member>
+        <member name="M:Battleship.ComputerPlayer.RandomShipPlacement(System.Int32,System.Double,System.Int32,System.Collections.Generic.List{Battleship.Ship})">
+            <summary>
+            Method that randomly-places ships.
+            </summary>
+            <param name="player_ID">The ID of the player.</param>
+            <param name="gridcellSize">The size of each grid space (in pixels).</param>
+            <param name="maxCol">The maximum number of columns.</param>
+            <param name="shiploader">The ship to be loaded.</param>
+            <returns>The list of ships that are loaded.</returns>
+        </member>
+        <member name="M:Battleship.ComputerPlayer.SetRandomShipCoordinate(Battleship.Ship,System.Int32,System.Boolean)">
+            <summary>
+            The random ship coordinate.
+            </summary>
+            <param name="warship">The ship to be randomly-placed.</param>
+            <param name="maxCol">The maximum number of column spaces.</param>
+            <param name="horDirection">Whether or not the ship is horizontal.</param>
+            <returns>The coordinate to place the ship in.</returns>
+        </member>
+        <member name="M:Battleship.ComputerPlayer.AdvancedShipPlacement(System.Int32,System.Double,System.Int32,System.Collections.Generic.List{Battleship.Ship})">
+            <summary>
+            Places the ships randomly in an advanced way.
+            </summary>
+            <param name="player_ID">The ID of the player.</param>
+            <param name="gridcellSize">The grid cell size (in pixels).</param>
+            <param name="maxCol">The maximum number of columns.</param>
+            <param name="shiploader">The list of ships to be randomly-placed.</param>
+            <returns>The list of ships after they are randomly-placed.</returns>
+        </member>
+        <member name="M:Battleship.ComputerPlayer.SetToBoard(Battleship.Ship)">
+            <summary>
+            Method to set the board.
+            </summary>
+            <param name="warship">The ship to be placed on the board.</param>
+        </member>
+        <member name="M:Battleship.ComputerPlayer.SetShipOnEdge(Battleship.Ship,System.Int32)">
+            <summary>
+            Method to set the ship on the edge of the board.
+            </summary>
+            <param name="testShip">The ship to be tested.</param>
+            <param name="maxCol">The maximum number of columns.</param>
         </member>
         <member name="T:Battleship.Coordinate">
             <summary>
@@ -229,6 +330,16 @@
             The computer player 2.
             </summary>
         </member>
+        <member name="F:Battleship.GameWindow.computerPlayerDifficulty1">
+            <summary>
+            The first computer player's difficulty level.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.computerPlayerDifficulty2">
+            <summary>
+            The second computer player's difficulty level.
+            </summary>
+        </member>
         <member name="F:Battleship.GameWindow.playerWindow1">
             <summary>
             The player 1 window.
@@ -237,6 +348,11 @@
         <member name="F:Battleship.GameWindow.playerWindow2">
             <summary>
             The player 2 window.
+            </summary>
+        </member>
+        <member name="F:Battleship.GameWindow.dispatcherTimer">
+            <summary>
+            The dispatch timer.
             </summary>
         </member>
         <member name="M:Battleship.GameWindow.#ctor(Battleship.StatusCodes.GameType)">
@@ -286,6 +402,23 @@
             Make the windows visible with Attack button.
             </summary>
         </member>
+        <member name="M:Battleship.GameWindow.DispatcherTimer_Tick(System.Object,System.EventArgs)">
+            <summary>
+            The event for the dispatch timer.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="e">The arguments being passed to the event.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.DeclarePlayerGrid(Battleship.Player,Battleship.Player,System.Collections.Generic.List{Battleship.GridCell},System.Windows.Controls.Canvas,System.Double)">
+            <summary>
+            Method that declares the player grid.
+            </summary>
+            <param name="p_currentPlayer">The current player to be declared.</param>
+            <param name="p_otherPlayer">The other player relative to the current player.</param>
+            <param name="p_playersCellRecords">The current player's cell records.</param>
+            <param name="p_currentPlayerWindow">The current player's window.</param>
+            <param name="p_cellsize">The cell size (in pixels).</param>
+        </member>
         <member name="M:Battleship.GameWindow.SetshipMovePerCrewCheck(Battleship.Ship,Battleship.GridCell,Battleship.Player,System.Int32)">
             <summary>
             Return a confirmation to do a move if there is no ships overlapping.
@@ -293,7 +426,34 @@
             <param name="myShip">The ship to be checked.</param>
             <param name="mainPlayerCell">The former grid space of the captain.</param>
             <param name="p_currentPlayer">The current player.</param>
+            <param name="dragTurn">The current drag turn.</param>
             <returns>The new captain of the ship.</returns>
+        </member>
+        <member name="M:Battleship.GameWindow.DeclareComputerPlayerGrid(Battleship.Player,Battleship.Player,System.Collections.Generic.List{Battleship.GridCell},System.Windows.Controls.Canvas,System.Double)">
+            <summary>
+            Declare a computer player's grid.
+            </summary>
+            <param name="p_currentPlayer">The current player.</param>
+            <param name="p_otherPlayer">The other player relative to the current player.</param>
+            <param name="p_playersCellRecords">The current player's cell records.</param>
+            <param name="p_currentPlayerWindow">The current player's window.</param>
+            <param name="p_cellsize">The cell size (in pixels).</param>
+        </member>
+        <member name="M:Battleship.GameWindow.DeclarePlayerShips(Battleship.Player,System.Windows.Controls.Canvas,System.Double)">
+            <summary>
+            Declares the player's ships.
+            </summary>
+            <param name="p_currentPlayer">The current player.</param>
+            <param name="p_currentPlayerWindow">The other player relative to the current player.</param>
+            <param name="p_cellsize">The cell size (in pixels).</param>
+        </member>
+        <member name="M:Battleship.GameWindow.DeclareComputerPlayerShips(Battleship.Player,System.Windows.Controls.Canvas,System.Double)">
+            <summary>
+            Method to declare the computer's ships.
+            </summary>
+            <param name="p_currentPlayer">The current (computer) player.</param>
+            <param name="p_currentPlayerWindow">The other player relative to the current player.</param>
+            <param name="p_cellsize">The current cell size (in pixels).</param>
         </member>
         <member name="M:Battleship.GameWindow.SetConfirmButtonVisibility(System.String)">
             <summary>
@@ -550,6 +710,39 @@
             <param name="sender">The object that initiated the event.</param>
             <param name="e">The event arguments for the event.</param>
         </member>
+        <member name="M:Battleship.MainWindow.UpdateRadioButtonOptions">
+            <summary>
+            Method to update the radio buttons.
+            </summary>
+        </member>
+        <member name="M:Battleship.MainWindow.PlayerToPlayerRadioButton_Checked(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Method to change the whether or not the computer players options are available.
+            </summary>
+            <param name="sender">The sender that invoked the event.</param>
+            <param name="e">The parameters to be passed to the event.</param>
+        </member>
+        <member name="M:Battleship.MainWindow.PlayerToComputerRadioButton_Checked(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Method to change the whether or not the computer players options are available.
+            </summary>
+            <param name="sender">The sender that invoked the event.</param>
+            <param name="e">The parameters to be passed to the event.</param>
+        </member>
+        <member name="M:Battleship.MainWindow.ComputerToComputerRadioButton_Checked(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Method to change the whether or not the computer players options are available.
+            </summary>
+            <param name="sender">The sender that invoked the event.</param>
+            <param name="e">The parameters to be passed to the event.</param>
+        </member>
+        <member name="M:Battleship.MainWindow.MainWindow_OnLoaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Method to change the whether or not the computer players options are available.
+            </summary>
+            <param name="sender">The sender that invoked the event.</param>
+            <param name="e">The parameters to be passed to the event.</param>
+        </member>
         <member name="M:Battleship.MainWindow.InitializeComponent">
             <summary>
             InitializeComponent
@@ -575,6 +768,11 @@
             Used to contain the board information.
             </summary>
         </member>
+        <member name="F:Battleship.Player.isLocked">
+            <summary>
+            Whether or not the current player's ships are locked.
+            </summary>
+        </member>
         <member name="F:Battleship.Player.playerID">
             <summary>
             The player's ID.
@@ -583,6 +781,11 @@
         <member name="F:Battleship.Player.name">
             <summary>
             The player's name.
+            </summary>
+        </member>
+        <member name="F:Battleship.Player.winner">
+            <summary>
+            Whether or not the current player is a winner.
             </summary>
         </member>
         <member name="M:Battleship.Player.#ctor(System.Int32,System.String,System.Double,System.Int32,System.Int32,System.Int32)">
@@ -746,7 +949,7 @@
         </member>
         <member name="F:Battleship.Ship.movingVerticalCrewmembers">
             <summary>
-            Vertical Crew mwmbers.
+            Vertical Crew members.
             </summary>
         </member>
         <member name="F:Battleship.Ship.initialHorizontalCrewmembers">
@@ -756,7 +959,7 @@
         </member>
         <member name="F:Battleship.Ship.initialVerticalCrewmembers">
             <summary>
-            Vertical Crew mwmbers.
+            Vertical Crew members.
             </summary>
         </member>
         <member name="F:Battleship.Ship.delayedCrewmembers">
@@ -786,7 +989,7 @@
         </member>
         <member name="F:Battleship.Ship.rowsgrid">
             <summary>
-            The ship's number of gridsh.
+            The ship's number of grid spaces.
             </summary>
         </member>
         <member name="F:Battleship.Ship.drags">
@@ -1064,7 +1267,7 @@
         </member>
         <member name="F:Battleship.StatusCodes.DefenseStrategy.DEFENSE_DIFFICULTY_CENTER">
             <summary>
-            Indicates a defense strategy in which ships are placed towards the cener.
+            Indicates a defense strategy in which ships are placed towards the center.
             </summary>
         </member>
         <member name="T:Battleship.UMLstructure">

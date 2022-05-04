@@ -145,6 +145,9 @@ namespace Battleship
             this.Close();
         }
 
+        /// <summary>
+        /// Method to update the radio buttons.
+        /// </summary>
         private void UpdateRadioButtonOptions()
         {
             if (this.playerToComputerRadioButton.IsChecked == true)
@@ -173,21 +176,41 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Method to change the whether or not the computer players options are available.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The parameters to be passed to the event.</param>
         private void PlayerToPlayerRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();
         }
 
+        /// <summary>
+        /// Method to change the whether or not the computer players options are available.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The parameters to be passed to the event.</param>
         private void PlayerToComputerRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();
         }
 
+        /// <summary>
+        /// Method to change the whether or not the computer players options are available.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The parameters to be passed to the event.</param>
         private void ComputerToComputerRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();
         }
 
+        /// <summary>
+        /// Method to change the whether or not the computer players options are available.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The parameters to be passed to the event.</param>
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();

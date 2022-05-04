@@ -64,8 +64,14 @@ namespace Battleship
         /// </summary>
         private ComputerPlayer computerPlayer2;
 
+        /// <summary>
+        /// The first computer player's difficulty level.
+        /// </summary>
         private StatusCodes.ComputerPlayerDifficulty computerPlayerDifficulty1;
 
+        /// <summary>
+        /// The second computer player's difficulty level.
+        /// </summary>
         private StatusCodes.ComputerPlayerDifficulty computerPlayerDifficulty2;
 
         /// <summary>
@@ -78,6 +84,9 @@ namespace Battleship
         /// </summary>
         private Canvas playerWindow2;
 
+        /// <summary>
+        /// The dispatch timer.
+        /// </summary>
         private DispatcherTimer dispatcherTimer;
 
         /// <summary>
@@ -347,6 +356,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The event for the dispatch timer.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The arguments being passed to the event.</param>
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (this.player1.Winner || this.player2.Winner)
@@ -379,6 +393,14 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Method that declares the player grid.
+        /// </summary>
+        /// <param name="p_currentPlayer">The current player to be declared.</param>
+        /// <param name="p_otherPlayer">The other player relative to the current player.</param>
+        /// <param name="p_playersCellRecords">The current player's cell records.</param>
+        /// <param name="p_currentPlayerWindow">The current player's window.</param>
+        /// <param name="p_cellsize">The cell size (in pixels).</param>
         private void DeclarePlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
             foreach (KeyValuePair<int, GridCell> mainPlayerPair in p_currentPlayer.Playergridsquarecollection)
@@ -482,8 +504,6 @@ namespace Battleship
                             {
                                 Logger.Error("Error: The other player has not yet confirmed their ship placement.");
                             }
-
-                            // Otherwise, let the user know that they need to confirm ship placement.
                             else
                             {
                                 Logger.Error("Error: Please confirm your ship placement before proceeding to attack.");
@@ -554,6 +574,7 @@ namespace Battleship
         /// <param name="myShip">The ship to be checked.</param>
         /// <param name="mainPlayerCell">The former grid space of the captain.</param>
         /// <param name="p_currentPlayer">The current player.</param>
+        /// <param name="dragTurn">The current drag turn.</param>
         /// <returns>The new captain of the ship.</returns>
         private int SetshipMovePerCrewCheck(Ship myShip, GridCell mainPlayerCell, Player p_currentPlayer, int dragTurn)
         {
@@ -586,6 +607,14 @@ namespace Battleship
             return overlapingCrewMembers;
         }
 
+        /// <summary>
+        /// Declare a computer player's grid.
+        /// </summary>
+        /// <param name="p_currentPlayer">The current player.</param>
+        /// <param name="p_otherPlayer">The other player relative to the current player.</param>
+        /// <param name="p_playersCellRecords">The current player's cell records.</param>
+        /// <param name="p_currentPlayerWindow">The current player's window.</param>
+        /// <param name="p_cellsize">The cell size (in pixels).</param>
         private void DeclareComputerPlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
             foreach (KeyValuePair<int, GridCell> mainPlayerPair in p_currentPlayer.Playergridsquarecollection)
@@ -598,6 +627,12 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Declares the player's ships.
+        /// </summary>
+        /// <param name="p_currentPlayer">The current player.</param>
+        /// <param name="p_currentPlayerWindow">The other player relative to the current player.</param>
+        /// <param name="p_cellsize">The cell size (in pixels).</param>
         private void DeclarePlayerShips(Player p_currentPlayer, Canvas p_currentPlayerWindow, double p_cellsize)
         {
             foreach (Ship navyShip in p_currentPlayer.Playershipcollection)
@@ -654,6 +689,12 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Method to declare the computer's ships.
+        /// </summary>
+        /// <param name="p_currentPlayer">The current (computer) player.</param>
+        /// <param name="p_currentPlayerWindow">The other player relative to the current player.</param>
+        /// <param name="p_cellsize">The current cell size (in pixels).</param>
         private void DeclareComputerPlayerShips(Player p_currentPlayer, Canvas p_currentPlayerWindow, double p_cellsize)
         {
             foreach (Ship ship_1 in p_currentPlayer.Playershipcollection)

@@ -3,9 +3,15 @@
   "settings": {
     "documentationRules": {
       "companyName": "Battleship Coding Group",
-      "copyrightText": "Battleship Coding Group, 2022",
+      "copyrightText": "{companyName}, 2022",
       "xmlHeader": true,
-      "headerDecoration": "-----------------------------------------------------------------------"
+      "headerDecoration": "-----------------------------------------------------------------------",
+
+      "documentPrivateElements": true,
+      "documentPrivateFields": true
+    },
+    "namingRules": {
+      "allowCommonHungarianPrefixes": false
     }
   }
 }

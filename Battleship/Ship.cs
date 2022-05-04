@@ -76,7 +76,7 @@ namespace Battleship
         private List<int> movingHorizontalCrewmembers;
 
         /// <summary>
-        /// Vertical Crew mwmbers.
+        /// Vertical Crew members.
         /// </summary>
         private List<int> movingVerticalCrewmembers;
 
@@ -86,7 +86,7 @@ namespace Battleship
         private List<int> initialHorizontalCrewmembers;
 
         /// <summary>
-        /// Vertical Crew mwmbers.
+        /// Vertical Crew members.
         /// </summary>
         private List<int> initialVerticalCrewmembers;
 
@@ -116,7 +116,7 @@ namespace Battleship
         private int grids;
 
         /// <summary>
-        /// The ship's number of gridsh.
+        /// The ship's number of grid spaces.
         /// </summary>
         private int rowsgrid;
 
@@ -197,19 +197,19 @@ namespace Battleship
             // set the entry point crew member to compare future moves
             this.initialHorizontalCrewmembers.Clear();
             this.initialVerticalCrewmembers.Clear();
-            int hValue = driver;
-            int vValue = driver;
+            int horizontalValue = driver;
+            int vertialValue = driver;
 
             for (int i = 0; i < this.grids; i++)
             {
-                this.initialHorizontalCrewmembers.Add(hValue);
-                hValue++;
+                this.initialHorizontalCrewmembers.Add(horizontalValue);
+                horizontalValue++;
             }
 
             for (int i = 0; i < this.grids; i++)
             {
-                this.initialVerticalCrewmembers.Add(vValue);
-                vValue += rowTotal;
+                this.initialVerticalCrewmembers.Add(vertialValue);
+                vertialValue += rowTotal;
             }
 
             if (this.HDirection == true)
@@ -564,19 +564,19 @@ namespace Battleship
             List<int> back = new List<int>();
             this.movingHorizontalCrewmembers.Clear();
             this.movingVerticalCrewmembers.Clear();
-            int hValue = p_capitan;
-            int vValue = p_capitan;
+            int horizontalValue = p_capitan;
+            int verticalValue = p_capitan;
 
             for (int i = 0; i < this.GridSpaces; i++)
             {
-                this.movingHorizontalCrewmembers.Add(hValue);
-                hValue++;
+                this.movingHorizontalCrewmembers.Add(horizontalValue);
+                horizontalValue++;
             }
 
             for (int i = 0; i < this.GridSpaces; i++)
             {
-                this.movingVerticalCrewmembers.Add(vValue);
-                vValue += this.rowsgrid;
+                this.movingVerticalCrewmembers.Add(verticalValue);
+                verticalValue += this.rowsgrid;
             }
 
             // draging crewmembers request for check

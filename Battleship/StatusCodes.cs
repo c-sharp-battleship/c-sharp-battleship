@@ -148,7 +148,7 @@ namespace Battleship
             DEFENSE_DIFFICULTY_CORNER,
 
             /// <summary>
-            /// Indicates a defense strategy in which ships are placed towards the cener.
+            /// Indicates a defense strategy in which ships are placed towards the center.
             /// </summary>
             DEFENSE_DIFFICULTY_CENTER,
         }

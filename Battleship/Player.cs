@@ -32,6 +32,10 @@ namespace Battleship
         /// Used to contain the board information.
         /// </summary>
         protected string[,] board;
+
+        /// <summary>
+        /// Whether or not the current player's ships are locked.
+        /// </summary>
         private bool isLocked;
 
         /// <summary>
@@ -44,6 +48,9 @@ namespace Battleship
         /// </summary>
         private string name;
 
+        /// <summary>
+        /// Whether or not the current player is a winner.
+        /// </summary>
         private bool winner = false;
 
         /// <summary>
