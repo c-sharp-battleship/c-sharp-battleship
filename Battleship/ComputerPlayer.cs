@@ -3,6 +3,9 @@
 //     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
+
+using System.Diagnostics.Eventing.Reader;
+
 namespace Battleship
 {
     using System;
@@ -17,6 +20,22 @@ namespace Battleship
     /// </summary>
     public class ComputerPlayer : Player
     {
+        private StatusCodes.ComputerPlayerDifficulty difficulty;
+
+        private List<int> hitList;
+
+        private int attackShipLength;
+
+        private string attackShipName;
+
+        private bool attackShipDirection = true;
+
+        private int prevGrid;
+
+        private List<int> alreadyAttackedGrids;
+
+        private List<int> firstAttackGrids;
+        private bool allow;
         /// <summary>
         ///  Initializes a new instance of the <see cref="ComputerPlayer" /> class.
         /// </summary>
@@ -26,11 +45,14 @@ namespace Battleship
         /// <param name="maxCol"> This is the max number of columns requested at the moment pf loading.</param>
         /// <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor).</param>
         /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
-        public ComputerPlayer(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense)
+        /// <param name="difficulty"> This is the difficulty of the player. </param>
+        public ComputerPlayer(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense, StatusCodes.ComputerPlayerDifficulty difficulty)
             : base(player_ID, player_Name, gridcellSize, maxCol, buttoncolorForDeffense, buttoncolorForOffense)
         {
-            // List of buttons for each player returned to the personal grid builder
-            List<GridCell> loader = new List<GridCell>();
+            this.difficulty = difficulty;
+
+            this.hitList = new List<int>();
+            this.alreadyAttackedGrids = new List<int>();
 
             // List of ships for each player to return to the personal grid builder
             List<Ship> shiploader = new List<Ship>();
@@ -81,8 +103,6 @@ namespace Battleship
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             myButton.Left_Comp_ParentLeft = col * gridcellSize;
                             myButton.Top_Comp_ParentTop = row * gridcellSize;
-
-                            loader.Add(myButton);
                             playerGridCellsComputer.Add(col + 1 + (row * maxCol), myButton);
                         }
                     }
@@ -115,7 +135,6 @@ namespace Battleship
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
-                            loader.Add(myButton);
                             playerGridCellsComputer.Add(dictionaryOffset + col + 1 + (row * maxCol), myButton);
                         }
                     }
@@ -123,10 +142,17 @@ namespace Battleship
             }
 
             // load the button collection to the list field if it is right
-            this.playerGridCellsList = loader;
             this.playerGridCells = playerGridCellsComputer;
 
-            this.playerShips = this.RandomShipPlacement(player_ID, gridcellSize, maxCol, shiploader);
+            if (difficulty == StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY)
+            {
+                this.playerShips = this.RandomShipPlacement(player_ID, gridcellSize, maxCol, shiploader);
+            }
+            else
+            {
+                this.playerShips = this.RandomShipPlacement(player_ID, gridcellSize, maxCol, shiploader);
+            }
+
             foreach (Ship warship in this.playerShips)
             {
                 BitmapImage shipPic = new BitmapImage();
@@ -141,6 +167,530 @@ namespace Battleship
 
                 warship.OnShipIsSunk += this.PlayerShipSunk;
             }
+        }
+
+        /// <summary>
+        ///  Gets a computer player difficulty.
+        /// </summary>
+        public StatusCodes.ComputerPlayerDifficulty Difficulty
+        {
+            get { return this.difficulty; }
+        }
+
+        public void AdvancedAttack(Player p_otherPlayer, int rowRep)
+        {
+            
+            if (this.hitList.Count == 0)
+            {
+                Random random = new Random();
+                Coordinate position = new Coordinate();
+                bool availableToChoose = false;
+
+                int rowNumber = 0;
+                int colNumber = 0;
+
+                while (!availableToChoose)
+                {
+                    rowNumber = random.Next(0, 10);
+                    colNumber = random.Next(0, 10);
+                    string letterAttackGrid = p_otherPlayer.Board[rowNumber, colNumber];
+
+                    if (letterAttackGrid != "H" && letterAttackGrid != "M")
+                    {
+                        availableToChoose = true;
+                        GridCell playerCell = this.playerGridCells[((rowNumber * 10) + (colNumber + 1)) + 100];
+                        if (letterAttackGrid == "O")
+                        {
+                            p_otherPlayer.Board[rowNumber, colNumber] = "M";
+                            playerCell.Visibility = Visibility.Hidden;
+                        }
+                        else
+                        {
+                            attackShipName = p_otherPlayer.Board[rowNumber, colNumber];
+                            foreach (Ship testShip in p_otherPlayer.Playershipcollection)
+                            {
+                                if (attackShipName == testShip.ShipName.Substring(0, 2))
+                                {
+                                    attackShipLength = testShip.Length;
+                                }
+                            }
+                            p_otherPlayer.Board[rowNumber, colNumber] = "H";
+                            playerCell.Background = Brushes.Green;
+                            playerCell.Content = "H";
+                            playerCell.Stricked = 1;
+                            playerCell.AllowDrop = false;
+                            //int gridNumber = this.ConvertCoordinateIntoGridNumber(position);
+                            this.AddNeighborGrids(rowNumber*10+colNumber);
+                            prevGrid = rowNumber * 10 + colNumber;
+                            alreadyAttackedGrids.Add(rowNumber * 10 + colNumber);
+                            allow = true;
+                        }
+                    }
+                }
+
+                position.XCoordinate = (short)colNumber;
+                position.YCoordinate = (short)rowNumber;
+
+                Logger.ConsoleInformation("------- Player Grid ------");
+                for (int i = 0; i < 10; i++)
+                {
+                    for (int j = 0; j < 10; j++)
+                    {
+                        Logger.ConsoleInformationForArray(p_otherPlayer.Board[i, j] + ", ");
+                    }
+
+                    Logger.ConsoleInformation("\n");
+                }
+                Logger.ConsoleInformation(position.XCoordinate.ToString() + ' ' + position.YCoordinate.ToString());
+                foreach (KeyValuePair<int, GridCell> playerPair in p_otherPlayer.Playergridsquarecollection)
+                {
+                    GridCell playerCell = playerPair.Value;
+                    int y = ((position.YCoordinate + 1) * 10) + (position.XCoordinate + 1);
+                    if (playerPair.Key == (position.YCoordinate * 10) + (position.XCoordinate + 1) &&
+                        playerCell.OffenseButton == false)
+                    {
+                        // make changes to player two grid
+                        playerCell.Background = Brushes.Red;
+                        playerCell.Content = "X";
+                        playerCell.Stricked = 1;
+                        playerCell.AllowDrop = false;
+                    }
+                }
+
+                Coordinate attackedGridSpace = new Coordinate((short)(position.XCoordinate + 1), (short)(position.YCoordinate + 1));
+
+                foreach (Ship testShip in p_otherPlayer.Playershipcollection)
+                {
+                    // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
+                    AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                }
+
+                Logger.ConsoleInformation("------- Computer99 Grid ------");
+                for (int i = 0; i < rowRep; i++)
+                {
+                    for (int j = 0; j < rowRep; j++)
+                    {
+                        Logger.ConsoleInformationForArray(this.Board[i, j] + ", ");
+                    }
+
+                    Logger.ConsoleInformation("\n");
+                }
+
+            }
+            else
+            {
+                Coordinate position = new Coordinate();
+                bool availableToChoose = false;
+                int k = 0;
+                bool findGridInDirection = false;
+
+                if (allow)
+                {
+                    int rowNumber = hitList[k] / 10;
+                    int colNumber = hitList[k] % 10;
+                    bool check = true;
+
+                    while (!availableToChoose)
+                    {
+                            string letterAttackGrid = p_otherPlayer.Board[rowNumber, colNumber];
+
+                            if (letterAttackGrid != "H" && letterAttackGrid != "M")
+                            {
+                                availableToChoose = true;
+                                GridCell playerCell =
+                                    this.playerGridCells[((rowNumber * 10) + (colNumber + 1)) + 100];
+                                if (letterAttackGrid == "O")
+                                {
+                                    p_otherPlayer.Board[rowNumber, colNumber] = "M";
+                                    playerCell.Visibility = Visibility.Hidden;
+                                    this.hitList.RemoveAt(k);
+                                }
+                                else
+                                {
+                                    if (p_otherPlayer.Board[rowNumber, colNumber] == attackShipName)
+                                    {
+                                        attackShipLength--;
+                                    }
+
+                                    if ((prevGrid / 10) == rowNumber)
+                                    {
+                                        attackShipDirection = true;
+                                        allow = false;
+                                    }
+                                    else
+                                    {
+                                        attackShipDirection = false;
+                                        allow = false;
+                                    }
+
+                                    p_otherPlayer.Board[rowNumber, colNumber] = "H";
+                                    playerCell.Background = Brushes.Green;
+                                    playerCell.Content = "H";
+                                    playerCell.Stricked = 1;
+                                    playerCell.AllowDrop = false;
+                                    //int gridNumber = this.ConvertCoordinateIntoGridNumber(position);
+                                    this.AddNeighborGrids(rowNumber * 10 + colNumber);
+                                    alreadyAttackedGrids.Add(rowNumber * 10 + colNumber);
+                                    this.hitList.RemoveAt(k);
+                                }
+                            }
+                            else
+                            {
+                                this.hitList.RemoveAt(k);
+                                break;
+                            }
+                        }
+
+                        if (attackShipLength == 1)
+                        {
+                            hitList.Clear();
+                            alreadyAttackedGrids.Clear();
+                        }
+
+                        position.XCoordinate = (short)colNumber;
+                        position.YCoordinate = (short)rowNumber;
+
+                        Logger.ConsoleInformation("------- Player Grid ------");
+                        for (int i = 0; i < 10; i++)
+                        {
+                            for (int j = 0; j < 10; j++)
+                            {
+                                Logger.ConsoleInformationForArray(p_otherPlayer.Board[i, j] + ", ");
+                            }
+
+                            Logger.ConsoleInformation("\n");
+                        }
+
+                        Logger.ConsoleInformation(position.XCoordinate.ToString() + ' ' +
+                                                  position.YCoordinate.ToString());
+                        foreach (KeyValuePair<int, GridCell> playerPair in p_otherPlayer.Playergridsquarecollection)
+                        {
+                            GridCell playerCell = playerPair.Value;
+                            int y = ((position.YCoordinate + 1) * 10) + (position.XCoordinate + 1);
+                            if (playerPair.Key == (position.YCoordinate * 10) + (position.XCoordinate + 1) &&
+                                playerCell.OffenseButton == false)
+                            {
+                                // make changes to player two grid
+                                playerCell.Background = Brushes.Red;
+                                playerCell.Content = "X";
+                                playerCell.Stricked = 1;
+                                playerCell.AllowDrop = false;
+                            }
+                        }
+
+                        Coordinate attackedGridSpace = new Coordinate((short)(position.XCoordinate + 1),
+                            (short)(position.YCoordinate + 1));
+
+                        foreach (Ship testShip in p_otherPlayer.Playershipcollection)
+                        {
+                            // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
+                            AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+
+                        }
+
+                        Logger.ConsoleInformation("------- Computer99 Grid ------");
+                        for (int i = 0; i < rowRep; i++)
+                        {
+                            for (int j = 0; j < rowRep; j++)
+                            {
+                                Logger.ConsoleInformationForArray(this.Board[i, j] + ", ");
+                            }
+
+                            Logger.ConsoleInformation("\n");
+                        }
+                }
+                else
+                {
+
+                    while (!findGridInDirection)
+                    {
+                        int rowNumber = hitList[k] / 10;
+                        int colNumber = hitList[k] % 10;
+                        bool check = true;
+                        foreach (int gridSquare in alreadyAttackedGrids)
+                        {
+                            if (gridSquare == hitList[k])
+                            {
+                                check = false;
+                                break;
+                            }
+                        }
+
+                        if (attackShipDirection && (prevGrid / 10) == rowNumber && check)
+                        {
+                            findGridInDirection = true;
+                            while (!availableToChoose)
+                            {
+                                string letterAttackGrid = p_otherPlayer.Board[rowNumber, colNumber];
+
+                                if (letterAttackGrid != "H" && letterAttackGrid != "M")
+                                {
+                                    availableToChoose = true;
+                                    GridCell playerCell =
+                                        this.playerGridCells[((rowNumber * 10) + (colNumber + 1)) + 100];
+                                    if (letterAttackGrid == "O")
+                                    {
+                                        p_otherPlayer.Board[rowNumber, colNumber] = "M";
+                                        playerCell.Visibility = Visibility.Hidden;
+                                        this.hitList.RemoveAt(k);
+                                    }
+                                    else
+                                    {
+                                        if (p_otherPlayer.Board[rowNumber, colNumber] == attackShipName)
+                                        {
+                                            attackShipLength--;
+                                        }
+
+                                        if ((prevGrid / 10) == rowNumber)
+                                        {
+                                            attackShipDirection = true;
+                                        }
+                                        else
+                                        {
+                                            attackShipDirection = false;
+                                        }
+
+                                        p_otherPlayer.Board[rowNumber, colNumber] = "H";
+                                        playerCell.Background = Brushes.Green;
+                                        playerCell.Content = "H";
+                                        playerCell.Stricked = 1;
+                                        playerCell.AllowDrop = false;
+                                        //int gridNumber = this.ConvertCoordinateIntoGridNumber(position);
+                                        this.AddNeighborGrids(rowNumber * 10 + colNumber);
+                                        alreadyAttackedGrids.Add(rowNumber * 10 + colNumber);
+                                        this.hitList.RemoveAt(k);
+                                    }
+                                }
+                                else
+                                {
+                                    this.hitList.RemoveAt(k);
+                                    break;
+                                }
+                            }
+
+                            if (attackShipLength == 1)
+                            {
+                                hitList.Clear();
+                                alreadyAttackedGrids.Clear();
+                            }
+
+                            position.XCoordinate = (short) colNumber;
+                            position.YCoordinate = (short) rowNumber;
+
+                            Logger.ConsoleInformation("------- Player Grid ------");
+                            for (int i = 0; i < 10; i++)
+                            {
+                                for (int j = 0; j < 10; j++)
+                                {
+                                    Logger.ConsoleInformationForArray(p_otherPlayer.Board[i, j] + ", ");
+                                }
+
+                                Logger.ConsoleInformation("\n");
+                            }
+
+                            Logger.ConsoleInformation(position.XCoordinate.ToString() + ' ' +
+                                                      position.YCoordinate.ToString());
+                            foreach (KeyValuePair<int, GridCell> playerPair in p_otherPlayer.Playergridsquarecollection)
+                            {
+                                GridCell playerCell = playerPair.Value;
+                                int y = ((position.YCoordinate + 1) * 10) + (position.XCoordinate + 1);
+                                if (playerPair.Key == (position.YCoordinate * 10) + (position.XCoordinate + 1) &&
+                                    playerCell.OffenseButton == false)
+                                {
+                                    // make changes to player two grid
+                                    playerCell.Background = Brushes.Red;
+                                    playerCell.Content = "X";
+                                    playerCell.Stricked = 1;
+                                    playerCell.AllowDrop = false;
+                                }
+                            }
+
+                            Coordinate attackedGridSpace = new Coordinate((short) (position.XCoordinate + 1),
+                                (short) (position.YCoordinate + 1));
+
+                            foreach (Ship testShip in p_otherPlayer.Playershipcollection)
+                            {
+                                // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
+                                AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+
+                            }
+
+                            Logger.ConsoleInformation("------- Computer99 Grid ------");
+                            for (int i = 0; i < rowRep; i++)
+                            {
+                                for (int j = 0; j < rowRep; j++)
+                                {
+                                    Logger.ConsoleInformationForArray(this.Board[i, j] + ", ");
+                                }
+
+                                Logger.ConsoleInformation("\n");
+                            }
+
+                        }
+                        else if (!attackShipDirection && (prevGrid % 10) == colNumber && check)
+                        {
+                            findGridInDirection = true;
+                            while (!availableToChoose)
+                            {
+                                string letterAttackGrid = p_otherPlayer.Board[rowNumber, colNumber];
+
+                                if (letterAttackGrid != "H" && letterAttackGrid != "M")
+                                {
+                                    availableToChoose = true;
+                                    GridCell playerCell =
+                                        this.playerGridCells[((rowNumber * 10) + (colNumber + 1)) + 100];
+                                    if (letterAttackGrid == "O")
+                                    {
+                                        p_otherPlayer.Board[rowNumber, colNumber] = "M";
+                                        playerCell.Visibility = Visibility.Hidden;
+                                        this.hitList.RemoveAt(k);
+                                    }
+                                    else
+                                    {
+                                        if (p_otherPlayer.Board[rowNumber, colNumber] == attackShipName)
+                                        {
+                                            attackShipLength--;
+                                        }
+
+                                        if ((prevGrid / 10) == rowNumber)
+                                        {
+                                            attackShipDirection = true;
+                                        }
+                                        else
+                                        {
+                                            attackShipDirection = false;
+                                        }
+
+                                        p_otherPlayer.Board[rowNumber, colNumber] = "H";
+                                        playerCell.Background = Brushes.Green;
+                                        playerCell.Content = "H";
+                                        playerCell.Stricked = 1;
+                                        playerCell.AllowDrop = false;
+                                        //int gridNumber = this.ConvertCoordinateIntoGridNumber(position);
+                                        this.AddNeighborGrids(rowNumber * 10 + colNumber);
+                                        this.hitList.RemoveAt(k);
+                                    }
+                                }
+                                else
+                                {
+                                    this.hitList.RemoveAt(k);
+                                    break;
+                                }
+                            }
+
+                            if (attackShipLength == 1)
+                            {
+                                hitList.Clear();
+                            }
+
+                            position.XCoordinate = (short) colNumber;
+                            position.YCoordinate = (short) rowNumber;
+
+                            Logger.ConsoleInformation("------- Player Grid ------");
+                            for (int i = 0; i < 10; i++)
+                            {
+                                for (int j = 0; j < 10; j++)
+                                {
+                                    Logger.ConsoleInformationForArray(p_otherPlayer.Board[i, j] + ", ");
+                                }
+
+                                Logger.ConsoleInformation("\n");
+                            }
+
+                            Logger.ConsoleInformation(position.XCoordinate.ToString() + ' ' +
+                                                      position.YCoordinate.ToString());
+                            foreach (KeyValuePair<int, GridCell> playerPair in p_otherPlayer.Playergridsquarecollection)
+                            {
+                                GridCell playerCell = playerPair.Value;
+                                int y = ((position.YCoordinate + 1) * 10) + (position.XCoordinate + 1);
+                                if (playerPair.Key == (position.YCoordinate * 10) + (position.XCoordinate + 1) &&
+                                    playerCell.OffenseButton == false)
+                                {
+                                    // make changes to player two grid
+                                    playerCell.Background = Brushes.Red;
+                                    playerCell.Content = "X";
+                                    playerCell.Stricked = 1;
+                                    playerCell.AllowDrop = false;
+                                }
+                            }
+
+                            Coordinate attackedGridSpace = new Coordinate((short) (position.XCoordinate + 1),
+                                (short) (position.YCoordinate + 1));
+
+                            foreach (Ship testShip in p_otherPlayer.Playershipcollection)
+                            {
+                                // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
+                                AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+
+                            }
+
+                            Logger.ConsoleInformation("------- Computer99 Grid ------");
+                            for (int i = 0; i < rowRep; i++)
+                            {
+                                for (int j = 0; j < rowRep; j++)
+                                {
+                                    Logger.ConsoleInformationForArray(this.Board[i, j] + ", ");
+                                }
+
+                                Logger.ConsoleInformation("\n");
+                            }
+                        }
+                        else
+                        {
+                            hitList.RemoveAt(k);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void AddNeighborGrids(int gridNumber)
+        {
+            if (this.attackShipLength == 0)
+            {
+                hitList.Clear();
+            }
+            // If a ship is not destroyed add adjacent grids to hitList
+            else
+            {
+                // Computer hit a ship, add the adjacent grids to hitList
+                // If the position is on the left side
+                if (gridNumber % 10 == 0)
+                    this.hitList.Add(gridNumber + 1);
+                // If the position is on the  right side
+                else if (gridNumber % 10 == 9)
+                    this.hitList.Add(gridNumber - 1);
+                // Is the position is not on the left or right
+                else
+                {
+                    this.hitList.Add(gridNumber + 1);
+                    this.hitList.Add(gridNumber - 1);
+                }
+                // If the position is on the top
+                if (gridNumber < 10)
+                    this.hitList.Add(gridNumber + 10);
+                // If the position is on the bottom
+                else if (gridNumber > 89)
+                    this.hitList.Add(gridNumber - 10);
+                // If the position is not on the top or bottom
+                else
+                {
+                    this.hitList.Add(gridNumber + 10);
+                    this.hitList.Add(gridNumber - 10);
+                }
+            }
+        }
+
+        private int ConvertCoordinateIntoGridNumber(Coordinate position)
+        {
+            int num = position.YCoordinate + position.XCoordinate;
+            return num;
+        }
+
+        private Coordinate ConvertGridNumberIntoCoordinate(int gridNumber)
+        {
+            Coordinate position = new Coordinate((short) (gridNumber % 10), (short) (gridNumber / 10));
+            return position;
         }
 
         /// <summary>
@@ -229,19 +779,6 @@ namespace Battleship
 
             position.XCoordinate = (short)colNumber;
             position.YCoordinate = (short)rowNumber;
-            foreach (KeyValuePair<int, GridCell> playerPair in this.Playergridsquarecollection)
-            {
-                GridCell playerCell = playerPair.Value;
-                if (playerPair.Key == (position.YCoordinate * 10) + (position.XCoordinate + 1) &&
-                    playerCell.OffenseButton == true)
-                {
-                    // make changes to player two grid
-                    playerCell.Background = Brushes.Red;
-                    playerCell.Content = "X";
-                    playerCell.Stricked = 1;
-                    playerCell.AllowDrop = false;
-                }
-            }
 
             Logger.ConsoleInformation("------- Player Grid ------");
             for (int i = 0; i < 10; i++)
@@ -284,7 +821,7 @@ namespace Battleship
                 warship.ShipStartCoords = shipPositionFinal;
                 for (int j = 0; j < warship.Length; j++)
                 {
-                    string letter = warship.Name.Substring(0, 2);
+                    string letter = warship.ShipName.Substring(0, 2);
                     this.board[rowShip, colShip] = letter;
                     if (horDirection)
                     {

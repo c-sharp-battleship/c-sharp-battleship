@@ -49,13 +49,71 @@ namespace Battleship
             }
             else if (this.playerToComputerRadioButton.IsChecked == true)
             {
-                this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
-                this.gameScreen.Show();
+                if (this.easyAIRadioButton1.IsChecked == true)
+                {
+                    this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
+                    this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
+                    this.gameScreen.Show();
+                }
+                else if (this.hardAIRadioButton1.IsChecked == true)
+                {
+                    this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
+                    this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
+                    this.gameScreen.Show();
+                }
+                else
+                {
+                    Logger.Error("Please Select an AI difficulty for Computer Player!");
+                }
             }
             else if (this.computerToComputerRadioButton.IsChecked == true)
             {
-                this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
-                this.gameScreen.Show();
+                if (this.easyAIRadioButton1.IsChecked == true)
+                {
+                    if (this.easyAIRadioButton2.IsChecked == true)
+                    {
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
+                        this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
+                        this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
+                        this.gameScreen.Show();
+                    }
+                    else if (this.hardAIRadioButton2.IsChecked == true)
+                    {
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
+                        this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
+                        this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
+                        this.gameScreen.Show();
+                    }
+                    else
+                    {
+                        Logger.Error("Please Select an AI Difficulty for Computer Player 2!");
+                    }
+                }
+                else if (this.hardAIRadioButton1.IsChecked == true)
+                {
+                    if (this.easyAIRadioButton2.IsChecked == true)
+                    {
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
+                        this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
+                        this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
+                        this.gameScreen.Show();
+                    }
+                    else if (this.hardAIRadioButton2.IsChecked == true)
+                    {
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
+                        this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
+                        this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
+                        this.gameScreen.Show();
+                    }
+                    else
+                    {
+                        Logger.Error("Please Select an AI Difficulty for Computer Player 2!");
+                    }
+                }
+                else
+                {
+                    Logger.Error("Please Select an AI difficulty for Computer Player 1!");
+                }
             }
             else
             {

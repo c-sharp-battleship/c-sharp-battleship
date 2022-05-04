@@ -100,7 +100,7 @@
             Interaction logic for ComputerPlayer.
             </summary>
         </member>
-        <member name="M:Battleship.ComputerPlayer.#ctor(System.Int32,System.String,System.Double,System.Int32,System.Int32,System.Int32)">
+        <member name="M:Battleship.ComputerPlayer.#ctor(System.Int32,System.String,System.Double,System.Int32,System.Int32,System.Int32,Battleship.StatusCodes.ComputerPlayerDifficulty)">
             <summary>
              Initializes a new instance of the <see cref="T:Battleship.ComputerPlayer" /> class.
             </summary>
@@ -110,6 +110,12 @@
             <param name="maxCol"> This is the max number of columns requested at the moment pf loading.</param>
             <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor).</param>
             <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
+            <param name="difficulty"> This is the difficulty of the player. </param>
+        </member>
+        <member name="P:Battleship.ComputerPlayer.Difficulty">
+            <summary>
+             Gets a computer player difficulty.
+            </summary>
         </member>
         <member name="M:Battleship.ComputerPlayer.CompPlayerAttack(Battleship.Player,System.Int32)">
             <summary>
@@ -235,6 +241,16 @@
         <member name="P:Battleship.GameWindow.Switch">
             <summary>
              Gets a value indicating whether screen player1 is visible or not.
+            </summary>
+        </member>
+        <member name="P:Battleship.GameWindow.ComputerPlayerDifficulty1">
+            <summary>
+             Gets or sets a computer player 1 difficulty.
+            </summary>
+        </member>
+        <member name="P:Battleship.GameWindow.ComputerPlayerDifficulty2">
+            <summary>
+             Gets or sets a computer player 2 difficulty.
             </summary>
         </member>
         <member name="M:Battleship.GameWindow.StartPlayerToPlayerGame(System.Object,System.EventArgs)">
@@ -542,11 +558,6 @@
             The list of player's ships.
             </summary>
         </member>
-        <member name="F:Battleship.Player.playerGridCellsList">
-            <summary>
-            The list of player's gris cells.
-            </summary>
-        </member>
         <member name="F:Battleship.Player.playerGridCells">
             <summary>
             Tracking changes event dictionary.
@@ -608,15 +619,17 @@
             Gets player Button collections for its personal grid.
             </summary>
         </member>
-        <member name="P:Battleship.Player.PlayerGridCellList">
-            <summary>
-            Gets player Button collections for its personal grid.
-            </summary>
-        </member>
         <member name="P:Battleship.Player.Board">
             <summary>
             Gets or sets the board information.
             </summary>
+        </member>
+        <member name="M:Battleship.Player.SetShipsToBoard(System.String,System.Int32)">
+            <summary>
+            Set ships to player's board.
+            </summary>
+            <param name="canvasUid">The name of canvas.</param>
+            <param name="rowRep">The number of columns and rows.</param>
         </member>
         <member name="M:Battleship.Player.LockShipsIntoPlace">
             <summary>
@@ -995,6 +1008,21 @@
         <member name="F:Battleship.StatusCodes.GridSpaceStatus.GRID_SPACE_NOT_OCCUPIED">
             <summary>
             Indicates that the grid space is not occupied.
+            </summary>
+        </member>
+        <member name="T:Battleship.StatusCodes.ComputerPlayerDifficulty">
+            <summary>
+            Indicates the computer player difficulty.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY">
+            <summary>
+            Represents an easy computer player difficulty.
+            </summary>
+        </member>
+        <member name="F:Battleship.StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD">
+            <summary>
+            Represents a hard computer player difficulty.
             </summary>
         </member>
         <member name="T:Battleship.StatusCodes.AttackStrategy">

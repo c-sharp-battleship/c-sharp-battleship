@@ -101,6 +101,22 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Indicates the computer player difficulty.
+        /// </summary>
+        public enum ComputerPlayerDifficulty
+        {
+            /// <summary>
+            /// Represents an easy computer player difficulty.
+            /// </summary>
+            COMPUTER_DIFFICULTY_EASY,
+
+            /// <summary>
+            /// Represents a hard computer player difficulty.
+            /// </summary>
+            COMPUTER_DIFFICULTY_HARD,
+        }
+
+        /// <summary>
         /// Indicates the computer attack strategy.
         /// </summary>
         public enum AttackStrategy

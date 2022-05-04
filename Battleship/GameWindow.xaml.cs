@@ -64,6 +64,10 @@ namespace Battleship
         /// </summary>
         private ComputerPlayer computerPlayer2;
 
+        private StatusCodes.ComputerPlayerDifficulty computerPlayerDifficulty1;
+
+        private StatusCodes.ComputerPlayerDifficulty computerPlayerDifficulty2;
+
         /// <summary>
         /// The player 1 window.
         /// </summary>
@@ -108,6 +112,24 @@ namespace Battleship
         public bool Switch
         {
             get { return this.screenPlayerOne; }
+        }
+
+        /// <summary>
+        ///  Gets or sets a computer player 1 difficulty.
+        /// </summary>
+        public StatusCodes.ComputerPlayerDifficulty ComputerPlayerDifficulty1
+        {
+            get { return this.computerPlayerDifficulty1; }
+            set { this.computerPlayerDifficulty1 = value; }
+        }
+
+        /// <summary>
+        ///  Gets or sets a computer player 2 difficulty.
+        /// </summary>
+        public StatusCodes.ComputerPlayerDifficulty ComputerPlayerDifficulty2
+        {
+            get { return this.computerPlayerDifficulty2; }
+            set { this.computerPlayerDifficulty2 = value; }
         }
 
         /// <summary>
@@ -170,7 +192,7 @@ namespace Battleship
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.player1 = new Player(1, "PlayerOne", this.Cellsize, this.RowRep, 1, 3);
-            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6);
+            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6, this.computerPlayerDifficulty1);
             this.player2.IsLocked = true;
 
             Logger.ConsoleInformation("------- Computer Grid ------");
@@ -216,8 +238,8 @@ namespace Battleship
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
-            this.player1 = new ComputerPlayer(1, "ComputerPlayerOne", this.Cellsize, this.RowRep, 1, 3);
-            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6);
+            this.player1 = new ComputerPlayer(1, "ComputerPlayerOne", this.Cellsize, this.RowRep, 1, 3, this.computerPlayerDifficulty1);
+            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6, this.computerPlayerDifficulty2);
 
             Logger.ConsoleInformation("------- Computer Grid ------");
             for (int i = 0; i < this.RowRep; i++)
@@ -420,7 +442,15 @@ namespace Battleship
                             // Swicth windows between players
                             if (p_otherPlayer.Name == "ComputerPlayerTwo")
                             {
-                                ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, this.RowRep);
+                                if (ComputerPlayerDifficulty1 ==
+                                    StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
+                                {
+                                    ((ComputerPlayer)p_otherPlayer).AdvancedAttack(p_currentPlayer, this.RowRep);
+                                }
+                                else
+                                {
+                                    ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, this.RowRep);
+                                }
                             }
                             else
                             {
@@ -559,7 +589,7 @@ namespace Battleship
                     if (p_currentPlayer.IsLocked == false)
                     {
                         // create a cell to pass a cell to this method and return the possible crew members for this turn
-                        GridCell fakecell = new GridCell(p_currentPlayer.PlayerID, 0, string.Empty);
+                        GridCell fakecell = new GridCell(p_currentPlayer.PlayerID, 0, "");
                         fakecell.TrackingID = navyShip.Captain;
                         int overlappingCrew = this.SetshipMovePerCrewCheck(navyShip, fakecell, p_currentPlayer, 1);
 
@@ -643,78 +673,13 @@ namespace Battleship
             {
                 this.player1.IsLocked = true;
                 this.player1.LockShipsIntoPlace();
-                foreach (Ship ship in this.player1.Playershipcollection)
-                {
-                    int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;
-                    int startRow = (int)ship.ShipStartCoords.YCoordinate - 1;
-                    int endColumn = (int)ship.ShipEndCoords.XCoordinate - 1;
-                    int endRow = (int)ship.ShipEndCoords.YCoordinate - 1;
-                    string letter = ship.ShipName.Substring(0, 2);
-                    if (ship.HDirection == true)
-                    {
-                        for (int i = startColumn; i <= endColumn; i++)
-                        {
-                            this.player1.Board[startRow, i] = letter;
-                        }
-                    }
-                    else if (ship.HDirection == false)
-                    {
-                        for (int i = startRow; i <= endRow; i++)
-                        {
-                            this.player1.Board[i, startColumn] = letter;
-                        }
-                    }
-                }
-
-                Logger.ConsoleInformation("------- " + canvasUid + " ------");
-                for (int i = 0; i < this.RowRep; i++)
-                {
-                    for (int j = 0; j < this.RowRep; j++)
-                    {
-                        Logger.ConsoleInformationForArray(this.player1.Board[i, j] + ", ");
-                    }
-
-                    Logger.ConsoleInformation(string.Empty);
-                }
+                this.player1.SetShipsToBoard(canvasUid, this.RowRep);
             }
             else if (canvasUid == "Player2Canvas")
             {
                 this.player2.IsLocked = true;
                 this.player2.LockShipsIntoPlace();
-                foreach (Ship ship in this.player2.Playershipcollection)
-                {
-                    int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;
-                    int startRow = (int)ship.ShipStartCoords.YCoordinate - 1;
-                    int endColumn = (int)ship.ShipEndCoords.XCoordinate - 1;
-                    int endRow = (int)ship.ShipEndCoords.YCoordinate - 1;
-
-                    string letter = ship.ShipName.Substring(0, 2);
-                    if (ship.HDirection == true)
-                    {
-                        for (int i = startColumn; i <= endColumn; i++)
-                        {
-                            this.player2.Board[startRow, i] = letter;
-                        }
-                    }
-                    else if (ship.HDirection == false)
-                    {
-                        for (int i = startRow; i <= endRow; i++)
-                        {
-                            this.player2.Board[i, startColumn] = letter;
-                        }
-                    }
-                }
-
-                Logger.ConsoleInformation("------- " + canvasUid + " ------");
-                for (int i = 0; i < this.RowRep; i++)
-                {
-                    for (int j = 0; j < this.RowRep; j++)
-                    {
-                        Logger.ConsoleInformationForArray(this.player2.Board[i, j] + ", ");
-                    }
-
-                    Logger.ConsoleInformation(string.Empty);
-                }
+                this.player2.SetShipsToBoard(canvasUid, this.RowRep);
             }
 
             this.SetConfirmButtonVisibility(canvasUid);

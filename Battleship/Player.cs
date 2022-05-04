@@ -24,11 +24,6 @@ namespace Battleship
         protected List<Ship> playerShips = new List<Ship>();
 
         /// <summary>
-        /// The list of player's gris cells.
-        /// </summary>
-        protected List<GridCell> playerGridCellsList = new List<GridCell>();
-
-        /// <summary>
         /// Tracking changes event dictionary.
         /// </summary>
         protected Dictionary<int, GridCell> playerGridCells = new Dictionary<int, GridCell>();
@@ -247,20 +242,54 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player Button collections for its personal grid.
-        /// </summary>
-        public List<GridCell> PlayerGridCellList
-        {
-            get { return this.playerGridCellsList; }
-        }
-
-        /// <summary>
         /// Gets or sets the board information.
         /// </summary>
         public string[,] Board
         {
             get { return this.board; }
             set { this.board = value; }
+        }
+
+        /// <summary>
+        /// Set ships to player's board.
+        /// </summary>
+        /// <param name="canvasUid">The name of canvas.</param>
+        /// <param name="rowRep">The number of columns and rows.</param>
+        public void SetShipsToBoard(string canvasUid, int rowRep)
+        {
+            foreach (Ship ship in this.Playershipcollection)
+            {
+                int startColumn = (int)ship.ShipStartCoords.XCoordinate - 1;
+                int startRow = (int)ship.ShipStartCoords.YCoordinate - 1;
+                int endColumn = (int)ship.ShipEndCoords.XCoordinate - 1;
+                int endRow = (int)ship.ShipEndCoords.YCoordinate - 1;
+                string letter = ship.ShipName.Substring(0, 2);
+                if (ship.HDirection == true)
+                {
+                    for (int i = startColumn; i <= endColumn; i++)
+                    {
+                        this.Board[startRow, i] = letter;
+                    }
+                }
+                else if (ship.HDirection == false)
+                {
+                    for (int i = startRow; i <= endRow; i++)
+                    {
+                        this.Board[i, startColumn] = letter;
+                    }
+                }
+            }
+
+            Logger.ConsoleInformation("------- " + canvasUid + " ------");
+            for (int i = 0; i < rowRep; i++)
+            {
+                for (int j = 0; j < rowRep; j++)
+                {
+                    Logger.ConsoleInformationForArray(this.Board[i, j] + ", ");
+                }
+
+                Logger.ConsoleInformation("\n");
+            }
         }
 
         /// <summary>
@@ -321,7 +350,7 @@ namespace Battleship
         {
             Ship ship = sender as Ship;
             ship.ShipIsSunk = true;
-            Logger.Information(ship.Name + " has been sunk!");
+            Logger.Information(ship.ShipName + " has been sunk!");
             this.CheckIfPlayerHasWon();
         }
 
@@ -343,7 +372,7 @@ namespace Battleship
             if (numberOfShipsThatHaveBeenSunk == this.Playershipcollection.Count)
             {
                 this.winner = true;
-                Logger.Information(this.Name + "Lost");
+                Logger.Information(this.Name + " Lost");
                 Environment.Exit(0);
             }
         }
