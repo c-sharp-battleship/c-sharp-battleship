@@ -355,6 +355,11 @@
             The dispatch timer.
             </summary>
         </member>
+        <member name="F:Battleship.GameWindow.saveAndLoad">
+            <summary>
+            The object that handles saving and loading the game state.
+            </summary>
+        </member>
         <member name="M:Battleship.GameWindow.#ctor(Battleship.StatusCodes.GameType)">
             <summary>
             Initializes a new instance of the <see cref="T:Battleship.GameWindow" /> class.
@@ -884,22 +889,30 @@
             Class to save the game state.
             </summary>
         </member>
+        <member name="F:Battleship.SaveLoad.fileContents">
+            <summary>
+            The list of file contents.
+            </summary>
+        </member>
         <member name="M:Battleship.SaveLoad.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Battleship.SaveLoad" /> class.
+            </summary>
+        </member>
+        <member name="P:Battleship.SaveLoad.FileContents">
+            <summary>
+            Gets or sets the fileContents.
             </summary>
         </member>
         <member name="M:Battleship.SaveLoad.ReadFile">
             <summary>
             Read a file from a file dialog.
             </summary>
-            <returns>The contents of the file in a list.</returns>
         </member>
-        <member name="M:Battleship.SaveLoad.WriteFile(System.Collections.Generic.List{System.String})">
+        <member name="M:Battleship.SaveLoad.WriteFile">
             <summary>
             Method to write to a file.
             </summary>
-            <param name="fileContents">The contents to be written to the file.</param>
         </member>
         <member name="T:Battleship.Say">
             <summary>

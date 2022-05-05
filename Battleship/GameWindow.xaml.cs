@@ -90,6 +90,11 @@ namespace Battleship
         private DispatcherTimer dispatcherTimer;
 
         /// <summary>
+        /// The object that handles saving and loading the game state.
+        /// </summary>
+        private SaveLoad saveAndLoad;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow" /> class.
         /// </summary>
         /// <param name="gameType"> This is the game type.</param>
@@ -113,6 +118,8 @@ namespace Battleship
                     this.Loaded += this.StartComputerToComputerGame;
                     break;
             }
+
+            this.saveAndLoad = new SaveLoad();
         }
 
         /// <summary>

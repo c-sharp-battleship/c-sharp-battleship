@@ -21,32 +21,32 @@ namespace Battleship
     /// </summary>
     internal class SaveLoad
     {
-        // start of load function
-        // Generate new game (Later set GameID to what was loaded)
-        // Pull info from file, seperate into seperate arrays
-        // loadedP1DefenceArray, etc...
-        // P1DefenceArray = loadedP1DefenceArray
-        // or
-        // foreach entry in loadedP1DefenceArray
-        //  temp = loadedP1DefenceArray[x,y]
-        //  P1DDefenceArray = temp
-        //  x++
-        //  y++
+        /// <summary>
+        /// The list of file contents.
+        /// </summary>
+        private List<string> fileContents;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveLoad" /> class.
         /// </summary>
         public SaveLoad()
         {
-            List<string> fileContents = this.ReadFile();
-            this.WriteFile(fileContents);
+            this.fileContents = new List<string>();
+        }
+
+        /// <summary>
+        /// Gets or sets the fileContents.
+        /// </summary>
+        public List<string> FileContents
+        {
+            get { return this.fileContents; }
+            set { this.fileContents = value; }
         }
 
         /// <summary>
         /// Read a file from a file dialog.
         /// </summary>
-        /// <returns>The contents of the file in a list.</returns>
-        private List<string> ReadFile()
+        private void ReadFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
@@ -55,24 +55,19 @@ namespace Battleship
             dialog.Filter = "Battleship Game File (.csv)|*.csv";
             dialog.InitialDirectory = @"C:\";
 
-            List<string> fileContents = new List<string>();
-
             using (StreamReader sr = new StreamReader(dialog.FileName))
             {
                 while (sr.Peek() >= 0)
                 {
-                    fileContents.Add(sr.ReadLine());
+                    this.fileContents.Add(sr.ReadLine());
                 }
             }
-
-            return fileContents;
         }
 
         /// <summary>
         /// Method to write to a file.
         /// </summary>
-        /// <param name="fileContents">The contents to be written to the file.</param>
-        private void WriteFile(List<string> fileContents)
+        private void WriteFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
@@ -83,9 +78,9 @@ namespace Battleship
 
             using (StreamWriter sw = new StreamWriter(dialog.FileName))
             {
-                for (int i = 0; i < fileContents.Count; i++)
+                for (int i = 0; i < this.fileContents.Count; i++)
                 {
-                    sw.WriteLine(fileContents[i]);
+                    sw.WriteLine(this.fileContents[i]);
                 }
             }
         }
