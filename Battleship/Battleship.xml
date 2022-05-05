@@ -504,6 +504,20 @@
             <param name="sender">The object that initiated the event.</param>
             <param name="e">The event arguments for the event.</param>
         </member>
+        <member name="M:Battleship.GameWindow.BtnSave_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            The click event for the Save Game button.
+            </summary>
+            <param name="sender">The sender that invoked the event.</param>
+            <param name="e">The arguments passed to the event.</param>
+        </member>
+        <member name="M:Battleship.GameWindow.BtnLoad_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Click event for the Load Game button.
+            </summary>
+            <param name="sender">The sender that invoked the event.</param>
+            <param name="e">The arguments passed to the event.</param>
+        </member>
         <member name="M:Battleship.GameWindow.InitializeComponent">
             <summary>
             InitializeComponent
@@ -864,6 +878,28 @@
             <summary>
             Set a method that checks if player has won.
             </summary>
+        </member>
+        <member name="T:Battleship.SaveLoad">
+            <summary>
+            Class to save the game state.
+            </summary>
+        </member>
+        <member name="M:Battleship.SaveLoad.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Battleship.SaveLoad" /> class.
+            </summary>
+        </member>
+        <member name="M:Battleship.SaveLoad.ReadFile">
+            <summary>
+            Read a file from a file dialog.
+            </summary>
+            <returns>The contents of the file in a list.</returns>
+        </member>
+        <member name="M:Battleship.SaveLoad.WriteFile(System.Collections.Generic.List{System.String})">
+            <summary>
+            Method to write to a file.
+            </summary>
+            <param name="fileContents">The contents to be written to the file.</param>
         </member>
         <member name="T:Battleship.Say">
             <summary>

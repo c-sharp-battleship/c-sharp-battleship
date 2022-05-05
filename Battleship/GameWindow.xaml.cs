@@ -810,12 +810,22 @@ namespace Battleship
             }
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// The click event for the Save Game button.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             // Call Save method from SaveLoad.cs
         }
 
-        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Click event for the Load Game button.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
+        private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
             // Call Save method from SaveLoad.cs
         }
