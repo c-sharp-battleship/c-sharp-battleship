@@ -1,24 +1,56 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	
+
 	<xs:element name="game">
-
-		<xs:element name="player">
-
-			<xs:element name="attackBoard">
-				<xs:complexType name="row">
-					<xs:sequence type="string"></xs:sequence>
-				</xs:complexType>
-			</xs:complexType>
-
-			<xs:complexType name="defenseBoard">
-				<xs:complexType name="ship">
-					<xs:element name="crewmember"></xs:element>
-				</xs:complexType>
-			</xs:complexType>
-			
-		</xs:complexType>
-		
-	</xs:complexType>
+	<xs:complexType>
+	<xs:sequence>
 	
+		<xs:element name="player">
+		<xs:complexType>
+		<xs:sequence>
+		
+			<xs:element name="attackBoard">
+			<xs:complexType>
+			<xs:sequence>
+				
+				<xs:element name="row">
+				<xs:complexType>
+				<xs:sequence>
+					
+					<xs:element name="cell" type="xs:int"/>
+					
+				</xs:sequence>
+				</xs:complexType>
+				</xs:element>
+				
+			</xs:sequence>
+			</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="defenseBoard">
+			<xs:complexType>
+			<xs:sequence>
+				
+				<xs:element name="ship">
+				<xs:complexType>
+				<xs:sequence>
+					
+					<xs:element name="crewmember" type="xs:string"/>
+				
+				</xs:sequence>
+				</xs:complexType>
+				</xs:element>
+				
+			</xs:sequence>
+			</xs:complexType>
+			</xs:element>
+		
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+	
+	</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+
 </xs:schema>
