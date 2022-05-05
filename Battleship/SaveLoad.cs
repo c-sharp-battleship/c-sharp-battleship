@@ -149,7 +149,7 @@
             return fileContents;
         }
 
-        private string writeFile(List<string> fileContents)
+        private void writeFile(List<string> fileContents)
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
@@ -160,13 +160,17 @@
 
             using (StreamWriter sw = new StreamWriter(dialog.FileName))
             {
-                while(!sw.)
+                for (int i = 0; i < fileContents.Count; i++)
+                {
+                    sw.WriteLine(fileContents[i]);
+                }
             }
         }
 
         public SaveLoad()
         {
-            string fileContents = this.readFile();
+            List<string> fileContents = this.readFile();
+            this.writeFile(fileContents);
         }
     }
 }
