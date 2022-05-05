@@ -825,6 +825,7 @@ namespace Battleship
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             // Call Save method from SaveLoad.cs
+            this.saveAndLoad.WriteFile();
         }
 
         /// <summary>
@@ -835,6 +836,8 @@ namespace Battleship
         private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
             // Call Save method from SaveLoad.cs
+            this.saveAndLoad.ReadFile();
+            this.saveAndLoad.DisplayFileContents();
         }
     }
 }

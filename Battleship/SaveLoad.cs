@@ -46,7 +46,7 @@ namespace Battleship
         /// <summary>
         /// Read a file from a file dialog.
         /// </summary>
-        private void ReadFile()
+        public void ReadFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
@@ -55,26 +55,48 @@ namespace Battleship
             dialog.Filter = "Battleship Game File (.csv)|*.csv";
             dialog.InitialDirectory = @"C:\";
 
-            using (StreamReader sr = new StreamReader(dialog.FileName))
+            dialog.ShowDialog();
+
+            try
             {
-                while (sr.Peek() >= 0)
+                using (StreamReader sr = new StreamReader(dialog.FileName))
                 {
-                    this.fileContents.Add(sr.ReadLine());
+                    while (sr.Peek() >= 0)
+                    {
+                        this.fileContents.Add(sr.ReadLine());
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.ConsoleInformation(ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Method to display the contents of <see cref="fileContents"/>.
+        /// </summary>
+        public void DisplayFileContents()
+        {
+            foreach (string line in this.fileContents)
+            {
+                Logger.Information(line);
             }
         }
 
         /// <summary>
         /// Method to write to a file.
         /// </summary>
-        private void WriteFile()
+        public void WriteFile()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
+            SaveFileDialog dialog = new SaveFileDialog();
 
             dialog.FileName = "Game";
             dialog.DefaultExt = ".csv";
             dialog.Filter = "Battleship Game File (.csv)|*.csv";
             dialog.InitialDirectory = @"C:\";
+
+            dialog.ShowDialog();
 
             using (StreamWriter sw = new StreamWriter(dialog.FileName))
             {
