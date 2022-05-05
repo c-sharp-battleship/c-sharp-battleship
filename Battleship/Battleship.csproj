@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="schema.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Warship.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

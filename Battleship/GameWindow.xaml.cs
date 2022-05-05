@@ -809,5 +809,15 @@ namespace Battleship
                 this.ConfirmShipPlacement("Player2Canvas");
             }
         }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            // Call Save method from SaveLoad.cs
+        }
+
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            // Call Save method from SaveLoad.cs
+        }
     }
 }

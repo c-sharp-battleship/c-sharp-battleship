@@ -1,0 +1,20 @@
+﻿{
+  "game": {
+    "player": {
+      "attackBoard": {
+        "row": {
+          "cell": {
+
+          }
+        }
+      },
+      "defenseBoard": {
+        "ship": {
+          "crewmember": {
+
+          }
+        }
+      }
+    }
+  }
+}

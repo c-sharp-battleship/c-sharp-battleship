@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+	<xs:element name="game">
+
+		<xs:element name="player">
+
+			<xs:element name="attackBoard">
+				<xs:complexType name="row">
+					<xs:sequence type="string"></xs:sequence>
+				</xs:complexType>
+			</xs:complexType>
+
+			<xs:complexType name="defenseBoard">
+				<xs:complexType name="ship">
+					<xs:element name="crewmember"></xs:element>
+				</xs:complexType>
+			</xs:complexType>
+			
+		</xs:complexType>
+		
+	</xs:complexType>
+	
+</xs:schema>

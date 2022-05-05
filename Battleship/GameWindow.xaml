@@ -24,6 +24,8 @@
         <Image x:Name="PlayerOnelabel" HorizontalAlignment="Left" Height="66" Margin="132,26,0,0" VerticalAlignment="Top" Width="125" Source="/Playeroneturn.jpg" Stretch="Fill"/>
         <Image x:Name="PlayerTwolabel" HorizontalAlignment="Left" Height="66" Margin="112,26,0,0" VerticalAlignment="Top" Width="125" Source="/Playertwoturn.jpg" Stretch="Fill" RenderTransformOrigin="1.802,0.385"/>
         <Button x:Name="Confirm_Button" Content="Confirm Ship Placement" HorizontalAlignment="Left" Margin="112,115,0,0" VerticalAlignment="Top" Height="35" Width="145" Click="Confirm_Button_Click" Background="#FF8EADB3"/>
+        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Height="35" Margin="262,115,0,0" VerticalAlignment="Top" Width="126" Click="btnSave_Click"/>
+        <Button x:Name="btnLoad" Content="Load" HorizontalAlignment="Left" Height="35" Margin="400,115,0,0" VerticalAlignment="Top" Width="114" Click="btnLoad_Click"/>
 
     </Grid>
 </Window>
