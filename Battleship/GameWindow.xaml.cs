@@ -421,11 +421,6 @@ namespace Battleship
                 int gridcellnumber = mainPlayerPair.Key;
                 GridCell mainPlayerCell = mainPlayerPair.Value;
 
-                ///////////////////////////////////////////////////////////////////////////////////////////////
-                //////////////////////////////////////////////////////////////////////////////////////////////
-                //////////////////////////////////////////////////////////////////////////////////////////////
-                //////////////////////////////////////////////////////////////////////////////////////////////
-                //////////////////////////////////////////////////////////////////////////////////////////////
                 // Load in initial grids to game dictionary control for reports and outputs
                 string gameStatusdictionarykey = p_currentPlayer.PlayerID.ToString() + "-" + mainPlayerPair.Value.TrackingID.ToString();
                 this.gameStatus.Add(gameStatusdictionarykey, mainPlayerPair.Value);
@@ -618,9 +613,6 @@ namespace Battleship
                             {
                                 overlapingCrewMembers++;
                             }
-                            else
-                            {
-                            }
                         }
                     }
                 }
@@ -665,6 +657,7 @@ namespace Battleship
                 // Load all ships information to main dictionary
                 foreach (int iniMember in initialshipcrew)
                 {
+                    // Load initial ship information to gamestatus dictionary report
                     string initialship_cell_bind = p_currentPlayer.PlayerID.ToString() + "-" + iniMember.ToString();
                     this.gameStatus[initialship_cell_bind].ButtonOccupied = true;
                     this.gameStatus[initialship_cell_bind].ShipContainedID = navyShip.Uid;
@@ -673,10 +666,6 @@ namespace Battleship
                     this.gameStatus[initialship_cell_bind].Crewmembers = navyShip.Ship_Crewmembers;
                 }
 
-                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 // add a right click event to each ship
                 navyShip.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
                 {
@@ -714,19 +703,8 @@ namespace Battleship
                     {
                         if (e.LeftButton == MouseButtonState.Pressed)
                         {
-                            // This if statement will be used when the ship enters the boards for the first time
-                            int dragfirsttime = navyShip.DragsCounter;
-                            if (dragfirsttime > 0)
-                            {
-                                string objectUniqueID = navyShip.Uid;
-                                DragDrop.DoDragDrop(navyShip, objectUniqueID, DragDropEffects.Move);
-                            }
-                            else
-                            {
-                                Canvas.SetTop(navyShip, navyShip.Top_Comp_ParentTop);
-                                Canvas.SetLeft(navyShip, navyShip.LeftToParentLeft);
-                                navyShip.DragsCounter += 1;
-                            }
+                            string objectUniqueID = navyShip.Uid;
+                            DragDrop.DoDragDrop(navyShip, objectUniqueID, DragDropEffects.Move);
                         }
                     }
                 });
