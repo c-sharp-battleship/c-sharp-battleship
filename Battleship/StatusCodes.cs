@@ -152,5 +152,52 @@ namespace Battleship
             /// </summary>
             DEFENSE_DIFFICULTY_CENTER,
         }
+
+        /// <summary>
+        /// Represents the ship type.
+        /// </summary>
+        public enum ShipType
+        {
+            /// <summary>
+            /// Represents a destroyer ship.
+            /// </summary>
+            DESTROYER,
+
+            /// <summary>
+            /// Represents a submarine ship.
+            /// </summary>
+            SUBMARINE,
+
+            /// <summary>
+            /// Represents a cruiser ship.
+            /// </summary>
+            CRUISER,
+
+            /// <summary>
+            /// Represents a battleship ship.
+            /// </summary>
+            BATTLESHIP,
+
+            /// <summary>
+            /// Represents a carrier ship.
+            /// </summary>
+            CARRIER,
+        }
+
+        /// <summary>
+        /// Represents the player type.
+        /// </summary>
+        public enum PlayerType
+        {
+            /// <summary>
+            /// Represents a human player.
+            /// </summary>
+            PLAYER,
+
+            /// <summary>
+            /// Represents a computer player.
+            /// </summary>
+            COMPUTER,
+        }
     }
 }
