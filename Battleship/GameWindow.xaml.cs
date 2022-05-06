@@ -669,6 +669,7 @@ namespace Battleship
                     this.gameStatus[initialship_cell_bind].ButtonOccupied = true;
                     this.gameStatus[initialship_cell_bind].ShipContainedID = navyShip.Uid;
                     this.gameStatus[initialship_cell_bind].ShipContainedName = navyShip.ShipName;
+                    this.gameStatus[initialship_cell_bind].ShipContainedType = navyShip.ShipType;
                     this.gameStatus[initialship_cell_bind].Crewmembers = navyShip.Ship_Crewmembers;
                 }
 
@@ -887,6 +888,7 @@ namespace Battleship
                     gridCell.ButtonOccupied = false;
                     gridCell.ShipContainedID = string.Empty;
                     gridCell.ShipContainedName = string.Empty;
+                    gridCell.ShipContainedType = 0;
                 }
             }
 
@@ -915,6 +917,32 @@ namespace Battleship
                         gridCell.ButtonOccupied = true;
                         gridCell.ShipContainedID = ship.Uid;
                         gridCell.ShipContainedName = ship.ShipName;
+                        gridCell.ShipContainedType = ship.ShipType;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// show report dictionary.
+        /// </summary>
+        /// <param name="sender"> sender.</param>
+        /// <param name="e">handler.</param>
+        private void Reportgame_Click(object sender, RoutedEventArgs e)
+        {
+            for (int j = 1; j <= 2; j++)
+            {
+                for (int i = 1; i <= 5; i++)
+                {
+                    foreach (KeyValuePair<string, GridCell> report in this.gameStatus)
+                    {
+                        string keytext = report.Key;
+                        GridCell gridCell = report.Value;
+
+                        if (gridCell.Crewmembers.Count > 0 && gridCell.ShipContainedType == i && gridCell.PlayerID == j)
+                        {
+                            Logger.ConsoleInformation("key number (" + keytext + ")" + " contains " + gridCell.ShipContainedName + "_Player " + gridCell.PlayerID.ToString());
+                        }
                     }
                 }
             }

@@ -73,11 +73,6 @@ namespace Battleship
         /// <summary>
         /// Ship current crew.
         /// </summary>
-        private List<int> delayedCrewmembers;
-
-        /// <summary>
-        /// Ship current crew.
-        /// </summary>
         private List<int> actualCrewmembers;
 
         /// <summary>
@@ -157,13 +152,11 @@ namespace Battleship
             }
 
             this.actualCrewmembers = new List<int>();
-            this.delayedCrewmembers = new List<int>();
             this.playerID = playerID;
             this.shipType = shipType;
             this.ShipIsSunk = false;
             this.shipStartCoords = startCoords;
             this.rowsgrid = rowTotal;
-            this.delayedCrewmembers = this.SetCrewmembers(driver, 0);
             this.actualCrewmembers = this.SetCrewmembers(driver, 0);
 
             Coordinate endCoords = new Coordinate((short)(this.shipStartCoords.XCoordinate + this.length - 1), this.ShipStartCoords.YCoordinate);
@@ -171,18 +164,6 @@ namespace Battleship
             this.Width = this.length * gridCellSize;
             this.Height = gridCellSize;
             this.captain = driver;
-
-            // set the entry point crew member to compare future moves
-            int horizontalValue = driver;
-            int vertialValue = driver;
-
-            /*
-            for (int i = 0; i < this.grids; i++)
-            {
-                this.actualCrewmembers.Add(i + driver);
-                this.delayedCrewmembers.Add(i + driver);
-            }
-            */
         }
 
         /// <summary>
@@ -378,15 +359,6 @@ namespace Battleship
         {
             get { return this.grids; }
             set { this.grids = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the retained crew members before approving drags.
-        /// </summary>
-        public List<int> Delayed_Crew_Crewmembers
-        {
-            get { return this.delayedCrewmembers; }
-            set { this.delayedCrewmembers = value; }
         }
 
         /// <summary>

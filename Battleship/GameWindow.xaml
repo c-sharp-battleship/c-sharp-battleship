@@ -26,6 +26,7 @@
         <Button x:Name="Confirm_Button" Content="Confirm Ship Placement" HorizontalAlignment="Left" Margin="112,115,0,0" VerticalAlignment="Top" Height="35" Width="145" Click="Confirm_Button_Click" Background="#FF8EADB3"/>
         <Button x:Name="BtnSave" Content="Save" HorizontalAlignment="Left" Height="35" Margin="262,115,0,0" VerticalAlignment="Top" Width="126" Click="BtnSave_Click"/>
         <Button x:Name="BtnLoad" Content="Load" HorizontalAlignment="Left" Height="35" Margin="400,115,0,0" VerticalAlignment="Top" Width="114" Click="BtnLoad_Click"/>
+        <Button x:Name="Reportgame" Content="GameStatusdictionary" HorizontalAlignment="Left" Margin="536,115,0,0" VerticalAlignment="Top" Height="35" Width="225" Background="#FF5A7C28" Click="Reportgame_Click"/>
 
     </Grid>
 </Window>

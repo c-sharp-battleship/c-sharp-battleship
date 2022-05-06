@@ -62,6 +62,11 @@ namespace Battleship
         private string containedShipID;
 
         /// <summary>
+        /// The type of the ship contained by the gridcell.
+        /// </summary>
+        private int containedshipType;
+
+        /// <summary>
         /// The grid cell's column number.
         /// </summary>
         private int columnNumber;
@@ -198,6 +203,15 @@ namespace Battleship
         {
             get { return this.containedshipName; }
             set { this.containedshipName = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the ship name contained type.
+        /// </summary>
+        public int ShipContainedType
+        {
+            get { return this.containedshipType; }
+            set { this.containedshipType = value; }
         }
 
         /// <summary>

@@ -100,10 +100,10 @@ namespace Battleship
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
 
                             GridCell myButton = new GridCell(player_ID, buttoncolorForDeffense, rowthousand.ToString());
-                            myButton.Content = capital_letters[col] + (row + 1);
-                            myButton.TrackingID = (col + 1) + (row * maxCol);
 
-                            // myButton.Content = (col + 1) + (row * maxCol);
+                            // myButton.Content = capital_letters[col] + (row + 1);
+                            myButton.TrackingID = (col + 1) + (row * maxCol);
+                            myButton.Content = (col + 1) + (row * maxCol);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
                             myButton.RowNum = row + 1;
@@ -137,10 +137,10 @@ namespace Battleship
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
                             int dictionaryOffset = maxCol * maxCol;
                             GridCell myButton = new GridCell(player_ID, buttoncolorForOffense, rowthousand.ToString());
-                            myButton.Content = capital_letters[col] + (row + 1);
-                            myButton.TrackingID = offenseIDcountOffset + col + 1 + (row * maxCol);
 
-                            // myButton.Content = col + 1 + (row * maxCol);
+                            // myButton.Content = capital_letters[col] + (row + 1);
+                            myButton.TrackingID = offenseIDcountOffset + col + 1 + (row * maxCol);
+                            myButton.Content = col + 1 + (row * maxCol);
                             myButton.Width = gridcellSize;
                             myButton.Height = gridcellSize;
                             myButton.RowNum = row + 1;
@@ -310,7 +310,7 @@ namespace Battleship
                 string shipName = ship.ShipName.Substring(0, 2);
 
                 // Loop through each of the GridCells that the ship is currently placed on.
-                foreach (int crewMember in ship.Delayed_Crew_Crewmembers)
+                foreach (int crewMember in ship.Ship_Crewmembers)
                 {
                     // Set the GridCell's color to Azure.
                     this.playerGridCells[crewMember].Background = Brushes.Azure;
