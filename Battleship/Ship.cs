@@ -71,26 +71,6 @@ namespace Battleship
         private Coordinate shipEndCoords;
 
         /// <summary>
-        /// Horizontal crew members.
-        /// </summary>
-        private List<int> movingHorizontalCrewmembers;
-
-        /// <summary>
-        /// Vertical Crew members.
-        /// </summary>
-        private List<int> movingVerticalCrewmembers;
-
-        /// <summary>
-        /// Horizontal crew members.
-        /// </summary>
-        private List<int> initialHorizontalCrewmembers;
-
-        /// <summary>
-        /// Vertical Crew members.
-        /// </summary>
-        private List<int> initialVerticalCrewmembers;
-
-        /// <summary>
         /// Ship current crew.
         /// </summary>
         private List<int> delayedCrewmembers;
@@ -136,10 +116,6 @@ namespace Battleship
         /// <param name="startCoords"> This is the start coordinates of the ship.</param>
         public Ship(int playerID, int driver, int shipType, double gridCellSize, int rowTotal, Coordinate startCoords)
         {
-            this.movingHorizontalCrewmembers = new List<int>();
-            this.movingVerticalCrewmembers = new List<int>();
-            this.initialHorizontalCrewmembers = new List<int>();
-            this.initialVerticalCrewmembers = new List<int>();
             this.actualCrewmembers = new List<int>();
             this.delayedCrewmembers = new List<int>();
             this.playerID = playerID;
@@ -195,30 +171,13 @@ namespace Battleship
             this.captain = driver;
 
             // set the entry point crew member to compare future moves
-            this.initialHorizontalCrewmembers.Clear();
-            this.initialVerticalCrewmembers.Clear();
             int horizontalValue = driver;
             int vertialValue = driver;
 
             for (int i = 0; i < this.grids; i++)
             {
-                this.initialHorizontalCrewmembers.Add(horizontalValue);
-                horizontalValue++;
-            }
-
-            for (int i = 0; i < this.grids; i++)
-            {
-                this.initialVerticalCrewmembers.Add(vertialValue);
-                vertialValue += rowTotal;
-            }
-
-            if (this.HDirection == true)
-            {
-                this.delayedCrewmembers = this.initialHorizontalCrewmembers;
-            }
-            else
-            {
-                this.delayedCrewmembers = this.initialVerticalCrewmembers;
+                this.actualCrewmembers.Add(i + driver);
+                this.delayedCrewmembers.Add(i + driver);
             }
         }
 
@@ -562,45 +521,47 @@ namespace Battleship
         public List<int> SetCrewmembers(int p_capitan, int dragTurn)
         {
             List<int> back = new List<int>();
-            this.movingHorizontalCrewmembers.Clear();
-            this.movingVerticalCrewmembers.Clear();
+
+            List<int> movingHorizontalCrewmembers = new List<int>();
+            List<int> movingVerticalCrewmembers = new List<int>();
+
             int horizontalValue = p_capitan;
             int verticalValue = p_capitan;
 
             for (int i = 0; i < this.GridSpaces; i++)
             {
-                this.movingHorizontalCrewmembers.Add(horizontalValue);
+                movingHorizontalCrewmembers.Add(horizontalValue);
                 horizontalValue++;
             }
 
             for (int i = 0; i < this.GridSpaces; i++)
             {
-                this.movingVerticalCrewmembers.Add(verticalValue);
+                movingVerticalCrewmembers.Add(verticalValue);
                 verticalValue += this.rowsgrid;
             }
 
             // draging crewmembers request for check
             if (this.HDirection == true && dragTurn == 0)
             {
-                back = this.movingHorizontalCrewmembers;
+                back = movingHorizontalCrewmembers;
             }
 
             // draging crewmembers request for check
             if (this.HDirection == false && dragTurn == 0)
             {
-                back = this.movingVerticalCrewmembers;
+                back = movingVerticalCrewmembers;
             }
 
             // turning crewmembers request for check
             if (this.HDirection == true && dragTurn == 1)
             {
-                back = this.movingVerticalCrewmembers;
+                back = movingVerticalCrewmembers;
             }
 
             // turning crewmembers request for check
             if (this.HDirection == false && dragTurn == 1)
             {
-                back = this.movingHorizontalCrewmembers;
+                back = movingHorizontalCrewmembers;
             }
 
             return back;
