@@ -125,6 +125,7 @@ namespace Battleship
                     // second iteration for creating the attack grid
                     // offset this buttons from the left to become the attack grid to compaensate the space occupied by the defense grid
                     double gridOffsetWhenVisual = gridcellSize * maxCol;
+                    int offenseIDcountOffset = maxCol * maxCol;
 
                     // will iterate the number of columns requested
                     for (int col = 0; col < maxCol; col++)
@@ -137,7 +138,7 @@ namespace Battleship
                             int dictionaryOffset = maxCol * maxCol;
                             GridCell myButton = new GridCell(player_ID, buttoncolorForOffense, rowthousand.ToString());
                             myButton.Content = capital_letters[col] + (row + 1);
-                            myButton.TrackingID = col + 1 + (row * maxCol);
+                            myButton.TrackingID = offenseIDcountOffset + col + 1 + (row * maxCol);
 
                             // myButton.Content = col + 1 + (row * maxCol);
                             myButton.Width = gridcellSize;
@@ -170,7 +171,7 @@ namespace Battleship
                 // Construct the ships with the image above
                 Ship warship = new Ship(player_ID, driver, i, gridcellSize, maxCol, startCoords);
                 warship.Background = new ImageBrush(shipPic);
-                warship.Uid = i.ToString();
+                warship.Uid = player_ID.ToString() + "_" + i.ToString();
 
                 // Find the loading cell requested for the ship horizontally
                 foreach (KeyValuePair<int, GridCell> pair in this.playerGridCells)

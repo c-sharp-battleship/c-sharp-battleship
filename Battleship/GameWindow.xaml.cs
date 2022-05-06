@@ -35,6 +35,11 @@ namespace Battleship
         public List<GridCell> PlayersCellRecords;
 
         /// <summary>
+        /// Tracking changes event dictionary.
+        /// </summary>
+        private Dictionary<string, GridCell> gameStatus = new Dictionary<string, GridCell>();
+
+        /// <summary>
         /// The game type.
         /// </summary>
         private StatusCodes.GameType gameType;
@@ -412,8 +417,18 @@ namespace Battleship
         {
             foreach (KeyValuePair<int, GridCell> mainPlayerPair in p_currentPlayer.Playergridsquarecollection)
             {
+                // Create initial variables for interior iterations
                 int gridcellnumber = mainPlayerPair.Key;
                 GridCell mainPlayerCell = mainPlayerPair.Value;
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                // Load in initial grids to game dictionary control for reports and outputs
+                string gameStatusdictionarykey = p_currentPlayer.PlayerID.ToString() + "-" + mainPlayerPair.Value.TrackingID.ToString();
+                this.gameStatus.Add(gameStatusdictionarykey, mainPlayerPair.Value);
 
                 // add a click event for all cells in Player 1 grid only if the button is attack type
                 if (mainPlayerCell.OffenseButton == true)
@@ -436,7 +451,6 @@ namespace Battleship
                                 {
                                     // make changes to player two grid
                                     otherPlayerPlayerCell.Background = Brushes.Red;
-
                                     otherPlayerPlayerCell.Content = "X";
                                     otherPlayerPlayerCell.Stricked = 1;
                                     otherPlayerPlayerCell.AllowDrop = false;
@@ -537,19 +551,21 @@ namespace Battleship
                                 double shipMaxY = (p_currentPlayerWindow.Width / 2) - myShip.Height + p_cellsize;
 
                                 // check this method to see if its ok to move ship to requested cell
-                                int overlappingCrew = this.SetshipMovePerCrewCheck(myShip, mainPlayerCell, p_currentPlayer, 0);
+                                int overlappingCrew = this.AllowShipMove_CrewOverlapCheck(myShip, mainPlayerCell, p_currentPlayer, 0);
 
                                 if (overlappingCrew == 0)
                                 {
                                     Point grabPos = e.GetPosition(p_currentPlayerWindow);
                                     if (grabPos.X < shipMaxX && grabPos.Y < shipMaxY)
                                     {
-                                        myShip.Delayed_Crew_Crewmembers = myShip.SetCrewmembers(mainPlayerCell.TrackingID, 0);
+                                        // update the fixed crew members
+                                        myShip.Ship_Crewmembers = myShip.SetCrewmembers(mainPlayerCell.TrackingID, 0);
                                         Canvas.SetTop(myShip, mainPlayerCell.Top_Comp_ParentTop);
                                         myShip.Top_Comp_ParentTop = mainPlayerCell.Top_Comp_ParentTop;
                                         Canvas.SetLeft(myShip, mainPlayerCell.Left_Comp_ParentLeft);
                                         myShip.Left_Comp_ParentLeft = mainPlayerCell.Left_Comp_ParentLeft;
                                         myShip.Captain = mainPlayerCell.TrackingID;
+                                        this.Reportchange(myShip);
 
                                         Coordinate shipStartCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
                                         Coordinate shipEndCoords = this.ConvertCanvasCoordinatesToGridCoordinates(grabPos.X, grabPos.Y);
@@ -583,7 +599,7 @@ namespace Battleship
         /// <param name="p_currentPlayer">The current player.</param>
         /// <param name="dragTurn">The current drag turn.</param>
         /// <returns>The new captain of the ship.</returns>
-        private int SetshipMovePerCrewCheck(Ship myShip, GridCell mainPlayerCell, Player p_currentPlayer, int dragTurn)
+        private int AllowShipMove_CrewOverlapCheck(Ship myShip, GridCell mainPlayerCell, Player p_currentPlayer, int dragTurn)
         {
             int overlapingCrewMembers = 0;
             int newCaptain = mainPlayerCell.TrackingID;
@@ -592,12 +608,11 @@ namespace Battleship
 
             foreach (int newMember in newCrewmembers)
             {
-                // Logger.ConsoleInformation(newMember.ToString());
                 foreach (Ship shipCheck in p_currentPlayer.Playershipcollection)
                 {
                     if (shipCheck.Uid != myShip.Uid)
                     {
-                        foreach (int oldCrewMember in shipCheck.Delayed_Crew_Crewmembers)
+                        foreach (int oldCrewMember in shipCheck.Ship_Crewmembers)
                         {
                             if (newMember == oldCrewMember)
                             {
@@ -644,14 +659,32 @@ namespace Battleship
         {
             foreach (Ship navyShip in p_currentPlayer.Playershipcollection)
             {
+                // Create initial variables list of initial crew members dictionary cell records with ship information
+                List<int> initialshipcrew = navyShip.SetCrewmembers(navyShip.Captain, 0);
+
+                // Load all ships information to main dictionary
+                foreach (int iniMember in initialshipcrew)
+                {
+                    string initialship_cell_bind = p_currentPlayer.PlayerID.ToString() + "-" + iniMember.ToString();
+                    this.gameStatus[initialship_cell_bind].ButtonOccupied = true;
+                    this.gameStatus[initialship_cell_bind].ShipContainedID = navyShip.Uid;
+                    this.gameStatus[initialship_cell_bind].ShipContainedName = navyShip.ShipName;
+                    this.gameStatus[initialship_cell_bind].Crewmembers = navyShip.Ship_Crewmembers;
+                }
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // add a right click event to each ship
                 navyShip.MouseRightButtonDown += new MouseButtonEventHandler(delegate(object sender, MouseButtonEventArgs e)
                 {
                     if (p_currentPlayer.IsLocked == false)
                     {
                         // create a cell to pass a cell to this method and return the possible crew members for this turn
-                        GridCell fakecell = new GridCell(p_currentPlayer.PlayerID, 0, string.Empty);
-                        fakecell.TrackingID = navyShip.Captain;
-                        int overlappingCrew = this.SetshipMovePerCrewCheck(navyShip, fakecell, p_currentPlayer, 1);
+                        GridCell checkTempCell = new GridCell(p_currentPlayer.PlayerID, 0, string.Empty);
+                        checkTempCell.TrackingID = navyShip.Captain;
+                        int overlappingCrew = this.AllowShipMove_CrewOverlapCheck(navyShip, checkTempCell, p_currentPlayer, 1);
 
                         if (overlappingCrew == 0)
                         {
@@ -660,8 +693,14 @@ namespace Battleship
 
                             if (navyShip.Top_Comp_ParentTop <= shipMaxY && navyShip.LeftToParentLeft <= shipMaxX)
                             {
+                                // allow the right turn movement
                                 navyShip.RotateShip(true);
-                                navyShip.Delayed_Crew_Crewmembers = navyShip.SetCrewmembers(navyShip.Captain, 0);
+
+                                // Update the stored Crewmembers to the new captain values
+                                navyShip.Ship_Crewmembers = navyShip.SetCrewmembers(navyShip.Captain, 0);
+
+                                // call report change and update for main dictionary
+                                this.Reportchange(navyShip);
                             }
                         }
                     }
@@ -792,15 +831,6 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Set a report button click.
-        /// </summary>
-        /// <param name="sender">The object that initiated the event.</param>
-        /// <param name="e">The event arguments for the event.</param>
-        private void Reportbtn_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        /// <summary>
         /// Set a confirm button click.
         /// </summary>
         /// <param name="sender">The object that initiated the event.</param>
@@ -838,6 +868,56 @@ namespace Battleship
             // Call Save method from SaveLoad.cs
             this.saveAndLoad.ReadFile();
             this.saveAndLoad.DisplayFileContents();
+        }
+
+        /// <summary>
+        /// report change to main dictionary.
+        /// </summary>
+        /// <param name="ship">this is my ship.</param>
+        private void Reportchange(Ship ship)
+        {
+            foreach (KeyValuePair<string, GridCell> report in this.gameStatus)
+            {
+                string keytext = report.Key;
+                GridCell gridCell = report.Value;
+
+                if (ship.Uid == gridCell.ShipContainedID)
+                {
+                    gridCell.Crewmembers.Clear();
+                    gridCell.ButtonOccupied = false;
+                    gridCell.ShipContainedID = string.Empty;
+                    gridCell.ShipContainedName = string.Empty;
+                }
+            }
+
+            // update main game dictionary
+            this.Updatechange(ship);
+        }
+
+        /// <summary>
+        /// update ship members in main dictionary.
+        /// </summary>
+        /// <param name="ship">this is my ship.</param>
+        private void Updatechange(Ship ship)
+        {
+            foreach (int shipmember in ship.Ship_Crewmembers)
+            {
+                string reportcellID_ship = ship.PlayerID.ToString() + "-" + shipmember.ToString();
+
+                foreach (KeyValuePair<string, GridCell> report in this.gameStatus)
+                {
+                    string reportcellID_m = report.Key;
+                    GridCell gridCell = report.Value;
+
+                    if (reportcellID_m == reportcellID_ship)
+                    {
+                        gridCell.Crewmembers = ship.Ship_Crewmembers;
+                        gridCell.ButtonOccupied = true;
+                        gridCell.ShipContainedID = ship.Uid;
+                        gridCell.ShipContainedName = ship.ShipName;
+                    }
+                }
+            }
         }
     }
 }

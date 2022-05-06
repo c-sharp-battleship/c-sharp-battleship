@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace Battleship
 {
+    using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
@@ -36,6 +37,11 @@ namespace Battleship
         public double TopToParentTop;
 
         /// <summary>
+        /// Horizontal crew members.
+        /// </summary>
+        private List<int> movingCrewmembers;
+
+        /// <summary>
         /// The grid cell's player ID.
         /// </summary>
         private int playerID;
@@ -44,6 +50,16 @@ namespace Battleship
         /// The grid cell's name.
         /// </summary>
         private string name;
+
+        /// <summary>
+        /// name for ship contained.
+        /// </summary>
+        private string containedshipName;
+
+        /// <summary>
+        /// The grid cell's name.
+        /// </summary>
+        private string containedShipID;
 
         /// <summary>
         /// The grid cell's column number.
@@ -83,6 +99,7 @@ namespace Battleship
         /// <param name="myName"> This is the name of the grid cell. </param>
         public GridCell(int playerID, int buttonColor, string myName)
         {
+            this.movingCrewmembers = new List<int>();
             this.playerID = playerID;
             this.name = myName;
             switch (buttonColor)
@@ -175,6 +192,24 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Gets or sets the ship name contained if there is any.
+        /// </summary>
+        public string ShipContainedName
+        {
+            get { return this.containedshipName; }
+            set { this.containedshipName = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a ship id contained if there is any.
+        /// </summary>
+        public string ShipContainedID
+        {
+            get { return this.containedShipID; }
+            set { this.containedShipID = value; }
+        }
+
+        /// <summary>
         /// Gets or sets grid cell's player ID.
         /// </summary>
         public int PlayerID
@@ -226,6 +261,15 @@ namespace Battleship
         {
             get { return this.trackingID; }
             set { this.trackingID = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets grid cell's player ID.
+        /// </summary>
+        public List<int> Crewmembers
+        {
+            get { return this.movingCrewmembers; }
+            set { this.movingCrewmembers = value; }
         }
     }
 }

@@ -116,14 +116,6 @@ namespace Battleship
         /// <param name="startCoords"> This is the start coordinates of the ship.</param>
         public Ship(int playerID, int driver, int shipType, double gridCellSize, int rowTotal, Coordinate startCoords)
         {
-            this.actualCrewmembers = new List<int>();
-            this.delayedCrewmembers = new List<int>();
-            this.playerID = playerID;
-            this.shipType = shipType;
-            this.ShipIsSunk = false;
-            this.shipStartCoords = startCoords;
-            this.rowsgrid = rowTotal;
-
             switch (shipType)
             {
                 case 1:
@@ -164,6 +156,16 @@ namespace Battleship
                     break;
             }
 
+            this.actualCrewmembers = new List<int>();
+            this.delayedCrewmembers = new List<int>();
+            this.playerID = playerID;
+            this.shipType = shipType;
+            this.ShipIsSunk = false;
+            this.shipStartCoords = startCoords;
+            this.rowsgrid = rowTotal;
+            this.delayedCrewmembers = this.SetCrewmembers(driver, 0);
+            this.actualCrewmembers = this.SetCrewmembers(driver, 0);
+
             Coordinate endCoords = new Coordinate((short)(this.shipStartCoords.XCoordinate + this.length - 1), this.ShipStartCoords.YCoordinate);
             this.shipEndCoords = endCoords;
             this.Width = this.length * gridCellSize;
@@ -174,11 +176,13 @@ namespace Battleship
             int horizontalValue = driver;
             int vertialValue = driver;
 
+            /*
             for (int i = 0; i < this.grids; i++)
             {
                 this.actualCrewmembers.Add(i + driver);
                 this.delayedCrewmembers.Add(i + driver);
             }
+            */
         }
 
         /// <summary>
@@ -200,31 +204,37 @@ namespace Battleship
                     this.name = "Destroyer";
                     this.length = 2;
                     this.resistance = 2;
+                    this.grids = 2;
                     break;
                 case 2:
                     this.name = "Submarine";
                     this.length = 3;
                     this.resistance = 3;
+                    this.grids = 3;
                     break;
                 case 3:
                     this.name = "Cruiser";
                     this.length = 3;
                     this.resistance = 3;
+                    this.grids = 3;
                     break;
                 case 4:
                     this.name = "Battleship";
                     this.length = 4;
                     this.resistance = 4;
+                    this.grids = 4;
                     break;
                 case 5:
                     this.name = "Carrier";
                     this.length = 5;
                     this.resistance = 5;
+                    this.grids = 5;
                     break;
                 default:
                     this.name = "Mistake";
                     this.length = 0;
                     this.resistance = 0;
+                    this.grids = 0;
                     break;
             }
 
@@ -380,11 +390,12 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets the current crew members for each ship.
+        /// Gets or sets the current crew members for each ship.
         /// </summary>
         public List<int> Ship_Crewmembers
         {
             get { return this.actualCrewmembers; }
+            set { this.actualCrewmembers = value; }
         }
 
         /// <summary>
@@ -517,7 +528,7 @@ namespace Battleship
         /// </summary>
         /// <param name="p_capitan">see the cell for the ship has a crew.</param>
         /// <param name="dragTurn">The turn to be dragged.</param>
-        /// <returns>Returns the new crewmembers of the ship.</returns>
+        /// <returns>Returns the new Crewmembers of the ship.</returns>
         public List<int> SetCrewmembers(int p_capitan, int dragTurn)
         {
             List<int> back = new List<int>();
@@ -540,25 +551,25 @@ namespace Battleship
                 verticalValue += this.rowsgrid;
             }
 
-            // draging crewmembers request for check
+            // draging Crewmembers request for check
             if (this.HDirection == true && dragTurn == 0)
             {
                 back = movingHorizontalCrewmembers;
             }
 
-            // draging crewmembers request for check
+            // draging Crewmembers request for check
             if (this.HDirection == false && dragTurn == 0)
             {
                 back = movingVerticalCrewmembers;
             }
 
-            // turning crewmembers request for check
+            // turning Crewmembers request for check
             if (this.HDirection == true && dragTurn == 1)
             {
                 back = movingVerticalCrewmembers;
             }
 
-            // turning crewmembers request for check
+            // turning Crewmembers request for check
             if (this.HDirection == false && dragTurn == 1)
             {
                 back = movingHorizontalCrewmembers;
