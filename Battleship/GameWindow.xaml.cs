@@ -449,6 +449,14 @@ namespace Battleship
                                     otherPlayerPlayerCell.Content = "X";
                                     otherPlayerPlayerCell.Stricked = 1;
                                     otherPlayerPlayerCell.AllowDrop = false;
+                                    if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
+                                    {
+                                        Say.Show("You have damaged my " + otherPlayerPlayerCell.ShipContainedName );
+                                    }
+                                    else
+                                    {
+                                        Logger.ConsoleInformation("You will never succeed");
+                                    }
 
                                     int rowNum;
                                     if ((gridcellnumber - 100) % 10 == 0)

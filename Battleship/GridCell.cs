@@ -107,6 +107,7 @@ namespace Battleship
             this.movingCrewmembers = new List<int>();
             this.playerID = playerID;
             this.name = myName;
+            this.containedshipName = string.Empty;
             switch (buttonColor)
             {
                 case 1:
