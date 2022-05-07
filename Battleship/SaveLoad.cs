@@ -22,6 +22,11 @@ namespace Battleship
         private const ushort NumLinesCsvPlayerHeader = 1;
 
         /// <summary>
+        /// The number of cells that make up a CSV player header.
+        /// </summary>
+        private const ushort NumCellsCsvPlayerHeader = 2;
+
+        /// <summary>
         /// The number of lines that make up a CSV player attack board.
         /// </summary>
         private const ushort NumLinesCsvPlayerAttackBoard = 10;
@@ -151,7 +156,7 @@ namespace Battleship
         {
             string[] playerHeader = line.Split(",");
 
-            if (line.Length != SaveLoad.NumLinesCsvPlayerHeader)
+            if (playerHeader.Length != SaveLoad.NumCellsCsvPlayerHeader)
             {
                 Logger.ConsoleInformation("Error: invalid CSV player header!");
                 throw new ArgumentException("Error: invalid CSV player header: ", nameof(line));
@@ -213,7 +218,7 @@ namespace Battleship
                     }
                     else
                     {
-                        int[] separatedLineConverted = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                        int[] separatedLineConverted = new int[separatedLine.Length];
                         for (int j = 0; j < separatedLine.Length; j++)
                         {
                             if (!int.TryParse(separatedLine[j], out separatedLineConverted[j]))
@@ -226,14 +231,14 @@ namespace Battleship
                             {
                                 switch (separatedLineConverted[j])
                                 {
+                                    case 0:
+                                        attackBoardObject[j + (i * 10)] = StatusCodes.AttackStatus.NOT_ATTACKED;
+                                        break;
                                     case 1:
-                                        attackBoardObject[i + (j * 10)] = StatusCodes.AttackStatus.NOT_ATTACKED;
+                                        attackBoardObject[j + (i * 10)] = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
                                         break;
                                     case 2:
-                                        attackBoardObject[i + (j * 10)] = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
-                                        break;
-                                    case 3:
-                                        attackBoardObject[i + (j * 10)] = StatusCodes.AttackStatus.ATTACKED_HIT;
+                                        attackBoardObject[j + (i * 10)] = StatusCodes.AttackStatus.ATTACKED_HIT;
                                         break;
                                     default:
                                         throw new ArgumentException(
@@ -280,19 +285,19 @@ namespace Battleship
                             switch (separatedLine[j])
                             {
                                 case "De":
-                                    ships[StatusCodes.ShipType.DESTROYER].Add(i + (j * 10));
+                                    ships[StatusCodes.ShipType.DESTROYER].Add(j + (i * 10));
                                     break;
                                 case "Su":
-                                    ships[StatusCodes.ShipType.SUBMARINE].Add(i + (j * 10));
+                                    ships[StatusCodes.ShipType.SUBMARINE].Add(j + (i * 10));
                                     break;
                                 case "Cr":
-                                    ships[StatusCodes.ShipType.CRUISER].Add(i + (j * 10));
+                                    ships[StatusCodes.ShipType.CRUISER].Add(j + (i * 10));
                                     break;
                                 case "Ba":
-                                    ships[StatusCodes.ShipType.BATTLESHIP].Add(i + (j * 10));
+                                    ships[StatusCodes.ShipType.BATTLESHIP].Add(j + (i * 10));
                                     break;
                                 case "Ca":
-                                    ships[StatusCodes.ShipType.CARRIER].Add(i + (j * 10));
+                                    ships[StatusCodes.ShipType.CARRIER].Add(j + (i * 10));
                                     break;
                                 case "X":
                                     // Don't do anything if the grid space is empty.
@@ -429,7 +434,7 @@ namespace Battleship
 
                 for (int j = 0; j < SaveLoad.NumCellsPerLine; j++)
                 {
-                    line += playerAttackBoardObject[i + (j * 10)];
+                    line += (int)playerAttackBoardObject[j + (i * 10)];
 
                     // If the cell is not the last in the line, add a comma.
                     if (j != (SaveLoad.NumCellsPerLine - 1))
@@ -462,7 +467,7 @@ namespace Battleship
                     {
                         foreach (int crewmember in playerDefenseBoardObject[(StatusCodes.ShipType)k])
                         {
-                            if (crewmember == i + (j * 10))
+                            if (crewmember == j + (i * 10))
                             {
                                 switch ((StatusCodes.ShipType)k)
                                 {
