@@ -451,7 +451,7 @@ namespace Battleship
                                     otherPlayerPlayerCell.AllowDrop = false;
                                     if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
                                     {
-                                        Say.Show("You have damaged my " + otherPlayerPlayerCell.ShipContainedName );
+                                        Say.Show("You have damaged my " + otherPlayerPlayerCell.ShipContainedName);
                                     }
                                     else
                                     {
