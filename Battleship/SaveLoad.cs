@@ -103,6 +103,29 @@ namespace Battleship
         public SaveLoad()
         {
             this.fileContents = new List<string>();
+
+            this.player1Username = string.Empty;
+            this.player2Username = string.Empty;
+
+            this.player1Type = StatusCodes.PlayerType.OTHER;
+            this.player2Type = StatusCodes.PlayerType.OTHER;
+
+            this.player1AttackBoard = new Dictionary<int, StatusCodes.AttackStatus>();
+            this.player2AttackBoard = new Dictionary<int, StatusCodes.AttackStatus>();
+
+            // For each ship in the defense board, instantiate a new list of crewmembers.
+            this.player1DefenseBoard = new Dictionary<StatusCodes.ShipType, List<int>>();
+            for (int i = 0; i < this.player1DefenseBoard.Count; i++)
+            {
+                this.player1DefenseBoard[(StatusCodes.ShipType)i] = new List<int>();
+            }
+
+            // For each ship in the defense board, instantiate a new list of crewmembers.
+            this.player2DefenseBoard = new Dictionary<StatusCodes.ShipType, List<int>>();
+            for (int i = 0; i < this.player2DefenseBoard.Count; i++)
+            {
+                this.player2DefenseBoard[(StatusCodes.ShipType)i] = new List<int>();
+            }
         }
 
         /// <summary>
@@ -397,12 +420,9 @@ namespace Battleship
         /// Saves the given player's attack board in CSV format (per the schema).
         /// </summary>
         /// <param name="playerAttackBoardObject">The given user's attack board (passed in by reference).</param>
-        /// <returns>The CSV-formatted attack board.</returns>
-        public List<string> SaveCsvPlayerAttackBoard(
-            ref Dictionary<int, StatusCodes.AttackStatus> playerAttackBoardObject)
+        /// <param name="lines">The CSV output file (in list format, passed in by reference).</param>
+        public void SaveCsvPlayerAttackBoard(ref Dictionary<int, StatusCodes.AttackStatus> playerAttackBoardObject, ref List<string> lines)
         {
-            List<string> lines = new List<string>();
-
             for (int i = 0; i < SaveLoad.NumLinesPerBoard; i++)
             {
                 string line = string.Empty;
@@ -420,20 +440,15 @@ namespace Battleship
 
                 lines.Add(line);
             }
-
-            return lines;
         }
 
         /// <summary>
         /// Saves the player's defense board in CSV format (per the schema).
         /// </summary>
         /// <param name="playerDefenseBoardObject">The player's defense board object (passed in by reference).</param>
-        /// <returns>The CSV-formatted player defense board.</returns>
-        public List<string> SaveCsvPlayerDefenseBoard(
-            ref Dictionary<StatusCodes.ShipType, List<int>> playerDefenseBoardObject)
+        /// <param name="lines">The CSV output file (in list format, passed in by reference).</param>
+        public void SaveCsvPlayerDefenseBoard(ref Dictionary<StatusCodes.ShipType, List<int>> playerDefenseBoardObject, ref List<string> lines)
         {
-            List<string> lines = new List<string>();
-
             for (int i = 0; i < SaveLoad.NumLinesPerBoard; i++)
             {
                 string line = string.Empty;
@@ -485,19 +500,27 @@ namespace Battleship
 
                 lines.Add(line);
             }
-
-            return lines;
         }
 
         /// <summary>
         /// Saves the player's information in CSV format (per the schema).
         /// </summary>
-        /// <returns>The player's information in CSV-format (per the schema).</returns>
-        public List<string> SaveCsvPlayer()
+        /// <param name="playerUsernameObject">The object that represents the player's username (passed in by reference).</param>
+        /// <param name="playerTypeObject">The object that represents the player's type (passed in by reference).</param>
+        /// <param name="playerAttackBoardObject">The object that represent the player's attack board (passed in by reference).</param>
+        /// <param name="playerDefenseBoardObject">The object that represent the player's defense board (passed in by reference).</param>
+        /// <param name="lines">The CSV output file (in list format, passed in by reference).</param>
+        public void SaveCsvPlayer(
+            ref string playerUsernameObject,
+            ref StatusCodes.PlayerType playerTypeObject,
+            ref Dictionary<int, StatusCodes.AttackStatus> playerAttackBoardObject,
+            ref Dictionary<StatusCodes.ShipType, List<int>> playerDefenseBoardObject,
+            ref List<string> lines)
         {
-            List<string> lines = new List<string>();
+            lines.Add(this.SaveCsvPlayerHeader(ref playerUsernameObject, ref playerTypeObject));
 
-            return lines;
+            this.SaveCsvPlayerAttackBoard(ref playerAttackBoardObject, ref lines);
+            this.SaveCsvPlayerDefenseBoard(ref playerDefenseBoardObject, ref lines);
         }
 
         /// <summary>
@@ -507,6 +530,9 @@ namespace Battleship
         public List<string> SaveCsV()
         {
             List<string> lines = new List<string>();
+
+            this.SaveCsvPlayer(ref this.player1Username, ref this.player1Type, ref this.player1AttackBoard, ref this.player1DefenseBoard, ref lines);
+            this.SaveCsvPlayer(ref this.player2Username, ref this.player2Type, ref this.player2AttackBoard, ref this.player2DefenseBoard, ref lines);
 
             return lines;
         }

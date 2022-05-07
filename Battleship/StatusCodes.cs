@@ -198,6 +198,11 @@ namespace Battleship
             /// Represents a computer player.
             /// </summary>
             COMPUTER,
+
+            /// <summary>
+            /// Represents a player other than human or computer (invalid player type).
+            /// </summary>
+            OTHER,
         }
     }
 }
