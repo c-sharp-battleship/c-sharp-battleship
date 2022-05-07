@@ -3,12 +3,12 @@
 //     Battleship Coding Group, 2022
 // </copyright>
 //-----------------------------------------------------------------------
+
 namespace Battleship
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
-
     using Microsoft.Win32;
 
     /// <summary>
@@ -30,6 +30,16 @@ namespace Battleship
         /// The number of lines that make up a CSV player defense board.
         /// </summary>
         private const ushort NumLinesCsvPlayerDefenseBoard = 10;
+
+        /// <summary>
+        /// The number of cells that can exist for each line of a file (per the CSV schema).
+        /// </summary>
+        private const ushort NumCellsPerLine = 10;
+
+        /// <summary>
+        /// The number of lines that can exist for each player's board (per the CSV schema).
+        /// </summary>
+        private const ushort NumLinesPerBoard = 10;
 
         /// <summary>
         /// The number of lines that make up a CSV player.
@@ -109,7 +119,7 @@ namespace Battleship
         /// </summary>
         /// <param name="playerUsernameObject">The object for the player's username (passed in by reference based on the player's ID).</param>
         /// <param name="playerTypeObject">The object for the player's type (passed in by reference based on the player's ID).</param>
-        /// <param name="line">The line of text (header) to be Loadd.</param>
+        /// <param name="line">The line of text (header) to be loaded.</param>
         /// <exception cref="ArgumentException">Thrown if the CSV schema is invalid.</exception>
         public void LoadCsvPlayerHeader(
             ref string playerUsernameObject,
@@ -172,7 +182,7 @@ namespace Battleship
                 for (int i = 0; i < lines.Count; i++)
                 {
                     string[] separatedLine = lines[i].Split(",");
-                    if (separatedLine.Length != 10)
+                    if (separatedLine.Length != SaveLoad.NumCellsPerLine)
                     {
                         throw new ArgumentException(
                             "Error: invalid CSV player attack board width in line" + (i + 1).ToString() + ": ",
@@ -234,7 +244,7 @@ namespace Battleship
                 for (int i = 0; i < lines.Count; i++)
                 {
                     string[] separatedLine = lines[i].Split(",");
-                    if (separatedLine.Length != 10)
+                    if (separatedLine.Length != SaveLoad.NumCellsPerLine)
                     {
                         throw new ArgumentException(
                             "Error: invalid CSV player defense board width: ",
@@ -346,9 +356,159 @@ namespace Battleship
                     player2Csv.Add(this.fileContents[i]);
                 }
 
-                this.LoadCsvPlayer(ref this.player1Username, ref this.player1Type, ref this.player1AttackBoard, ref this.player1DefenseBoard, player1Csv);
-                this.LoadCsvPlayer(ref this.player2Username, ref this.player2Type, ref this.player2AttackBoard, ref this.player2DefenseBoard, player2Csv);
+                this.LoadCsvPlayer(
+                    ref this.player1Username,
+                    ref this.player1Type,
+                    ref this.player1AttackBoard,
+                    ref this.player1DefenseBoard,
+                    player1Csv);
+                this.LoadCsvPlayer(
+                    ref this.player2Username,
+                    ref this.player2Type,
+                    ref this.player2AttackBoard,
+                    ref this.player2DefenseBoard,
+                    player2Csv);
             }
+        }
+
+        /// <summary>
+        /// Saves the player's header in CSV format (per the CSV schema).
+        /// </summary>
+        /// <param name="playerUsernameObject">The username of the given player (passed in by reference).</param>
+        /// <param name="playerTypeObject">The type of the given player (passed in by reference).</param>
+        /// <returns>The CSV-formatted player header.</returns>
+        public string SaveCsvPlayerHeader(ref string playerUsernameObject, ref StatusCodes.PlayerType playerTypeObject)
+        {
+            string playerHeader = string.Empty;
+
+            if (playerTypeObject == StatusCodes.PlayerType.PLAYER)
+            {
+                playerHeader += playerUsernameObject + "," + "0";
+            }
+            else if (playerTypeObject == StatusCodes.PlayerType.COMPUTER)
+            {
+                playerHeader += playerUsernameObject + "," + "1";
+            }
+
+            return playerHeader;
+        }
+
+        /// <summary>
+        /// Saves the given player's attack board in CSV format (per the schema).
+        /// </summary>
+        /// <param name="playerAttackBoardObject">The given user's attack board (passed in by reference).</param>
+        /// <returns>The CSV-formatted attack board.</returns>
+        public List<string> SaveCsvPlayerAttackBoard(
+            ref Dictionary<int, StatusCodes.AttackStatus> playerAttackBoardObject)
+        {
+            List<string> lines = new List<string>();
+
+            for (int i = 0; i < SaveLoad.NumLinesPerBoard; i++)
+            {
+                string line = string.Empty;
+
+                for (int j = 0; j < SaveLoad.NumCellsPerLine; j++)
+                {
+                    line += playerAttackBoardObject[i + (j * 10)];
+
+                    // If the cell is not the last in the line, add a comma.
+                    if (j != (SaveLoad.NumCellsPerLine - 1))
+                    {
+                        line += ",";
+                    }
+                }
+
+                lines.Add(line);
+            }
+
+            return lines;
+        }
+
+        /// <summary>
+        /// Saves the player's defense board in CSV format (per the schema).
+        /// </summary>
+        /// <param name="playerDefenseBoardObject">The player's defense board object (passed in by reference).</param>
+        /// <returns>The CSV-formatted player defense board.</returns>
+        public List<string> SaveCsvPlayerDefenseBoard(
+            ref Dictionary<StatusCodes.ShipType, List<int>> playerDefenseBoardObject)
+        {
+            List<string> lines = new List<string>();
+
+            for (int i = 0; i < SaveLoad.NumLinesPerBoard; i++)
+            {
+                string line = string.Empty;
+
+                for (int j = 0; j < SaveLoad.NumCellsPerLine; j++)
+                {
+                    string gridspace = string.Empty;
+
+                    // Loop through each of the ships and their crewmembers to see if they are located on the ship.
+                    for (int k = 0; k < playerDefenseBoardObject.Count; k++)
+                    {
+                        foreach (int crewmember in playerDefenseBoardObject[(StatusCodes.ShipType)k])
+                        {
+                            if (crewmember == i + (j * 10))
+                            {
+                                switch ((StatusCodes.ShipType)k)
+                                {
+                                    case StatusCodes.ShipType.DESTROYER:
+                                        gridspace = "De";
+                                        break;
+                                    case StatusCodes.ShipType.SUBMARINE:
+                                        gridspace = "Su";
+                                        break;
+                                    case StatusCodes.ShipType.CRUISER:
+                                        gridspace = "Cr";
+                                        break;
+                                    case StatusCodes.ShipType.BATTLESHIP:
+                                        gridspace = "Ba";
+                                        break;
+                                    case StatusCodes.ShipType.CARRIER:
+                                        gridspace = "Ca";
+                                        break;
+                                    default:
+                                        gridspace = "X";
+                                        break;
+                                }
+                            }
+                        }
+                    }
+
+                    line += gridspace;
+
+                    // If the cell is not the last in the line, add a comma.
+                    if (j != (SaveLoad.NumCellsPerLine - 1))
+                    {
+                        line += ",";
+                    }
+                }
+
+                lines.Add(line);
+            }
+
+            return lines;
+        }
+
+        /// <summary>
+        /// Saves the player's information in CSV format (per the schema).
+        /// </summary>
+        /// <returns>The player's information in CSV-format (per the schema).</returns>
+        public List<string> SaveCsvPlayer()
+        {
+            List<string> lines = new List<string>();
+
+            return lines;
+        }
+
+        /// <summary>
+        /// Saves the current class-member objects to a CSV file according to the schema.
+        /// </summary>
+        /// <returns>The entire CSV file to be written (per the schema).</returns>
+        public List<string> SaveCsV()
+        {
+            List<string> lines = new List<string>();
+
+            return lines;
         }
 
         /// <summary>
@@ -408,13 +568,15 @@ namespace Battleship
 
             dialog.ShowDialog();
 
+            List<string> lines = this.SaveCsV();
+
             try
             {
                 using (StreamWriter sw = new StreamWriter(dialog.FileName))
                 {
-                    for (int i = 0; i < this.fileContents.Count; i++)
+                    for (int i = 0; i < lines.Count; i++)
                     {
-                        sw.WriteLine(this.fileContents[i]);
+                        sw.WriteLine(lines[i]);
                     }
                 }
             }
