@@ -854,7 +854,6 @@ namespace Battleship
         {
             // Call Save method from SaveLoad.cs
             this.saveAndLoad.ReadFile();
-            this.saveAndLoad.DisplayFileContents();
         }
 
         /// <summary>

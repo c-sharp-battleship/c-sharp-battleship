@@ -8,11 +8,6 @@ namespace Battleship
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Text;
-
-    using System.Xml;
-    using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     using Microsoft.Win32;
 
@@ -21,6 +16,32 @@ namespace Battleship
     /// </summary>
     internal class SaveLoad
     {
+        /// <summary>
+        /// The number of lines that make up a CSV player header.
+        /// </summary>
+        private const ushort NumLinesCsvPlayerHeader = 1;
+
+        /// <summary>
+        /// The number of lines that make up a CSV player attack board.
+        /// </summary>
+        private const ushort NumLinesCsvPlayerAttackBoard = 10;
+
+        /// <summary>
+        /// The number of lines that make up a CSV player defense board.
+        /// </summary>
+        private const ushort NumLinesCsvPlayerDefenseBoard = 10;
+
+        /// <summary>
+        /// The number of lines that make up a CSV player.
+        /// </summary>
+        private const ushort NumLinesCsvPlayer =
+            NumLinesCsvPlayerHeader + NumLinesCsvPlayerAttackBoard + NumLinesCsvPlayerDefenseBoard;
+
+        /// <summary>
+        /// The number of lines that make up an entire CSV project file.
+        /// </summary>
+        private const ushort NumLinesCsv = 2 * NumLinesCsvPlayer;
+
         /// <summary>
         /// The list of file contents.
         /// </summary>
@@ -84,17 +105,20 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Parses the header of each player's CSV space.
+        /// Loads the header of each player's CSV space.
         /// </summary>
         /// <param name="playerUsernameObject">The object for the player's username (passed in by reference based on the player's ID).</param>
         /// <param name="playerTypeObject">The object for the player's type (passed in by reference based on the player's ID).</param>
-        /// <param name="line">The line of text (header) to be parsed.</param>
+        /// <param name="line">The line of text (header) to be Loadd.</param>
         /// <exception cref="ArgumentException">Thrown if the CSV schema is invalid.</exception>
-        public void ParseCSVPlayerHeader(ref string playerUsernameObject, ref StatusCodes.PlayerType playerTypeObject, string line)
+        public void LoadCsvPlayerHeader(
+            ref string playerUsernameObject,
+            ref StatusCodes.PlayerType playerTypeObject,
+            string line)
         {
             string[] playerHeader = line.Split(",");
 
-            if (line.Length != 2)
+            if (line.Length != SaveLoad.NumLinesCsvPlayerHeader)
             {
                 Logger.ConsoleInformation("Error: invalid CSV player header!");
                 throw new ArgumentException("Error: invalid CSV player header: ", nameof(line));
@@ -107,7 +131,8 @@ namespace Battleship
 
                 if (!int.TryParse(playerHeader[1], out playerType))
                 {
-                    Logger.ConsoleInformation("Error: the second entry in the CSV player header is an invalid integer!");
+                    Logger.ConsoleInformation(
+                        "Error: the second entry in the CSV player header is an invalid integer!");
                     throw new ArgumentException("Error: invalid CSV player header: ", nameof(line));
                 }
                 else
@@ -129,14 +154,16 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Method that parses the attack board.
+        /// Method that Loads the attack board.
         /// </summary>
         /// <param name="attackBoardObject">The object containing the grid spaces that the player attacked (passed in by reference).</param>
         /// <param name="lines">The lines that correspond to the player's attack board.</param>
         /// <exception cref="ArgumentException">Thrown if the CSV schema is invalid.</exception>
-        public void ParseCSVPlayerAttackBoard(ref Dictionary<int, StatusCodes.AttackStatus> attackBoardObject, List<string> lines)
+        public void LoadCsvPlayerAttackBoard(
+            ref Dictionary<int, StatusCodes.AttackStatus> attackBoardObject,
+            List<string> lines)
         {
-            if (lines.Count != 10)
+            if (lines.Count != SaveLoad.NumLinesCsvPlayerAttackBoard)
             {
                 throw new ArgumentException("Error: invalid CSV player attack board height: ", nameof(lines));
             }
@@ -147,7 +174,9 @@ namespace Battleship
                     string[] separatedLine = lines[i].Split(",");
                     if (separatedLine.Length != 10)
                     {
-                        throw new ArgumentException("Error: invalid CSV player attack board width in line" + (i + 1).ToString() + ": ", nameof(separatedLine));
+                        throw new ArgumentException(
+                            "Error: invalid CSV player attack board width in line" + (i + 1).ToString() + ": ",
+                            nameof(separatedLine));
                     }
                     else
                     {
@@ -156,7 +185,9 @@ namespace Battleship
                         {
                             if (!int.TryParse(separatedLine[j], out separatedLineConverted[j]))
                             {
-                                throw new ArgumentException("Error: invalid data format in player attack board. Expected: int: ", nameof(separatedLine));
+                                throw new ArgumentException(
+                                    "Error: invalid data format in player attack board. Expected: int: ",
+                                    nameof(separatedLine));
                             }
                             else
                             {
@@ -172,7 +203,9 @@ namespace Battleship
                                         attackBoardObject[i + (j * 10)] = StatusCodes.AttackStatus.ATTACKED_HIT;
                                         break;
                                     default:
-                                        throw new ArgumentException("Error: invalid attack status in grid space: ", nameof(separatedLine));
+                                        throw new ArgumentException(
+                                            "Error: invalid attack status in grid space: ",
+                                            nameof(separatedLine));
                                         break;
                                 }
                             }
@@ -183,14 +216,16 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Method to parse the player's defense board.
+        /// Method to Load the player's defense board.
         /// </summary>
         /// <param name="ships">The ships and their crew members.</param>
-        /// <param name="lines">The lines to be parsed.</param>
+        /// <param name="lines">The lines to be Loadd.</param>
         /// <exception cref="ArgumentException">Thrown if the CSV schema is invalid.</exception>
-        public void ParseCSVPlayerDefenseBoard(ref Dictionary<StatusCodes.ShipType, List<int>> ships, List<string> lines)
+        public void LoadCsvPlayerDefenseBoard(
+            ref Dictionary<StatusCodes.ShipType, List<int>> ships,
+            List<string> lines)
         {
-            if (lines.Count != 10)
+            if (lines.Count != SaveLoad.NumLinesCsvPlayerDefenseBoard)
             {
                 throw new ArgumentException("Error: invalid CSV player defense board height: ", nameof(lines));
             }
@@ -201,7 +236,9 @@ namespace Battleship
                     string[] separatedLine = lines[i].Split(",");
                     if (separatedLine.Length != 10)
                     {
-                        throw new ArgumentException("Error: invalid CSV player defense board width: ", nameof(separatedLine));
+                        throw new ArgumentException(
+                            "Error: invalid CSV player defense board width: ",
+                            nameof(separatedLine));
                     }
                     else
                     {
@@ -228,7 +265,9 @@ namespace Battleship
                                     // Don't do anything if the grid space is empty.
                                     break;
                                 default:
-                                    throw new ArgumentException("Error: invalid CSV player ship syntax: ", nameof(separatedLine));
+                                    throw new ArgumentException(
+                                        "Error: invalid CSV player ship syntax: ",
+                                        nameof(separatedLine));
                                     break;
                             }
                         }
@@ -238,11 +277,78 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Method to parse the entire CSV file.
+        /// Method that Loads the player sections of a CSV file.
         /// </summary>
-        public void ParseCSV()
+        /// <param name="playerUsernameObject">The player's username (passed in by reference).</param>
+        /// <param name="playerTypeObject">The player's type (passed in by reference).</param>
+        /// <param name="attackBoardObject">The player's attack board (passed in by reference).</param>
+        /// <param name="ships">The player's ship collection (defense board) (passed in by reference).</param>
+        /// <param name="lines">The information about the player (in CSV format).</param>
+        public void LoadCsvPlayer(
+            ref string playerUsernameObject,
+            ref StatusCodes.PlayerType playerTypeObject,
+            ref Dictionary<int, StatusCodes.AttackStatus> attackBoardObject,
+            ref Dictionary<StatusCodes.ShipType, List<int>> ships,
+            List<string> lines)
         {
-            // TODO: Implement Method to Parse CSV File
+            if (lines.Count != SaveLoad.NumLinesCsvPlayer)
+            {
+                throw new ArgumentException("Error: invalid CSV player content: ", nameof(lines));
+            }
+            else
+            {
+                string playerHeader = lines[0];
+
+                List<string> playerAttackBoard = new List<string>();
+                List<string> playerDefenseBoard = new List<string>();
+
+                for (ushort i = SaveLoad.NumLinesCsvPlayerHeader;
+                     i < (SaveLoad.NumLinesCsvPlayerHeader + SaveLoad.NumLinesCsvPlayerAttackBoard);
+                     i++)
+                {
+                    playerAttackBoard.Add(lines[i]);
+                }
+
+                for (ushort i = SaveLoad.NumLinesCsvPlayerHeader + SaveLoad.NumLinesCsvPlayerAttackBoard;
+                     i < (SaveLoad.NumLinesCsvPlayerAttackBoard + SaveLoad.NumLinesCsvPlayerDefenseBoard);
+                     i++)
+                {
+                    playerDefenseBoard.Add(lines[i]);
+                }
+
+                this.LoadCsvPlayerHeader(ref playerUsernameObject, ref playerTypeObject, playerHeader);
+                this.LoadCsvPlayerAttackBoard(ref attackBoardObject, playerAttackBoard);
+                this.LoadCsvPlayerDefenseBoard(ref ships, playerDefenseBoard);
+            }
+        }
+
+        /// <summary>
+        /// Method to Load the entire CSV file.
+        /// </summary>
+        public void LoadCsv()
+        {
+            if (this.fileContents.Count != SaveLoad.NumLinesCsv)
+            {
+                throw new ArgumentException("Error: invalid CSV player content: ", nameof(this.fileContents));
+            }
+            else
+            {
+                List<string> player1Csv = new List<string>();
+                List<string> player2Csv = new List<string>();
+
+                for (ushort i = 0; i < SaveLoad.NumLinesCsvPlayer; i++)
+                {
+                    player1Csv.Add(this.fileContents[i]);
+                }
+
+                for (ushort i = SaveLoad.NumLinesCsvPlayer; i < 2 * SaveLoad.NumLinesCsvPlayer; i++)
+                {
+                    player2Csv.Add(this.fileContents[i]);
+                }
+
+                this.LoadCsvPlayer(ref this.player1Username, ref this.player1Type, ref this.player1AttackBoard, ref this.player1DefenseBoard, player1Csv);
+                this.LoadCsvPlayer(ref this.player2Username, ref this.player2Type, ref this.player2AttackBoard, ref this.player2DefenseBoard, player2Csv);
+            }
         }
 
         /// <summary>
@@ -268,6 +374,8 @@ namespace Battleship
                         this.fileContents.Add(sr.ReadLine());
                     }
                 }
+
+                this.LoadCsv();
             }
             catch (Exception ex)
             {
@@ -300,12 +408,19 @@ namespace Battleship
 
             dialog.ShowDialog();
 
-            using (StreamWriter sw = new StreamWriter(dialog.FileName))
+            try
             {
-                for (int i = 0; i < this.fileContents.Count; i++)
+                using (StreamWriter sw = new StreamWriter(dialog.FileName))
                 {
-                    sw.WriteLine(this.fileContents[i]);
+                    for (int i = 0; i < this.fileContents.Count; i++)
+                    {
+                        sw.WriteLine(this.fileContents[i]);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.ConsoleInformation(ex.ToString());
             }
         }
     }
