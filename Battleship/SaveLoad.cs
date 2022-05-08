@@ -232,13 +232,13 @@ namespace Battleship
                                 switch (separatedLineConverted[j])
                                 {
                                     case 0:
-                                        attackBoardObject[j + (i * 10)] = StatusCodes.AttackStatus.NOT_ATTACKED;
+                                        attackBoardObject.Add(j + (i * 10), StatusCodes.AttackStatus.NOT_ATTACKED);
                                         break;
                                     case 1:
-                                        attackBoardObject[j + (i * 10)] = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
+                                        attackBoardObject.Add(j + (i * 10), StatusCodes.AttackStatus.ATTACKED_NOT_HIT);
                                         break;
                                     case 2:
-                                        attackBoardObject[j + (i * 10)] = StatusCodes.AttackStatus.ATTACKED_HIT;
+                                        attackBoardObject.Add(j + (i * 10), StatusCodes.AttackStatus.ATTACKED_HIT);
                                         break;
                                     default:
                                         throw new ArgumentException(
@@ -348,7 +348,7 @@ namespace Battleship
                 }
 
                 for (ushort i = SaveLoad.NumLinesCsvPlayerHeader + SaveLoad.NumLinesCsvPlayerAttackBoard;
-                     i < (SaveLoad.NumLinesCsvPlayerAttackBoard + SaveLoad.NumLinesCsvPlayerDefenseBoard);
+                     i <= (SaveLoad.NumLinesCsvPlayerAttackBoard + SaveLoad.NumLinesCsvPlayerDefenseBoard);
                      i++)
                 {
                     playerDefenseBoard.Add(lines[i]);
