@@ -164,7 +164,7 @@ namespace Battleship
                 // get an image retainer for the iteration
                 BitmapImage shipPic = new BitmapImage();
                 shipPic.BeginInit();
-                shipPic.UriSource = new Uri(@"./warship.jpg", UriKind.Relative);
+                shipPic.UriSource = new Uri(@"./Images/Warship.jpg", UriKind.Relative);
                 shipPic.EndInit();
                 Coordinate startCoords = new Coordinate(1, (short)(i + 1));
 

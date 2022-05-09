@@ -8,7 +8,7 @@
         Title="UMLstructure" Height="450" Width="800">
     <Grid Margin="0,0,-46,-28">
         <Grid.Background>
-            <ImageBrush ImageSource="/Battefield3.png"/>
+            <ImageBrush ImageSource="/Images/UML Diagram.png"/>
         </Grid.Background>
 
     </Grid>

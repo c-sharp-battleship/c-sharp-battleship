@@ -159,7 +159,6 @@ namespace Battleship
             if (playerHeader.Length != SaveLoad.NumCellsCsvPlayerHeader)
             {
                 Logger.ConsoleInformation("Error: invalid CSV player header!");
-                throw new ArgumentException("Error: invalid CSV player header: ", nameof(line));
             }
             else
             {
@@ -169,9 +168,7 @@ namespace Battleship
 
                 if (!int.TryParse(playerHeader[1], out playerType))
                 {
-                    Logger.ConsoleInformation(
-                        "Error: the second entry in the CSV player header is an invalid integer!");
-                    throw new ArgumentException("Error: invalid CSV player header: ", nameof(line));
+                    Logger.ConsoleInformation("Error: Invalid CSV Player Header!");
                 }
                 else
                 {
@@ -185,7 +182,7 @@ namespace Battleship
                     }
                     else
                     {
-                        throw new ArgumentException("Error: invalid CSV player header: ", nameof(line));
+                        Logger.ConsoleInformation("Error: Invalid CSV Player Header!");
                     }
                 }
             }
@@ -203,7 +200,7 @@ namespace Battleship
         {
             if (lines.Count != SaveLoad.NumLinesCsvPlayerAttackBoard)
             {
-                throw new ArgumentException("Error: invalid CSV player attack board height: ", nameof(lines));
+                Logger.ConsoleInformation("Error: Invalid CSV Player Attack Board!");
             }
             else
             {
@@ -212,9 +209,7 @@ namespace Battleship
                     string[] separatedLine = lines[i].Split(",");
                     if (separatedLine.Length != SaveLoad.NumCellsPerLine)
                     {
-                        throw new ArgumentException(
-                            "Error: invalid CSV player attack board width in line" + (i + 1).ToString() + ": ",
-                            nameof(separatedLine));
+                        Logger.ConsoleInformation("Error: Invalid CSV Player Attack Board!");
                     }
                     else
                     {
@@ -223,9 +218,7 @@ namespace Battleship
                         {
                             if (!int.TryParse(separatedLine[j], out separatedLineConverted[j]))
                             {
-                                throw new ArgumentException(
-                                    "Error: invalid data format in player attack board. Expected: int: ",
-                                    nameof(separatedLine));
+                                Logger.ConsoleInformation("Error: Invalid CSV Player Attack Board!");
                             }
                             else
                             {
@@ -241,9 +234,7 @@ namespace Battleship
                                         attackBoardObject.Add(j + (i * 10), StatusCodes.AttackStatus.ATTACKED_HIT);
                                         break;
                                     default:
-                                        throw new ArgumentException(
-                                            "Error: invalid attack status in grid space: ",
-                                            nameof(separatedLine));
+                                        Logger.ConsoleInformation("Error: Invalid CSV Player Attack Board!");
                                         break;
                                 }
                             }
@@ -265,7 +256,7 @@ namespace Battleship
         {
             if (lines.Count != SaveLoad.NumLinesCsvPlayerDefenseBoard)
             {
-                throw new ArgumentException("Error: invalid CSV player defense board height: ", nameof(lines));
+                Logger.ConsoleInformation("Error: Invalid CSV Player Defense Board!");
             }
             else
             {
@@ -274,9 +265,7 @@ namespace Battleship
                     string[] separatedLine = lines[i].Split(",");
                     if (separatedLine.Length != SaveLoad.NumCellsPerLine)
                     {
-                        throw new ArgumentException(
-                            "Error: invalid CSV player defense board width: ",
-                            nameof(separatedLine));
+                        Logger.ConsoleInformation("Error: Invalid CSV Player Defense Board!");
                     }
                     else
                     {
@@ -303,9 +292,7 @@ namespace Battleship
                                     // Don't do anything if the grid space is empty.
                                     break;
                                 default:
-                                    throw new ArgumentException(
-                                        "Error: invalid CSV player ship syntax: ",
-                                        nameof(separatedLine));
+                                    Logger.ConsoleInformation("Error: Invalid CSV Player Defense Board!");
                                     break;
                             }
                         }
@@ -331,7 +318,7 @@ namespace Battleship
         {
             if (lines.Count != SaveLoad.NumLinesCsvPlayer)
             {
-                throw new ArgumentException("Error: invalid CSV player content: ", nameof(lines));
+                Logger.ConsoleInformation("Error: Invalid CSV Player Content!");
             }
             else
             {
@@ -367,7 +354,7 @@ namespace Battleship
         {
             if (this.fileContents.Count != SaveLoad.NumLinesCsv)
             {
-                throw new ArgumentException("Error: invalid CSV player content: ", nameof(this.fileContents));
+                Logger.ConsoleInformation("Error: Invalid CSV Player Content!");
             }
             else
             {
@@ -462,14 +449,13 @@ namespace Battleship
                 {
                     string gridspace = string.Empty;
 
-                    // Loop through each of the ships and their crewmembers to see if they are located on the ship.
-                    for (int k = 0; k < playerDefenseBoardObject.Count; k++)
+                    foreach (KeyValuePair<StatusCodes.ShipType, List<int>> playerShip in playerDefenseBoardObject)
                     {
-                        foreach (int crewmember in playerDefenseBoardObject[(StatusCodes.ShipType)k])
+                        foreach (int crewmember in playerShip.Value)
                         {
                             if (crewmember == j + (i * 10))
                             {
-                                switch ((StatusCodes.ShipType)k)
+                                switch (playerShip.Key)
                                 {
                                     case StatusCodes.ShipType.DESTROYER:
                                         gridspace = "De";

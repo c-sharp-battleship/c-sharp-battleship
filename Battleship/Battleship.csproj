@@ -11,29 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="8fbed52d9783b09666c5212ef2a30047.jpg" />
-    <None Remove="Battefield3.png" />
-    <None Remove="battlefield-5-pacific-map-volcanic-rock.jpg" />
-    <None Remove="Cat.jpg" />
-    <None Remove="Playeroneturn.jpg" />
-    <None Remove="Playertwoturn.jpg" />
-    <None Remove="Z5WCC7LWJVBS3ODXWV6FYI6KXA.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="8fbed52d9783b09666c5212ef2a30047.jpg" />
-    <Resource Include="Battefield3.png" />
-    <Resource Include="battlefield-5-pacific-map-volcanic-rock.jpg" />
-    <Resource Include="Playeroneturn.jpg" />
-    <Resource Include="Playertwoturn.jpg" />
-    <Resource Include="Z5WCC7LWJVBS3ODXWV6FYI6KXA.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="schema.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Warship.jpg">
+    <Resource Include="Images\GameWindow Background.jpg" />
+    <Resource Include="Images\UML Diagram.png" />
+    <Resource Include="Images\MainWindow Background.jpg" />
+    <Resource Include="Images\Player 2 Turn.jpg" />
+    <Resource Include="Images\Player 1 Turn.jpg" />
+    <Resource Include="Images\Rocket.jpg" />
+    <None Update="Images\Warship.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
