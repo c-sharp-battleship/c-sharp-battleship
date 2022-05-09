@@ -7,11 +7,14 @@ namespace Battleship
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Threading;
+    using Microsoft.Win32;
+
 
     /// <summary>
     /// Interaction logic for GameWindow.xaml.
@@ -243,6 +246,80 @@ namespace Battleship
 
             this.Show();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// test method
+        /// </summary>
+        public void Writefile()
+        {
+
+
+            try
+            {
+                SaveFileDialog saveTool = new SaveFileDialog();
+                saveTool.InitialDirectory = @"Desktop";
+                saveTool.Filter = "Text file|*txt";
+                saveTool.FileName = "game";
+                saveTool.DefaultExt = ".csv";
+                if (saveTool.ShowDialog() == true)
+                {
+                    StreamWriter outputfile;
+                    outputfile = File.CreateText(saveTool.FileName);
+
+                    foreach (KeyValuePair<string,GridCell> test in this.gameStatus)
+                    {
+                        outputfile.WriteLine(test.Key + "," +
+                                             test.Value.ButtonName + "," +
+                                             test.Value.ShipContainedName + "," +
+                                             test.Value.ShipContainedType + "," +
+                                             test.Value.PlayerID + "," +
+                                             test.Value.OffenseButton + "," +
+                                             test.Value.LeftToParentLeft.ToString() + "," +
+                                             test.Value.Stricked + "," +
+                                             test.Value.PlayerID);
+                    }
+
+                    outputfile.Close();
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// Start a computer to computer game.
@@ -931,6 +1008,11 @@ namespace Battleship
                     }
                 }
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Writefile();
         }
     }
 }
