@@ -22,34 +22,39 @@ namespace Battleship
         private enum CsvSchema
         {
             /// <summary>
+            /// The key that the gameStatus dictionary references.
+            /// </summary>
+            KEY = 0,
+
+            /// <summary>
             /// The attack status of the <see cref="GridCell"/>.
             /// </summary>
-            ATTACK_STATUS,
-
-            /// <summary>
-            /// The player ID that the <see cref="GridCell"/> belongs to.
-            /// </summary>
-            PLAYER_ID,
-
-            /// <summary>
-            /// The ship that is located on the <see cref="GridCell"/>.
-            /// </summary>
-            CONTAINED_SHIP_NAME,
+            CELL_ATTACK_STATUS = 1,
 
             /// <summary>
             /// The column number of the <see cref="GridCell"/>.
             /// </summary>
-            COLUMN_NUMBER,
+            COLUMN_NUMBER = 2,
 
             /// <summary>
-            /// The row number of the <see cref="GridCell"/>.
+            /// The ship that is located on the <see cref="GridCell"/>.
             /// </summary>
-            ROW_NUMBER,
+            SHIP_CONTAINED_NAME = 3,
 
             /// <summary>
             /// Whether or not the <see cref="GridCell"/> is an offense button.
             /// </summary>
-            OFFENSE_BUTTON,
+            OFFENSE_BUTTON = 4,
+
+            /// <summary>
+            /// The player ID that the <see cref="GridCell"/> belongs to.
+            /// </summary>
+            PLAYER_ID = 5,
+
+            /// <summary>
+            /// The row number of the <see cref="GridCell"/>.
+            /// </summary>
+            ROW_NUMBER = 6,
         }
 
         /// <summary>
@@ -81,31 +86,76 @@ namespace Battleship
 
                 for (int i = 0; i < fileContents.Count; i++)
                 {
+                    string key = "";
                     for (int j = 0; j < fileContents[i].Length; j++)
                     {
-                        if(j == (int)CsvSchema.ATTACK_STATUS)
+                        if (j == (int)CsvSchema.KEY)
                         {
-                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                            key = fileContents[i][j];
                         }
-                        else if(j == (int)CsvSchema.COLUMN_NUMBER)
+                        if (j == (int)CsvSchema.CELL_ATTACK_STATUS)
                         {
-                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                            int outputConversion = 0;
+                            if (!int.TryParse(fileContents[i][j], out outputConversion))
+                            {
+                                Logger.ConsoleInformation("Invalid CSV file format!");
+                            }
+                            else
+                            {
+                                gameStatus[key].CellAttackStatus = (StatusCodes.AttackStatus)outputConversion;
+                            }
                         }
-                        else if(j == (int)CsvSchema.CONTAINED_SHIP_NAME)
+                        else if (j == (int)CsvSchema.COLUMN_NUMBER)
                         {
-                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                            int outputConversion = 0;
+                            if (!int.TryParse(fileContents[i][j], out outputConversion))
+                            {
+                                Logger.ConsoleInformation("Invalid CSV file format!");
+                            }
+                            else
+                            {
+                                gameStatus[key].ColNum = outputConversion;
+                            }
                         }
-                        else if(j == (int)CsvSchema.OFFENSE_BUTTON)
+                        else if (j == (int)CsvSchema.SHIP_CONTAINED_NAME)
                         {
-                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                            gameStatus[key].ShipContainedName = fileContents[i][j];
                         }
-                        else if(j == (int)CsvSchema.PLAYER_ID)
+                        else if (j == (int)CsvSchema.OFFENSE_BUTTON)
                         {
-                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                            bool outputConversion = false;
+                            if (!bool.TryParse(fileContents[i][j], out outputConversion))
+                            {
+                                Logger.ConsoleInformation("Invalid CSV file format!");
+                            }
+                            else
+                            {
+                                gameStatus[key].OffenseButton = outputConversion;
+                            }
                         }
-                        else if(j == (int)CsvSchema.ROW_NUMBER)
+                        else if (j == (int)CsvSchema.PLAYER_ID)
                         {
-                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                            int outputConversion = 0;
+                            if (!int.TryParse(fileContents[i][j], out outputConversion))
+                            {
+                                Logger.ConsoleInformation("Invalid CSV file format!");
+                            }
+                            else
+                            {
+                                gameStatus[key].PlayerID = outputConversion;
+                            }
+                        }
+                        else if (j == (int)CsvSchema.ROW_NUMBER)
+                        {
+                            int outputConversion = 0;
+                            if (!int.TryParse(fileContents[i][j], out outputConversion))
+                            {
+                                Logger.ConsoleInformation("Invalid CSV file format!");
+                            }
+                            else
+                            {
+                                gameStatus[key].RowNum = outputConversion;
+                            }
                         }
                         else
                         {
@@ -142,11 +192,12 @@ namespace Battleship
                     foreach (KeyValuePair<string, GridCell> test in gameStatus)
                     {
                         outputfile.WriteLine(
-                            test.Value.CellAttackStatus + ", " +
-                            test.Value.ColNum + ", " +
-                            test.Value.ShipContainedName + ", " +
-                            test.Value.OffenseButton + ", " +
-                            test.Value.PlayerID + ", " +
+                            test.Key + "," +
+                            test.Value.CellAttackStatus + "," +
+                            test.Value.ColNum + "," +
+                            test.Value.ShipContainedName + "," +
+                            test.Value.OffenseButton + "," +
+                            test.Value.PlayerID + "," +
                             test.Value.RowNum);
                     }
 
