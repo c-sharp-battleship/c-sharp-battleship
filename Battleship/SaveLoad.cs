@@ -86,7 +86,7 @@ namespace Battleship
 
                 for (int i = 0; i < fileContents.Count; i++)
                 {
-                    string key = "";
+                    string key = string.Empty;
                     for (int j = 0; j < fileContents[i].Length; j++)
                     {
                         if (j == (int)CsvSchema.KEY)
@@ -166,7 +166,7 @@ namespace Battleship
             }
             catch (Exception ex)
             {
-                Logger.Error("File failed to open!");
+                Logger.Error("File failed to open: " + ex.ToString());
             }
         }
 
@@ -206,7 +206,7 @@ namespace Battleship
             }
             catch (Exception ex)
             {
-                Logger.Error("File failed to save!");
+                Logger.Error("File failed to save: " + ex.ToString());
             }
         }
     }
