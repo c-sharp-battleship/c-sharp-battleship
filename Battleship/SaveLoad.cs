@@ -69,47 +69,54 @@ namespace Battleship
 
             List<string[]> fileContents = new List<string[]>();
 
-            using (StreamReader sr = new StreamReader(dialog.FileName))
+            try
             {
-                while (sr.Peek() >= 0)
+                using (StreamReader sr = new StreamReader(dialog.FileName))
                 {
-                    fileContents.Add(sr.ReadLine().Split(","));
+                    while (sr.Peek() >= 0)
+                    {
+                        fileContents.Add(sr.ReadLine().Split(","));
+                    }
+                }
+
+                for (int i = 0; i < fileContents.Count; i++)
+                {
+                    for (int j = 0; j < fileContents[i].Length; j++)
+                    {
+                        if(j == (int)CsvSchema.ATTACK_STATUS)
+                        {
+                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                        }
+                        else if(j == (int)CsvSchema.COLUMN_NUMBER)
+                        {
+                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                        }
+                        else if(j == (int)CsvSchema.CONTAINED_SHIP_NAME)
+                        {
+                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                        }
+                        else if(j == (int)CsvSchema.OFFENSE_BUTTON)
+                        {
+                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                        }
+                        else if(j == (int)CsvSchema.PLAYER_ID)
+                        {
+                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                        }
+                        else if(j == (int)CsvSchema.ROW_NUMBER)
+                        {
+                            Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                        }
+                        else
+                        {
+                            Logger.ConsoleInformation("There was an error. Please contact your nearest software developer for further assistance.");
+                        }
+                    }
                 }
             }
-
-            for (int i = 0; i < fileContents.Count; i++)
+            catch (Exception ex)
             {
-                for (int j = 0; j < fileContents[i].Length; j++)
-                {
-                    if(j == (int)CsvSchema.ATTACK_STATUS)
-                    {
-                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
-                    }
-                    else if(j == (int)CsvSchema.COLUMN_NUMBER)
-                    {
-                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
-                    }
-                    else if(j == (int)CsvSchema.CONTAINED_SHIP_NAME)
-                    {
-                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
-                    }
-                    else if(j == (int)CsvSchema.OFFENSE_BUTTON)
-                    {
-                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
-                    }
-                    else if(j == (int)CsvSchema.PLAYER_ID)
-                    {
-                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
-                    }
-                    else if(j == (int)CsvSchema.ROW_NUMBER)
-                    {
-                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
-                    }
-                    else
-                    {
-                        Logger.ConsoleInformation("There was an error. Please contact your nearest software developer for furter assistance.");
-                    }
-                }
+                Logger.Error("File failed to open!");
             }
         }
 
@@ -148,7 +155,7 @@ namespace Battleship
             }
             catch (Exception ex)
             {
-                Logger.Information(ex.Message);
+                Logger.Error("File failed to save!");
             }
         }
     }
