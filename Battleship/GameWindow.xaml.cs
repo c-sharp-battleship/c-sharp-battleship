@@ -15,7 +15,6 @@ namespace Battleship
     using System.Windows.Threading;
     using Microsoft.Win32;
 
-
     /// <summary>
     /// Interaction logic for GameWindow.xaml.
     /// </summary>
@@ -46,6 +45,11 @@ namespace Battleship
         /// The game type.
         /// </summary>
         private StatusCodes.GameType gameType;
+
+        /// <summary>
+        /// The list of file contents.
+        /// </summary>
+        private List<string[]> fileContents = new List<string[]>();
 
         /// <summary>
         /// The player 1 screen.
@@ -98,11 +102,6 @@ namespace Battleship
         private DispatcherTimer dispatcherTimer;
 
         /// <summary>
-        /// The object that handles saving and loading the game state.
-        /// </summary>
-        private SaveLoad saveAndLoad;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow" /> class.
         /// </summary>
         /// <param name="gameType"> This is the game type.</param>
@@ -126,8 +125,6 @@ namespace Battleship
                     this.Loaded += this.StartComputerToComputerGame;
                     break;
             }
-
-            this.saveAndLoad = new SaveLoad();
         }
 
         /// <summary>
@@ -246,80 +243,6 @@ namespace Battleship
 
             this.Show();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /// <summary>
-        /// test method
-        /// </summary>
-        public void Writefile()
-        {
-
-
-            try
-            {
-                SaveFileDialog saveTool = new SaveFileDialog();
-                saveTool.InitialDirectory = @"Desktop";
-                saveTool.Filter = "Text file|*txt";
-                saveTool.FileName = "game";
-                saveTool.DefaultExt = ".csv";
-                if (saveTool.ShowDialog() == true)
-                {
-                    StreamWriter outputfile;
-                    outputfile = File.CreateText(saveTool.FileName);
-
-                    foreach (KeyValuePair<string,GridCell> test in this.gameStatus)
-                    {
-                        outputfile.WriteLine(test.Key + "," +
-                                             test.Value.ButtonName + "," +
-                                             test.Value.ShipContainedName + "," +
-                                             test.Value.ShipContainedType + "," +
-                                             test.Value.PlayerID + "," +
-                                             test.Value.OffenseButton + "," +
-                                             test.Value.LeftToParentLeft.ToString() + "," +
-                                             test.Value.Stricked + "," +
-                                             test.Value.PlayerID);
-                    }
-
-                    outputfile.Close();
-                }
-
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /// <summary>
         /// Start a computer to computer game.
@@ -919,7 +842,7 @@ namespace Battleship
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             // Call Save method from SaveLoad.cs
-            this.saveAndLoad.WriteFile();
+            SaveLoad.SaveGame(ref this.gameStatus);
         }
 
         /// <summary>
@@ -930,7 +853,7 @@ namespace Battleship
         private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
             // Call Save method from SaveLoad.cs
-            this.saveAndLoad.ReadFile();
+            SaveLoad.LoadGame(ref this.gameStatus);
         }
 
         /// <summary>
@@ -1008,11 +931,6 @@ namespace Battleship
                     }
                 }
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Writefile();
         }
     }
 }
