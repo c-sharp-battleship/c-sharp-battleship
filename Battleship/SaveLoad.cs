@@ -16,6 +16,46 @@ namespace Battleship
     /// </summary>
     internal class SaveLoad
     {
+        /// <summary>
+        /// Enum that represents the schema of each line in the CSV file.
+        /// </summary>
+        private enum CsvSchema
+        {
+            /// <summary>
+            /// The attack status of the <see cref="GridCell"/>.
+            /// </summary>
+            ATTACK_STATUS,
+
+            /// <summary>
+            /// The player ID that the <see cref="GridCell"/> belongs to.
+            /// </summary>
+            PLAYER_ID,
+
+            /// <summary>
+            /// The ship that is located on the <see cref="GridCell"/>.
+            /// </summary>
+            CONTAINED_SHIP_NAME,
+
+            /// <summary>
+            /// The column number of the <see cref="GridCell"/>.
+            /// </summary>
+            COLUMN_NUMBER,
+
+            /// <summary>
+            /// The row number of the <see cref="GridCell"/>.
+            /// </summary>
+            ROW_NUMBER,
+
+            /// <summary>
+            /// Whether or not the <see cref="GridCell"/> is an offense button.
+            /// </summary>
+            OFFENSE_BUTTON,
+        }
+
+        /// <summary>
+        /// Method to load the game from a CSV file.
+        /// </summary>
+        /// <param name="gameStatus">The dictionary object to be "hacked" into using reference magic.</param>
         public static void LoadGame(ref Dictionary<string, GridCell> gameStatus)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -23,7 +63,7 @@ namespace Battleship
             dialog.FileName = "Game";
             dialog.DefaultExt = ".csv";
             dialog.Filter = "Battleship Game File (.csv)|*.csv";
-            dialog.InitialDirectory = @"C:\";
+            dialog.InitialDirectory = @"Desktop";
 
             dialog.ShowDialog();
 
@@ -41,31 +81,52 @@ namespace Battleship
             {
                 for (int j = 0; j < fileContents[i].Length; j++)
                 {
-                    if (j == 1)
+                    if(j == (int)CsvSchema.ATTACK_STATUS)
                     {
-                        string test = fileContents[i][1];
-                        if (test == false.ToString())
-                        {
-                            System.Windows.Visibility trigger = System.Windows.Visibility.Hidden;
-                            string testInt = fileContents[i][0];
-                            gameStatus[testInt].Visibility = trigger;
-                        }
+                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                    }
+                    else if(j == (int)CsvSchema.COLUMN_NUMBER)
+                    {
+                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                    }
+                    else if(j == (int)CsvSchema.CONTAINED_SHIP_NAME)
+                    {
+                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                    }
+                    else if(j == (int)CsvSchema.OFFENSE_BUTTON)
+                    {
+                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                    }
+                    else if(j == (int)CsvSchema.PLAYER_ID)
+                    {
+                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                    }
+                    else if(j == (int)CsvSchema.ROW_NUMBER)
+                    {
+                        Logger.ConsoleInformation("Loaded: " + fileContents[i][j]);
+                    }
+                    else
+                    {
+                        Logger.ConsoleInformation("There was an error. Please contact your nearest software developer for furter assistance.");
                     }
                 }
-
-                Logger.ConsoleInformationForArray("\n");
             }
         }
 
+        /// <summary>
+        /// Method to save the game into a CSV file.
+        /// </summary>
+        /// <param name="gameStatus">The dictionary object to be "hacked" into using reference magic.</param>
         public static void SaveGame(ref Dictionary<string, GridCell> gameStatus)
         {
             try
             {
                 SaveFileDialog saveTool = new SaveFileDialog();
                 saveTool.InitialDirectory = @"Desktop";
-                saveTool.Filter = "Text file|*txt";
-                saveTool.FileName = "game";
+                saveTool.Filter = "Battleship Game File (.csv)|*.csv";
+                saveTool.FileName = "Game";
                 saveTool.DefaultExt = ".csv";
+
                 if (saveTool.ShowDialog() == true)
                 {
                     StreamWriter outputfile;
@@ -73,33 +134,13 @@ namespace Battleship
 
                     foreach (KeyValuePair<string, GridCell> test in gameStatus)
                     {
-                        System.Windows.Visibility madonna = test.Value.Visibility;
-                        bool madonnaIsVisible;
-
-                        if (madonna == System.Windows.Visibility.Visible)
-                        {
-                            madonnaIsVisible = true;
-                        }
-                        else
-                        {
-                            madonnaIsVisible = false;
-                        }
-
-                        outputfile.WriteLine(test.Key + "," + madonnaIsVisible.ToString());
-
-                        /*
-                       test.Value.ButtonName + "," +
-                       test.Value.ShipContainedName + "," +
-                       test.Value.ShipContainedType + "," +
-                       test.Value.PlayerID + "," +
-                       test.Value.OffenseButton + "," +
-                       test.Value.LeftToParentLeft.ToString() + "," +
-                       test.Value.Stricked + "," +
-                       test.Value.Stricked + "," + madonnaIsVisible.ToString() +
-                       test.Value.Background + "," +
-
-                       test.Value.PlayerID);
-                        */
+                        outputfile.WriteLine(
+                            test.Value.CellAttackStatus + ", " +
+                            test.Value.ColNum + ", " +
+                            test.Value.ShipContainedName + ", " +
+                            test.Value.OffenseButton + ", " +
+                            test.Value.PlayerID + ", " +
+                            test.Value.RowNum);
                     }
 
                     outputfile.Close();

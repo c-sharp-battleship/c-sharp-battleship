@@ -162,6 +162,51 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Gets or sets the cell's attack status.
+        /// </summary>
+        public StatusCodes.AttackStatus CellAttackStatus
+        {
+            get
+            {
+                StatusCodes.AttackStatus testAttackStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
+
+                switch (this.Stricked)
+                {
+                    case 0:
+                        testAttackStatus = StatusCodes.AttackStatus.NOT_ATTACKED;
+                        break;
+                    case 1:
+                        testAttackStatus = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
+                        break;
+                    case 2:
+                        testAttackStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
+                        break;
+                }
+
+                return testAttackStatus;
+            }
+
+            set
+            {
+                switch (value)
+                {
+                    case StatusCodes.AttackStatus.NOT_ATTACKED:
+                        this.Stricked = 0;
+                        break;
+                    case StatusCodes.AttackStatus.ATTACKED_NOT_HIT:
+                        this.Stricked = 1;
+                        break;
+                    case StatusCodes.AttackStatus.ATTACKED_HIT:
+                        this.Stricked = 2;
+                        break;
+                    default:
+                        Logger.ConsoleInformation("Error: Striked value was not set properly!");
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether offense button is occupied or not.
         /// </summary>
         public bool OffenseButton
