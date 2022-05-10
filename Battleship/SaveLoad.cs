@@ -93,7 +93,7 @@ namespace Battleship
                         {
                             key = fileContents[i][j];
                         }
-                        if (j == (int)CsvSchema.CELL_ATTACK_STATUS)
+                        else if (j == (int)CsvSchema.CELL_ATTACK_STATUS)
                         {
                             int outputConversion = 0;
                             if (!int.TryParse(fileContents[i][j], out outputConversion))
@@ -193,7 +193,7 @@ namespace Battleship
                     {
                         outputfile.WriteLine(
                             test.Key + "," +
-                            test.Value.CellAttackStatus + "," +
+                            (int)test.Value.CellAttackStatus + "," +
                             test.Value.ColNum + "," +
                             test.Value.ShipContainedName + "," +
                             test.Value.OffenseButton + "," +
