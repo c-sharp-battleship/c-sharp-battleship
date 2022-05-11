@@ -245,6 +245,7 @@ namespace Battleship
         {
             this.UpdateRadioButtonOptions();
             this.Player1NameTextBox.IsEnabled = true;
+            this.Player2NameTextBox.IsEnabled = false;
         }
 
         /// <summary>
@@ -255,6 +256,8 @@ namespace Battleship
         private void ComputerToComputerRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();
+            this.Player1NameTextBox.IsEnabled = false;
+            this.Player2NameTextBox.IsEnabled = false;
         }
 
         /// <summary>
