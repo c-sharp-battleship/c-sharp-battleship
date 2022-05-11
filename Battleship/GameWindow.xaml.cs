@@ -1016,7 +1016,7 @@ namespace Battleship
         {
             if (this.player1.IsLocked == true && this.player2.IsLocked == true)
             {
-                string path = this.player1.Name + "-" + this.player2.Name + "_" + DateTime.Now.ToString("MM-dd-yyyy") + ".txt";
+                string path = this.player1.Name + "-" + this.player2.Name + "_" + DateTime.Now.ToString("MM-dd-yyyy_hh-mm-ss") + ".txt";
                 string pathList = "SavedGamesList.txt";
                 if (!File.Exists(path))
                 {
