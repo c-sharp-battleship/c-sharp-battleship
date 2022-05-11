@@ -146,6 +146,83 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="GameWindow" /> class.
+        /// </summary>
+        /// <param name="pathFile"> This is the game file path.</param>
+        public GameWindow(string pathFile)
+        {
+            this.InitializeComponent();
+            string player1Name = string.Empty;
+            string player2Name = string.Empty;
+
+            string[,] player1Board = new string[this.RowRep, this.RowRep];
+            string[,] player2Board = new string[this.RowRep, this.RowRep];
+
+            if (File.Exists(pathFile))
+            {
+                using (StreamReader sr = File.OpenText(pathFile))
+                {
+                    sr.ReadLine();
+                    player1Name = sr.ReadLine();
+                    for (int i = 0; i < this.RowRep; ++i)
+                    {
+                        string[] items = sr.ReadLine().Split(',');
+
+                        for (int j = 0; j < this.RowRep; ++j)
+                        {
+                            player1Board[i, j] = items[j];
+                        }
+                    }
+
+                    player2Name = sr.ReadLine();
+                    for (int i = 0; i < this.RowRep; ++i)
+                    {
+                        string[] items = sr.ReadLine().Split(',');
+
+                        for (int j = 0; j < this.RowRep; ++j)
+                        {
+                            player2Board[i, j] = items[j];
+                        }
+                    }
+                }
+            }
+
+            // start player one label visible
+            this.PlayerOnelabel.Visibility = Visibility.Visible;
+            this.PlayerTwolabel.Visibility = Visibility.Hidden;
+            this.Confirm_Button.Visibility = Visibility.Hidden;
+
+            // Create Players with their cells and their ships and grids colors
+            // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
+            this.player1 = new Player(1, player1Name, this.Cellsize, this.RowRep, 1, 3, player1Board, player2Board);
+            this.player2 = new Player(2, player2Name, this.Cellsize, this.RowRep, 3, 1, player2Board, player1Board);
+
+            // Create two Canvas to place the player elements on them
+            this.playerWindow1 = new Canvas();
+            this.playerWindow1.HorizontalAlignment = HorizontalAlignment.Center;
+            this.playerWindow1.VerticalAlignment = VerticalAlignment.Center;
+            this.playerWindow1.Uid = "Player1Canvas";
+            this.playerWindow1.Width = (this.Cellsize * this.RowRep) * 2;
+            this.playerWindow1.Visibility = Visibility.Visible;
+
+            this.playerWindow2 = new Canvas();
+            this.playerWindow2.HorizontalAlignment = HorizontalAlignment.Center;
+            this.playerWindow2.VerticalAlignment = VerticalAlignment.Center;
+            this.playerWindow2.Uid = "Player2Canvas";
+            this.playerWindow2.Width = (this.Cellsize * this.RowRep) * 2;
+            this.playerWindow2.Visibility = Visibility.Hidden;
+
+            this.DeclarePlayerGridFromFile(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
+            this.DeclarePlayerGridFromFile(this.player2, this.player1, this.PlayersCellRecords, this.playerWindow2, this.Cellsize);
+
+            // load both canvas to this window grid
+            this.Maingrid.Children.Add(this.playerWindow1);
+            this.Maingrid.Children.Add(this.playerWindow2);
+
+            this.Show();
+        }
+
+        /// <summary>
         ///  Gets a value indicating whether screen player1 is visible or not.
         /// </summary>
         public bool Switch
@@ -204,7 +281,7 @@ namespace Battleship
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3);
-            this.player2 = new Player(2, this.player2Name, this.Cellsize, this.RowRep, 3, 6);
+            this.player2 = new Player(2, this.player2Name, this.Cellsize, this.RowRep, 3, 1);
             this.player2.PlayerTurn = false;
 
             // Create two Canvas to place the player elements on them
@@ -246,11 +323,12 @@ namespace Battleship
             this.PlayerOnelabel.Visibility = Visibility.Visible;
             this.PlayerTwolabel.Visibility = Visibility.Hidden;
             this.AttackBtn.Visibility = Visibility.Hidden;
+            this.SaveGameButton.Visibility = Visibility.Hidden;
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3);
-            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6, this.computerPlayerDifficulty1);
+            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 1, this.computerPlayerDifficulty2);
             this.player2.IsLocked = true;
 
             Logger.ConsoleInformation("------- Computer Grid ------");
@@ -293,11 +371,12 @@ namespace Battleship
             this.PlayerTwolabel.Visibility = Visibility.Hidden;
             this.AttackBtn.Visibility = Visibility.Hidden;
             this.Confirm_Button.Visibility = Visibility.Hidden;
+            this.SaveGameButton.Visibility = Visibility.Hidden;
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.player1 = new ComputerPlayer(1, "ComputerPlayerOne", this.Cellsize, this.RowRep, 1, 3, this.computerPlayerDifficulty1);
-            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 6, this.computerPlayerDifficulty2);
+            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 1, this.computerPlayerDifficulty2);
 
             Logger.ConsoleInformation("------- Computer Grid ------");
             for (int i = 0; i < this.RowRep; i++)
@@ -548,7 +627,7 @@ namespace Battleship
                                 // Swicth windows between players
                                 if (p_otherPlayer.Name == "ComputerPlayerTwo")
                                 {
-                                    if (this.computerPlayerDifficulty1 ==
+                                    if (this.computerPlayerDifficulty2 ==
                                         StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
                                     {
                                         ((ComputerPlayer)p_otherPlayer).AdvancedAttack(p_currentPlayer, this.RowRep);
@@ -1012,6 +1091,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The button that saves the game.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The event arguments passed to the event.</param>
         private void BtnSaveGame_Click(object sender, RoutedEventArgs e)
         {
             if (this.player1.IsLocked == true && this.player2.IsLocked == true)
@@ -1022,7 +1106,7 @@ namespace Battleship
                 {
                     using (StreamWriter sw = File.CreateText(path))
                     {
-                        sw.WriteLine(DateTime.Now.ToString("MM/dd/yyyy"));
+                        sw.WriteLine(DateTime.Now.ToString("G"));
                         sw.WriteLine(this.player1.Name);
                         for (int i = 0; i < this.RowRep; i++)
                         {
@@ -1063,80 +1147,15 @@ namespace Battleship
             }
         }
 
-        public GameWindow(string pathFile)
-        {
-            this.InitializeComponent();
-            string player1Name = string.Empty;
-            string player2Name = string.Empty;
-
-            string[,] player1Board = new string[this.RowRep, this.RowRep];
-            string[,] player2Board = new string[this.RowRep, this.RowRep];
-
-            if (File.Exists(pathFile))
-            {
-                using (StreamReader sr = File.OpenText(pathFile))
-                {
-                    sr.ReadLine();
-                    player1Name = sr.ReadLine();
-                    for (int i = 0; i < this.RowRep; ++i)
-                    {
-                        string[] items = sr.ReadLine().Split(',');
-
-                        for (int j = 0; j < this.RowRep; ++j)
-                        {
-                            player1Board[i, j] = items[j];
-                        }
-                    }
-
-                    player2Name = sr.ReadLine();
-                    for (int i = 0; i < this.RowRep; ++i)
-                    {
-                        string[] items = sr.ReadLine().Split(',');
-
-                        for (int j = 0; j < this.RowRep; ++j)
-                        {
-                            player2Board[i, j] = items[j];
-                        }
-                    }
-                }
-            }
-
-            // start player one label visible
-            this.PlayerOnelabel.Visibility = Visibility.Visible;
-            this.PlayerTwolabel.Visibility = Visibility.Hidden;
-            this.Confirm_Button.Visibility = Visibility.Hidden;
-
-            // Create Players with their cells and their ships and grids colors
-            // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
-            this.player1 = new Player(1, player1Name, this.Cellsize, this.RowRep, 1, 3, player1Board, player2Board);
-            this.player2 = new Player(2, player2Name, this.Cellsize, this.RowRep, 3, 6, player2Board, player1Board);
-
-            // Create two Canvas to place the player elements on them
-            this.playerWindow1 = new Canvas();
-            this.playerWindow1.HorizontalAlignment = HorizontalAlignment.Center;
-            this.playerWindow1.VerticalAlignment = VerticalAlignment.Center;
-            this.playerWindow1.Uid = "Player1Canvas";
-            this.playerWindow1.Width = (this.Cellsize * this.RowRep) * 2;
-            this.playerWindow1.Visibility = Visibility.Visible;
-
-            this.playerWindow2 = new Canvas();
-            this.playerWindow2.HorizontalAlignment = HorizontalAlignment.Center;
-            this.playerWindow2.VerticalAlignment = VerticalAlignment.Center;
-            this.playerWindow2.Uid = "Player2Canvas";
-            this.playerWindow2.Width = (this.Cellsize * this.RowRep) * 2;
-            this.playerWindow2.Visibility = Visibility.Hidden;
-
-            this.DeclarePlayerGridFromFile(this.player1, this.player2, this.PlayersCellRecords, this.playerWindow1, this.Cellsize);
-            this.DeclarePlayerGridFromFile(this.player2, this.player1, this.PlayersCellRecords, this.playerWindow2, this.Cellsize);
-
-            // load both canvas to this window grid
-            this.Maingrid.Children.Add(this.playerWindow1);
-            this.Maingrid.Children.Add(this.playerWindow2);
-
-            this.Show();
-        }
-
-        public void DeclarePlayerGridFromFile(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
+        /// <summary>
+        /// Method that declares the player grid.
+        /// </summary>
+        /// <param name="p_currentPlayer">The current player to be declared.</param>
+        /// <param name="p_otherPlayer">The other player relative to the current player.</param>
+        /// <param name="p_playersCellRecords">The current player's cell records.</param>
+        /// <param name="p_currentPlayerWindow">The current player's window.</param>
+        /// <param name="p_cellsize">The cell size (in pixels).</param>
+        private void DeclarePlayerGridFromFile(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
             foreach (KeyValuePair<int, GridCell> mainPlayerPair in p_currentPlayer.Playergridsquarecollection)
             {
@@ -1231,7 +1250,7 @@ namespace Battleship
                             // Swicth windows between players
                             if (p_otherPlayer.Name == "ComputerPlayerTwo")
                             {
-                                if (this.computerPlayerDifficulty1 ==
+                                if (this.computerPlayerDifficulty2 ==
                                     StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
                                 {
                                     ((ComputerPlayer)p_otherPlayer).AdvancedAttack(p_currentPlayer, this.RowRep);

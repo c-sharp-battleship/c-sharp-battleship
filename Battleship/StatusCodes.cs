@@ -106,6 +106,11 @@ namespace Battleship
         public enum ComputerPlayerDifficulty
         {
             /// <summary>
+            /// Represents an no computer player difficulty.
+            /// </summary>
+            NO_COMPUTER_DIFFICULTY,
+
+            /// <summary>
             /// Represents an easy computer player difficulty.
             /// </summary>
             COMPUTER_DIFFICULTY_EASY,

@@ -70,11 +70,11 @@ namespace Battleship
         {
             if (this.playerToPlayerRadioButton.IsChecked == true)
             {
-                if (this.Player1NameTextBox.Text == "")
+                if (this.Player1NameTextBox.Text == string.Empty)
                 {
                     Logger.Information("Please enter the player 1 name!");
                 }
-                else if (this.Player2NameTextBox.Text == "")
+                else if (this.Player2NameTextBox.Text == string.Empty)
                 {
                     Logger.Information("Please enter the player 2 name!");
                 }
@@ -88,7 +88,7 @@ namespace Battleship
             }
             else if (this.playerToComputerRadioButton.IsChecked == true)
             {
-                if (this.Player1NameTextBox.Text == "")
+                if (this.Player1NameTextBox.Text == string.Empty)
                 {
                     Logger.Information("Please enter the player 1 name!");
                 }
@@ -97,14 +97,14 @@ namespace Battleship
                     if (this.easyAIRadioButton1.IsChecked == true)
                     {
                         this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
-                        this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
+                        this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
                         this.gameScreen.Player1Name = this.Player1NameTextBox.Text;
                         this.gameScreen.Show();
                     }
                     else if (this.hardAIRadioButton1.IsChecked == true)
                     {
                         this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
-                        this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
+                        this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
                         this.gameScreen.Player1Name = this.Player1NameTextBox.Text;
                         this.gameScreen.Show();
                     }

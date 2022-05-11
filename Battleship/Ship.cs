@@ -114,31 +114,31 @@ namespace Battleship
             switch (shipType)
             {
                 case 1:
-                    this.name = "De";
+                    this.name = "Destroyer";
                     this.length = 2;
                     this.resistance = 2;
                     this.grids = 2;
                     break;
                 case 2:
-                    this.name = "Su";
+                    this.name = "Submarine";
                     this.length = 3;
                     this.resistance = 3;
                     this.grids = 3;
                     break;
                 case 3:
-                    this.name = "Cr";
+                    this.name = "Cruiser";
                     this.length = 3;
                     this.resistance = 3;
                     this.grids = 3;
                     break;
                 case 4:
-                    this.name = "Ba";
+                    this.name = "Battleship";
                     this.length = 4;
                     this.resistance = 4;
                     this.grids = 4;
                     break;
                 case 5:
-                    this.name = "Ca";
+                    this.name = "Carrier";
                     this.length = 5;
                     this.resistance = 5;
                     this.grids = 5;
@@ -182,31 +182,31 @@ namespace Battleship
             switch (shipType)
             {
                 case 1:
-                    this.name = "De";
+                    this.name = "Destroyer";
                     this.length = 2;
                     this.resistance = 2;
                     this.grids = 2;
                     break;
                 case 2:
-                    this.name = "Sa";
+                    this.name = "Submarine";
                     this.length = 3;
                     this.resistance = 3;
                     this.grids = 3;
                     break;
                 case 3:
-                    this.name = "Cr";
+                    this.name = "Cruiser";
                     this.length = 3;
                     this.resistance = 3;
                     this.grids = 3;
                     break;
                 case 4:
-                    this.name = "Ba";
+                    this.name = "Battleship";
                     this.length = 4;
                     this.resistance = 4;
                     this.grids = 4;
                     break;
                 case 5:
-                    this.name = "Ca";
+                    this.name = "Carrier";
                     this.length = 5;
                     this.resistance = 5;
                     this.grids = 5;

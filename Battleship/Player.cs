@@ -332,6 +332,54 @@ namespace Battleship
                     }
                 }
             }
+
+            int driver = 11;
+            for (int i = 1; i <= 5; i++)
+            {
+                int check = 0;
+                bool start = false;
+                Coordinate startCoords = new Coordinate(1, (short)(i + 1));
+                Ship warship = new Ship(player_ID, driver, i, gridcellSize, maxCol, startCoords);
+
+                for (int row = 0; row < maxCol; row++)
+                {
+                    for (int col = 0; col < maxCol; col++)
+                    {
+                        if (this.board[row, col] == warship.ShipName.Substring(0, 2) && !start)
+                        {
+                            check++;
+                            start = true;
+                            startCoords = new Coordinate((short)(col + 1), (short)(row + 1));
+                        }
+                        else if (this.board[row, col] == warship.ShipName.Substring(0, 2))
+                        {
+                            check++;
+                            if (startCoords.XCoordinate == col)
+                            {
+                                warship.HDirection = true;
+                                warship.ShipStartCoords = startCoords;
+                            }
+                            else if (startCoords.YCoordinate == row)
+                            {
+                                warship.HDirection = false;
+                                warship.ShipStartCoords = startCoords;
+                            }
+                        }
+                    }
+                }
+
+                warship.Resistance = check;
+                if (warship.Resistance == 0)
+                {
+                    warship.ShipIsSunk = true;
+                }
+
+                warship.OnShipIsSunk += this.PlayerShipSunk;
+
+                // load the ship to the list of ships
+                this.playerShips.Add(warship);
+                driver += maxCol;
+            }
         }
 
         /// <summary>
