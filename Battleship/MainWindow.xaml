@@ -17,20 +17,20 @@
             <ColumnDefinition Width="79*"/>
             <ColumnDefinition Width="31*"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="BattleshipTitleLabel" Content="Battleship: A Game of Adventure and Conquest" HorizontalAlignment="Left" Margin="25,172,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.829,-0.287" Height="28" Grid.Column="1" Grid.ColumnSpan="2" Width="281"/>
-        <Label x:Name="Player1NameLabel" Content="Player 1 Name:&#xD;&#xA;" HorizontalAlignment="Left" Margin="4,43,0,0" VerticalAlignment="Top" Height="24" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <Label x:Name="Player2NameLabel" Content="Player 2 Name:&#xA;" HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top" Height="24" Grid.Column="1"/>
+        <Label x:Name="BattleshipTitleLabel" Content="Battleship: A Game of Adventure and Conquest" Background="LightGray" HorizontalAlignment="Left" Margin="10,252,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.829,-0.287" Height="28" Grid.Column="1" Grid.ColumnSpan="2" Width="348"/>
+        <Label x:Name="Player1NameLabel" Content="Player 1 Name:&#xD;&#xA;" HorizontalAlignment="Left" Margin="4,43,0,0" VerticalAlignment="Top" Height="24" Grid.Column="1"/>
+        <Label x:Name="Player2NameLabel" Content="Player 2 Name:&#xA;" HorizontalAlignment="Left" Margin="4,75,0,0" VerticalAlignment="Top" Height="24" Grid.Column="1"/>
         <TextBox x:Name="Player1NameTextBox" HorizontalAlignment="Left" Margin="112,43,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="194" Grid.Column="1" Grid.ColumnSpan="2" Height="24"/>
         <TextBox x:Name="Player2NameTextBox" HorizontalAlignment="Left" Margin="112,75,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="194" Grid.Column="1" Grid.ColumnSpan="2" Height="24"/>
-        <Button x:Name="StartGameButton" Content="Start Game" HorizontalAlignment="Left" Margin="10,297,0,0" VerticalAlignment="Top" Width="322" Grid.ColumnSpan="2" Grid.Column="1" Click="StartGameButton_Click" Height="64"/>
-        <Button x:Name="AboutButton" Content="About" Grid.Column="2" HorizontalAlignment="Left" Margin="277,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.681,-0.015" Grid.ColumnSpan="2" Width="140" Click="AboutButton_Click"/>
-        <Button x:Name="QuitButton" Content="Quit" Grid.Column="2" HorizontalAlignment="Left" Margin="248,297,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.681,-0.015" Grid.ColumnSpan="2" Width="169" Click="QuitButton_Click" Height="64"/>
-        <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,224,23,154" Grid.Column="1">
+        <Button x:Name="StartGameButton" Content="Start Game" HorizontalAlignment="Left" Margin="10,358,0,0" VerticalAlignment="Top" Width="296" Grid.ColumnSpan="2" Grid.Column="1" Click="StartGameButton_Click" Height="32"/>
+        <Button x:Name="AboutButton" Content="About" Grid.Column="2" HorizontalAlignment="Left" Margin="215,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.681,-0.015" Grid.ColumnSpan="2" Width="202" Click="AboutButton_Click"/>
+        <Button x:Name="QuitButton" Content="Quit" Grid.Column="2" HorizontalAlignment="Left" Margin="158,358,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.681,-0.015" Grid.ColumnSpan="2" Width="259" Click="QuitButton_Click" Height="32"/>
+        <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,285,22,93" Grid.Column="1">
             <Label x:Name="AIDifficultyLabel1" Content="AI Player 1 - Difficulty Settings" Margin="0,0,375,0"/>
             <RadioButton x:Name="easyAIRadioButton1" Content="Easy AI" Margin="215,2,233,-2" />
             <RadioButton x:Name="hardAIRadioButton1" Content="Hard AI" Margin="408,0,0,1" Height="22" VerticalAlignment="Bottom" />
         </Grid>
-        <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,247,23,131" Grid.Column="1">
+        <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,308,22,70" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="21*"/>
@@ -39,13 +39,13 @@
             <RadioButton x:Name="easyAIRadioButton2" Content="Easy AI" Margin="216,0,231,0" Grid.RowSpan="2" />
             <RadioButton x:Name="hardAIRadioButton2" Content="Hard AI" Margin="408,0,0,1" Height="22" VerticalAlignment="Bottom" Grid.RowSpan="2" />
         </Grid>
-        <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,270,23,108" Grid.Column="1">
+        <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,331,22,47" Grid.Column="1">
             <RadioButton x:Name="playerToPlayerRadioButton" Content="Player to Player" Margin="0,2,448,2" Checked="PlayerToPlayerRadioButton_Checked" />
             <RadioButton x:Name="playerToComputerRadioButton" Content="Player to Computer" Margin="216,2,215,2" Checked="PlayerToComputerRadioButton_Checked" />
             <RadioButton x:Name="computerToComputerRadioButton" Content="Computer to Computer" Margin="408,0,0,0" Height="14" VerticalAlignment="Center" Checked="ComputerToComputerRadioButton_Checked" />
         </Grid>
-        <ListBox x:Name="SavedGamesList" Grid.Column="2" Margin="215,109,23,181" Grid.ColumnSpan="2"/>
-        <Button x:Name="btnLoadGame" Content="btnLoadGame" Grid.Column="2" HorizontalAlignment="Left" Margin="248,87,0,0" VerticalAlignment="Top" Click="BtnLoadGame_Click"/>
-        <Button x:Name="btnDeleteGame" Content="btnDelete" Grid.Column="3" HorizontalAlignment="Left" Margin="16,87,0,0" VerticalAlignment="Top" Click="BtnDeleteGame_Click"/>
+        <ListBox x:Name="SavedGamesList" Grid.Column="2" Margin="215,109,23,120" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnLoadGame" Content="Load Game" Grid.Column="2" HorizontalAlignment="Left" Margin="215,87,0,0" VerticalAlignment="Top" Click="BtnLoadGame_Click" Width="101"/>
+        <Button x:Name="btnDeleteGame" Content="Delete Game" Grid.Column="3" HorizontalAlignment="Left" Margin="0,87,0,0" VerticalAlignment="Top" Click="BtnDeleteGame_Click" Width="101"/>
     </Grid>
 </Window>
