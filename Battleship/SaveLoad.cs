@@ -16,6 +16,9 @@ namespace Battleship
     /// </summary>
     internal class SaveLoad
     {
+        /// <summary>
+        /// The event that is invoked whenever the gameStatus is changed.
+        /// </summary>
         public event EventHandler OnGameStatusUpdate;
 
         /// <summary>

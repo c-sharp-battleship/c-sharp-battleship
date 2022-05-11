@@ -107,6 +107,7 @@ namespace Battleship
         /// <param name="playerID"> This is the ID of the player. </param>
         /// <param name="buttonColor"> This is the button color. </param>
         /// <param name="myName"> This is the name of the grid cell. </param>
+        /// <param name="gridCellOwner">The player that owns the <see cref="GridCell"/>.</param>
         public GridCell(int playerID, int buttonColor, string myName, Player gridCellOwner)
         {
             this.movingCrewmembers = new List<int>();

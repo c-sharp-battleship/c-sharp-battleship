@@ -132,7 +132,7 @@ namespace Battleship
             }
 
             this.savingAndLoading = new SaveLoad();
-            this.savingAndLoading.OnGameStatusUpdate += OnGameLoad;
+            this.savingAndLoading.OnGameStatusUpdate += this.OnGameLoad;
         }
 
         /// <summary>
@@ -845,6 +845,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The event that is invoked after the game is loaded.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event (in this case, none).</param>
         private void OnGameLoad(object sender, EventArgs e)
         {
            // foreach(Ship navyShip)
@@ -949,11 +954,15 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The button that loops though all of the GridCells and changes their contents to random values.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The event arguments passed to the event.</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            foreach(KeyValuePair<string,GridCell> pair in this.gameStatus)
+            foreach (KeyValuePair<string, GridCell> pair in this.gameStatus)
             {
-
                 pair.Value.Background = Brushes.Red;
 
                 /*
