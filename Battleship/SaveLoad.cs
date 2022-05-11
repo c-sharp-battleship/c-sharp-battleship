@@ -16,6 +16,8 @@ namespace Battleship
     /// </summary>
     internal class SaveLoad
     {
+        public event EventHandler OnGameStatusUpdate;
+
         /// <summary>
         /// Enum that represents the schema of each line in the CSV file.
         /// </summary>
@@ -61,7 +63,7 @@ namespace Battleship
         /// Method to load the game from a CSV file.
         /// </summary>
         /// <param name="gameStatus">The dictionary object to be "hacked" into using reference magic.</param>
-        public static void LoadGame(ref Dictionary<string, GridCell> gameStatus)
+        public void LoadGame(ref Dictionary<string, GridCell> gameStatus)
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
@@ -163,6 +165,8 @@ namespace Battleship
                         }
                     }
                 }
+
+                this.OnGameStatusUpdate?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -174,7 +178,7 @@ namespace Battleship
         /// Method to save the game into a CSV file.
         /// </summary>
         /// <param name="gameStatus">The dictionary object to be "hacked" into using reference magic.</param>
-        public static void SaveGame(ref Dictionary<string, GridCell> gameStatus)
+        public void SaveGame(ref Dictionary<string, GridCell> gameStatus)
         {
             try
             {

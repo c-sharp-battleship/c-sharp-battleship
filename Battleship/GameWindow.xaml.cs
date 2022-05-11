@@ -102,6 +102,11 @@ namespace Battleship
         private DispatcherTimer dispatcherTimer;
 
         /// <summary>
+        /// The object for saving and loading the game state.
+        /// </summary>
+        private SaveLoad savingAndLoading;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow" /> class.
         /// </summary>
         /// <param name="gameType"> This is the game type.</param>
@@ -125,6 +130,9 @@ namespace Battleship
                     this.Loaded += this.StartComputerToComputerGame;
                     break;
             }
+
+            this.savingAndLoading = new SaveLoad();
+            this.savingAndLoading.OnGameStatusUpdate += OnGameLoad;
         }
 
         /// <summary>
@@ -449,13 +457,16 @@ namespace Battleship
                                     otherPlayerPlayerCell.Content = "X";
                                     otherPlayerPlayerCell.Stricked = 1;
                                     otherPlayerPlayerCell.AllowDrop = false;
+
                                     if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
                                     {
                                         Say.Show("You have damaged my " + otherPlayerPlayerCell.ShipContainedName);
+                                        otherPlayerPlayerCell.CellAttackStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
                                     }
                                     else
                                     {
                                         Logger.ConsoleInformation("You will never succeed");
+                                        otherPlayerPlayerCell.CellAttackStatus = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
                                     }
 
                                     int rowNum;
@@ -834,6 +845,11 @@ namespace Battleship
             }
         }
 
+        private void OnGameLoad(object sender, EventArgs e)
+        {
+           // this.Reportchange(sender);
+        }
+
         /// <summary>
         /// The click event for the Save Game button.
         /// </summary>
@@ -842,7 +858,7 @@ namespace Battleship
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             // Call Save method from SaveLoad.cs
-            SaveLoad.SaveGame(ref this.gameStatus);
+            this.savingAndLoading.SaveGame(ref this.gameStatus);
         }
 
         /// <summary>
@@ -853,7 +869,7 @@ namespace Battleship
         private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
             // Call Save method from SaveLoad.cs
-            SaveLoad.LoadGame(ref this.gameStatus);
+            this.savingAndLoading.LoadGame(ref this.gameStatus);
         }
 
         /// <summary>
@@ -929,6 +945,17 @@ namespace Battleship
                             Logger.ConsoleInformation("key number (" + keytext + ")" + " contains " + gridCell.ShipContainedName + "_Player " + gridCell.PlayerID.ToString());
                         }
                     }
+                }
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(KeyValuePair<string,GridCell> pair in this.gameStatus)
+            {
+                if (pair.Value.CellAttackStatus == StatusCodes.AttackStatus.ATTACKED_HIT)
+                {
+                    Logger.ConsoleInformation(pair.Key);
                 }
             }
         }
