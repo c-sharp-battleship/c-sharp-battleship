@@ -1014,7 +1014,7 @@ namespace Battleship
 
         private void BtnSaveGame_Click(object sender, RoutedEventArgs e)
         {
-            string path = this.player1.Name + "-" + this.player2.Name + "_" + DateTime.Now.ToString("MM/dd/yyyy") + ".txt";
+            string path = this.player1.Name + "-" + this.player2.Name + "_" + DateTime.Now.ToString("MM-dd-yyyy") + ".txt";
             string pathList = "SavedGamesList.txt";
             if (!File.Exists(path))
             {
