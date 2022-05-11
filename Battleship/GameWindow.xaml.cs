@@ -1014,45 +1014,52 @@ namespace Battleship
 
         private void BtnSaveGame_Click(object sender, RoutedEventArgs e)
         {
-            string path = this.player1.Name + "-" + this.player2.Name + "_" + DateTime.Now.ToString("MM-dd-yyyy") + ".txt";
-            string pathList = "SavedGamesList.txt";
-            if (!File.Exists(path))
+            if (this.player1.IsLocked == true && this.player2.IsLocked == true)
             {
-                using (StreamWriter sw = File.CreateText(path))
+                string path = this.player1.Name + "-" + this.player2.Name + "_" + DateTime.Now.ToString("MM-dd-yyyy") + ".txt";
+                string pathList = "SavedGamesList.txt";
+                if (!File.Exists(path))
                 {
-                    sw.WriteLine(DateTime.Now.ToString("MM/dd/yyyy"));
-                    sw.WriteLine(this.player1.Name);
-                    for (int i = 0; i < this.RowRep; i++)
+                    using (StreamWriter sw = File.CreateText(path))
                     {
-                        for (int j = 0; j < this.RowRep; j++)
+                        sw.WriteLine(DateTime.Now.ToString("MM/dd/yyyy"));
+                        sw.WriteLine(this.player1.Name);
+                        for (int i = 0; i < this.RowRep; i++)
                         {
-                            sw.Write(this.player1.Board[i, j] + ',');
+                            for (int j = 0; j < this.RowRep; j++)
+                            {
+                                sw.Write(this.player1.Board[i, j] + ',');
+                            }
+
+                            sw.Write("\n");
                         }
 
-                        sw.Write("\n");
-                    }
-
-                    sw.WriteLine(this.player2.Name);
-                    for (int i = 0; i < this.RowRep; i++)
-                    {
-                        for (int j = 0; j < this.RowRep; j++)
+                        sw.WriteLine(this.player2.Name);
+                        for (int i = 0; i < this.RowRep; i++)
                         {
-                            sw.Write(this.player2.Board[i, j] + ',');
+                            for (int j = 0; j < this.RowRep; j++)
+                            {
+                                sw.Write(this.player2.Board[i, j] + ',');
+                            }
+
+                            sw.Write("\n");
                         }
 
-                        sw.Write("\n");
+                        using (StreamWriter sl = File.AppendText(pathList))
+                        {
+                            sl.WriteLine(path);
+                        }
+
+                        MainWindow mw = Application.Current.MainWindow as MainWindow;
+                        mw.AddItem(path);
+
+                        Logger.Information("The game was saved.");
                     }
-
-                    using (StreamWriter sl = File.AppendText(pathList))
-                    {
-                        sl.WriteLine(path);
-                    }
-
-                    MainWindow mw = Application.Current.MainWindow as MainWindow;
-                    mw.AddItem(path);
-
-                    Logger.Information("The game was saved.");
                 }
+            }
+            else
+            {
+                Logger.Error("Error: Both players must first confirm their ship placement before saving a game!");
             }
         }
 
