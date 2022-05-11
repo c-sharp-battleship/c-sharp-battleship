@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Resource Include="Images\GameWindow Background.jpg" />
-    <Resource Include="Images\UML Diagram.png" />
     <Resource Include="Images\MainWindow Background.jpg" />
     <Resource Include="Images\Player 1 Turn.jpg" />
     <Resource Include="Images\Player 2 Turn.jpg" />

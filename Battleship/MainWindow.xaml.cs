@@ -25,11 +25,6 @@ namespace Battleship
         private AboutWindow aboutScreen;
 
         /// <summary>
-        /// The project info screen.
-        /// </summary>
-        private UMLstructure projectInfo;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow" /> class.
         /// </summary>
         public MainWindow()
@@ -177,10 +172,8 @@ namespace Battleship
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             this.aboutScreen = new AboutWindow();
-            this.projectInfo = new UMLstructure();
 
             this.aboutScreen.Show();
-            this.projectInfo.Show();
         }
 
         /// <summary>
