@@ -17,6 +17,11 @@ namespace Battleship
     public class GridCell : Button
     {
         /// <summary>
+        /// The owner of the GridCell.
+        /// </summary>
+        public Player GridCellOwner;
+
+        /// <summary>
         /// Is the grid cell stricked or not.
         /// </summary>
         public int Stricked = 0;
@@ -102,7 +107,7 @@ namespace Battleship
         /// <param name="playerID"> This is the ID of the player. </param>
         /// <param name="buttonColor"> This is the button color. </param>
         /// <param name="myName"> This is the name of the grid cell. </param>
-        public GridCell(int playerID, int buttonColor, string myName)
+        public GridCell(int playerID, int buttonColor, string myName, Player gridCellOwner)
         {
             this.movingCrewmembers = new List<int>();
             this.playerID = playerID;
@@ -159,6 +164,8 @@ namespace Battleship
                     this.Foreground = Brushes.CadetBlue;
                     break;
             }
+
+            this.GridCellOwner = gridCellOwner;
         }
 
         /// <summary>

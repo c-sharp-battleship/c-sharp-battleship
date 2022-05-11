@@ -26,37 +26,47 @@ namespace Battleship
             /// <summary>
             /// The key that the gameStatus dictionary references.
             /// </summary>
-            KEY = 0,
+            KEY,
 
             /// <summary>
             /// The attack status of the <see cref="GridCell"/>.
             /// </summary>
-            CELL_ATTACK_STATUS = 1,
+            CELL_ATTACK_STATUS,
 
             /// <summary>
             /// The column number of the <see cref="GridCell"/>.
             /// </summary>
-            COLUMN_NUMBER = 2,
+            COLUMN_NUMBER,
+
+            /// <summary>
+            /// The visibility number of the <see cref="GridCell"/>.
+            /// </summary>
+            CONTENT,
 
             /// <summary>
             /// The ship that is located on the <see cref="GridCell"/>.
             /// </summary>
-            SHIP_CONTAINED_NAME = 3,
+            SHIP_CONTAINED_NAME,
 
             /// <summary>
             /// Whether or not the <see cref="GridCell"/> is an offense button.
             /// </summary>
-            OFFENSE_BUTTON = 4,
+            OFFENSE_BUTTON,
 
             /// <summary>
             /// The player ID that the <see cref="GridCell"/> belongs to.
             /// </summary>
-            PLAYER_ID = 5,
+            PLAYER_ID,
 
             /// <summary>
             /// The row number of the <see cref="GridCell"/>.
             /// </summary>
-            ROW_NUMBER = 6,
+            ROW_NUMBER,
+
+            /// <summary>
+            /// The visibility number of the <see cref="GridCell"/>.
+            /// </summary>
+            VISIBILITY,
         }
 
         /// <summary>
@@ -119,6 +129,10 @@ namespace Battleship
                                 gameStatus[key].ColNum = outputConversion;
                             }
                         }
+                        else if (j == (int)CsvSchema.CONTENT)
+                        {
+                            gameStatus[key].ShipContainedName = fileContents[i][j];
+                        }
                         else if (j == (int)CsvSchema.SHIP_CONTAINED_NAME)
                         {
                             gameStatus[key].ShipContainedName = fileContents[i][j];
@@ -157,6 +171,18 @@ namespace Battleship
                             else
                             {
                                 gameStatus[key].RowNum = outputConversion;
+                            }
+                        }
+                        else if (j == (int)CsvSchema.VISIBILITY)
+                        {
+                            int outputConversion = 0;
+                            if (!int.TryParse(fileContents[i][j], out outputConversion))
+                            {
+                                Logger.ConsoleInformation("Invalid CSV file format!");
+                            }
+                            else
+                            {
+                                gameStatus[key].Visibility = (System.Windows.Visibility)outputConversion;
                             }
                         }
                         else
@@ -199,10 +225,12 @@ namespace Battleship
                             test.Key + "," +
                             (int)test.Value.CellAttackStatus + "," +
                             test.Value.ColNum + "," +
+                            test.Value.Content + ", " +
                             test.Value.ShipContainedName + "," +
                             test.Value.OffenseButton + "," +
                             test.Value.PlayerID + "," +
-                            test.Value.RowNum);
+                            test.Value.RowNum + ", " +
+                            (int)test.Value.Visibility);
                     }
 
                     outputfile.Close();

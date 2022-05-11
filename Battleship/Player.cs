@@ -99,7 +99,7 @@ namespace Battleship
                             // create a name for this button will result in a string(10.0001, this is elevated to the ten thounsans to allow a high number of buttons without the repeating of the name)
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
 
-                            GridCell myButton = new GridCell(player_ID, buttoncolorForDeffense, rowthousand.ToString());
+                            GridCell myButton = new GridCell(player_ID, buttoncolorForDeffense, rowthousand.ToString(), this);
 
                             // myButton.Content = capital_letters[col] + (row + 1);
                             myButton.TrackingID = (col + 1) + (row * maxCol);
@@ -136,7 +136,7 @@ namespace Battleship
                             // create a name for this button will result in a string(10.0001, this is elevated to the ten thounsans to allow a high number of buttons without the repeating of the name)
                             double rowthousand = col + 1 + ((row + 1) * 0.0001);
                             int dictionaryOffset = maxCol * maxCol;
-                            GridCell myButton = new GridCell(player_ID, buttoncolorForOffense, rowthousand.ToString());
+                            GridCell myButton = new GridCell(player_ID, buttoncolorForOffense, rowthousand.ToString(), this);
 
                             // myButton.Content = capital_letters[col] + (row + 1);
                             myButton.TrackingID = offenseIDcountOffset + col + 1 + (row * maxCol);

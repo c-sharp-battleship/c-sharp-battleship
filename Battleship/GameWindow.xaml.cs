@@ -460,7 +460,7 @@ namespace Battleship
 
                                     if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
                                     {
-                                        Say.Show("You have damaged my " + otherPlayerPlayerCell.ShipContainedName);
+                                        Logger.ConsoleInformation("You have damaged my " + otherPlayerPlayerCell.ShipContainedName);
                                         otherPlayerPlayerCell.CellAttackStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
                                     }
                                     else
@@ -691,7 +691,7 @@ namespace Battleship
                     if (p_currentPlayer.IsLocked == false)
                     {
                         // create a cell to pass a cell to this method and return the possible crew members for this turn
-                        GridCell checkTempCell = new GridCell(p_currentPlayer.PlayerID, 0, string.Empty);
+                        GridCell checkTempCell = new GridCell(p_currentPlayer.PlayerID, 0, string.Empty, p_currentPlayer);
                         checkTempCell.TrackingID = navyShip.Captain;
                         int overlappingCrew = this.AllowShipMove_CrewOverlapCheck(navyShip, checkTempCell, p_currentPlayer, 1);
 
@@ -847,7 +847,7 @@ namespace Battleship
 
         private void OnGameLoad(object sender, EventArgs e)
         {
-           // this.Reportchange(sender);
+           // foreach(Ship navyShip)
         }
 
         /// <summary>
@@ -953,10 +953,16 @@ namespace Battleship
         {
             foreach(KeyValuePair<string,GridCell> pair in this.gameStatus)
             {
+
+                pair.Value.Background = Brushes.Red;
+
+                /*
                 if (pair.Value.CellAttackStatus == StatusCodes.AttackStatus.ATTACKED_HIT)
                 {
+
                     Logger.ConsoleInformation(pair.Key);
                 }
+                */
             }
         }
     }
