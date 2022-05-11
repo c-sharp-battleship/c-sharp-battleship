@@ -185,7 +185,7 @@ namespace Battleship
             {
                 BitmapImage shipPic = new BitmapImage();
                 shipPic.BeginInit();
-                shipPic.UriSource = new Uri(@"./warship.jpg", UriKind.Relative);
+                shipPic.UriSource = new Uri(@"./Images/Warship.jpg", UriKind.Relative);
                 shipPic.EndInit();
 
                 warship.Background = new ImageBrush(shipPic);
