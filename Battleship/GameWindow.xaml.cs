@@ -1046,10 +1046,10 @@ namespace Battleship
         }
 
         /// <summary>
-        /// show report dictionary.
+        /// Method that shows the report dictionary.
         /// </summary>
-        /// <param name="sender"> sender.</param>
-        /// <param name="e">handler.</param>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void Reportgame_Click(object sender, RoutedEventArgs e)
         {
             for (int j = 1; j <= 2; j++)

@@ -53,7 +53,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Method to add an item to a listbox.
+        /// Method to add an item to the <see cref="SavedGamesList"/>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
         public void AddItem(string fileName)
@@ -271,7 +271,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Click event to load a game from listbox.
+        /// Click event to load a game from the <see cref="SavedGamesList"/>.
         /// </summary>
         /// <param name="sender">The sender that invoked the event.</param>
         /// <param name="e">The parameters to be passed to the event.</param>
@@ -289,7 +289,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Click event to delete a game from listbox.
+        /// Click event to delete a game from the <see cref="SavedGamesList"/>.
         /// </summary>
         /// <param name="sender">The sender that invoked the event.</param>
         /// <param name="e">The parameters to be passed to the event.</param>

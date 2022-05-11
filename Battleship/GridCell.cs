@@ -67,7 +67,7 @@ namespace Battleship
         private string containedShipID;
 
         /// <summary>
-        /// The type of the ship contained by the gridcell.
+        /// The type of the ship contained by the <see cref="GridCell"/>.
         /// </summary>
         private int containedshipType;
 
