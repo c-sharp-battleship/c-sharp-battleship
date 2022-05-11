@@ -39,6 +39,11 @@ namespace Battleship
         private bool isLocked;
 
         /// <summary>
+        /// Whether or not the current player's ships are locked.
+        /// </summary>
+        private bool playerTurn;
+
+        /// <summary>
         /// The player's ID.
         /// </summary>
         private int playerID;
@@ -65,6 +70,7 @@ namespace Battleship
         public Player(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense)
         {
             this.isLocked = false;
+            this.playerTurn = true;
 
             // set the fixed properties
             this.name = player_Name;
@@ -200,12 +206,150 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Player" /> class.
+        /// </summary>
+        /// <param name="player_ID"> This is the ID of the player. </param>
+        /// <param name="player_Name"> this is the name of the Player.</param>
+        /// <param name="gridcellSize"> This is the size in pixels for the grid square dimension.</param>
+        /// <param name="maxCol"> This is the max number of columns requested at the moment pf loading.</param>
+        /// <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor).</param>
+        /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
+        /// <param name="p_currentPlayerBoard"> The current player's board.</param>
+        /// <param name="p_otherPlayerBoard"> The other player's board.</param>
+        public Player(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense, string[,] p_currentPlayerBoard, string[,] p_otherPlayerBoard)
+        {
+            this.isLocked = true;
+            this.playerTurn = true;
+
+            // set the fixed properties
+            this.name = player_Name;
+            this.playerID = player_ID;
+
+            // List of Alphabet letters to give names to gridcells
+            string[] capital_letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+            this.board = p_currentPlayerBoard;
+
+            // set the player cstom button(grid) collection list if it is placed on the right side of screen
+            // Make two grids of buttons for each player one for defense and one for offense(Defense buttons wnot have click events)
+            for (int grids = 0; grids < 2; grids++)
+            {
+                // determine the grid type and assign a flag to the buttons if they are defense or offense.
+                if (grids == 0)
+                {
+                    // will iterate the number of columns requested
+                    for (int col = 0; col < maxCol; col++)
+                    {
+                        // will iterate the number of rows(same as the columns) requested
+                        for (int row = 0; row < maxCol; row++)
+                        {
+                            // create a name for this button will result in a string(10.0001, this is elevated to the ten thounsans to allow a high number of buttons without the repeating of the name)
+                            double rowthousand = col + 1 + ((row + 1) * 0.0001);
+
+                            GridCell myButton = new GridCell(player_ID, buttoncolorForDeffense, rowthousand.ToString(), this);
+
+                            // myButton.Content = capital_letters[col] + (row + 1);
+                            myButton.TrackingID = (col + 1) + (row * maxCol);
+                            myButton.Content = (col + 1) + (row * maxCol);
+                            myButton.Width = gridcellSize;
+                            myButton.Height = gridcellSize;
+                            myButton.RowNum = row + 1;
+                            myButton.ColNum = col + 1;
+                            myButton.OffenseButton = false;
+                            myButton.AllowDrop = true;
+                            myButton.Buttonid = (col * 10) + row;
+                            myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
+                            Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
+                            Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
+                            myButton.Left_Comp_ParentLeft = col * gridcellSize;
+                            myButton.Top_Comp_ParentTop = row * gridcellSize;
+                            if (this.board[row, col] == "H" || this.board[row, col] == "M")
+                            {
+                                myButton.Background = Brushes.Red;
+                                myButton.Content = "X";
+                                myButton.Stricked = 1;
+                                myButton.AllowDrop = false;
+                            }
+                            else if (this.board[row, col] != "H" && this.board[row, col] != "M" &&
+                                     this.board[row, col] != "O")
+                            {
+                                myButton.Background = Brushes.Azure;
+                                myButton.Content = this.board[row, col];
+                                myButton.Stricked = 1;
+                            }
+
+                            this.playerGridCells.Add(col + 1 + (row * maxCol), myButton);
+                        }
+                    }
+                }
+                else
+                {
+                    // second iteration for creating the attack grid
+                    // offset this buttons from the left to become the attack grid to compaensate the space occupied by the defense grid
+                    double gridOffsetWhenVisual = gridcellSize * maxCol;
+                    int offenseIDcountOffset = maxCol * maxCol;
+
+                    // will iterate the number of columns requested
+                    for (int col = 0; col < maxCol; col++)
+                    {
+                        // will iterate the number of rows(same as the columns) requested
+                        for (int row = 0; row < maxCol; row++)
+                        {
+                            // create a name for this button will result in a string(10.0001, this is elevated to the ten thounsans to allow a high number of buttons without the repeating of the name)
+                            double rowthousand = col + 1 + ((row + 1) * 0.0001);
+                            int dictionaryOffset = maxCol * maxCol;
+                            GridCell myButton = new GridCell(player_ID, buttoncolorForOffense, rowthousand.ToString(), this);
+
+                            // myButton.Content = capital_letters[col] + (row + 1);
+                            myButton.TrackingID = offenseIDcountOffset + col + 1 + (row * maxCol);
+                            myButton.Content = col + 1 + (row * maxCol);
+                            myButton.Width = gridcellSize;
+                            myButton.Height = gridcellSize;
+                            myButton.RowNum = row + 1;
+                            myButton.ColNum = col + 1;
+                            myButton.OffenseButton = true;
+                            myButton.AllowDrop = false;
+                            myButton.Buttonid = (col * 10) + row;
+                            myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
+                            Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
+                            Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
+                            if (p_otherPlayerBoard[row, col] == "H")
+                            {
+                                myButton.Background = Brushes.Green;
+                                myButton.Content = "H";
+                                myButton.IsEnabled = false;
+                                myButton.Stricked = 1;
+                                myButton.AllowDrop = false;
+                            }
+                            else if (p_otherPlayerBoard[row, col] == "M")
+                            {
+                                myButton.Visibility = Visibility.Hidden;
+                                myButton.Stricked = 1;
+                            }
+
+                            this.playerGridCells.Add(dictionaryOffset + col + 1 + (row * maxCol), myButton);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the ship placement is locked.
         /// </summary>
         public bool IsLocked
         {
             get => this.isLocked;
             set => this.isLocked = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether it is player's turn or not.
+        /// </summary>
+        public bool PlayerTurn
+        {
+            get { return this.playerTurn; }
+            set { this.playerTurn = value; }
         }
 
         /// <summary>

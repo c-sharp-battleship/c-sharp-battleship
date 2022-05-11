@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------
 namespace Battleship
 {
+    using System.Collections.Generic;
+    using System.IO;
     using System.Windows;
 
     /// <summary>
@@ -33,6 +35,30 @@ namespace Battleship
         public MainWindow()
         {
            this.InitializeComponent();
+
+           this.Player1NameTextBox.IsEnabled = false;
+           this.Player2NameTextBox.IsEnabled = false;
+
+           string pathList = "SavedGamesList.txt";
+           if (File.Exists(pathList))
+           {
+               using (StreamReader sr = File.OpenText(pathList))
+               {
+                   while (sr.Peek() != -1)
+                   {
+                       this.SavedGamesList.Items.Add(sr.ReadLine());
+                   }
+               }
+           }
+        }
+
+        /// <summary>
+        /// Method to add an item to a listbox.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        public void AddItem(string fileName)
+        {
+            this.SavedGamesList.Items.Add(fileName);
         }
 
         /// <summary>
@@ -44,26 +70,48 @@ namespace Battleship
         {
             if (this.playerToPlayerRadioButton.IsChecked == true)
             {
-                this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_PLAYER);
-                this.gameScreen.Show();
-            }
-            else if (this.playerToComputerRadioButton.IsChecked == true)
-            {
-                if (this.easyAIRadioButton1.IsChecked == true)
+                if (this.Player1NameTextBox.Text == "")
                 {
-                    this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
-                    this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
-                    this.gameScreen.Show();
+                    Logger.Information("Please enter the player 1 name!");
                 }
-                else if (this.hardAIRadioButton1.IsChecked == true)
+                else if (this.Player2NameTextBox.Text == "")
                 {
-                    this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
-                    this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
-                    this.gameScreen.Show();
+                    Logger.Information("Please enter the player 2 name!");
                 }
                 else
                 {
-                    Logger.Error("Please Select an AI difficulty for Computer Player!");
+                    this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_PLAYER);
+                    this.gameScreen.Player1Name = this.Player1NameTextBox.Text;
+                    this.gameScreen.Player2Name = this.Player2NameTextBox.Text;
+                    this.gameScreen.Show();
+                }
+            }
+            else if (this.playerToComputerRadioButton.IsChecked == true)
+            {
+                if (this.Player1NameTextBox.Text == "")
+                {
+                    Logger.Information("Please enter the player 1 name!");
+                }
+                else
+                {
+                    if (this.easyAIRadioButton1.IsChecked == true)
+                    {
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
+                        this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
+                        this.gameScreen.Player1Name = this.Player1NameTextBox.Text;
+                        this.gameScreen.Show();
+                    }
+                    else if (this.hardAIRadioButton1.IsChecked == true)
+                    {
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
+                        this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
+                        this.gameScreen.Player1Name = this.Player1NameTextBox.Text;
+                        this.gameScreen.Show();
+                    }
+                    else
+                    {
+                        Logger.Error("Please Select an AI difficulty for Computer Player!");
+                    }
                 }
             }
             else if (this.computerToComputerRadioButton.IsChecked == true)
@@ -184,6 +232,8 @@ namespace Battleship
         private void PlayerToPlayerRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();
+            this.Player1NameTextBox.IsEnabled = true;
+            this.Player2NameTextBox.IsEnabled = true;
         }
 
         /// <summary>
@@ -194,6 +244,7 @@ namespace Battleship
         private void PlayerToComputerRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();
+            this.Player1NameTextBox.IsEnabled = true;
         }
 
         /// <summary>
@@ -214,6 +265,62 @@ namespace Battleship
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             this.UpdateRadioButtonOptions();
+        }
+
+        /// <summary>
+        /// Click event to load a game from listbox.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The parameters to be passed to the event.</param>
+        private void BtnLoadGame_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.SavedGamesList.SelectedItem != null)
+            {
+                this.gameScreen = new GameWindow(this.SavedGamesList.SelectedItem.ToString());
+                this.gameScreen.Show();
+            }
+            else
+            {
+                Logger.Information("Please select the file to load!");
+            }
+        }
+
+        /// <summary>
+        /// Click event to delete a game from listbox.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The parameters to be passed to the event.</param>
+        private void BtnDeleteGame_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.SavedGamesList.SelectedItem != null)
+            {
+                string path = this.SavedGamesList.SelectedItem.ToString();
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                    this.SavedGamesList.Items.Remove(this.SavedGamesList.SelectedItem);
+                    string pathList = "SavedGamesList.txt";
+                    if (File.Exists(pathList))
+                    {
+                        string[] lines = File.ReadAllLines(pathList);
+                        File.Delete(pathList);
+                        using (StreamWriter sr = File.CreateText(pathList))
+                        {
+                            for (int i = lines.Length - 1; i >= 0; i--)
+                            {
+                                if (lines[i] != path)
+                                {
+                                    sr.WriteLine(lines[i]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Logger.Information("Please select the file to delete!");
+            }
         }
     }
 }
