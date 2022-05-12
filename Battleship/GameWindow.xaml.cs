@@ -588,19 +588,19 @@ namespace Battleship
                                         }
 
                                         int rowNum;
-                                        if ((gridcellnumber - 100) % 10 == 0)
+                                        if ((gridcellnumber - (this.RowRep * this.RowRep)) % this.RowRep == 0)
                                         {
-                                            rowNum = ((gridcellnumber - 100) / 10) - 1;
+                                            rowNum = ((gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep) - 1;
                                         }
                                         else
                                         {
-                                            rowNum = (gridcellnumber - 100) / 10;
+                                            rowNum = (gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep;
                                         }
 
-                                        int colNum = ((gridcellnumber - 100) - (((gridcellnumber - 100) / 10) * 10)) - 1;
+                                        int colNum = ((gridcellnumber - (this.RowRep * this.RowRep)) - (((gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep) * this.RowRep)) - 1;
                                         if (colNum == -1)
                                         {
-                                            colNum = 9;
+                                            colNum = this.RowRep - 1;
                                         }
 
                                         string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
@@ -1220,19 +1220,19 @@ namespace Battleship
                                     }
 
                                     int rowNum;
-                                    if ((gridcellnumber - 100) % 10 == 0)
+                                    if ((gridcellnumber - (this.RowRep * this.RowRep)) % this.RowRep == 0)
                                     {
-                                        rowNum = ((gridcellnumber - 100) / 10) - 1;
+                                        rowNum = ((gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep) - 1;
                                     }
                                     else
                                     {
-                                        rowNum = (gridcellnumber - 100) / 10;
+                                        rowNum = (gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep;
                                     }
 
-                                    int colNum = ((gridcellnumber - 100) - (((gridcellnumber - 100) / 10) * 10)) - 1;
+                                    int colNum = ((gridcellnumber - (this.RowRep * this.RowRep)) - (((gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep) * this.RowRep)) - 1;
                                     if (colNum == -1)
                                     {
-                                        colNum = 9;
+                                        colNum = this.RowRep - 1;
                                     }
 
                                     string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
@@ -1248,12 +1248,16 @@ namespace Battleship
                                         {
                                             p_currentPlayerTurn = true;
                                             p_otherPlayerTurn = false;
+                                            Logger.Information("You can continue hitting!");
                                         }
                                     }
                                     else
                                     {
                                         mainPlayerCell.Visibility = Visibility.Hidden;
                                         p_otherPlayer.Board[rowNum, colNum] = "M";
+                                        p_currentPlayerTurn = false;
+                                        p_otherPlayerTurn = true;
+                                        Logger.Information("Switch Player. Next Player Turn.");
                                     }
                                 }
                             }

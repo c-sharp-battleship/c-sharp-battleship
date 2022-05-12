@@ -116,7 +116,7 @@ namespace Battleship
                             myButton.ColNum = col + 1;
                             myButton.OffenseButton = false;
                             myButton.AllowDrop = true;
-                            myButton.Buttonid = (col * 10) + row;
+                            myButton.Buttonid = (col * maxCol) + row;
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
@@ -153,7 +153,7 @@ namespace Battleship
                             myButton.ColNum = col + 1;
                             myButton.OffenseButton = true;
                             myButton.AllowDrop = false;
-                            myButton.Buttonid = (col * 10) + row;
+                            myButton.Buttonid = (col * maxCol) + row;
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
@@ -164,7 +164,7 @@ namespace Battleship
             }
 
             // Create a collection of 5 ships for any player
-            int driver = 11;
+            int driver = maxCol + 1;
 
             // for (int  i = 1; i <= 5; i++)
             int i = 0;
@@ -262,7 +262,7 @@ namespace Battleship
                             myButton.ColNum = col + 1;
                             myButton.OffenseButton = false;
                             myButton.AllowDrop = true;
-                            myButton.Buttonid = (col * 10) + row;
+                            myButton.Buttonid = (col * maxCol) + row;
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, col * gridcellSize); // assign a value where it will be loaded if plased on a canvas
@@ -314,7 +314,7 @@ namespace Battleship
                             myButton.ColNum = col + 1;
                             myButton.OffenseButton = true;
                             myButton.AllowDrop = false;
-                            myButton.Buttonid = (col * 10) + row;
+                            myButton.Buttonid = (col * maxCol) + row;
                             myButton.Uid = capital_letters[col] + (row + 1); // will result in an id(A1) string
                             Canvas.SetTop(myButton, row * gridcellSize); // assign a value where it will be loaded if plased on a canvas
                             Canvas.SetLeft(myButton, (col * gridcellSize) + gridOffsetWhenVisual); // assign a value where it will be loaded if plased on a canvas
@@ -338,7 +338,7 @@ namespace Battleship
                 }
             }
 
-            int driver = 11;
+            int driver = maxCol + 1;
             for (int i = 1; i <= 5; i++)
             {
                 int check = 0;
