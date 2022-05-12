@@ -116,7 +116,9 @@ namespace Battleship
         /// </summary>
         private SaveLoad savingAndLoading;
 
-        private List<int> shiptypelist = new List<int>() { 1, 3, 5 };
+        private List<int> shiptypelist = new List<int>() { 1, 3, 5, 1 };
+
+        private int bombcounttest = 2;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow" /> class.
@@ -282,8 +284,8 @@ namespace Battleship
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
-            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3, this.shiptypelist);
-            this.player2 = new Player(2, this.player2Name, this.Cellsize, this.RowRep, 3, 1, this.shiptypelist);
+            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3, this.shiptypelist, bombcounttest);
+            this.player2 = new Player(2, this.player2Name, this.Cellsize, this.RowRep, 3, 1, this.shiptypelist, bombcounttest);
             this.player2.PlayerTurn = false;
 
             // Create two Canvas to place the player elements on them
@@ -330,7 +332,7 @@ namespace Battleship
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.shiptypelist = new List<int> { 1, 2, 3, 4, 5 };
-            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3, this.shiptypelist);
+            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3, this.shiptypelist, bombcounttest);
             this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 1, this.computerPlayerDifficulty2, this.shiptypelist);
             this.player2.IsLocked = true;
 

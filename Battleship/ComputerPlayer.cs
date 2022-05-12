@@ -74,7 +74,7 @@ namespace Battleship
         /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
         /// <param name="difficulty"> This is the difficulty of the player. </param>
         public ComputerPlayer(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense, StatusCodes.ComputerPlayerDifficulty difficulty, List<int> shipTypes)
-            : base(player_ID, player_Name, gridcellSize, maxCol, buttoncolorForDeffense, buttoncolorForOffense, shipTypes)
+            : base(player_ID, player_Name, gridcellSize, maxCol, buttoncolorForDeffense, buttoncolorForOffense, shipTypes, 2)
         {
             this.difficulty = difficulty;
 

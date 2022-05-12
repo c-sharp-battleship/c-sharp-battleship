@@ -49,6 +49,11 @@ namespace Battleship
         private int playerID;
 
         /// <summary>
+        /// The player's bomb count.
+        /// </summary>
+        private int bombCount;
+
+        /// <summary>
         /// The player's name.
         /// </summary>
         private string name;
@@ -67,8 +72,9 @@ namespace Battleship
         /// <param name="maxCol"> This is the max number of columns requested at the moment pf loading.</param>
         /// <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor).</param>
         /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
-        public Player(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense,List<int> shiptypes)
+        public Player(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense,List<int> shiptypes, int p_bombcount)
         {
+            this.bombCount = p_bombcount;
             this.isLocked = false;
             this.playerTurn = true;
 
@@ -163,10 +169,8 @@ namespace Battleship
                 }
             }
 
-            // Create a collection of 5 ships for any player
+            // Create a collection of ships for any player
             int driver = 11;
-
-            // for (int  i = 1; i <= 5; i++)
             int i = 0;
             foreach (int type in shiptypes)
             {
@@ -419,6 +423,15 @@ namespace Battleship
         public int PlayerID
         {
             get { return this.playerID; }
+        }
+
+        /// <summary>
+        /// Gets player ID.
+        /// </summary>
+        public int BombCount
+        {
+            get { return this.bombCount; }
+            set { this.BombCount = value; }
         }
 
         /// <summary>
