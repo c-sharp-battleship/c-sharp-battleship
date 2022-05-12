@@ -116,6 +116,8 @@ namespace Battleship
         /// </summary>
         private SaveLoad savingAndLoading;
 
+        private bool optionPlayerTurnHits = true;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow" /> class.
         /// </summary>
@@ -531,6 +533,9 @@ namespace Battleship
         /// <param name="p_cellsize">The cell size (in pixels).</param>
         private void DeclarePlayerGrid(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
+            bool p_currentPlayerTurn = false;
+            bool p_otherPlayerTurn = true;
+
             foreach (KeyValuePair<int, GridCell> mainPlayerPair in p_currentPlayer.Playergridsquarecollection)
             {
                 // Create initial variables for interior iterations
@@ -604,11 +609,20 @@ namespace Battleship
                                             mainPlayerCell.IsEnabled = false;
                                             mainPlayerCell.Stricked = 1;
                                             mainPlayerCell.AllowDrop = false;
+                                            if (optionPlayerTurnHits)
+                                            {
+                                                p_currentPlayerTurn = true;
+                                                p_otherPlayerTurn = false;
+                                                Logger.Information("You can continue hitting!");
+                                            }
                                         }
                                         else
                                         {
                                             mainPlayerCell.Visibility = Visibility.Hidden;
                                             p_otherPlayer.Board[rowNum, colNum] = "M";
+                                            p_currentPlayerTurn = false;
+                                            p_otherPlayerTurn = true;
+                                            Logger.Information("Switch Player. Next Player Turn.");
                                         }
                                     }
                                 }
@@ -637,11 +651,8 @@ namespace Battleship
                                         ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, this.RowRep);
                                     }
                                 }
-                                else
-                                {
-                                    p_currentPlayer.PlayerTurn = false;
-                                    p_otherPlayer.PlayerTurn = true;
-                                }
+                                p_currentPlayer.PlayerTurn = p_currentPlayerTurn;
+                                p_otherPlayer.PlayerTurn = p_otherPlayerTurn;
                             }
                             else
                             {
@@ -1157,6 +1168,9 @@ namespace Battleship
         /// <param name="p_cellsize">The cell size (in pixels).</param>
         private void DeclarePlayerGridFromFile(Player p_currentPlayer, Player p_otherPlayer, List<GridCell> p_playersCellRecords, Canvas p_currentPlayerWindow, double p_cellsize)
         {
+            bool p_currentPlayerTurn = false;
+            bool p_otherPlayerTurn = true;
+
             foreach (KeyValuePair<int, GridCell> mainPlayerPair in p_currentPlayer.Playergridsquarecollection)
             {
                 // Create initial variables for interior iterations
@@ -1227,6 +1241,11 @@ namespace Battleship
                                         mainPlayerCell.IsEnabled = false;
                                         mainPlayerCell.Stricked = 1;
                                         mainPlayerCell.AllowDrop = false;
+                                        if (optionPlayerTurnHits)
+                                        {
+                                            p_currentPlayerTurn = true;
+                                            p_otherPlayerTurn = false;
+                                        }
                                     }
                                     else
                                     {
@@ -1247,24 +1266,8 @@ namespace Battleship
                                 AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
                             }
 
-                            // Swicth windows between players
-                            if (p_otherPlayer.Name == "ComputerPlayerTwo")
-                            {
-                                if (this.computerPlayerDifficulty2 ==
-                                    StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
-                                {
-                                    ((ComputerPlayer)p_otherPlayer).AdvancedAttack(p_currentPlayer, this.RowRep);
-                                }
-                                else
-                                {
-                                    ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, this.RowRep);
-                                }
-                            }
-                            else
-                            {
-                                p_currentPlayer.PlayerTurn = false;
-                                p_otherPlayer.PlayerTurn = true;
-                            }
+                            p_currentPlayer.PlayerTurn = p_currentPlayerTurn;
+                            p_otherPlayer.PlayerTurn = p_otherPlayerTurn;
                         }
                         else
                         {
