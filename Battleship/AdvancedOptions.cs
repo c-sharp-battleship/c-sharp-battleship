@@ -7,8 +7,49 @@ namespace Battleship
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Class to store the advanced options of the game.
+    /// </summary>
     public class AdvancedOptions
     {
+        /// <summary>
+        /// Specifies how many ships each player's fleet should contain.
+        /// </summary>
+        private int fleetSize;
+
+        /// <summary>
+        /// The list containing the types of ships to be created (for a custom <see cref="fleetSize"/>.
+        /// </summary>
+        private List<StatusCodes.ShipType> shipTypes;
+
+        /// <summary>
+        /// Specifies the length and width of each board.
+        /// </summary>
+        private short gridSize;
+
+        /// <summary>
+        /// Determines whether or not the player can attack multiple times follow.
+        /// </summary>
+        private bool playerCanAttackAgain;
+
+        /// <summary>
+        /// Whether or not, during each turn, each player can get a hit based on the number of ships they have remaining.
+        /// </summary>
+        private bool eachShipGetsAShot;
+
+        /// <summary>
+        /// Whether or not the player can attack multiple surrounding grid spaces in one turn.
+        /// </summary>
+        private bool playerGetsABombMove;
+
+        /// <summary>
+        /// How many <see cref="playerGetsABombMove"/> moves the player can have per game.
+        /// </summary>
+        private int bombCount;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdvancedOptions"/> class.
+        /// </summary>
         public AdvancedOptions()
         {
             this.fleetSize = 5;
@@ -24,17 +65,10 @@ namespace Battleship
             this.gridSize = 10;
             this.playerCanAttackAgain = false;
             this.eachShipGetsAShot = false;
-            this.PlayerGetsABombMove = false;
+            this.playerGetsABombMove = false;
 
             this.bombCount = 0;
         }
-
-        // Rule 1 - Adjustable Fleet Sizes
-
-        /// <summary>
-        /// Specifies how many ships each player's fleet should contain.
-        /// </summary>
-        private int fleetSize;
 
         /// <summary>
         /// Gets or sets the <see cref="fleetSize"/>.
@@ -59,20 +93,14 @@ namespace Battleship
             }
         }
 
-        private List<StatusCodes.ShipType> shipTypes;
-
+        /// <summary>
+        /// Gets or sets the <see cref="shipTypes"/>.
+        /// </summary>
         public List<StatusCodes.ShipType> ShipTypes
         {
-            get { return shipTypes; }
+            get { return this.shipTypes; }
             set { this.shipTypes = value; }
         }
-
-        // Rule 2 - Adjustable Grid Size
-
-        /// <summary>
-        /// Specifies the length and width of each board.
-        /// </summary>
-        private short gridSize;
 
         /// <summary>
         /// Gets or sets the <see cref="gridSize"/>.
@@ -97,41 +125,36 @@ namespace Battleship
             }
         }
 
-        // Rule 3 - If a Player Gets Hit, They Can Attack Again
-
         /// <summary>
-        /// Determines whether or not the player can attack multiple times follow.
+        /// Gets or sets a value indicating whether or not the player can attack again after a successful attack.
         /// </summary>
-        private bool playerCanAttackAgain;
-
         public bool PlayerCanAttackAgain
         {
             get { return this.playerCanAttackAgain; }
             set { this.playerCanAttackAgain = value; }
         }
 
-        // Rule 4 - Each Ship Gets a Shot
-
-        private bool eachShipGetsAShot;
-
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the player can attack multiple times based on the number of ships the player has remaining.
+        /// </summary>
         public bool EachShipGetsAShot
         {
             get { return this.eachShipGetsAShot; }
             set { this.eachShipGetsAShot = value; }
         }
 
-        // Rule 5 - Player Gets a "Bomb" Move
-
-        private bool playerGetsABombMove;
-
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the player can attack surrounding grid spaces in a single play.
+        /// </summary>
         public bool PlayerGetsABombMove
         {
             get { return this.playerGetsABombMove; }
             set { this.playerGetsABombMove = value; }
         }
 
-        private int bombCount;
-
+        /// <summary>
+        /// Gets or sets the <see cref="bombCount"/>.
+        /// </summary>
         public int BombCount
         {
             get { return this.bombCount; }

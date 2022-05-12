@@ -116,10 +116,19 @@ namespace Battleship
         /// </summary>
         private SaveLoad savingAndLoading;
 
+        /// <summary>
+        /// The list of ship types.
+        /// </summary>
         private List<int> shiptypelist = new List<int>() { 1, 3, 5, 1 };
 
+        /// <summary>
+        /// A temporary variable containing the bomb count (should be removed once <see cref="AdvancedOptionsWindow"/> is implemented).
+        /// </summary>
         private int bombcounttest = 2;
 
+        /// <summary>
+        /// Specifies whether or not the player can have multiple hits per turn.
+        /// </summary>
         private bool optionPlayerTurnHits = true;
 
         /// <summary>
@@ -660,6 +669,7 @@ namespace Battleship
                                             ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, this.RowRep);
                                         }
                                     }
+
                                     p_currentPlayer.PlayerTurn = p_currentPlayerTurn;
                                     p_otherPlayer.PlayerTurn = p_otherPlayerTurn;
                                 }

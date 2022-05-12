@@ -1,27 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="AdvancedOptionsWindow.xaml.cs" company="Battleship Coding Group">
+//     Battleship Coding Group, 2022
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Battleship
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+
     /// <summary>
-    /// Interaction logic for AdvancedOptionsWindow.xaml
+    /// Interaction logic for AdvancedOptionsWindow.xaml.
     /// </summary>
     public partial class AdvancedOptionsWindow : Window
     {
+        /// <summary>
+        /// The advanced options object to be passed by reference.
+        /// </summary>
         private AdvancedOptions advancedOptions;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdvancedOptionsWindow"/> class.
+        /// </summary>
+        /// <param name="p_advancedOptions">The advancedOptions instance to be passed by reference and assigned as a class-member object.</param>
         public AdvancedOptionsWindow(ref AdvancedOptions p_advancedOptions)
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             this.advancedOptions = p_advancedOptions;
 
@@ -32,8 +36,18 @@ namespace Battleship
             this.AddDefaultShipTypesToComboBox(ref this.AdjustableFleetSize5ComboBox);
             this.AddDefaultShipTypesToComboBox(ref this.AdjustableFleetSize6ComboBox);
             this.AddDefaultShipTypesToComboBox(ref this.AdjustableFleetSize7ComboBox);
+
+            this.EachPlayerCanAttackLargeGridSpaceComboBox.Items.Add(1);
+            this.EachPlayerCanAttackLargeGridSpaceComboBox.Items.Add(2);
+            this.EachPlayerCanAttackLargeGridSpaceComboBox.Items.Add(3);
         }
 
+        /// <summary>
+        /// Load event for the <see cref="AdvancedOptionsWindow"/> class.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
+        /// <exception cref="Exception">Thrown if the <see cref="advancedOptions"/>'s FleetSize is invalid.</exception>
         private void AdvancedOptionsWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             switch (this.advancedOptions.FleetSize)
@@ -70,6 +84,10 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Method to add the default ship types to the corresponding <see cref="ComboBox"/> object.
+        /// </summary>
+        /// <param name="comboBox">The comboBox to be modified (passed by reference).</param>
         private void AddDefaultShipTypesToComboBox(ref ComboBox comboBox)
         {
             comboBox.Items.Add(StatusCodes.ShipType.DESTROYER);
@@ -79,12 +97,33 @@ namespace Battleship
             comboBox.Items.Add(StatusCodes.ShipType.CARRIER);
         }
 
+        /// <summary>
+        /// Method to set the <see cref="ComboBox"/> IsEnabled property.
+        /// </summary>
+        /// <param name="ship1">Whether or not the first ComboBox should be enabled.</param>
+        /// <param name="ship2">Whether or not the second ComboBox should be enabled.</param>
+        /// <param name="ship3">Whether or not the third ComboBox should be enabled.</param>
+        /// <param name="ship4">Whether or not the fourth ComboBox should be enabled.</param>
+        /// <param name="ship5">Whether or not the fifth ComboBox should be enabled.</param>
+        /// <param name="ship6">Whether or not the sixth ComboBox should be enabled.</param>
+        /// <param name="ship7">Whether or not the seventh ComboBox should be enabled.</param>
         private void SetFleetSizeComboBoxDisability(bool ship1, bool ship2, bool ship3, bool ship4, bool ship5, bool ship6, bool ship7)
         {
             // Set the Default Values for Adjustable Fleet Size
-
+            this.AdjustableFleetSize1ComboBox.IsEnabled = ship1;
+            this.AdjustableFleetSize2ComboBox.IsEnabled = ship2;
+            this.AdjustableFleetSize3ComboBox.IsEnabled = ship3;
+            this.AdjustableFleetSize4ComboBox.IsEnabled = ship4;
+            this.AdjustableFleetSize5ComboBox.IsEnabled = ship5;
+            this.AdjustableFleetSize6ComboBox.IsEnabled = ship6;
+            this.AdjustableFleetSize7ComboBox.IsEnabled = ship7;
         }
 
+        /// <summary>
+        /// Checked event for the <see cref="AdjustableFleetSize3RadioButton"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableFleetSize3RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.advancedOptions.FleetSize = 3;
@@ -92,6 +131,11 @@ namespace Battleship
             this.SetFleetSizeComboBoxDisability(true, true, true, false, false, false, false);
         }
 
+        /// <summary>
+        /// Checked event for the <see cref="AdjustableFleetSize5RadioButton"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableFleetSize5RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.advancedOptions.FleetSize = 5;
@@ -99,6 +143,11 @@ namespace Battleship
             this.SetFleetSizeComboBoxDisability(true, true, true, true, true, false, false);
         }
 
+        /// <summary>
+        /// Checked event for the <see cref="AdjustableFleetSize7RadioButton"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableFleetSize7RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.advancedOptions.FleetSize = 7;
@@ -106,71 +155,136 @@ namespace Battleship
             this.SetFleetSizeComboBoxDisability(true, true, true, true, true, true, true);
         }
 
+        /// <summary>
+        /// SelectionChanged event for the <see cref="AdjustableFleetSize1ComboBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableFleetSize1ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            // TODO: Implement AdjustableFleetSize1ComboBox_SelectionChanged
         }
 
+        /// <summary>
+        /// SelectionChanged event for the <see cref="AdjustableFleetSize2ComboBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableFleetSize2ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // TODO: Implement AdjustableFleetSize2ComboBox_SelectionChanged
         }
 
+        /// <summary>
+        /// SelectionChanged event for the <see cref="AdjustableFleetSize3ComboBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableFleetSize3ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // TODO: Implement AdjustableFleetSize3ComboBox_SelectionChanged
         }
 
+        /// <summary>
+        /// SelectionChanged event for the <see cref="AdjustableFleetSize4ComboBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableFleetSize4ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // TODO: Implement AdjustableFleetSize4ComboBox_SelectionChanged
         }
 
+        /// <summary>
+        /// SelectionChanged event for the <see cref="AdjustableFleetSize5ComboBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableFleetSize5ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // TODO: Implement AdjustableFleetSize5ComboBox_SelectionChanged
         }
 
+        /// <summary>
+        /// SelectionChanged event for the <see cref="AdjustableFleetSize6ComboBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableFleetSize6ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // TODO: Implement AdjustableFleetSize6ComboBox_SelectionChanged
         }
 
+        /// <summary>
+        /// SelectionChanged event for the <see cref="AdjustableFleetSize7ComboBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableFleetSize7ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // TODO: Implement AdjustableFleetSize7ComboBox_SelectionChanged
         }
 
+        /// <summary>
+        /// Checked event for the <see cref="AdjustableGridSize8RadioButton"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableGridSize8RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.advancedOptions.GridSize = 8;
         }
 
+        /// <summary>
+        /// Checked event for the <see cref="AdjustableGridSize10RadioButton"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableGridSize10RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.advancedOptions.GridSize = 10;
         }
 
+        /// <summary>
+        /// Checked event for the <see cref="AdjustableGridSize12RadioButton"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdjustableGridSize12RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             this.advancedOptions.GridSize = 12;
         }
 
+        /// <summary>
+        /// Checked event for the <see cref="MultipleAttacksPerSuccessfulAttackCheckBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void MultipleAttacksPerSuccessfulAttackCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             this.advancedOptions.PlayerCanAttackAgain = true;
         }
 
+        /// <summary>
+        /// Checked event for the <see cref="MultipleAttacksPerTurnPerShip"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void MultipleAttacksPerTurnPerShip_Checked(object sender, RoutedEventArgs e)
         {
             this.advancedOptions.EachShipGetsAShot = true;
         }
 
+        /// <summary>
+        /// Checked event for the <see cref="EachPlayerCanAttackLargeGridSpaceCheckBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void EachPlayerCanAttackLargeGridSpaceCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             this.advancedOptions.PlayerGetsABombMove = true;
 
-            if(this.EachPlayerCanAttackLargeGridSpaceCheckBox.IsChecked == true)
+            if (this.EachPlayerCanAttackLargeGridSpaceCheckBox.IsChecked == true)
             {
                 this.EachPlayerCanAttackLargeGridSpaceComboBox.IsEnabled = true;
             }
@@ -180,11 +294,21 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// SelectionChanged event for the <see cref="EachPlayerCanAttackLargeGridSpaceComboBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void EachPlayerCanAttackLargeGridSpaceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // TODO: Implement EachPlayerCanAttackLargeGridSpaceComboBox_SelectionChanged
         }
 
+        /// <summary>
+        /// Click event for the <see cref="DefaultOptionsButton"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void DefaultOptionsButton_Click(object sender, RoutedEventArgs e)
         {
             this.AdjustableFleetSize5RadioButton.IsChecked = true;
@@ -194,6 +318,11 @@ namespace Battleship
             this.EachPlayerCanAttackLargeGridSpaceCheckBox.IsChecked = false;
         }
 
+        /// <summary>
+        /// Click event for the <see cref="ExitButton"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

@@ -77,7 +77,9 @@ namespace Battleship
         /// <param name="maxCol"> This is the max number of columns requested at the moment pf loading.</param>
         /// <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor).</param>
         /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
-        public Player(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense,List<int> shiptypes, int p_bombcount)
+        /// <param name="shiptypes">The types of ships to be instantiated (advanced option).</param>
+        /// <param name="p_bombcount">How many "bomb" moves a player has (advanced option).</param>
+        public Player(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense, List<int> shiptypes, int p_bombcount)
         {
             this.bombCount = p_bombcount;
             this.isLocked = false;
@@ -440,7 +442,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets or sets the activation of a bomb.
+        /// Gets or sets a value indicating whether the player's bomb is activated.
         /// </summary>
         public bool PlayerBombactivated
         {
