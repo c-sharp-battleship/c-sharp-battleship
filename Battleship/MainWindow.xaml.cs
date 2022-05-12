@@ -331,6 +331,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Click event for the <see cref="AdvancedOptionsButton"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void AdvancedOptionsButton_Click(object sender, RoutedEventArgs e)
         {
             this.advancedOptionsScreen = new AdvancedOptionsWindow(ref this.advancedOptions);

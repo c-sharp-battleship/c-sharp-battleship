@@ -295,8 +295,8 @@ namespace Battleship
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
-            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3, this.shiptypelist, bombcounttest);
-            this.player2 = new Player(2, this.player2Name, this.Cellsize, this.RowRep, 3, 1, this.shiptypelist, bombcounttest);
+            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3, this.shiptypelist, this.bombcounttest);
+            this.player2 = new Player(2, this.player2Name, this.Cellsize, this.RowRep, 3, 1, this.shiptypelist, this.bombcounttest);
             this.player2.PlayerTurn = false;
 
             // Create two Canvas to place the player elements on them
@@ -343,7 +343,7 @@ namespace Battleship
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
             this.shiptypelist = new List<int> { 1, 2, 3, 4, 5 };
-            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3, this.shiptypelist, bombcounttest);
+            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3, this.shiptypelist, this.bombcounttest);
             this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 1, this.computerPlayerDifficulty2, this.shiptypelist);
             this.player2.IsLocked = true;
 
@@ -627,7 +627,7 @@ namespace Battleship
                                                 mainPlayerCell.IsEnabled = false;
                                                 mainPlayerCell.Stricked = 1;
                                                 mainPlayerCell.AllowDrop = false;
-                                                if (optionPlayerTurnHits)
+                                                if (this.optionPlayerTurnHits)
                                                 {
                                                     p_currentPlayerTurn = true;
                                                     p_otherPlayerTurn = false;
@@ -752,14 +752,20 @@ namespace Battleship
             }
         }
 
-        private List<int> SetAttack(int passTrackingID,Player currentplayer)
+        /// <summary>
+        /// Sets the attack mode.
+        /// </summary>
+        /// <param name="passTrackingID">The tracking ID for the custom attack.</param>
+        /// <param name="currentplayer">The current player that is attacking.</param>
+        /// <returns>The "bomb" attack coordinates (advanced option).</returns>
+        private List<int> SetAttack(int passTrackingID, Player currentplayer)
         {
             List<int> threebythree = new List<int>();
             int gridID = passTrackingID;
 
             threebythree.Add(gridID);
 
-            // Will load extra hits if bomb is active 
+            // Will load extra hits if bomb is active
             if (currentplayer.PlayerBombactivated == true)
             {
                 threebythree.Add(gridID + 1);
@@ -1287,7 +1293,7 @@ namespace Battleship
                                         mainPlayerCell.IsEnabled = false;
                                         mainPlayerCell.Stricked = 1;
                                         mainPlayerCell.AllowDrop = false;
-                                        if (optionPlayerTurnHits)
+                                        if (this.optionPlayerTurnHits)
                                         {
                                             p_currentPlayerTurn = true;
                                             p_otherPlayerTurn = false;
@@ -1326,6 +1332,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Click event for <see cref="BombLoader"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void BombLoader_Click(object sender, RoutedEventArgs e)
         {
             if (this.playerWindow1.Visibility == Visibility.Visible)
