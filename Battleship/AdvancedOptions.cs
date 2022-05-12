@@ -9,6 +9,26 @@ namespace Battleship
 
     public class AdvancedOptions
     {
+        public AdvancedOptions()
+        {
+            this.fleetSize = 5;
+
+            this.shipTypes = new List<StatusCodes.ShipType>();
+
+            this.shipTypes.Add(StatusCodes.ShipType.DESTROYER);
+            this.shipTypes.Add(StatusCodes.ShipType.SUBMARINE);
+            this.ShipTypes.Add(StatusCodes.ShipType.CRUISER);
+            this.shipTypes.Add(StatusCodes.ShipType.BATTLESHIP);
+            this.shipTypes.Add(StatusCodes.ShipType.CARRIER);
+
+            this.gridSize = 10;
+            this.playerCanAttackAgain = false;
+            this.eachShipGetsAShot = false;
+            this.PlayerGetsABombMove = false;
+
+            this.bombCount = 0;
+        }
+
         // Rule 1 - Adjustable Fleet Sizes
 
         /// <summary>

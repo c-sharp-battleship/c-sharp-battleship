@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
-        Title="AdvancedOptionsWindow" Height="265" Width="500">
-    <Grid Margin="0,0,0,-2">
+        Title="AdvancedOptionsWindow" Height="265" Width="525" Loaded="AdvancedOptionsWindow_OnLoaded">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="31*"/>
             <RowDefinition Height="28*"/>
@@ -30,9 +30,9 @@
         </Grid>
         <Label Content="Adjustable Grid Size" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="27" Width="400" Margin="0,10,0,0" Grid.Row="2"/>
         <Grid Margin="8,33,78,125" Grid.Row="2" Grid.RowSpan="2">
-            <RadioButton Name="AdjustableGridSize1RadioButton" Content="8x8" Margin="0,0,0,0"/>
-            <RadioButton Name="AdjustableGridSize2RadioButton" Content="10x10 (Default)" Margin="60,0,0,0"/>
-            <RadioButton Name="AdjustableGridSize3RadioButton" Content="12x12" Margin="173,0,0,0"/>
+            <RadioButton Name="AdjustableGridSize8RadioButton" Content="8x8" Margin="0,0,0,0"/>
+            <RadioButton Name="AdjustableGridSize10RadioButton" Content="10x10 (Default)" Margin="60,0,0,0"/>
+            <RadioButton Name="AdjustableGridSize12RadioButton" Content="12x12" Margin="173,0,0,0"/>
         </Grid>
         <Label Content="Other Options" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="24" Width="87" Grid.Row="2" Margin="4,45,0,0" Grid.RowSpan="2"/>
         <CheckBox Name="MultipleAttacksPerSuccessfulAttackCheckBox" Content="Multiple Attacks Per Successful Attack" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top" Width="310" Grid.Row="3"/>
