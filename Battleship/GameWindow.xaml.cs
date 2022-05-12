@@ -569,14 +569,13 @@ namespace Battleship
                                     GridCell otherPlayerPlayerCell = otherPlayerPair.Value;
 
                                     // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                                    if (mainPlayerCell.Uid == otherPlayerPlayerCell.Uid &&
+                                    if (mainPlayerCell.TrackingID == otherPlayerPlayerCell.TrackingID &&
                                         otherPlayerPlayerCell.OffenseButton == false)
                                     {
                                         // make changes to player two grid
                                         otherPlayerPlayerCell.Background = Brushes.Red;
                                         otherPlayerPlayerCell.Content = "X";
                                         otherPlayerPlayerCell.Stricked = 1;
-                                        otherPlayerPlayerCell.AllowDrop = false;
 
                                         if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
                                         {
