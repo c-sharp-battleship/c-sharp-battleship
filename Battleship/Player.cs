@@ -67,7 +67,7 @@ namespace Battleship
         /// <param name="maxCol"> This is the max number of columns requested at the moment pf loading.</param>
         /// <param name="buttoncolorForDeffense"> this is the color for the button created, refer to Custom button class(switch case in constructor).</param>
         /// <param name="buttoncolorForOffense"> This is the side of the screen to load the canvas, if left then reversed count, if right then incremental from one.</param>
-        public Player(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense)
+        public Player(int player_ID, string player_Name, double gridcellSize, int maxCol, int buttoncolorForDeffense, int buttoncolorForOffense,List<int> shiptypes)
         {
             this.isLocked = false;
             this.playerTurn = true;
@@ -81,11 +81,11 @@ namespace Battleship
 
             this.board = new string[maxCol, maxCol];
 
-            for (int i = 0; i < maxCol; i++)
+            for (int k = 0; k < maxCol; k++)
             {
                 for (int j = 0; j < maxCol; j++)
                 {
-                    this.board[i, j] = "O";
+                    this.board[k, j] = "O";
                 }
             }
 
@@ -165,8 +165,13 @@ namespace Battleship
 
             // Create a collection of 5 ships for any player
             int driver = 11;
-            for (int i = 1; i <= 5; i++)
+
+            // for (int  i = 1; i <= 5; i++)
+            int i = 0;
+            foreach (int type in shiptypes)
             {
+                i++;
+
                 // get an image retainer for the iteration
                 BitmapImage shipPic = new BitmapImage();
                 shipPic.BeginInit();
@@ -175,7 +180,7 @@ namespace Battleship
                 Coordinate startCoords = new Coordinate(1, (short)(i + 1));
 
                 // Construct the ships with the image above
-                Ship warship = new Ship(player_ID, driver, i, gridcellSize, maxCol, startCoords);
+                Ship warship = new Ship(player_ID, driver, type, gridcellSize, maxCol, startCoords);
                 warship.Background = new ImageBrush(shipPic);
                 warship.Uid = player_ID.ToString() + "_" + i.ToString();
 

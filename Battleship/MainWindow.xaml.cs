@@ -25,9 +25,14 @@ namespace Battleship
         private AboutWindow aboutScreen;
 
         /// <summary>
-        /// The project info screen.
+        /// The advanced options screen.
         /// </summary>
-        private UMLstructure projectInfo;
+        private AdvancedOptionsWindow advancedOptionsScreen;
+
+        /// <summary>
+        /// The advanced options.
+        /// </summary>
+        private AdvancedOptions advancedOptions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow" /> class.
@@ -50,10 +55,12 @@ namespace Battleship
                    }
                }
            }
+
+           this.advancedOptions = new AdvancedOptions();
         }
 
         /// <summary>
-        /// Method to add an item to a listbox.
+        /// Method to add an item to the <see cref="SavedGamesList"/>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
         public void AddItem(string fileName)
@@ -177,10 +184,8 @@ namespace Battleship
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             this.aboutScreen = new AboutWindow();
-            this.projectInfo = new UMLstructure();
 
             this.aboutScreen.Show();
-            this.projectInfo.Show();
         }
 
         /// <summary>
@@ -271,7 +276,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Click event to load a game from listbox.
+        /// Click event to load a game from the <see cref="SavedGamesList"/>.
         /// </summary>
         /// <param name="sender">The sender that invoked the event.</param>
         /// <param name="e">The parameters to be passed to the event.</param>
@@ -289,7 +294,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Click event to delete a game from listbox.
+        /// Click event to delete a game from the <see cref="SavedGamesList"/>.
         /// </summary>
         /// <param name="sender">The sender that invoked the event.</param>
         /// <param name="e">The parameters to be passed to the event.</param>
@@ -324,6 +329,12 @@ namespace Battleship
             {
                 Logger.Information("Please select the file to delete!");
             }
+        }
+
+        private void AdvancedOptionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.advancedOptionsScreen = new AdvancedOptionsWindow(ref this.advancedOptions);
+            this.advancedOptionsScreen.Show();
         }
     }
 }

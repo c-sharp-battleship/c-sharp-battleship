@@ -116,6 +116,8 @@ namespace Battleship
         /// </summary>
         private SaveLoad savingAndLoading;
 
+        private List<int> shiptypelist = new List<int>() { 1, 3, 5 };
+
         private bool optionPlayerTurnHits = true;
 
         /// <summary>
@@ -282,8 +284,8 @@ namespace Battleship
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
-            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3);
-            this.player2 = new Player(2, this.player2Name, this.Cellsize, this.RowRep, 3, 1);
+            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3, this.shiptypelist);
+            this.player2 = new Player(2, this.player2Name, this.Cellsize, this.RowRep, 3, 1, this.shiptypelist);
             this.player2.PlayerTurn = false;
 
             // Create two Canvas to place the player elements on them
@@ -329,8 +331,9 @@ namespace Battleship
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
-            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3);
-            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 1, this.computerPlayerDifficulty2);
+            this.shiptypelist = new List<int> { 1, 2, 3, 4, 5 };
+            this.player1 = new Player(1, this.player1Name, this.Cellsize, this.RowRep, 1, 3, this.shiptypelist);
+            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 1, this.computerPlayerDifficulty2, this.shiptypelist);
             this.player2.IsLocked = true;
 
             Logger.ConsoleInformation("------- Computer Grid ------");
@@ -377,8 +380,8 @@ namespace Battleship
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
-            this.player1 = new ComputerPlayer(1, "ComputerPlayerOne", this.Cellsize, this.RowRep, 1, 3, this.computerPlayerDifficulty1);
-            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 1, this.computerPlayerDifficulty2);
+            this.player1 = new ComputerPlayer(1, "ComputerPlayerOne", this.Cellsize, this.RowRep, 1, 3, this.computerPlayerDifficulty1, this.shiptypelist);
+            this.player2 = new ComputerPlayer(2, "ComputerPlayerTwo", this.Cellsize, this.RowRep, 3, 1, this.computerPlayerDifficulty2, this.shiptypelist);
 
             Logger.ConsoleInformation("------- Computer Grid ------");
             for (int i = 0; i < this.RowRep; i++)
@@ -1057,10 +1060,10 @@ namespace Battleship
         }
 
         /// <summary>
-        /// show report dictionary.
+        /// Method that shows the report dictionary.
         /// </summary>
-        /// <param name="sender"> sender.</param>
-        /// <param name="e">handler.</param>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void Reportgame_Click(object sender, RoutedEventArgs e)
         {
             for (int j = 1; j <= 2; j++)
