@@ -7,6 +7,9 @@ namespace Battleship
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Class to store the advanced options.
+    /// </summary>
     public class AdvancedOptions
     {
         // Rule 1 - Adjustable Fleet Sizes
@@ -41,6 +44,9 @@ namespace Battleship
 
         private List<StatusCodes.ShipType> shipTypes;
 
+        /// <summary>
+        /// The list of <see cref="StatusCodes.ShipType"/> for custom <see cref="FleetSize"/>.
+        /// </summary>
         public List<StatusCodes.ShipType> ShipTypes
         {
             get { return shipTypes; }
