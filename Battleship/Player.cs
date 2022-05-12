@@ -54,6 +54,11 @@ namespace Battleship
         private int bombCount;
 
         /// <summary>
+        /// The player's bomb trigger.
+        /// </summary>
+        private bool playerBombactivated;
+
+        /// <summary>
         /// The player's name.
         /// </summary>
         private string name;
@@ -426,12 +431,21 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Gets player ID.
+        /// Gets or sets player ID.
         /// </summary>
         public int BombCount
         {
             get { return this.bombCount; }
             set { this.BombCount = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the activation of a bomb.
+        /// </summary>
+        public bool PlayerBombactivated
+        {
+            get { return this.playerBombactivated; }
+            set { this.playerBombactivated = value; }
         }
 
         /// <summary>

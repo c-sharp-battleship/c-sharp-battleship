@@ -16,7 +16,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Button x:Name="AttackBtn" Content="Switch Player" HorizontalAlignment="Left" Margin="262,26,0,0" VerticalAlignment="Top" Height="66" Width="430" Click="AttackBtn_Click_1" FontSize="36" FontFamily="Arial Black">
+        <Button x:Name="AttackBtn" Content="Switch Player" HorizontalAlignment="Left" Margin="262,26,0,0" VerticalAlignment="Top" Height="66" Width="338" Click="AttackBtn_Click_1" FontSize="36" FontFamily="Arial Black">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/Rocket.jpg"/>
             </Button.Background>
@@ -25,6 +25,7 @@
         <Image x:Name="PlayerTwolabel" HorizontalAlignment="Left" Height="66" Margin="112,26,0,0" VerticalAlignment="Top" Width="125" Source="/Images/Player 2 Turn.jpg" Stretch="Fill" RenderTransformOrigin="1.802,0.385"/>
         <Button x:Name="Confirm_Button" Content="Confirm Ship Placement" HorizontalAlignment="Left" Margin="112,115,0,0" VerticalAlignment="Top" Height="35" Width="145" Click="Confirm_Button_Click" Background="#FF8EADB3"/>
         <Button x:Name="SaveGameButton" Content="Save Game" HorizontalAlignment="Left" Margin="547,115,0,0" VerticalAlignment="Top" Height="35" Width="145" Click="BtnSaveGame_Click"/>
+        <Button x:Name="BombLoader" Content="Load Bomb" HorizontalAlignment="Left" Margin="620,26,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.216,-0.981" Height="66" Width="154" Click="BombLoader_Click"/>
 
     </Grid>
 </Window>

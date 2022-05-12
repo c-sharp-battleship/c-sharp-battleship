@@ -562,98 +562,107 @@ namespace Battleship
                         {
                             if (p_currentPlayer.PlayerTurn)
                             {
-                                // go check the list of buttons for player two and change the status for them
-                                foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
+                                // return list of targets to destroy
+                                List<int> targets = this.SetAttack(mainPlayerCell.Buttonid, p_currentPlayer);
+
+                                foreach (int target in targets)
                                 {
-                                    int otherPlayercellnumber = otherPlayerPair.Key;
-                                    GridCell otherPlayerPlayerCell = otherPlayerPair.Value;
-
-                                    // turn off buttons on the enemy grid(player two left side)only if it is a defense button
-                                    if (mainPlayerCell.TrackingID == otherPlayerPlayerCell.TrackingID &&
-                                        otherPlayerPlayerCell.OffenseButton == false)
+                                    // go check the list of buttons for player two and change the status for them
+                                    foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
                                     {
-                                        // make changes to player two grid
+                                        int otherPlayercellnumber = otherPlayerPair.Key;
+                                        GridCell otherPlayerPlayerCell = otherPlayerPair.Value;
 
-                                        if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
+                                        // turn off buttons on the enemy grid(player two left side)only if it is a defense button
+                                        if (target == otherPlayerPlayerCell.Buttonid &&
+                                            otherPlayerPlayerCell.OffenseButton == false)
                                         {
-                                            Logger.ConsoleInformation("You have damaged my " + otherPlayerPlayerCell.ShipContainedName);
-                                            otherPlayerPlayerCell.CellAttackStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
-                                        }
-                                        else
-                                        {
-                                            Logger.ConsoleInformation("You will never succeed");
-                                            otherPlayerPlayerCell.CellAttackStatus = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
-                                        }
+                                            // make changes to player two grid
+                                            otherPlayerPlayerCell.Background = Brushes.Red;
+                                            otherPlayerPlayerCell.Content = "X";
+                                            otherPlayerPlayerCell.Stricked = 1;
 
-                                        int rowNum;
-                                        if ((gridcellnumber - 100) % 10 == 0)
-                                        {
-                                            rowNum = ((gridcellnumber - 100) / 10) - 1;
-                                        }
-                                        else
-                                        {
-                                            rowNum = (gridcellnumber - 100) / 10;
-                                        }
-
-                                        int colNum = ((gridcellnumber - 100) - (((gridcellnumber - 100) / 10) * 10)) - 1;
-                                        if (colNum == -1)
-                                        {
-                                            colNum = 9;
-                                        }
-
-                                        string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
-                                        if (letterAttackGrid != "O" && letterAttackGrid != "H" && letterAttackGrid != "M")
-                                        {
-                                            p_otherPlayer.Board[rowNum, colNum] = "H";
-                                            mainPlayerCell.Background = Brushes.Green;
-                                            mainPlayerCell.Content = "H";
-                                            mainPlayerCell.IsEnabled = false;
-                                            mainPlayerCell.Stricked = 1;
-                                            mainPlayerCell.AllowDrop = false;
-                                            if (optionPlayerTurnHits)
+                                            if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
                                             {
-                                                p_currentPlayerTurn = true;
-                                                p_otherPlayerTurn = false;
-                                                Logger.Information("You can continue hitting!");
+                                                Logger.ConsoleInformation("You have damaged my " + otherPlayerPlayerCell.ShipContainedName);
+                                                otherPlayerPlayerCell.CellAttackStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
+                                            }
+                                            else
+                                            {
+                                                Logger.ConsoleInformation("You will never succeed");
+                                                otherPlayerPlayerCell.CellAttackStatus = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
+                                            }
+
+                                            int rowNum;
+                                            if ((gridcellnumber - 100) % 10 == 0)
+                                            {
+                                                rowNum = ((gridcellnumber - 100) / 10) - 1;
+                                            }
+                                            else
+                                            {
+                                                rowNum = (gridcellnumber - 100) / 10;
+                                            }
+
+                                            int colNum = ((gridcellnumber - 100) - (((gridcellnumber - 100) / 10) * 10)) - 1;
+                                            if (colNum == -1)
+                                            {
+                                                colNum = 9;
+                                            }
+
+                                            string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
+                                            if (letterAttackGrid != "O" && letterAttackGrid != "H" && letterAttackGrid != "M")
+                                            {
+                                                p_otherPlayer.Board[rowNum, colNum] = "H";
+                                                mainPlayerCell.Background = Brushes.Green;
+                                                mainPlayerCell.Content = "H";
+                                                mainPlayerCell.IsEnabled = false;
+                                                mainPlayerCell.Stricked = 1;
+                                                mainPlayerCell.AllowDrop = false;
+                                                if (optionPlayerTurnHits)
+                                                {
+                                                    p_currentPlayerTurn = true;
+                                                    p_otherPlayerTurn = false;
+                                                    Logger.Information("You can continue hitting!");
+                                                }
+                                            }
+                                            else
+                                            {
+                                                mainPlayerCell.Visibility = Visibility.Hidden;
+                                                p_otherPlayer.Board[rowNum, colNum] = "M";
+                                                p_currentPlayerTurn = false;
+                                                p_otherPlayerTurn = true;
+                                                Logger.Information("Switch Player. Next Player Turn.");
                                             }
                                         }
+                                    }
+
+                                    Coordinate attackedGridSpace = new Coordinate((short)mainPlayerCell.ColNum, (short)mainPlayerCell.RowNum);
+
+                                    Logger.ConsoleInformation("Row Number: " + mainPlayerCell.RowNum);
+                                    Logger.ConsoleInformation("Column Number: " + mainPlayerCell.ColNum);
+
+                                    foreach (Ship testShip in p_otherPlayer.Playershipcollection)
+                                    {
+                                        // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
+                                        AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                                    }
+
+                                    // Swicth windows between players
+                                    if (p_otherPlayer.Name == "ComputerPlayerTwo")
+                                    {
+                                        if (this.computerPlayerDifficulty2 ==
+                                            StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
+                                        {
+                                            ((ComputerPlayer)p_otherPlayer).AdvancedAttack(p_currentPlayer, this.RowRep);
+                                        }
                                         else
                                         {
-                                            mainPlayerCell.Visibility = Visibility.Hidden;
-                                            p_otherPlayer.Board[rowNum, colNum] = "M";
-                                            p_currentPlayerTurn = false;
-                                            p_otherPlayerTurn = true;
-                                            Logger.Information("Switch Player. Next Player Turn.");
+                                            ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, this.RowRep);
                                         }
                                     }
+                                    p_currentPlayer.PlayerTurn = p_currentPlayerTurn;
+                                    p_otherPlayer.PlayerTurn = p_otherPlayerTurn;
                                 }
-
-                                Coordinate attackedGridSpace = new Coordinate((short)mainPlayerCell.ColNum, (short)mainPlayerCell.RowNum);
-
-                                Logger.ConsoleInformation("Row Number: " + mainPlayerCell.RowNum);
-                                Logger.ConsoleInformation("Column Number: " + mainPlayerCell.ColNum);
-
-                                foreach (Ship testShip in p_otherPlayer.Playershipcollection)
-                                {
-                                    // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
-                                    AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
-                                }
-
-                                // Swicth windows between players
-                                if (p_otherPlayer.Name == "ComputerPlayerTwo")
-                                {
-                                    if (this.computerPlayerDifficulty2 ==
-                                        StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
-                                    {
-                                        ((ComputerPlayer)p_otherPlayer).AdvancedAttack(p_currentPlayer, this.RowRep);
-                                    }
-                                    else
-                                    {
-                                        ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, this.RowRep);
-                                    }
-                                }
-                                p_currentPlayer.PlayerTurn = p_currentPlayerTurn;
-                                p_otherPlayer.PlayerTurn = p_otherPlayerTurn;
                             }
                             else
                             {
@@ -733,23 +742,32 @@ namespace Battleship
             }
         }
 
-        private List<int> SetAttack(int passTrackingID, Player player)
+        private List<int> SetAttack(int passTrackingID,Player currentplayer)
         {
-            Player thing = player;
             List<int> threebythree = new List<int>();
             int gridID = passTrackingID;
-            //if(thing.bomb)
+
             threebythree.Add(gridID);
-            threebythree.Add(gridID + 1);
-            threebythree.Add(gridID - 1);
-            threebythree.Add(gridID + 10);
-            threebythree.Add(gridID - 10);
-            threebythree.Add(gridID + 9);
-            threebythree.Add(gridID - 9);
-            threebythree.Add(gridID + 11);
-            threebythree.Add(gridID - 11);
+
+            // Will load extra hits if bomb is active 
+            if (currentplayer.PlayerBombactivated == true)
+            {
+                threebythree.Add(gridID + 1);
+                threebythree.Add(gridID - 1);
+                threebythree.Add(gridID + 10);
+                threebythree.Add(gridID - 10);
+                threebythree.Add(gridID + 9);
+                threebythree.Add(gridID - 9);
+                threebythree.Add(gridID + 11);
+                threebythree.Add(gridID - 11);
+            }
+
+            // reset the bomb
+            currentplayer.PlayerBombactivated = false;
+
             return threebythree;
         }
+
         /// <summary>
         /// Return a confirmation to do a move if there is no ships overlapping.
         /// </summary>
@@ -1295,6 +1313,18 @@ namespace Battleship
                 }
                 //// Add player 1 cells to the window grid
                 p_currentPlayerWindow.Children.Add(mainPlayerCell);
+            }
+        }
+
+        private void BombLoader_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.playerWindow1.Visibility == Visibility.Visible)
+            {
+                this.player1.PlayerBombactivated = true;
+            }
+            else if (this.playerWindow2.Visibility == Visibility.Visible)
+            {
+                this.player2.PlayerBombactivated = true;
             }
         }
     }
