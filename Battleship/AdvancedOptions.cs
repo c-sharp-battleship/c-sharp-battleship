@@ -106,8 +106,8 @@ namespace Battleship
 
         public bool PlayerGetsABombMove
         {
-            get { return this.eachShipGetsAShot; }
-            set { this.eachShipGetsAShot = value; }
+            get { return this.playerGetsABombMove; }
+            set { this.playerGetsABombMove = value; }
         }
 
         private int bombCount;
