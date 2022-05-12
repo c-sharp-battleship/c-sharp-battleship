@@ -5,8 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
-        Title="AdvancedOptionsWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="AdvancedOptionsWindow" Height="265" Width="500">
+    <Grid Margin="0,0,0,-2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="31*"/>
+            <RowDefinition Height="28*"/>
+            <RowDefinition Height="57*"/>
+            <RowDefinition Height="136*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Adjustable Fleet Size" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="25" Width="128"/>
+        <Grid Margin="8,22,78,11" Grid.RowSpan="2">
+            <RadioButton Name="AdjustableFleetSize3RadioButton" Content="3 Ships" Margin="0,0,0,0"/>
+            <RadioButton Name="AdjustableFleetSize5RadioButton" Content="5 Ships (Default)" Margin="62,0,0,0"/>
+            <RadioButton Name="AdjustableFleetSize7RadioButton" Content="7 Ships" Margin="173,0,0,0"/>
+        </Grid>
+        <Grid Margin="10,15,0,43" Grid.RowSpan="2" Grid.Row="1">
+            <ComboBox Name="AdjustableFleetSize1ComboBox" HorizontalAlignment="Left" Width="64" Margin="0,0,0,0" />
+            <ComboBox Name="AdjustableFleetSize2ComboBox" HorizontalAlignment="Left" Width="64" Margin="69,0,0,0" />
+            <ComboBox Name="AdjustableFleetSize3ComboBox" HorizontalAlignment="Left" Width="64" Margin="138,0,0,0" />
+            <ComboBox Name="AdjustableFleetSize4ComboBox" HorizontalAlignment="Left" Width="64" Margin="207,0,0,0" />
+            <ComboBox Name="AdjustableFleetSize5ComboBox" HorizontalAlignment="Left" Width="63" Margin="276,0,0,0" />
+            <ComboBox Name="AdjustableFleetSize6ComboBox" HorizontalAlignment="Left" Width="63" Margin="345,0,0,0" />
+            <ComboBox Name="AdjustableFleetSize7ComboBox" HorizontalAlignment="Left" Width="63" Margin="413,0,0,0" />
+        </Grid>
+        <Label Content="Adjustable Grid Size" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="27" Width="400" Margin="0,10,0,0" Grid.Row="2"/>
+        <Grid Margin="8,33,78,125" Grid.Row="2" Grid.RowSpan="2">
+            <RadioButton Name="AdjustableGridSize1RadioButton" Content="8x8" Margin="0,0,0,0"/>
+            <RadioButton Name="AdjustableGridSize2RadioButton" Content="10x10 (Default)" Margin="60,0,0,0"/>
+            <RadioButton Name="AdjustableGridSize3RadioButton" Content="12x12" Margin="173,0,0,0"/>
+        </Grid>
+        <Label Content="Other Options" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="24" Width="87" Grid.Row="2" Margin="4,45,0,0" Grid.RowSpan="2"/>
+        <CheckBox Name="MultipleAttacksPerSuccessfulAttackCheckBox" Content="Multiple Attacks Per Successful Attack" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top" Width="310" Grid.Row="3"/>
+        <CheckBox Name="MultipleAttacksPerTurnPerShip" Content="Multiple Attacks Per Turn Per Ship" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Grid.Row="3"/>
+
+        <Grid Margin="10,58,0,48" Grid.Row="3">
+            <CheckBox Name="EachPlayerCanAttackLargeGridSpaceCheckBox" Content="Each Player Can Attack a 3x3 Grid Space" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <ComboBox Name="EachPlayerCanAttackLargeGridSpaceComboBox" Margin="245,0,10,0" />
+        </Grid>
+        <Button Name="DefaultOptionsButton" Content="Default Options" Margin="10,93,254,10" Click="DefaultOptionsButton_Click" Grid.Row="3"/>
+        <Button Name="ExitButton" Content="Exit" Margin="255,93,10,10" Click="ExitButton_Click" Grid.Row="3"/>
     </Grid>
 </Window>

@@ -25,5 +25,16 @@ namespace Battleship
 
             this.advancedOptions = p_advancedOptions;
         }
+
+        private void DefaultOptionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Set the Default Values for Adjustable Fleet Size
+
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
