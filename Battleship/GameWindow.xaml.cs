@@ -573,9 +573,6 @@ namespace Battleship
                                         otherPlayerPlayerCell.OffenseButton == false)
                                     {
                                         // make changes to player two grid
-                                        otherPlayerPlayerCell.Background = Brushes.Red;
-                                        otherPlayerPlayerCell.Content = "X";
-                                        otherPlayerPlayerCell.Stricked = 1;
 
                                         if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
                                         {
@@ -736,6 +733,23 @@ namespace Battleship
             }
         }
 
+        private List<int> SetAttack(int passTrackingID, Player player)
+        {
+            Player thing = player;
+            List<int> threebythree = new List<int>();
+            int gridID = passTrackingID;
+            //if(thing.bomb)
+            threebythree.Add(gridID);
+            threebythree.Add(gridID + 1);
+            threebythree.Add(gridID - 1);
+            threebythree.Add(gridID + 10);
+            threebythree.Add(gridID - 10);
+            threebythree.Add(gridID + 9);
+            threebythree.Add(gridID - 9);
+            threebythree.Add(gridID + 11);
+            threebythree.Add(gridID - 11);
+            return threebythree;
+        }
         /// <summary>
         /// Return a confirmation to do a move if there is no ships overlapping.
         /// </summary>
