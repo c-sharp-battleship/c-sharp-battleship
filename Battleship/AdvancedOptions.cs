@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="AdvancedOptions.cs" company="Battleship Coding Group">
+//     Battleship Coding Group, 2022
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Battleship
 {
+    using System.Collections.Generic;
+
     public class AdvancedOptions
     {
         // Rule 1 - Adjustable Fleet Sizes
@@ -34,6 +37,14 @@ namespace Battleship
                     Logger.ConsoleInformation("Error: the FleetSize can only take in a 3, 5, or 7!");
                 }
             }
+        }
+
+        private List<StatusCodes.ShipType> shipTypes;
+
+        public List<StatusCodes.ShipType> ShipTypes
+        {
+            get { return shipTypes; }
+            set { this.shipTypes = value; }
         }
 
         // Rule 2 - Adjustable Grid Size
