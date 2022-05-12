@@ -15,13 +15,55 @@
                 <RadioButton Name="AdjustableFleetSize7RadioButton" Content="7 Ships" Margin="10,0,0,0" Checked="AdjustableFleetSize7RadioButton_Checked"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5">
-                <ComboBox Name="AdjustableFleetSize1ComboBox" HorizontalAlignment="Left" Width="64" Margin="0,0,0,0" SelectionChanged="AdjustableFleetSize1ComboBox_SelectionChanged"/>
-                <ComboBox Name="AdjustableFleetSize2ComboBox" HorizontalAlignment="Left" Width="64" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize2ComboBox_SelectionChanged"/>
-                <ComboBox Name="AdjustableFleetSize3ComboBox" HorizontalAlignment="Left" Width="64" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize3ComboBox_SelectionChanged"/>
-                <ComboBox Name="AdjustableFleetSize4ComboBox" HorizontalAlignment="Left" Width="64" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize4ComboBox_SelectionChanged"/>
-                <ComboBox Name="AdjustableFleetSize5ComboBox" HorizontalAlignment="Left" Width="63" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize5ComboBox_SelectionChanged"/>
-                <ComboBox Name="AdjustableFleetSize6ComboBox" HorizontalAlignment="Left" Width="63" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize6ComboBox_SelectionChanged"/>
-                <ComboBox Name="AdjustableFleetSize7ComboBox" HorizontalAlignment="Left" Width="63" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize7ComboBox_SelectionChanged"/>
+                <ComboBox Name="AdjustableFleetSize1ComboBox" HorizontalAlignment="Left" Width="64" Margin="0,0,0,0" SelectionChanged="AdjustableFleetSize1ComboBox_SelectionChanged">
+                    <ComboBoxItem>DESTROYER</ComboBoxItem>
+                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
+                    <ComboBoxItem>CRUISER</ComboBoxItem>
+                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
+                    <ComboBoxItem>CARRIER</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Name="AdjustableFleetSize2ComboBox" HorizontalAlignment="Left" Width="64" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize2ComboBox_SelectionChanged">
+                    <ComboBoxItem>DESTROYER</ComboBoxItem>
+                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
+                    <ComboBoxItem>CRUISER</ComboBoxItem>
+                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
+                    <ComboBoxItem>CARRIER</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Name="AdjustableFleetSize3ComboBox" HorizontalAlignment="Left" Width="64" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize3ComboBox_SelectionChanged">
+                    <ComboBoxItem>DESTROYER</ComboBoxItem>
+                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
+                    <ComboBoxItem>CRUISER</ComboBoxItem>
+                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
+                    <ComboBoxItem>CARRIER</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Name="AdjustableFleetSize4ComboBox" HorizontalAlignment="Left" Width="64" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize4ComboBox_SelectionChanged">
+                    <ComboBoxItem>DESTROYER</ComboBoxItem>
+                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
+                    <ComboBoxItem>CRUISER</ComboBoxItem>
+                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
+                    <ComboBoxItem>CARRIER</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Name="AdjustableFleetSize5ComboBox" HorizontalAlignment="Left" Width="63" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize5ComboBox_SelectionChanged">
+                    <ComboBoxItem>DESTROYER</ComboBoxItem>
+                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
+                    <ComboBoxItem>CRUISER</ComboBoxItem>
+                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
+                    <ComboBoxItem>CARRIER</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Name="AdjustableFleetSize6ComboBox" HorizontalAlignment="Left" Width="63" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize6ComboBox_SelectionChanged">
+                    <ComboBoxItem>DESTROYER</ComboBoxItem>
+                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
+                    <ComboBoxItem>CRUISER</ComboBoxItem>
+                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
+                    <ComboBoxItem>CARRIER</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Name="AdjustableFleetSize7ComboBox" HorizontalAlignment="Left" Width="63" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize7ComboBox_SelectionChanged">
+                    <ComboBoxItem>DESTROYER</ComboBoxItem>
+                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
+                    <ComboBoxItem>CRUISER</ComboBoxItem>
+                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
+                    <ComboBoxItem>CARRIER</ComboBoxItem>
+                </ComboBox>
             </StackPanel>
             <Label Content="Adjustable Grid Size"/>
             <StackPanel Orientation="Horizontal" Margin="5">
@@ -36,7 +78,11 @@
             
             <StackPanel  Orientation="Horizontal" Margin="5">
                 <CheckBox x:Name="EachPlayerCanAttackLargeGridSpaceCheckBox" Content="Each Player Can Attack a 3x3 Grid Space" Checked="EachPlayerCanAttackLargeGridSpaceCheckBox_Checked"/>
-                <ComboBox x:Name="EachPlayerCanAttackLargeGridSpaceComboBox" Width="250" Margin="20,0,0,0" SelectionChanged="EachPlayerCanAttackLargeGridSpaceComboBox_SelectionChanged"/>
+                <ComboBox x:Name="EachPlayerCanAttackLargeGridSpaceComboBox" Width="250" Margin="20,0,0,0" SelectionChanged="EachPlayerCanAttackLargeGridSpaceComboBox_SelectionChanged">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                </ComboBox>
             </StackPanel>
             
             <StackPanel Orientation="Horizontal" Margin="5">

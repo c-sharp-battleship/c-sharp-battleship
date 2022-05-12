@@ -28,18 +28,6 @@ namespace Battleship
             this.InitializeComponent();
 
             this.advancedOptions = p_advancedOptions;
-
-            this.AddDefaultShipTypesToComboBox(ref this.AdjustableFleetSize1ComboBox);
-            this.AddDefaultShipTypesToComboBox(ref this.AdjustableFleetSize2ComboBox);
-            this.AddDefaultShipTypesToComboBox(ref this.AdjustableFleetSize3ComboBox);
-            this.AddDefaultShipTypesToComboBox(ref this.AdjustableFleetSize4ComboBox);
-            this.AddDefaultShipTypesToComboBox(ref this.AdjustableFleetSize5ComboBox);
-            this.AddDefaultShipTypesToComboBox(ref this.AdjustableFleetSize6ComboBox);
-            this.AddDefaultShipTypesToComboBox(ref this.AdjustableFleetSize7ComboBox);
-
-            this.EachPlayerCanAttackLargeGridSpaceComboBox.Items.Add(1);
-            this.EachPlayerCanAttackLargeGridSpaceComboBox.Items.Add(2);
-            this.EachPlayerCanAttackLargeGridSpaceComboBox.Items.Add(3);
         }
 
         /// <summary>
@@ -57,7 +45,6 @@ namespace Battleship
                     break;
                 case 5:
                     this.AdjustableFleetSize5RadioButton.IsChecked = true;
-                    this.SetFleetSizeComboBoxDisability(true, true, true, true, true, false, false);
                     break;
                 case 7:
                     this.AdjustableFleetSize5RadioButton.IsChecked = true;
@@ -82,19 +69,6 @@ namespace Battleship
                     throw new Exception();
                     break;
             }
-        }
-
-        /// <summary>
-        /// Method to add the default ship types to the corresponding <see cref="ComboBox"/> object.
-        /// </summary>
-        /// <param name="comboBox">The comboBox to be modified (passed by reference).</param>
-        private void AddDefaultShipTypesToComboBox(ref ComboBox comboBox)
-        {
-            comboBox.Items.Add(StatusCodes.ShipType.DESTROYER);
-            comboBox.Items.Add(StatusCodes.ShipType.SUBMARINE);
-            comboBox.Items.Add(StatusCodes.ShipType.CRUISER);
-            comboBox.Items.Add(StatusCodes.ShipType.BATTLESHIP);
-            comboBox.Items.Add(StatusCodes.ShipType.CARRIER);
         }
 
         /// <summary>
