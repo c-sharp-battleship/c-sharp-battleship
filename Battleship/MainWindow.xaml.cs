@@ -25,6 +25,16 @@ namespace Battleship
         private AboutWindow aboutScreen;
 
         /// <summary>
+        /// The advanced options screen.
+        /// </summary>
+        private AdvancedOptionsWindow advancedOptionsScreen;
+
+        /// <summary>
+        /// The advanced options.
+        /// </summary>
+        private AdvancedOptions advancedOptions;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow" /> class.
         /// </summary>
         public MainWindow()
@@ -45,6 +55,8 @@ namespace Battleship
                    }
                }
            }
+
+           this.advancedOptions = new AdvancedOptions();
         }
 
         /// <summary>
@@ -317,6 +329,12 @@ namespace Battleship
             {
                 Logger.Information("Please select the file to delete!");
             }
+        }
+
+        private void AdvancedOptionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.advancedOptionsScreen = new AdvancedOptionsWindow(ref this.advancedOptions);
+            this.advancedOptionsScreen.Show();
         }
     }
 }

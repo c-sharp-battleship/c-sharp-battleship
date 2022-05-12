@@ -23,7 +23,7 @@
         <TextBox x:Name="Player1NameTextBox" HorizontalAlignment="Left" Margin="112,43,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="194" Grid.Column="1" Grid.ColumnSpan="2" Height="24"/>
         <TextBox x:Name="Player2NameTextBox" HorizontalAlignment="Left" Margin="112,75,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="194" Grid.Column="1" Grid.ColumnSpan="2" Height="24"/>
         <Button x:Name="StartGameButton" Content="Start Game" HorizontalAlignment="Left" Margin="10,358,0,0" VerticalAlignment="Top" Width="296" Grid.ColumnSpan="2" Grid.Column="1" Click="StartGameButton_Click" Height="32"/>
-        <Button x:Name="AboutButton" Content="About" Grid.Column="2" HorizontalAlignment="Left" Margin="163,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.681,-0.015" Grid.ColumnSpan="2" Width="254" Click="AboutButton_Click"/>
+        <Button x:Name="AboutButton" Content="About" Grid.Column="2" HorizontalAlignment="Left" Margin="290,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.681,-0.015" Grid.ColumnSpan="2" Width="127" Click="AboutButton_Click"/>
         <Button x:Name="QuitButton" Content="Quit" Grid.Column="2" HorizontalAlignment="Left" Margin="158,358,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.681,-0.015" Grid.ColumnSpan="2" Width="259" Click="QuitButton_Click" Height="32"/>
         <Grid Background="LightGray" Grid.ColumnSpan="3" Margin="10,285,22,93" Grid.Column="1">
             <Label x:Name="AIDifficultyLabel1" Content="AI Player 1 - Difficulty Settings" Margin="0,-2,375,-2"/>
@@ -51,5 +51,6 @@
         <ListBox x:Name="SavedGamesList" Grid.Column="2" Margin="163,109,23,120" Grid.ColumnSpan="2"/>
         <Button x:Name="btnLoadGame" Content="Load Game" Grid.Column="2" HorizontalAlignment="Left" Margin="163,77,0,0" VerticalAlignment="Top" Click="BtnLoadGame_Click" Width="127"/>
         <Button x:Name="btnDeleteGame" Content="Delete Game" Grid.Column="2" HorizontalAlignment="Left" Margin="290,77,0,0" VerticalAlignment="Top" Click="BtnDeleteGame_Click" Width="127" Grid.ColumnSpan="2"/>
+        <Button x:Name="AdvancedOptionsButton" Content="Advanced Options" Grid.Column="2" HorizontalAlignment="Left" Margin="163,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.681,-0.015" Width="127" Click="AdvancedOptionsButton_Click"/>
     </Grid>
 </Window>
