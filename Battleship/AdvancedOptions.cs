@@ -109,5 +109,13 @@ namespace Battleship
             get { return this.eachShipGetsAShot; }
             set { this.eachShipGetsAShot = value; }
         }
+
+        private int bombCount;
+
+        public int BombCount
+        {
+            get { return this.bombCount; }
+            set { this.bombCount = value; }
+        }
     }
 }
