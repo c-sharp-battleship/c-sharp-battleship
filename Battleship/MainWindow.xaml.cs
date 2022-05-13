@@ -87,7 +87,7 @@ namespace Battleship
                 }
                 else
                 {
-                    this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_PLAYER);
+                    this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_PLAYER, ref this.advancedOptions);
                     this.gameScreen.Player1Name = this.Player1NameTextBox.Text;
                     this.gameScreen.Player2Name = this.Player2NameTextBox.Text;
                     this.gameScreen.Show();
@@ -103,14 +103,14 @@ namespace Battleship
                 {
                     if (this.easyAIRadioButton1.IsChecked == true)
                     {
-                        this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER, ref this.advancedOptions);
                         this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
                         this.gameScreen.Player1Name = this.Player1NameTextBox.Text;
                         this.gameScreen.Show();
                     }
                     else if (this.hardAIRadioButton1.IsChecked == true)
                     {
-                        this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER);
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.PLAYER_TO_COMPUTER, ref this.advancedOptions);
                         this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
                         this.gameScreen.Player1Name = this.Player1NameTextBox.Text;
                         this.gameScreen.Show();
@@ -127,14 +127,14 @@ namespace Battleship
                 {
                     if (this.easyAIRadioButton2.IsChecked == true)
                     {
-                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER, ref this.advancedOptions);
                         this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
                         this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
                         this.gameScreen.Show();
                     }
                     else if (this.hardAIRadioButton2.IsChecked == true)
                     {
-                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER, ref this.advancedOptions);
                         this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
                         this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
                         this.gameScreen.Show();
@@ -148,14 +148,14 @@ namespace Battleship
                 {
                     if (this.easyAIRadioButton2.IsChecked == true)
                     {
-                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER, ref this.advancedOptions);
                         this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
                         this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_EASY;
                         this.gameScreen.Show();
                     }
                     else if (this.hardAIRadioButton2.IsChecked == true)
                     {
-                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER);
+                        this.gameScreen = new GameWindow(StatusCodes.GameType.COMPUTER_TO_COMPUTER, ref this.advancedOptions);
                         this.gameScreen.ComputerPlayerDifficulty1 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
                         this.gameScreen.ComputerPlayerDifficulty2 = StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD;
                         this.gameScreen.Show();

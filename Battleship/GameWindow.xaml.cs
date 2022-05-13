@@ -21,6 +21,8 @@ namespace Battleship
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not taught.")]
     public partial class GameWindow : Window
     {
+        private AdvancedOptions advancedOptions;
+
         /// <summary>
         /// The cell size.
         /// </summary>
@@ -119,23 +121,23 @@ namespace Battleship
         /// <summary>
         /// The list of ship types.
         /// </summary>
-        private List<int> shiptypelist = new List<int>() { 1, 3, 5, 1 };
+        private List<int> shiptypelist;
 
         /// <summary>
         /// A temporary variable containing the bomb count (should be removed once <see cref="AdvancedOptionsWindow"/> is implemented).
         /// </summary>
-        private int bombcounttest = 2;
+        private int bombcounttest;
 
         /// <summary>
         /// Specifies whether or not the player can have multiple hits per turn.
         /// </summary>
-        private bool optionPlayerTurnHits = true;
+        private bool optionPlayerTurnHits;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow" /> class.
         /// </summary>
         /// <param name="gameType"> This is the game type.</param>
-        public GameWindow(StatusCodes.GameType gameType)
+        public GameWindow(StatusCodes.GameType gameType, ref AdvancedOptions p_advancedOptions)
         {
             this.PlayersCellRecords = new List<GridCell>();
 
@@ -158,6 +160,35 @@ namespace Battleship
 
             this.savingAndLoading = new SaveLoad();
             this.savingAndLoading.OnGameStatusUpdate += this.OnGameLoad;
+
+            this.advancedOptions = p_advancedOptions;
+
+            this.shiptypelist = new List<int>();
+
+            foreach (StatusCodes.ShipType shipType in this.advancedOptions.ShipTypes)
+            {
+                switch (shipType)
+                {
+                    case StatusCodes.ShipType.DESTROYER:
+                        this.shiptypelist.Add(1);
+                        break;
+                    case StatusCodes.ShipType.SUBMARINE:
+                        this.shiptypelist.Add(2);
+                        break;
+                    case StatusCodes.ShipType.CRUISER:
+                        this.shiptypelist.Add(3);
+                        break;
+                    case StatusCodes.ShipType.BATTLESHIP:
+                        this.shiptypelist.Add(4);
+                        break;
+                    case StatusCodes.ShipType.CARRIER:
+                        this.shiptypelist.Add(5);
+                        break;
+                }
+            }
+
+            this.bombcounttest = this.advancedOptions.BombCount;
+            this.optionPlayerTurnHits = this.advancedOptions.PlayerCanAttackAgain;
         }
 
         /// <summary>
