@@ -38,12 +38,7 @@ namespace Battleship
         private bool eachShipGetsAShot;
 
         /// <summary>
-        /// Whether or not the player can attack multiple surrounding grid spaces in one turn.
-        /// </summary>
-        private bool playerGetsABombMove;
-
-        /// <summary>
-        /// How many <see cref="playerGetsABombMove"/> moves the player can have per game.
+        /// How many bombs a player may have per game.
         /// </summary>
         private int bombCount;
 
@@ -65,8 +60,6 @@ namespace Battleship
             this.gridSize = 10;
             this.playerCanAttackAgain = false;
             this.eachShipGetsAShot = false;
-            this.playerGetsABombMove = false;
-
             this.bombCount = 0;
         }
 
@@ -141,15 +134,6 @@ namespace Battleship
         {
             get { return this.eachShipGetsAShot; }
             set { this.eachShipGetsAShot = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether or not the player can attack surrounding grid spaces in a single play.
-        /// </summary>
-        public bool PlayerGetsABombMove
-        {
-            get { return this.playerGetsABombMove; }
-            set { this.playerGetsABombMove = value; }
         }
 
         /// <summary>

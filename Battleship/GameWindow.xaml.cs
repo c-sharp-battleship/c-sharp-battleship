@@ -31,7 +31,7 @@ namespace Battleship
         /// <summary>
         /// The number of rows.
         /// </summary>
-        public int RowRep = 10;
+        public int RowRep;
 
         /// <summary>
         /// The list of player cell grids.
@@ -189,6 +189,8 @@ namespace Battleship
 
             this.bombcounttest = this.advancedOptions.BombCount;
             this.optionPlayerTurnHits = this.advancedOptions.PlayerCanAttackAgain;
+
+            this.RowRep = this.advancedOptions.GridSize;
         }
 
         /// <summary>

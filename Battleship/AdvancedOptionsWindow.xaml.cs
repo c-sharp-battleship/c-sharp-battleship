@@ -59,6 +59,18 @@ namespace Battleship
                     throw new Exception();
                     break;
             }
+
+            if (this.advancedOptions.PlayerCanAttackAgain == true)
+            {
+                this.MultipleAttacksPerSuccessfulAttackCheckBox.IsChecked = true;
+            }
+
+            if (this.advancedOptions.EachShipGetsAShot == true)
+            {
+                this.MultipleAttacksPerTurnPerShip.IsChecked = true;
+            }
+
+            this.BombCountComboBox.SelectedIndex = this.advancedOptions.BombCount;
         }
 
         /// <summary>
@@ -98,7 +110,14 @@ namespace Battleship
         /// <param name="e">The arguments passed to the event.</param>
         private void MultipleAttacksPerSuccessfulAttackCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            this.advancedOptions.PlayerCanAttackAgain = true;
+            if(this.MultipleAttacksPerSuccessfulAttackCheckBox.IsChecked == true)
+            {
+                this.advancedOptions.PlayerCanAttackAgain = true;
+            }
+            else
+            {
+                this.advancedOptions.PlayerCanAttackAgain = false;
+            }
         }
 
         /// <summary>
@@ -108,25 +127,13 @@ namespace Battleship
         /// <param name="e">The arguments passed to the event.</param>
         private void MultipleAttacksPerTurnPerShip_Checked(object sender, RoutedEventArgs e)
         {
-            this.advancedOptions.EachShipGetsAShot = true;
-        }
-
-        /// <summary>
-        /// Checked event for the <see cref="EachPlayerCanAttackLargeGridSpaceCheckBox"/>.
-        /// </summary>
-        /// <param name="sender">The sender that invoked the event.</param>
-        /// <param name="e">The arguments passed to the event.</param>
-        private void EachPlayerCanAttackLargeGridSpaceCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            this.advancedOptions.PlayerGetsABombMove = true;
-
-            if (this.EachPlayerCanAttackLargeGridSpaceCheckBox.IsChecked == true)
+            if(this.MultipleAttacksPerTurnPerShip.IsChecked == true)
             {
-                this.EachPlayerCanAttackLargeGridSpaceComboBox.IsEnabled = true;
+                this.advancedOptions.EachShipGetsAShot = true;
             }
             else
             {
-                this.EachPlayerCanAttackLargeGridSpaceComboBox.IsEnabled = false;
+                this.advancedOptions.EachShipGetsAShot = false;
             }
         }
 
@@ -135,9 +142,16 @@ namespace Battleship
         /// </summary>
         /// <param name="sender">The sender that invoked the event.</param>
         /// <param name="e">The arguments passed to the event.</param>
-        private void EachPlayerCanAttackLargeGridSpaceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BombCountComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // TODO: Implement EachPlayerCanAttackLargeGridSpaceComboBox_SelectionChanged
+            if (this.BombCountComboBox.SelectedIndex != -1)
+            {
+                this.advancedOptions.BombCount = this.BombCountComboBox.SelectedIndex;
+            }
+            else
+            {
+                Logger.Error("The Selected Index is Not Valid!");
+            }
         }
 
         /// <summary>
@@ -148,9 +162,16 @@ namespace Battleship
         private void DefaultOptionsButton_Click(object sender, RoutedEventArgs e)
         {
             this.AdjustableGridSize10RadioButton.IsChecked = true;
+            this.advancedOptions.GridSize = 10;
+
             this.MultipleAttacksPerSuccessfulAttackCheckBox.IsChecked = false;
+            this.advancedOptions.PlayerCanAttackAgain = false;
+
             this.MultipleAttacksPerTurnPerShip.IsChecked = false;
-            this.EachPlayerCanAttackLargeGridSpaceCheckBox.IsChecked = false;
+            this.advancedOptions.EachShipGetsAShot = false;
+
+            this.BombCountComboBox.SelectedIndex = 0;
+            this.advancedOptions.BombCount = 0;
         }
 
         /// <summary>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
-        Title="Advanced Options" Height="350" Width="550" Loaded="AdvancedOptionsWindow_OnLoaded">
+        Title="Advanced Options" Height="300" Width="300" Loaded="AdvancedOptionsWindow_OnLoaded">
     <Grid>
         <StackPanel Margin="5">
             <Label Content="Adjustable Fleet Size" />
@@ -22,17 +22,18 @@
             <CheckBox Name="MultipleAttacksPerTurnPerShip" Content="Multiple Attacks Per Turn Per Ship" Margin="5" Checked="MultipleAttacksPerTurnPerShip_Checked"/>
             
             <StackPanel  Orientation="Horizontal" Margin="5">
-                <CheckBox x:Name="EachPlayerCanAttackLargeGridSpaceCheckBox" Content="Each Player Can Attack a 3x3 Grid Space" Checked="EachPlayerCanAttackLargeGridSpaceCheckBox_Checked"/>
-                <ComboBox x:Name="EachPlayerCanAttackLargeGridSpaceComboBox" Width="250" Margin="20,0,0,0" SelectionChanged="EachPlayerCanAttackLargeGridSpaceComboBox_SelectionChanged">
-                    <ComboBoxItem>1</ComboBoxItem>
-                    <ComboBoxItem>2</ComboBoxItem>
-                    <ComboBoxItem>3</ComboBoxItem>
+                <Label>Bomb Count:</Label>
+                <ComboBox x:Name="BombCountComboBox" Width="100" Margin="20,0,0,0" SelectionChanged="BombCountComboBox_SelectionChanged">
+                    <ComboBoxItem Name="BombCount0">0</ComboBoxItem>
+                    <ComboBoxItem Name="BombCount1">1</ComboBoxItem>
+                    <ComboBoxItem Name="BombCount2">2</ComboBoxItem>
+                    <ComboBoxItem Name="BombCount3">3</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
             
             <StackPanel Orientation="Horizontal" Margin="5">
-                <Button Name="DefaultOptionsButton" Content="Default Options" Click="DefaultOptionsButton_Click" Width="250" Margin="5"/>
-                <Button Name="ExitButton" Content="Exit" Click="ExitButton_Click" Width="250" Margin="5"/>
+                <Button Name="DefaultOptionsButton" Content="Default Options" Click="DefaultOptionsButton_Click" Width="125" Margin="5"/>
+                <Button Name="ExitButton" Content="Exit" Click="ExitButton_Click" Width="125" Margin="5"/>
             </StackPanel>
         </StackPanel>
     </Grid>
