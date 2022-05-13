@@ -1381,5 +1381,17 @@ namespace Battleship
                 this.player2.PlayerBombactivated = true;
             }
         }
+
+        private void GameWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (this.advancedOptions.BombCount == 0)
+            {
+                this.BombLoader.IsEnabled = false;
+            }
+            else
+            {
+                this.BombLoader.IsEnabled = true;
+            }
+        }
     }
 }

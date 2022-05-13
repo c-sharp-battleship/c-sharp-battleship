@@ -33,7 +33,6 @@ namespace Battleship
             this.InitializeComponent();
 
             this.advancedOptions = p_advancedOptions;
-            this.shipLoading = new Ship_Loading(ref p_advancedOptions);
         }
 
         /// <summary>
@@ -186,6 +185,7 @@ namespace Battleship
 
         private void CustomFleetButton_Click(object sender, RoutedEventArgs e)
         {
+            this.shipLoading = new Ship_Loading(ref this.advancedOptions);
             this.shipLoading.Show();
         }
     }
