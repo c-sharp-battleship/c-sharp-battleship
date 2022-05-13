@@ -1,0 +1,28 @@
+﻿<Window x:Class="Battleship.Ship_Loading"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Battleship"
+        mc:Ignorable="d"
+        Title="Ship_Loading" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <StackPanel Orientation="Horizontal" Margin="50">
+            <StackPanel Orientation="Vertical" Margin="10">
+                <Button x:Name="DE_BTN" Content="Destroyer" Height="38" Width="173" Click="DE_BTN_Click" Margin="10"/>
+                <Button x:Name="CA_BTN" Content="Carrier" Height="38" Width="173" Click="CA_BTN_Click" Margin="10"/>
+                <Button x:Name="BA_BTN" Content="Battleship" Height="38" Width="173" Click="BA_BTN_Click" Margin="10"/>
+                <Button x:Name="CR_BTN" Content="Cruiser" Height="38" Width="173" Click="CR_BTN_Click" Margin="10"/>
+                <Button x:Name="SU_BTN" Content="Submarine" Height="38" Width="173" Click="SU_BTN_Click" Margin="10"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Button x:Name="RESET_BTN" Content="Reset" Height="30" Width="144" Click="RESET_BTN_Click" Margin="10"/>
+                    <Button x:Name="DELETE_BTN" Content="Delete" Height="30" Width="144" Margin="10" Click="DELETE_BTN_Click"/>
+                    <Button x:Name="SUBMIT_BTN" Content="Submit" Height="30" Width="144" Click="SUBMIT_BTN_Click" Margin="10"/>
+                </StackPanel>
+                <ListBox x:Name="RPT_LIST" Height="200"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

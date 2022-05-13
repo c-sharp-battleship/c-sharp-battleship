@@ -9,62 +9,7 @@
     <Grid>
         <StackPanel Margin="5">
             <Label Content="Adjustable Fleet Size" />
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <RadioButton Name="AdjustableFleetSize3RadioButton" Content="3 Ships" Checked="AdjustableFleetSize3RadioButton_Checked"/>
-                <RadioButton Name="AdjustableFleetSize5RadioButton" Content="5 Ships (Default)" Margin="10,0,0,0" Checked="AdjustableFleetSize5RadioButton_Checked"/>
-                <RadioButton Name="AdjustableFleetSize7RadioButton" Content="7 Ships" Margin="10,0,0,0" Checked="AdjustableFleetSize7RadioButton_Checked"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <ComboBox Name="AdjustableFleetSize1ComboBox" HorizontalAlignment="Left" Width="64" Margin="0,0,0,0" SelectionChanged="AdjustableFleetSize1ComboBox_SelectionChanged">
-                    <ComboBoxItem>DESTROYER</ComboBoxItem>
-                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
-                    <ComboBoxItem>CRUISER</ComboBoxItem>
-                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
-                    <ComboBoxItem>CARRIER</ComboBoxItem>
-                </ComboBox>
-                <ComboBox Name="AdjustableFleetSize2ComboBox" HorizontalAlignment="Left" Width="64" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize2ComboBox_SelectionChanged">
-                    <ComboBoxItem>DESTROYER</ComboBoxItem>
-                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
-                    <ComboBoxItem>CRUISER</ComboBoxItem>
-                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
-                    <ComboBoxItem>CARRIER</ComboBoxItem>
-                </ComboBox>
-                <ComboBox Name="AdjustableFleetSize3ComboBox" HorizontalAlignment="Left" Width="64" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize3ComboBox_SelectionChanged">
-                    <ComboBoxItem>DESTROYER</ComboBoxItem>
-                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
-                    <ComboBoxItem>CRUISER</ComboBoxItem>
-                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
-                    <ComboBoxItem>CARRIER</ComboBoxItem>
-                </ComboBox>
-                <ComboBox Name="AdjustableFleetSize4ComboBox" HorizontalAlignment="Left" Width="64" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize4ComboBox_SelectionChanged">
-                    <ComboBoxItem>DESTROYER</ComboBoxItem>
-                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
-                    <ComboBoxItem>CRUISER</ComboBoxItem>
-                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
-                    <ComboBoxItem>CARRIER</ComboBoxItem>
-                </ComboBox>
-                <ComboBox Name="AdjustableFleetSize5ComboBox" HorizontalAlignment="Left" Width="63" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize5ComboBox_SelectionChanged">
-                    <ComboBoxItem>DESTROYER</ComboBoxItem>
-                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
-                    <ComboBoxItem>CRUISER</ComboBoxItem>
-                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
-                    <ComboBoxItem>CARRIER</ComboBoxItem>
-                </ComboBox>
-                <ComboBox Name="AdjustableFleetSize6ComboBox" HorizontalAlignment="Left" Width="63" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize6ComboBox_SelectionChanged">
-                    <ComboBoxItem>DESTROYER</ComboBoxItem>
-                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
-                    <ComboBoxItem>CRUISER</ComboBoxItem>
-                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
-                    <ComboBoxItem>CARRIER</ComboBoxItem>
-                </ComboBox>
-                <ComboBox Name="AdjustableFleetSize7ComboBox" HorizontalAlignment="Left" Width="63" Margin="10,0,0,0" SelectionChanged="AdjustableFleetSize7ComboBox_SelectionChanged">
-                    <ComboBoxItem>DESTROYER</ComboBoxItem>
-                    <ComboBoxItem>SUBMARINE</ComboBoxItem>
-                    <ComboBoxItem>CRUISER</ComboBoxItem>
-                    <ComboBoxItem>BATTLESHIP</ComboBoxItem>
-                    <ComboBoxItem>CARRIER</ComboBoxItem>
-                </ComboBox>
-            </StackPanel>
+            <Button Content="Custom Fleet" Name="CustomFleetButton" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Click="CustomFleetButton_Click"></Button>
             <Label Content="Adjustable Grid Size"/>
             <StackPanel Orientation="Horizontal" Margin="5">
                 <RadioButton Name="AdjustableGridSize8RadioButton" Content="8x8" Checked="AdjustableGridSize8RadioButton_Checked"/>
