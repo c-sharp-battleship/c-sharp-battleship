@@ -16,10 +16,11 @@
                 <Button x:Name="SU_BTN" Content="Submarine" Height="38" Width="173" Click="SU_BTN_Click" Margin="10"/>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <Button x:Name="RESET_BTN" Content="Reset" Height="30" Width="144" Click="RESET_BTN_Click" Margin="10"/>
-                    <Button x:Name="DELETE_BTN" Content="Delete" Height="30" Width="144" Margin="10" Click="DELETE_BTN_Click"/>
-                    <Button x:Name="SUBMIT_BTN" Content="Submit" Height="30" Width="144" Click="SUBMIT_BTN_Click" Margin="10"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="DELETE_BTN" Content="Delete" Height="30" Width="100" Margin="10" Click="DELETE_BTN_Click"/>
+                    <Button x:Name="CLEAR_BTN" Content="Clear" Height="30" Width="100" Click="CLEAR_BTN_Click" Margin="10"/>
+                    <Button x:Name="DEFAULT_BTN" Content="Default" Height="30" Width="100" Click="DEFAULT_BTN_Click" Margin="10"/>
+                    <Button x:Name="SUBMIT_BTN" Content="Submit" Height="30" Width="100" Click="SUBMIT_BTN_Click" Margin="10"/>
                 </StackPanel>
                 <ListBox x:Name="RPT_LIST" Height="200"/>
             </StackPanel>

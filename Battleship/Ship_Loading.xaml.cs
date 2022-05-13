@@ -112,7 +112,7 @@ namespace Battleship
             }
         }
 
-        private void RESET_BTN_Click(object sender, RoutedEventArgs e)
+        private void DEFAULT_BTN_Click(object sender, RoutedEventArgs e)
         {
             this.RPT_LIST.Items.Clear();
 
@@ -133,6 +133,14 @@ namespace Battleship
 
             this.advancedOptions.ShipTypes.Add(StatusCodes.ShipType.CARRIER);
             this.RPT_LIST.Items.Add("Carrier");
+        }
+
+        private void CLEAR_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            this.RPT_LIST.Items.Clear();
+
+            // Create a new AdvancedOptions.ShipTypes.
+            this.advancedOptions.ShipTypes = new List<StatusCodes.ShipType>();
         }
 
         private void SUBMIT_BTN_Click(object sender, RoutedEventArgs e)
