@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="Ship_Loading" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-        <StackPanel Orientation="Horizontal" Margin="50">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Vertical" Margin="10">
+                <Label>Deploy Ships By Clicking on the Buttons Below</Label>
                 <Button x:Name="DE_BTN" Content="Destroyer" Height="38" Width="173" Click="DE_BTN_Click" Margin="10"/>
                 <Button x:Name="CA_BTN" Content="Carrier" Height="38" Width="173" Click="CA_BTN_Click" Margin="10"/>
                 <Button x:Name="BA_BTN" Content="Battleship" Height="38" Width="173" Click="BA_BTN_Click" Margin="10"/>
@@ -20,9 +21,10 @@
                     <Button x:Name="DELETE_BTN" Content="Delete" Height="30" Width="100" Margin="10" Click="DELETE_BTN_Click"/>
                     <Button x:Name="CLEAR_BTN" Content="Clear" Height="30" Width="100" Click="CLEAR_BTN_Click" Margin="10"/>
                     <Button x:Name="DEFAULT_BTN" Content="Default" Height="30" Width="100" Click="DEFAULT_BTN_Click" Margin="10"/>
-                    <Button x:Name="SUBMIT_BTN" Content="Submit" Height="30" Width="100" Click="SUBMIT_BTN_Click" Margin="10"/>
+                    <Button x:Name="CLOSE_BTN" Content="Exit" Height="30" Width="100" Click="CLOSE_BTN_Click" Margin="10"/>
                 </StackPanel>
-                <ListBox x:Name="RPT_LIST" Height="200"/>
+                <ListBox x:Name="RPT_LIST" Height="300" VerticalAlignment="Center"/>
+                <TextBlock TextWrapping="Wrap" Height="50" Width="450">Click on the buttons above to delete individual entries, clear all entries, reset all entries to the default values, and close this form (saving your changes).</TextBlock>
             </StackPanel>
         </StackPanel>
     </Grid>

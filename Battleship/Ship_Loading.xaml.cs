@@ -143,7 +143,7 @@ namespace Battleship
             this.advancedOptions.ShipTypes = new List<StatusCodes.ShipType>();
         }
 
-        private void SUBMIT_BTN_Click(object sender, RoutedEventArgs e)
+        private void CLOSE_BTN_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
