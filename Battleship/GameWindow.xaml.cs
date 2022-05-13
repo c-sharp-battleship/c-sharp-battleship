@@ -624,7 +624,21 @@ namespace Battleship
                                             otherPlayerPlayerCell.Content = "X";
                                             otherPlayerPlayerCell.Stricked = 1;
 
-                                            if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
+                                            // go check the list of buttons for player one and make them invisible
+                                            foreach (KeyValuePair<int, GridCell> oneplayer in p_currentPlayer.Playergridsquarecollection)
+                                            {
+                                                int oneplayerkey = oneplayer.Key;
+                                                GridCell oneplayerCell = oneplayer.Value;
+
+                                                if (target == oneplayerCell.Buttonid &&
+                                                    oneplayerCell.OffenseButton == true)
+                                                {
+                                                    oneplayerCell.Visibility = Visibility.Hidden;
+                                                }
+
+                                            }
+
+                                                if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
                                             {
                                                 Logger.ConsoleInformation("You have damaged my " + otherPlayerPlayerCell.ShipContainedName);
                                                 otherPlayerPlayerCell.CellAttackStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
