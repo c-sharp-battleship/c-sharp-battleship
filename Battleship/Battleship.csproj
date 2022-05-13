@@ -11,6 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Bomb.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Bomb.jpg" />
     <Resource Include="Images\GameWindow Background.jpg" />
     <Resource Include="Images\MainWindow Background.jpg" />
     <Resource Include="Images\Player 1 Turn.jpg" />

@@ -482,6 +482,22 @@ namespace Battleship
             this.Show();
         }
 
+        private void Bombbtnvis()
+        {
+            if (this.advancedOptions.BombCount > 0 && this.playerWindow1.Visibility == Visibility.Visible && this.player1.BombCount > 0)
+            {
+                this.BombLoader.Visibility = Visibility.Visible;
+            }
+            else if (this.advancedOptions.BombCount > 0 && this.playerWindow2.Visibility == Visibility.Visible && this.player2.BombCount > 0)
+            {
+                this.BombLoader.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.BombLoader.Visibility = Visibility.Hidden;
+            }
+        }
+
         /// <summary>
         /// Make the windows visible with Attack button.
         /// </summary>
@@ -507,6 +523,7 @@ namespace Battleship
                 }
                 //// if the switch button has been clicked for the first time then allow player2 to move their ships
                 this.SetConfirmButtonVisibility("Player2Canvas");
+                this.Bombbtnvis();
             }
             else
             {
@@ -530,6 +547,7 @@ namespace Battleship
                 }
 
                 this.SetConfirmButtonVisibility("Player1Canvas");
+                this.Bombbtnvis();
             }
         }
 
@@ -813,7 +831,7 @@ namespace Battleship
             threebythree.Add(gridID);
 
             // Will load extra hits if bomb is active
-            if (currentplayer.PlayerBombactivated == true)
+            if (currentplayer.PlayerBombactivated == true && currentplayer.BombCount >= 0)
             {
                 threebythree.Add(gridID + 1);
                 threebythree.Add(gridID - 1);
@@ -827,6 +845,7 @@ namespace Battleship
 
             // reset the bomb
             currentplayer.PlayerBombactivated = false;
+
 
             return threebythree;
         }
@@ -993,6 +1012,25 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Confirm Button Appearance
+        /// </summary>
+        private void confirmBtnApp()
+        {
+            if (this.playerWindow1.Visibility == Visibility.Visible && this.player1.IsLocked == false)
+            {
+                this.Confirm_Button.Visibility = Visibility.Visible;
+            }
+            else if (this.playerWindow2.Visibility == Visibility.Hidden && this.player2.IsLocked == false)
+            {
+                this.Confirm_Button.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.Confirm_Button.Visibility = Visibility.Hidden;
+            }
+        }
+
+        /// <summary>
         /// Set a confirm ship placement button.
         /// </summary>
         /// <param name="canvasUid">The id of the canvas.</param>
@@ -1050,8 +1088,11 @@ namespace Battleship
         /// <param name="e">The event arguments for the event.</param>
         private void AttackBtn_Click_1(object sender, RoutedEventArgs e)
         {
+            this.confirmBtnApp();
+
             // goto to method to change the screen view
             this.SwitchPlayerWindows();
+
         }
 
         /// <summary>
@@ -1389,23 +1430,20 @@ namespace Battleship
             if (this.playerWindow1.Visibility == Visibility.Visible)
             {
                 this.player1.PlayerBombactivated = true;
+                this.player1.BombCount -= 1;
+                this.BombLoader.Visibility = Visibility.Hidden;
             }
             else if (this.playerWindow2.Visibility == Visibility.Visible)
             {
                 this.player2.PlayerBombactivated = true;
+                this.player2.BombCount -= 1;
+                this.BombLoader.Visibility = Visibility.Hidden;
             }
         }
 
         private void GameWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (this.advancedOptions.BombCount == 0)
-            {
-                this.BombLoader.IsEnabled = false;
-            }
-            else
-            {
-                this.BombLoader.IsEnabled = true;
-            }
+            this.BombLoader.Visibility = Visibility.Hidden;
         }
     }
 }

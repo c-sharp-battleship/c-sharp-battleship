@@ -438,7 +438,7 @@ namespace Battleship
         public int BombCount
         {
             get { return this.bombCount; }
-            set { this.BombCount = value; }
+            set { this.bombCount = value; }
         }
 
         /// <summary>
