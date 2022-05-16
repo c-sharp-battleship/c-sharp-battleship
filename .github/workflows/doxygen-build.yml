@@ -13,7 +13,7 @@ jobs:
 
     - name: Doxygen Action
       id: doxygen_build
-      uses: mattnotmitt/doxygen-action@1.9.3
+      uses: mattnotmitt/doxygen-action@edge
       with:
         working-directory: 'docs/'
         doxyfile-path: './Doxyfile'
