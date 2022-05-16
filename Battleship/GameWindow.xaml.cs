@@ -21,8 +21,6 @@ namespace Battleship
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Encapsulation not taught.")]
     public partial class GameWindow : Window
     {
-        private AdvancedOptions advancedOptions;
-
         /// <summary>
         /// The cell size.
         /// </summary>
@@ -37,6 +35,11 @@ namespace Battleship
         /// The list of player cell grids.
         /// </summary>
         public List<GridCell> PlayersCellRecords;
+
+        /// <summary>
+        /// The <see cref="AdvancedOptions"/> object for the GameWindow (assigned by reference in the constructor).
+        /// </summary>
+        private AdvancedOptions advancedOptions;
 
         /// <summary>
         /// Tracking changes event dictionary.
@@ -137,6 +140,7 @@ namespace Battleship
         /// Initializes a new instance of the <see cref="GameWindow" /> class.
         /// </summary>
         /// <param name="gameType"> This is the game type.</param>
+        /// <param name="p_advancedOptions">The <see cref="AdvancedOptions"/> to be passed to the <see cref="GameWindow"/>.</param>
         public GameWindow(StatusCodes.GameType gameType, ref AdvancedOptions p_advancedOptions)
         {
             this.PlayersCellRecords = new List<GridCell>();
@@ -319,7 +323,7 @@ namespace Battleship
         /// </summary>
         /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
-        public void StartPlayerToPlayerGame(object sender, EventArgs e)
+        private void StartPlayerToPlayerGame(object sender, EventArgs e)
         {
             // start player one label visible
             this.PlayerOnelabel.Visibility = Visibility.Visible;
@@ -365,7 +369,7 @@ namespace Battleship
         /// </summary>
         /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
-        public void StartPlayerToComputerGame(object sender, EventArgs e)
+        private void StartPlayerToComputerGame(object sender, EventArgs e)
         {
             // start player one label visible
             this.PlayerOnelabel.Visibility = Visibility.Visible;
@@ -413,7 +417,7 @@ namespace Battleship
         /// </summary>
         /// <param name="sender">The object that initiated the event.</param>
         /// <param name="e">The event arguments for the event.</param>
-        public void StartComputerToComputerGame(object sender, EventArgs e)
+        private void StartComputerToComputerGame(object sender, EventArgs e)
         {
             // start player one label visible
             this.PlayerOnelabel.Visibility = Visibility.Visible;
@@ -482,6 +486,9 @@ namespace Battleship
             this.Show();
         }
 
+        /// <summary>
+        /// Changes the bomb button visibility based on the player in view.
+        /// </summary>
         private void Bombbtnvis()
         {
             if (this.advancedOptions.BombCount > 0 && this.playerWindow1.Visibility == Visibility.Visible && this.player1.BombCount > 0)
@@ -501,7 +508,7 @@ namespace Battleship
         /// <summary>
         /// Make the windows visible with Attack button.
         /// </summary>
-        public void SwitchPlayerWindows()
+        private void SwitchPlayerWindows()
         {
             if (this.screenPlayerOne == true)
             {
@@ -653,10 +660,9 @@ namespace Battleship
                                                 {
                                                     oneplayerCell.Visibility = Visibility.Hidden;
                                                 }
-
                                             }
 
-                                                if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
+                                            if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
                                             {
                                                 Logger.ConsoleInformation("You have damaged my " + otherPlayerPlayerCell.ShipContainedName);
                                                 otherPlayerPlayerCell.CellAttackStatus = StatusCodes.AttackStatus.ATTACKED_HIT;
@@ -846,7 +852,6 @@ namespace Battleship
             // reset the bomb
             currentplayer.PlayerBombactivated = false;
 
-
             return threebythree;
         }
 
@@ -1012,9 +1017,9 @@ namespace Battleship
         }
 
         /// <summary>
-        /// Confirm Button Appearance
+        /// Confirm Button Appearance.
         /// </summary>
-        private void confirmBtnApp()
+        private void ConfirmBtnApp()
         {
             if (this.playerWindow1.Visibility == Visibility.Visible && this.player1.IsLocked == false)
             {
@@ -1088,11 +1093,10 @@ namespace Battleship
         /// <param name="e">The event arguments for the event.</param>
         private void AttackBtn_Click_1(object sender, RoutedEventArgs e)
         {
-            this.confirmBtnApp();
+            this.ConfirmBtnApp();
 
             // goto to method to change the screen view
             this.SwitchPlayerWindows();
-
         }
 
         /// <summary>
@@ -1441,6 +1445,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The loaded event for the <see cref="GameWindow"/> class.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void GameWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             this.BombLoader.Visibility = Visibility.Hidden;

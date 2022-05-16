@@ -13,8 +13,15 @@ namespace Battleship
     /// </summary>
     public partial class Ship_Loading : Window
     {
+        /// <summary>
+        /// The <see cref="AdvancedOptions"/> for the <see cref="Ship_Loading"/> object.
+        /// </summary>
         private AdvancedOptions advancedOptions;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Ship_Loading"/> class.
+        /// </summary>
+        /// <param name="p_advancedOptions">The <see cref="AdvancedOptions"/> object to be modified.</param>
         public Ship_Loading(ref AdvancedOptions p_advancedOptions)
         {
             this.InitializeComponent();
@@ -22,11 +29,16 @@ namespace Battleship
             this.advancedOptions = p_advancedOptions;
         }
 
+        /// <summary>
+        /// The loaded event for the <see cref="Ship_Loading"/> window.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach(StatusCodes.ShipType ship in this.advancedOptions.ShipTypes)
+            foreach (StatusCodes.ShipType ship in this.advancedOptions.ShipTypes)
             {
-                switch(ship)
+                switch (ship)
                 {
                     case StatusCodes.ShipType.DESTROYER:
                         this.RPT_LIST.Items.Add("Destroyer");
@@ -47,9 +59,14 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The destroyer deployment button click event.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void DE_BTN_Click(object sender, RoutedEventArgs e)
         {
-            if(this.advancedOptions.ShipTypes.Count < 7)
+            if (this.advancedOptions.ShipTypes.Count < 7)
             {
                 this.RPT_LIST.Items.Add("Destroyer");
                 this.advancedOptions.ShipTypes.Add(StatusCodes.ShipType.DESTROYER);
@@ -60,6 +77,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The destroyer deployment button click event.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void SU_BTN_Click(object sender, RoutedEventArgs e)
         {
             if (this.advancedOptions.ShipTypes.Count < 7)
@@ -73,6 +95,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The cruiser deployment button click event.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void CR_BTN_Click(object sender, RoutedEventArgs e)
         {
             if (this.advancedOptions.ShipTypes.Count < 7)
@@ -86,6 +113,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The battleship deployment button click event.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void BA_BTN_Click(object sender, RoutedEventArgs e)
         {
             if (this.advancedOptions.ShipTypes.Count < 7)
@@ -99,6 +131,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The carrier deployment button click event.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void CA_BTN_Click(object sender, RoutedEventArgs e)
         {
             if (this.advancedOptions.ShipTypes.Count < 7)
@@ -112,6 +149,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The default options button click event.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void DEFAULT_BTN_Click(object sender, RoutedEventArgs e)
         {
             this.RPT_LIST.Items.Clear();
@@ -135,6 +177,11 @@ namespace Battleship
             this.RPT_LIST.Items.Add("Carrier");
         }
 
+        /// <summary>
+        /// The clear options button click event.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void CLEAR_BTN_Click(object sender, RoutedEventArgs e)
         {
             this.RPT_LIST.Items.Clear();
@@ -143,14 +190,24 @@ namespace Battleship
             this.advancedOptions.ShipTypes = new List<StatusCodes.ShipType>();
         }
 
+        /// <summary>
+        /// The close window button click event.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void CLOSE_BTN_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// The delete selected option button click event.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void DELETE_BTN_Click(object sender, RoutedEventArgs e)
         {
-            if(this.RPT_LIST.SelectedIndex == -1)
+            if (this.RPT_LIST.SelectedIndex == -1)
             {
                 Logger.Error("You Need To Select Something Before Deleting It!");
             }

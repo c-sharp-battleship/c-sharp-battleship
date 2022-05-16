@@ -109,7 +109,7 @@ namespace Battleship
         /// <param name="e">The arguments passed to the event.</param>
         private void MultipleAttacksPerSuccessfulAttackCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if(this.MultipleAttacksPerSuccessfulAttackCheckBox.IsChecked == true)
+            if (this.MultipleAttacksPerSuccessfulAttackCheckBox.IsChecked == true)
             {
                 this.advancedOptions.PlayerCanAttackAgain = true;
             }
@@ -126,7 +126,7 @@ namespace Battleship
         /// <param name="e">The arguments passed to the event.</param>
         private void MultipleAttacksPerTurnPerShip_Checked(object sender, RoutedEventArgs e)
         {
-            if(this.MultipleAttacksPerTurnPerShip.IsChecked == true)
+            if (this.MultipleAttacksPerTurnPerShip.IsChecked == true)
             {
                 this.advancedOptions.EachShipGetsAShot = true;
             }
@@ -137,7 +137,7 @@ namespace Battleship
         }
 
         /// <summary>
-        /// SelectionChanged event for the <see cref="EachPlayerCanAttackLargeGridSpaceComboBox"/>.
+        /// SelectionChanged event for the <see cref="BombCountComboBox"/>.
         /// </summary>
         /// <param name="sender">The sender that invoked the event.</param>
         /// <param name="e">The arguments passed to the event.</param>
@@ -183,6 +183,11 @@ namespace Battleship
             this.Close();
         }
 
+        /// <summary>
+        /// Loads a new <see cref="Ship_Loading"/> window.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
         private void CustomFleetButton_Click(object sender, RoutedEventArgs e)
         {
             this.shipLoading = new Ship_Loading(ref this.advancedOptions);
