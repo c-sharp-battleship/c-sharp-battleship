@@ -68,8 +68,14 @@ namespace Battleship
         /// </summary>
         private bool winner = false;
 
+        /// <summary>
+        /// The count of player's ships.
+        /// </summary>
         private int shipCount;
 
+        /// <summary>
+        /// The count of player's ships per turn.
+        /// </summary>
         private int shipCountTurn;
 
         /// <summary>
@@ -465,18 +471,23 @@ namespace Battleship
             set { this.winner = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a count of player's ships.
+        /// </summary>
         public int ShipCount
         {
             get { return this.shipCount; }
             set { this.shipCount = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a count of player's ships per turn.
+        /// </summary>
         public int ShipCountTurn
         {
             get { return this.shipCountTurn; }
             set { this.shipCountTurn = value; }
         }
-
 
         /// <summary>
         /// Gets player collection of ships.

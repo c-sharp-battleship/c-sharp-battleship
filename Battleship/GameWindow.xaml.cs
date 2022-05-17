@@ -136,6 +136,9 @@ namespace Battleship
         /// </summary>
         private bool optionPlayerTurnHits;
 
+        /// <summary>
+        /// Specifies whether or not the player can have as many hits as they have ships still afloat.
+        /// </summary>
         private bool optionPlayerTurnShip;
 
         /// <summary>
@@ -557,7 +560,7 @@ namespace Battleship
                 }
 
                 this.SetConfirmButtonVisibility("Player1Canvas");
-                //this.Bombbtnvis();
+                this.Bombbtnvis();
             }
         }
 
@@ -614,8 +617,10 @@ namespace Battleship
             foreach (KeyValuePair<int, GridCell> mainPlayerPair in p_currentPlayer.Playergridsquarecollection)
             {
                 // Create initial variables for interior iterations
-                int gridcellnumber = mainPlayerPair.Key;
+                int gridMaincellnumber = mainPlayerPair.Key;
                 GridCell mainPlayerCell = mainPlayerPair.Value;
+                GridCell mainPlayerCell_New = mainPlayerPair.Value;
+                int gridcellnumber = mainPlayerPair.Key;
 
                 // Load in initial grids to game dictionary control for reports and outputs
                 string gameStatusdictionarykey = p_currentPlayer.PlayerID.ToString() + "-" + mainPlayerPair.Value.TrackingID.ToString();
@@ -634,9 +639,13 @@ namespace Battleship
                             {
                                 // return list of targets to destroy
                                 List<int> targets = this.SetAttack(mainPlayerCell.Buttonid, p_currentPlayer);
+                                int targetCount = 1;
+                                bool bombHasHit = false;
 
                                 foreach (int target in targets)
                                 {
+                                    bool checkIfCellHasHit = false;
+
                                     // go check the list of buttons for player two and change the status for them
                                     foreach (KeyValuePair<int, GridCell> otherPlayerPair in p_otherPlayer.Playergridsquarecollection)
                                     {
@@ -676,6 +685,7 @@ namespace Battleship
                                                 otherPlayerPlayerCell.CellAttackStatus = StatusCodes.AttackStatus.ATTACKED_NOT_HIT;
                                             }
 
+                                            gridcellnumber = (this.RowRep * this.RowRep) + otherPlayercellnumber;
                                             int rowNum;
                                             if ((gridcellnumber - (this.RowRep * this.RowRep)) % this.RowRep == 0)
                                             {
@@ -692,29 +702,35 @@ namespace Battleship
                                                 colNum = this.RowRep - 1;
                                             }
 
+                                            mainPlayerCell_New =
+                                                p_currentPlayer.Playergridsquarecollection[gridcellnumber];
                                             string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
                                             if (letterAttackGrid != "O" && letterAttackGrid != "H" && letterAttackGrid != "M")
                                             {
                                                 p_otherPlayer.Board[rowNum, colNum] = "H";
-                                                mainPlayerCell.Background = Brushes.Green;
-                                                mainPlayerCell.Content = "H";
-                                                mainPlayerCell.IsEnabled = false;
-                                                mainPlayerCell.Stricked = 1;
-                                                mainPlayerCell.AllowDrop = false;
+                                                mainPlayerCell_New.Background = Brushes.Green;
+                                                mainPlayerCell_New.Content = "H";
+                                                mainPlayerCell_New.IsEnabled = false;
+                                                mainPlayerCell_New.Stricked = 1;
+                                                mainPlayerCell_New.AllowDrop = false;
                                                 if (this.optionPlayerTurnHits)
+                                                {
+                                                    bombHasHit = true;
+                                                }
+                                                /*if (this.optionPlayerTurnHits && targetCount == targets.Count)
                                                 {
                                                     p_currentPlayerTurn = true;
                                                     p_otherPlayerTurn = false;
                                                     Logger.Information("You can continue hitting!");
                                                 }
-                                                else if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn < p_currentPlayer.ShipCount)
+                                                else*/ if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn < p_currentPlayer.ShipCount && targetCount == targets.Count)
                                                 {
                                                     p_currentPlayerTurn = true;
                                                     p_otherPlayerTurn = false;
                                                     Logger.Information("You can continue hitting! Attacks left: " + (p_currentPlayer.ShipCount - p_currentPlayer.ShipCountTurn));
                                                     p_currentPlayer.ShipCountTurn++;
                                                 }
-                                                else if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn >= p_currentPlayer.ShipCount)
+                                                else if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn >= p_currentPlayer.ShipCount && targetCount == targets.Count)
                                                 {
                                                     p_currentPlayerTurn = false;
                                                     p_otherPlayerTurn = true;
@@ -722,18 +738,18 @@ namespace Battleship
                                                     Logger.Information("Switch Player. Next Player Turn.");
                                                 }
                                             }
-                                            else
+                                            else if (letterAttackGrid == "O")
                                             {
-                                                mainPlayerCell.Visibility = Visibility.Hidden;
+                                                mainPlayerCell_New.Visibility = Visibility.Hidden;
                                                 p_otherPlayer.Board[rowNum, colNum] = "M";
-                                                if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn < p_currentPlayer.ShipCount)
+                                                if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn < p_currentPlayer.ShipCount && targetCount == targets.Count)
                                                 {
                                                     p_currentPlayerTurn = true;
                                                     p_otherPlayerTurn = false;
                                                     Logger.Information("You can continue hitting! Attacks left: " + (p_currentPlayer.ShipCount - p_currentPlayer.ShipCountTurn));
                                                     p_currentPlayer.ShipCountTurn++;
                                                 }
-                                                else if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn >= p_currentPlayer.ShipCount)
+                                                else if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn >= p_currentPlayer.ShipCount && targetCount == targets.Count)
                                                 {
                                                     p_currentPlayerTurn = false;
                                                     p_otherPlayerTurn = true;
@@ -744,21 +760,55 @@ namespace Battleship
                                                 {
                                                     p_currentPlayerTurn = false;
                                                     p_otherPlayerTurn = true;
+                                                    if (targets.Count == 1)
+                                                    {
+                                                        Logger.Information("Switch Player. Next Player Turn.");
+                                                    }
+                                                }
+                                            }
+                                            else if (letterAttackGrid == "H")
+                                            {
+                                                checkIfCellHasHit = true;
+                                                if (this.optionPlayerTurnHits)
+                                                {
+                                                    bombHasHit = true;
+                                                }
+                                                /*if (this.optionPlayerTurnHits && targetCount == targets.Count)
+                                                {
+                                                    p_currentPlayerTurn = true;
+                                                    p_otherPlayerTurn = false;
+                                                    Logger.Information("You can continue hitting!");
+                                                }
+                                                else*/ if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn < p_currentPlayer.ShipCount && targetCount == targets.Count)
+                                                {
+                                                    p_currentPlayerTurn = true;
+                                                    p_otherPlayerTurn = false;
+                                                    Logger.Information("You can continue hitting! Attacks left: " + (p_currentPlayer.ShipCount - p_currentPlayer.ShipCountTurn));
+                                                    p_currentPlayer.ShipCountTurn++;
+                                                }
+                                                else if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn >= p_currentPlayer.ShipCount && targetCount == targets.Count)
+                                                {
+                                                    p_currentPlayerTurn = false;
+                                                    p_otherPlayerTurn = true;
+                                                    p_currentPlayer.ShipCountTurn = 1;
                                                     Logger.Information("Switch Player. Next Player Turn.");
                                                 }
                                             }
                                         }
                                     }
 
-                                    Coordinate attackedGridSpace = new Coordinate((short)mainPlayerCell.ColNum, (short)mainPlayerCell.RowNum);
+                                    Coordinate attackedGridSpace = new Coordinate((short)mainPlayerCell_New.ColNum, (short)mainPlayerCell_New.RowNum);
 
-                                    Logger.ConsoleInformation("Row Number: " + mainPlayerCell.RowNum);
-                                    Logger.ConsoleInformation("Column Number: " + mainPlayerCell.ColNum);
+                                    Logger.ConsoleInformation("Row Number: " + mainPlayerCell_New.RowNum);
+                                    Logger.ConsoleInformation("Column Number: " + mainPlayerCell_New.ColNum);
 
                                     foreach (Ship testShip in p_otherPlayer.Playershipcollection)
                                     {
                                         // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
-                                        AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                                        if (!checkIfCellHasHit)
+                                        {
+                                            AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                                        }
                                     }
 
                                     // Swicth windows between players
@@ -775,6 +825,16 @@ namespace Battleship
                                         }
                                     }
 
+                                    p_currentPlayer.PlayerTurn = p_currentPlayerTurn;
+                                    p_otherPlayer.PlayerTurn = p_otherPlayerTurn;
+                                    targetCount++;
+                                }
+
+                                if (bombHasHit)
+                                {
+                                    p_currentPlayerTurn = true;
+                                    p_otherPlayerTurn = false;
+                                    Logger.Information("You can continue hitting!");
                                     p_currentPlayer.PlayerTurn = p_currentPlayerTurn;
                                     p_otherPlayer.PlayerTurn = p_otherPlayerTurn;
                                 }
@@ -875,12 +935,12 @@ namespace Battleship
             {
                 threebythree.Add(gridID + 1);
                 threebythree.Add(gridID - 1);
-                threebythree.Add(gridID + 10);
-                threebythree.Add(gridID - 10);
-                threebythree.Add(gridID + 9);
-                threebythree.Add(gridID - 9);
-                threebythree.Add(gridID + 11);
-                threebythree.Add(gridID - 11);
+                threebythree.Add(gridID + this.RowRep);
+                threebythree.Add(gridID - this.RowRep);
+                threebythree.Add(gridID + (this.RowRep - 1));
+                threebythree.Add(gridID - (this.RowRep - 1));
+                threebythree.Add(gridID + (this.RowRep + 1));
+                threebythree.Add(gridID - (this.RowRep + 1));
             }
 
             // reset the bomb
