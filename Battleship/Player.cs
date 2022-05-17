@@ -68,6 +68,10 @@ namespace Battleship
         /// </summary>
         private bool winner = false;
 
+        private int shipCount;
+
+        private int shipCountTurn;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Player" /> class.
         /// </summary>
@@ -84,6 +88,8 @@ namespace Battleship
             this.bombCount = p_bombcount;
             this.isLocked = false;
             this.playerTurn = true;
+            this.shipCount = shiptypes.Count;
+            this.shipCountTurn = 1;
 
             // set the fixed properties
             this.name = player_Name;
@@ -459,6 +465,19 @@ namespace Battleship
             set { this.winner = value; }
         }
 
+        public int ShipCount
+        {
+            get { return this.shipCount; }
+            set { this.shipCount = value; }
+        }
+
+        public int ShipCountTurn
+        {
+            get { return this.shipCountTurn; }
+            set { this.shipCountTurn = value; }
+        }
+
+
         /// <summary>
         /// Gets player collection of ships.
         /// </summary>
@@ -584,6 +603,7 @@ namespace Battleship
         {
             Ship ship = sender as Ship;
             ship.ShipIsSunk = true;
+            this.shipCount--;
             Logger.Information(ship.ShipName + " has been sunk!");
             this.CheckIfPlayerHasWon();
         }

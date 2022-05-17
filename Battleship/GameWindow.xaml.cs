@@ -136,6 +136,8 @@ namespace Battleship
         /// </summary>
         private bool optionPlayerTurnHits;
 
+        private bool optionPlayerTurnShip;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow" /> class.
         /// </summary>
@@ -193,6 +195,7 @@ namespace Battleship
 
             this.bombcounttest = this.advancedOptions.BombCount;
             this.optionPlayerTurnHits = this.advancedOptions.PlayerCanAttackAgain;
+            this.optionPlayerTurnShip = this.advancedOptions.EachShipGetsAShot;
 
             this.RowRep = this.advancedOptions.GridSize;
         }
@@ -216,7 +219,7 @@ namespace Battleship
                 {
                     sr.ReadLine();
                     player1Name = sr.ReadLine();
-                    for (int i = 0; i < this.RowRep; ++i)
+                    for (int i = 0; i < this.RowRep; i++)
                     {
                         string[] items = sr.ReadLine().Split(',');
 
@@ -227,7 +230,7 @@ namespace Battleship
                     }
 
                     player2Name = sr.ReadLine();
-                    for (int i = 0; i < this.RowRep; ++i)
+                    for (int i = 0; i < this.RowRep; i++)
                     {
                         string[] items = sr.ReadLine().Split(',');
 
@@ -554,7 +557,7 @@ namespace Battleship
                 }
 
                 this.SetConfirmButtonVisibility("Player1Canvas");
-                this.Bombbtnvis();
+                //this.Bombbtnvis();
             }
         }
 
@@ -704,14 +707,45 @@ namespace Battleship
                                                     p_otherPlayerTurn = false;
                                                     Logger.Information("You can continue hitting!");
                                                 }
+                                                else if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn < p_currentPlayer.ShipCount)
+                                                {
+                                                    p_currentPlayerTurn = true;
+                                                    p_otherPlayerTurn = false;
+                                                    Logger.Information("You can continue hitting! Attacks left: " + (p_currentPlayer.ShipCount - p_currentPlayer.ShipCountTurn));
+                                                    p_currentPlayer.ShipCountTurn++;
+                                                }
+                                                else if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn >= p_currentPlayer.ShipCount)
+                                                {
+                                                    p_currentPlayerTurn = false;
+                                                    p_otherPlayerTurn = true;
+                                                    p_currentPlayer.ShipCountTurn = 1;
+                                                    Logger.Information("Switch Player. Next Player Turn.");
+                                                }
                                             }
                                             else
                                             {
                                                 mainPlayerCell.Visibility = Visibility.Hidden;
                                                 p_otherPlayer.Board[rowNum, colNum] = "M";
-                                                p_currentPlayerTurn = false;
-                                                p_otherPlayerTurn = true;
-                                                Logger.Information("Switch Player. Next Player Turn.");
+                                                if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn < p_currentPlayer.ShipCount)
+                                                {
+                                                    p_currentPlayerTurn = true;
+                                                    p_otherPlayerTurn = false;
+                                                    Logger.Information("You can continue hitting! Attacks left: " + (p_currentPlayer.ShipCount - p_currentPlayer.ShipCountTurn));
+                                                    p_currentPlayer.ShipCountTurn++;
+                                                }
+                                                else if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn >= p_currentPlayer.ShipCount)
+                                                {
+                                                    p_currentPlayerTurn = false;
+                                                    p_otherPlayerTurn = true;
+                                                    p_currentPlayer.ShipCountTurn = 1;
+                                                    Logger.Information("Switch Player. Next Player Turn.");
+                                                }
+                                                else
+                                                {
+                                                    p_currentPlayerTurn = false;
+                                                    p_otherPlayerTurn = true;
+                                                    Logger.Information("Switch Player. Next Player Turn.");
+                                                }
                                             }
                                         }
                                     }
