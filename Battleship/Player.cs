@@ -615,7 +615,12 @@ namespace Battleship
             Ship ship = sender as Ship;
             ship.ShipIsSunk = true;
             this.shipCount--;
-            Logger.Information(ship.ShipName + " has been sunk!");
+
+            if (ship.Resistance == 0)
+            {
+                Logger.Information(ship.ShipName + " has been sunk!");
+            }
+
             this.CheckIfPlayerHasWon();
         }
 

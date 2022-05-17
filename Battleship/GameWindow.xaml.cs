@@ -776,7 +776,7 @@ namespace Battleship
                                                 {
                                                     bombHasHit = true;
                                                 }
-                                                
+
                                                 /*if (this.optionPlayerTurnHits && targetCount == targets.Count)
                                                 {
                                                     p_currentPlayerTurn = true;
