@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="AdvancedOptions.cs" company="Battleship Coding Group">
-//     Battleship Coding Group, 2022
+// <copyright file="AdvancedOptions.cs" company="David Fedchuk, Gerson Eliu Sorto Flores, Lincoln Kaszynski, Sanaaia Okhlopkova, and Samuel Mace">
+//     MIT License, 2022 (https://mit-license.org).
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Battleship

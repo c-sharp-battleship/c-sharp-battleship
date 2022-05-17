@@ -10,8 +10,8 @@
   <Analyzers>
     <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
       <AnalyzerSettings>
-        <StringProperty Name="CompanyName">Battleship Coding Group</StringProperty>
-        <StringProperty Name="Copyright">Battleship Coding Group, 2022</StringProperty>
+        <StringProperty Name="CompanyName">David Fedchuk, Gerson Eliu Sorto Flores, Lincoln Kaszynski, Sanaaia Okhlopkova, and Samuel Mace</StringProperty>
+        <StringProperty Name="Copyright">MIT License, 2022 (https://mit-license.org).</StringProperty>
       </AnalyzerSettings>
     </Analyzer>
   </Analyzers>

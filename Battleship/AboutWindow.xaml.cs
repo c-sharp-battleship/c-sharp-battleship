@@ -1,8 +1,11 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="AboutWindow.xaml.cs" company="Battleship Coding Group">
-// Battleship Coding Group, 2022
+// <copyright file="AboutWindow.xaml.cs" company="David Fedchuk, Gerson Eliu Sorto Flores, Lincoln Kaszynski, Sanaaia Okhlopkova, and Samuel Mace">
+//     MIT License, 2022 (https://mit-license.org).
 // </copyright>
 //-----------------------------------------------------------------------
+
+using System.Windows.Navigation;
+
 namespace Battleship
 {
     using System.Windows;
@@ -28,6 +31,11 @@ namespace Battleship
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://mit-license.org");
         }
     }
 }

@@ -4,10 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="About Battleship" Height="150" Width="375">
+        Title="About Battleship" Height="200" Width="400">
     <Grid Margin="0,0,0,0">
-        <Label x:Name="GameLabel" Content="Battleship: A Game of Adventure and Conquest" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="CopyrightLabel" Content="Copyright © 2022: Lincoln, David, Sanaaia, Gerson, and Samuel" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Click="CloseButton_Click" Width="303"/>
+        <StackPanel Orientation="Vertical" Margin="10">
+            <Label x:Name="GameLabel" Content="Battleship: A Game of Adventure and Conquest" Margin="5"/>
+            <TextBlock TextWrapping="Wrap" x:Name="CopyrightLabel" Margin="5">
+                Copyright © 2022: David Fedchuk, Gerson Eliu Sorto Flores, Lincoln Kaszynski, Sanaaia Okhlopkova, and Samuel Mace.
+            </TextBlock>
+            <TextBlock Margin="5">
+                <Hyperlink 
+                    NavigateUri="http://mit-license.org"
+                    RequestNavigate="Hyperlink_OnRequestNavigate">
+                    MIT License, 2022.
+                </Hyperlink>
+            </TextBlock>
+            <Button x:Name="CloseButton" Content="Close" Click="CloseButton_Click" Width="315" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Window>

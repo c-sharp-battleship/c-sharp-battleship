@@ -7,3 +7,10 @@
 
 ## Dependencies
 Battleship will compile running the dotnet runtime on Windows. It uses WPF as it's framework.
+
+## License
+David Fedchuk, Gerson Eliu Sorto Flores, Lincoln Kaszynski, Sanaaia Okhlopkova, and Samuel Mace, 2022.
+
+This code is licensed under the MIT license.
+By contributing code, you agree that your contributions are to be bound by the terms of this license.
+You should have received a license with the copy of this software. If not, see https://mit-license.org/

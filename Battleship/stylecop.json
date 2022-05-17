@@ -2,8 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
   "settings": {
     "documentationRules": {
-      "companyName": "Battleship Coding Group",
-      "copyrightText": "{companyName}, 2022",
+      "companyName": "David Fedchuk, Gerson Eliu Sorto Flores, Lincoln Kaszynski, Sanaaia Okhlopkova, and Samuel Mace",
+      "copyrightText": "MIT License, 2022 (https://mit-license.org).",
       "xmlHeader": true,
       "headerDecoration": "-----------------------------------------------------------------------",
 
