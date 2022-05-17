@@ -717,13 +717,16 @@ namespace Battleship
                                                 {
                                                     bombHasHit = true;
                                                 }
+
                                                 /*if (this.optionPlayerTurnHits && targetCount == targets.Count)
                                                 {
                                                     p_currentPlayerTurn = true;
                                                     p_otherPlayerTurn = false;
                                                     Logger.Information("You can continue hitting!");
                                                 }
-                                                else*/ if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn < p_currentPlayer.ShipCount && targetCount == targets.Count)
+                                                else*/
+
+                                                if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn < p_currentPlayer.ShipCount && targetCount == targets.Count)
                                                 {
                                                     p_currentPlayerTurn = true;
                                                     p_otherPlayerTurn = false;
@@ -773,6 +776,7 @@ namespace Battleship
                                                 {
                                                     bombHasHit = true;
                                                 }
+                                                
                                                 /*if (this.optionPlayerTurnHits && targetCount == targets.Count)
                                                 {
                                                     p_currentPlayerTurn = true;
