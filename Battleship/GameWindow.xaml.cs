@@ -650,17 +650,17 @@ namespace Battleship
                                             otherPlayerPlayerCell.Stricked = 1;
 
                                             // go check the list of buttons for player one and make them invisible
-                                            foreach (KeyValuePair<int, GridCell> oneplayer in p_currentPlayer.Playergridsquarecollection)
+                                            // Why do you need this? As a player I want to see id hit the ship or not
+                                            /*foreach (KeyValuePair<int, GridCell> oneplayer in p_currentPlayer.Playergridsquarecollection)
                                             {
                                                 int oneplayerkey = oneplayer.Key;
                                                 GridCell oneplayerCell = oneplayer.Value;
-
                                                 if (target == oneplayerCell.Buttonid &&
                                                     oneplayerCell.OffenseButton == true)
                                                 {
                                                     oneplayerCell.Visibility = Visibility.Hidden;
                                                 }
-                                            }
+                                            } */
 
                                             if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
                                             {
@@ -674,19 +674,19 @@ namespace Battleship
                                             }
 
                                             int rowNum;
-                                            if ((gridcellnumber - 100) % 10 == 0)
+                                            if ((gridcellnumber - (this.RowRep * this.RowRep)) % this.RowRep == 0)
                                             {
-                                                rowNum = ((gridcellnumber - 100) / 10) - 1;
+                                                rowNum = ((gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep) - 1;
                                             }
                                             else
                                             {
-                                                rowNum = (gridcellnumber - 100) / 10;
+                                                rowNum = (gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep;
                                             }
 
-                                            int colNum = ((gridcellnumber - 100) - (((gridcellnumber - 100) / 10) * 10)) - 1;
+                                            int colNum = ((gridcellnumber - (this.RowRep * this.RowRep)) - (((gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep) * this.RowRep)) - 1;
                                             if (colNum == -1)
                                             {
-                                                colNum = 9;
+                                                colNum = this.RowRep - 1;
                                             }
 
                                             string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
@@ -1361,19 +1361,19 @@ namespace Battleship
                                     }
 
                                     int rowNum;
-                                    if ((gridcellnumber - 100) % 10 == 0)
+                                    if ((gridcellnumber - (this.RowRep * this.RowRep)) % this.RowRep == 0)
                                     {
-                                        rowNum = ((gridcellnumber - 100) / 10) - 1;
+                                        rowNum = ((gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep) - 1;
                                     }
                                     else
                                     {
-                                        rowNum = (gridcellnumber - 100) / 10;
+                                        rowNum = (gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep;
                                     }
 
-                                    int colNum = ((gridcellnumber - 100) - (((gridcellnumber - 100) / 10) * 10)) - 1;
+                                    int colNum = ((gridcellnumber - (this.RowRep * this.RowRep)) - (((gridcellnumber - (this.RowRep * this.RowRep)) / this.RowRep) * this.RowRep)) - 1;
                                     if (colNum == -1)
                                     {
-                                        colNum = 9;
+                                        colNum = this.RowRep - 1;
                                     }
 
                                     string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
