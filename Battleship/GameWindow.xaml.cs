@@ -8,6 +8,7 @@ namespace Battleship
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -242,6 +243,7 @@ namespace Battleship
         public GameWindow(string pathFile)
         {
             this.InitializeComponent();
+            this.RowRep = 10;
             string player1Name = string.Empty;
             string player2Name = string.Empty;
 
@@ -367,6 +369,10 @@ namespace Battleship
             this.PlayerOnelabel.Visibility = Visibility.Visible;
             this.PlayerTwolabel.Visibility = Visibility.Hidden;
             this.AttackBtn.IsEnabled = false;
+            if (!(!this.optionPlayerTurnHits && !this.optionPlayerTurnShip && this.bombcounttest == 0 && this.RowRep == 10 && this.shiptypelist.Distinct().Count() == 5))
+            {
+                this.SaveGameButton.Visibility = Visibility.Hidden;
+            }
 
             // Create Players with their cells and their ships and grids colors
             // 1 = Black,2=dark blue,3=magenta,4=lightseagreen,5=purple,6=white,standard cadet blue
@@ -529,11 +535,11 @@ namespace Battleship
         /// </summary>
         private void Bombbtnvis()
         {
-            if (this.advancedOptions.BombCount > 0 && this.playerWindow1.Visibility == Visibility.Visible && this.player1.BombCount > 0)
+            if (this.playerWindow1.Visibility == Visibility.Visible && this.player1.BombCount > 0 && this.player1.IsLocked == true)
             {
                 this.BombLoader.Visibility = Visibility.Visible;
             }
-            else if (this.advancedOptions.BombCount > 0 && this.playerWindow2.Visibility == Visibility.Visible && this.player2.BombCount > 0)
+            else if (this.playerWindow2.Visibility == Visibility.Visible && this.player2.BombCount > 0 && this.player2.IsLocked == true)
             {
                 this.BombLoader.Visibility = Visibility.Visible;
             }
@@ -677,6 +683,15 @@ namespace Battleship
                             {
                                 // return list of targets to destroy
                                 List<int> targets = this.SetAttack(mainPlayerCell.Buttonid, p_currentPlayer);
+
+                                for (int i = targets.Count - 1; i >= 0; i--)
+                                {
+                                    if (targets[i] < 0 || targets[i] > (this.RowRep * this.RowRep))
+                                    {
+                                        targets.RemoveAt(i);
+                                    }
+                                }
+
                                 int targetCount = 1;
                                 bool bombHasHit = false;
 
@@ -694,24 +709,6 @@ namespace Battleship
                                         if (target == otherPlayerPlayerCell.Buttonid &&
                                             otherPlayerPlayerCell.OffenseButton == false)
                                         {
-                                            // make changes to player two grid
-                                            otherPlayerPlayerCell.Background = Brushes.Red;
-                                            otherPlayerPlayerCell.Content = "X";
-                                            otherPlayerPlayerCell.Stricked = 1;
-
-                                            // go check the list of buttons for player one and make them invisible
-                                            // Why do you need this? As a player I want to see id hit the ship or not
-                                            /*foreach (KeyValuePair<int, GridCell> oneplayer in p_currentPlayer.Playergridsquarecollection)
-                                            {
-                                                int oneplayerkey = oneplayer.Key;
-                                                GridCell oneplayerCell = oneplayer.Value;
-                                                if (target == oneplayerCell.Buttonid &&
-                                                    oneplayerCell.OffenseButton == true)
-                                                {
-                                                    oneplayerCell.Visibility = Visibility.Hidden;
-                                                }
-                                            } */
-
                                             if (otherPlayerPlayerCell.ShipContainedName != string.Empty)
                                             {
                                                 Logger.ConsoleInformation("You have damaged my " + otherPlayerPlayerCell.ShipContainedName);
@@ -745,10 +742,13 @@ namespace Battleship
                                             string letterAttackGrid = p_otherPlayer.Board[rowNum, colNum];
                                             if (letterAttackGrid != "O" && letterAttackGrid != "H" && letterAttackGrid != "M")
                                             {
+                                                otherPlayerPlayerCell.Background = Brushes.Red;
+                                                otherPlayerPlayerCell.Content = letterAttackGrid;
+                                                otherPlayerPlayerCell.Stricked = 1;
+
                                                 p_otherPlayer.Board[rowNum, colNum] = "H";
                                                 mainPlayerCell_New.Background = Brushes.Green;
                                                 mainPlayerCell_New.Content = "H";
-                                                mainPlayerCell_New.IsEnabled = false;
                                                 mainPlayerCell_New.Stricked = 1;
                                                 mainPlayerCell_New.AllowDrop = false;
                                                 if (this.optionPlayerTurnHits)
@@ -784,8 +784,15 @@ namespace Battleship
                                             }
                                             else if (letterAttackGrid == "O")
                                             {
-                                                mainPlayerCell_New.Visibility = Visibility.Hidden;
+                                                otherPlayerPlayerCell.Background = Brushes.Red;
+                                                otherPlayerPlayerCell.Content = "X";
+                                                otherPlayerPlayerCell.Stricked = 1;
+
                                                 p_otherPlayer.Board[rowNum, colNum] = "M";
+                                                mainPlayerCell_New.Background = Brushes.Red;
+                                                mainPlayerCell_New.Content = "X";
+                                                mainPlayerCell_New.Stricked = 1;
+                                                mainPlayerCell_New.AllowDrop = false;
                                                 if (this.optionPlayerTurnShip && p_currentPlayer.ShipCountTurn < p_currentPlayer.ShipCount && targetCount == targets.Count)
                                                 {
                                                     p_currentPlayerTurn = true;
@@ -1639,12 +1646,14 @@ namespace Battleship
                 this.player1.PlayerBombactivated = true;
                 this.player1.BombCount -= 1;
                 this.BombLoader.Visibility = Visibility.Hidden;
+                Logger.Information("Please choose the spot to drop the bomb! Bombs Left: " + this.player1.BombCount);
             }
             else if (this.playerWindow2.Visibility == Visibility.Visible)
             {
                 this.player2.PlayerBombactivated = true;
                 this.player2.BombCount -= 1;
                 this.BombLoader.Visibility = Visibility.Hidden;
+                Logger.Information("Please choose the spot to drop the bomb! Bombs Left: " + this.player2.BombCount);
             }
         }
 

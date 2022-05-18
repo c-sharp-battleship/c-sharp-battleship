@@ -57,6 +57,7 @@ namespace Battleship
            }
 
            this.advancedOptions = new AdvancedOptions();
+           this.AdvancedOptionsButton.IsEnabled = false;
         }
 
         /// <summary>
@@ -239,6 +240,8 @@ namespace Battleship
             this.UpdateRadioButtonOptions();
             this.Player1NameTextBox.IsEnabled = true;
             this.Player2NameTextBox.IsEnabled = true;
+            this.AdvancedOptionsButton.IsEnabled = true;
+            Logger.Information("Advanced options available. Please click \"Advanced Options\" button for more information.");
         }
 
         /// <summary>
@@ -251,6 +254,7 @@ namespace Battleship
             this.UpdateRadioButtonOptions();
             this.Player1NameTextBox.IsEnabled = true;
             this.Player2NameTextBox.IsEnabled = false;
+            this.AdvancedOptionsButton.IsEnabled = false;
         }
 
         /// <summary>
@@ -263,6 +267,7 @@ namespace Battleship
             this.UpdateRadioButtonOptions();
             this.Player1NameTextBox.IsEnabled = false;
             this.Player2NameTextBox.IsEnabled = false;
+            this.AdvancedOptionsButton.IsEnabled = false;
         }
 
         /// <summary>

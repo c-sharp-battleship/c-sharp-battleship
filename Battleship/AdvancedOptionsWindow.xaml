@@ -18,8 +18,8 @@
             </StackPanel>
             
             <Label Content="Other Options" />
-            <CheckBox Name="MultipleAttacksPerSuccessfulAttackCheckBox" Content="Multiple Attacks Per Successful Attack" Margin="5" Checked="MultipleAttacksPerSuccessfulAttackCheckBox_Checked"/>
-            <CheckBox Name="MultipleAttacksPerTurnPerShip" Content="Multiple Attacks Per Turn Per Ship" Margin="5" Checked="MultipleAttacksPerTurnPerShip_Checked"/>
+            <CheckBox Name="MultipleAttacksPerSuccessfulAttackCheckBox" Content="Multiple Attacks Per Successful Attack" Margin="5" Checked="MultipleAttacksPerSuccessfulAttackCheckBox_Checked" Unchecked="MultipleAttacksPerSuccessfulAttackCheckBox_Unchecked"/>
+            <CheckBox Name="MultipleAttacksPerTurnPerShip" Content="Multiple Attacks Per Turn Per Ship" Margin="5" Checked="MultipleAttacksPerTurnPerShip_Checked" Unchecked="MultipleAttacksPerTurnPerShip_Unchecked"/>
             
             <StackPanel  Orientation="Horizontal" Margin="5">
                 <Label>Bomb Count:</Label>

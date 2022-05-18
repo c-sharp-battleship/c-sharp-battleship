@@ -193,5 +193,39 @@ namespace Battleship
             this.shipLoading = new Ship_Loading(ref this.advancedOptions);
             this.shipLoading.Show();
         }
+
+        /// <summary>
+        /// Checked event for the <see cref="MultipleAttacksPerSuccessfulAttackCheckBox"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
+        private void MultipleAttacksPerSuccessfulAttackCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (this.MultipleAttacksPerSuccessfulAttackCheckBox.IsChecked == true)
+            {
+                this.advancedOptions.PlayerCanAttackAgain = true;
+            }
+            else
+            {
+                this.advancedOptions.PlayerCanAttackAgain = false;
+            }
+        }
+
+        /// <summary>
+        /// Checked event for the <see cref="MultipleAttacksPerTurnPerShip"/>.
+        /// </summary>
+        /// <param name="sender">The sender that invoked the event.</param>
+        /// <param name="e">The arguments passed to the event.</param>
+        private void MultipleAttacksPerTurnPerShip_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (this.MultipleAttacksPerTurnPerShip.IsChecked == true)
+            {
+                this.advancedOptions.EachShipGetsAShot = true;
+            }
+            else
+            {
+                this.advancedOptions.EachShipGetsAShot = false;
+            }
+        }
     }
 }
