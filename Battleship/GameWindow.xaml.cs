@@ -206,6 +206,38 @@ namespace Battleship
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow" /> class.
         /// </summary>
+        /// <param name="gameType"> This is the game type.</param>
+        public GameWindow(StatusCodes.GameType gameType)
+        {
+            this.PlayersCellRecords = new List<GridCell>();
+
+            this.InitializeComponent();
+
+            this.gameType = gameType;
+
+            switch (gameType)
+            {
+                case StatusCodes.GameType.PLAYER_TO_PLAYER:
+                    this.Loaded += this.StartPlayerToPlayerGame;
+                    break;
+                case StatusCodes.GameType.PLAYER_TO_COMPUTER:
+                    this.Loaded += this.StartPlayerToComputerGame;
+                    break;
+                case StatusCodes.GameType.COMPUTER_TO_COMPUTER:
+                    this.Loaded += this.StartComputerToComputerGame;
+                    break;
+            }
+
+            this.shiptypelist = new List<int>() { 1, 2, 3, 4, 5 };
+            this.bombcounttest = 0;
+            this.optionPlayerTurnHits = false;
+            this.optionPlayerTurnShip = false;
+            this.RowRep = 10;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameWindow" /> class.
+        /// </summary>
         /// <param name="pathFile"> This is the game file path.</param>
         public GameWindow(string pathFile)
         {
@@ -536,7 +568,10 @@ namespace Battleship
                 }
                 //// if the switch button has been clicked for the first time then allow player2 to move their ships
                 this.SetConfirmButtonVisibility("Player2Canvas");
-                this.Bombbtnvis();
+                if (this.player2.Name != "ComputerPlayerTwo")
+                {
+                    this.Bombbtnvis();
+                }
             }
             else
             {
@@ -560,7 +595,10 @@ namespace Battleship
                 }
 
                 this.SetConfirmButtonVisibility("Player1Canvas");
-                this.Bombbtnvis();
+                if (this.player2.Name != "ComputerPlayerTwo")
+                {
+                    this.Bombbtnvis();
+                }
             }
         }
 
@@ -738,7 +776,10 @@ namespace Battleship
                                                     p_currentPlayerTurn = false;
                                                     p_otherPlayerTurn = true;
                                                     p_currentPlayer.ShipCountTurn = 1;
-                                                    Logger.Information("Switch Player. Next Player Turn.");
+                                                    if (p_otherPlayer.Name != "ComputerPlayerTwo")
+                                                    {
+                                                        Logger.Information("Switch Player. Next Player Turn.");
+                                                    }
                                                 }
                                             }
                                             else if (letterAttackGrid == "O")
@@ -757,7 +798,10 @@ namespace Battleship
                                                     p_currentPlayerTurn = false;
                                                     p_otherPlayerTurn = true;
                                                     p_currentPlayer.ShipCountTurn = 1;
-                                                    Logger.Information("Switch Player. Next Player Turn.");
+                                                    if (p_otherPlayer.Name != "ComputerPlayerTwo")
+                                                    {
+                                                        Logger.Information("Switch Player. Next Player Turn.");
+                                                    }
                                                 }
                                                 else
                                                 {
@@ -765,7 +809,10 @@ namespace Battleship
                                                     p_otherPlayerTurn = true;
                                                     if (targets.Count == 1)
                                                     {
-                                                        Logger.Information("Switch Player. Next Player Turn.");
+                                                        if (p_otherPlayer.Name != "ComputerPlayerTwo")
+                                                        {
+                                                            Logger.Information("Switch Player. Next Player Turn.");
+                                                        }
                                                     }
                                                 }
                                             }
@@ -795,7 +842,10 @@ namespace Battleship
                                                     p_currentPlayerTurn = false;
                                                     p_otherPlayerTurn = true;
                                                     p_currentPlayer.ShipCountTurn = 1;
-                                                    Logger.Information("Switch Player. Next Player Turn.");
+                                                    if (p_otherPlayer.Name != "ComputerPlayerTwo")
+                                                    {
+                                                        Logger.Information("Switch Player. Next Player Turn.");
+                                                    }
                                                 }
                                             }
                                         }
@@ -825,10 +875,14 @@ namespace Battleship
                                             StatusCodes.ComputerPlayerDifficulty.COMPUTER_DIFFICULTY_HARD)
                                         {
                                             ((ComputerPlayer)p_otherPlayer).AdvancedAttack(p_currentPlayer, this.RowRep);
+                                            p_currentPlayerTurn = true;
+                                            p_otherPlayerTurn = false;
                                         }
                                         else
                                         {
                                             ((ComputerPlayer)p_otherPlayer).CompPlayerAttack(p_currentPlayer, this.RowRep);
+                                            p_currentPlayerTurn = true;
+                                            p_otherPlayerTurn = false;
                                         }
                                     }
 
@@ -848,7 +902,10 @@ namespace Battleship
                             }
                             else
                             {
-                                Logger.Information("Switch Player. Next Player Turn.");
+                                if (p_otherPlayer.Name != "ComputerPlayerTwo")
+                                {
+                                    Logger.Information("Switch Player. Next Player Turn.");
+                                }
                             }
                         }
                         else
