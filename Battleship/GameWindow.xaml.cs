@@ -801,17 +801,20 @@ namespace Battleship
                                         }
                                     }
 
-                                    Coordinate attackedGridSpace = new Coordinate((short)mainPlayerCell_New.ColNum, (short)mainPlayerCell_New.RowNum);
-
-                                    Logger.ConsoleInformation("Row Number: " + mainPlayerCell_New.RowNum);
-                                    Logger.ConsoleInformation("Column Number: " + mainPlayerCell_New.ColNum);
-
-                                    foreach (Ship testShip in p_otherPlayer.Playershipcollection)
+                                    if (target >= 0 && target <= (this.RowRep * this.RowRep))
                                     {
-                                        // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
-                                        if (!checkIfCellHasHit)
+                                        Coordinate attackedGridSpace = new Coordinate((short)mainPlayerCell_New.ColNum, (short)mainPlayerCell_New.RowNum);
+
+                                        Logger.ConsoleInformation("Row Number: " + mainPlayerCell_New.RowNum);
+                                        Logger.ConsoleInformation("Column Number: " + mainPlayerCell_New.ColNum);
+
+                                        foreach (Ship testShip in p_otherPlayer.Playershipcollection)
                                         {
-                                            AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                                            // Logger.Information(testShip.ShipStartCoords.XCoordinate.ToString() + " "+ testShip.ShipStartCoords.YCoordinate.ToString());
+                                            if (!checkIfCellHasHit)
+                                            {
+                                                AttackCoordinate tempCoordainte = testShip.AttackGridSpace(attackedGridSpace);
+                                            }
                                         }
                                     }
 
@@ -937,14 +940,59 @@ namespace Battleship
             // Will load extra hits if bomb is active
             if (currentplayer.PlayerBombactivated == true && currentplayer.BombCount >= 0)
             {
-                threebythree.Add(gridID + 1);
-                threebythree.Add(gridID - 1);
-                threebythree.Add(gridID + this.RowRep);
-                threebythree.Add(gridID - this.RowRep);
-                threebythree.Add(gridID + (this.RowRep - 1));
-                threebythree.Add(gridID - (this.RowRep - 1));
-                threebythree.Add(gridID + (this.RowRep + 1));
-                threebythree.Add(gridID - (this.RowRep + 1));
+                if (gridID % this.RowRep == 0)
+                {
+                    threebythree.Add(gridID + 1);
+                    if (gridID == (this.RowRep * (this.RowRep - 1)))
+                    {
+                        threebythree.Add(gridID - (this.RowRep - 1));
+                        threebythree.Add(gridID - this.RowRep);
+                    }
+                    else if (gridID == 0)
+                    {
+                        threebythree.Add(gridID + (this.RowRep + 1));
+                        threebythree.Add(gridID + this.RowRep);
+                    }
+                    else
+                    {
+                        threebythree.Add(gridID - (this.RowRep - 1));
+                        threebythree.Add(gridID + (this.RowRep + 1));
+                        threebythree.Add(gridID + this.RowRep);
+                        threebythree.Add(gridID - this.RowRep);
+                    }
+                }
+                else if (gridID % this.RowRep == (this.RowRep - 1))
+                {
+                    threebythree.Add(gridID - 1);
+                    if (gridID == (this.RowRep * (this.RowRep - 1)) + (this.RowRep - 1))
+                    {
+                        threebythree.Add(gridID - (this.RowRep + 1));
+                        threebythree.Add(gridID - this.RowRep);
+                    }
+                    else if (gridID == (this.RowRep - 1))
+                    {
+                        threebythree.Add(gridID + (this.RowRep - 1));
+                        threebythree.Add(gridID + this.RowRep);
+                    }
+                    else
+                    {
+                        threebythree.Add(gridID - (this.RowRep + 1));
+                        threebythree.Add(gridID + (this.RowRep - 1));
+                        threebythree.Add(gridID + this.RowRep);
+                        threebythree.Add(gridID - this.RowRep);
+                    }
+                }
+                else
+                {
+                    threebythree.Add(gridID + 1);
+                    threebythree.Add(gridID - 1);
+                    threebythree.Add(gridID + this.RowRep);
+                    threebythree.Add(gridID - this.RowRep);
+                    threebythree.Add(gridID + (this.RowRep - 1));
+                    threebythree.Add(gridID - (this.RowRep - 1));
+                    threebythree.Add(gridID + (this.RowRep + 1));
+                    threebythree.Add(gridID - (this.RowRep + 1));
+                }
             }
 
             // reset the bomb
